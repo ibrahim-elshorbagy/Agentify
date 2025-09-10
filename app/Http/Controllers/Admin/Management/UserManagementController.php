@@ -1,0 +1,167 @@
+<?php
+
+namespace App\Http\Controllers\Admin\Management;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
+
+class UserManagementController extends Controller
+{
+  public function index(Request $request)
+  {
+      $request->validate([
+          'name' => ['nullable', 'string', 'max:255'],
+          'email' => ['nullable', 'string', 'max:255'],
+          'username' => ['nullable', 'string', 'max:255'],
+          'sort' => ['nullable', 'string', 'in:id,name,email,username,created_at'],
+          'direction' => ['nullable', 'string', 'in:asc,desc'],
+          'per_page' => ['nullable', 'integer', 'min:1'],
+      ]);
+
+      $sortField = $request->input('sort', 'id');
+      $sortDirection = $request->input('direction', 'desc');
+      $perPage = $request->input('per_page', 15);
+
+      // Shared filter function
+      $applyFilters = function ($query) use ($request) {
+          if ($request->filled('name')) {
+              $query->where('name', 'like', '%' . $request->name . '%');
+          }
+          if ($request->filled('email')) {
+              $query->where('email', 'like', '%' . $request->email . '%');
+          }
+          if ($request->filled('username')) {
+              $query->where('username', 'like', '%' . $request->username . '%');
+          }
+      };
+
+      // Admins
+      $adminsQuery = User::query()->with('roles')->whereHas('roles', fn($q) => $q->where('name', 'admin'))->whereNot('id', $request->user()->id);
+      $applyFilters($adminsQuery);
+      $admins = $adminsQuery->orderBy($sortField, $sortDirection)
+          ->paginate($perPage, ['*'], 'admins_page')
+          ->withQueryString();
+
+      // Users
+      $usersQuery = User::query()->with('roles')->whereHas('roles', fn($q) => $q->where('name', 'user'));
+      $applyFilters($usersQuery);
+      $users = $usersQuery->orderBy($sortField, $sortDirection)
+          ->paginate($perPage, ['*'], 'users_page')
+          ->withQueryString();
+
+      // Roles for dropdown in modals
+      $roles = Role::all();
+
+      return inertia('Admin/Management/UserManagement/Users', [
+          'admins' => $admins,
+          'users' => $users,
+          'roles' => $roles,
+          'queryParams' => $request->query() ?: null,
+      ]);
+  }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'string', 'exists:roles,name'],
+        ]);
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'username' => $data['username'],
+            'password' => Hash::make($data['password']),
+        ]);
+
+        $user->assignRole($data['role']);
+
+        return back()
+            ->with('title', __('website_response.user_created_title'))
+            ->with('message', __('website_response.user_created_message'))
+            ->with('status', 'success');
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'username' => ['required', 'string', 'max:255', 'unique:users,username,' . $user->id],
+            'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'string', 'exists:roles,name'],
+        ]);
+
+        $updateData = [
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'username' => $data['username'],
+        ];
+
+        if (!empty($data['password'])) {
+            $updateData['password'] = Hash::make($data['password']);
+        }
+
+        $user->update($updateData);
+
+        // Sync role
+        $user->syncRoles($data['role']);
+
+        return back()
+            ->with('title', __('website_response.user_updated_title'))
+            ->with('message', __('website_response.user_updated_message'))
+            ->with('status', 'success');
+    }
+
+    public function destroy(Request $request, User $user)
+    {
+        // Don't allow deleting self
+        if ($user->id === $request->user()->id) {
+            return back()
+                ->with('title', __('website_response.user_delete_error_title'))
+                ->with('message', __('website_response.user_delete_error_self_message'))
+                ->with('status', 'error');
+        }
+
+        $user->delete();
+
+        return back()
+            ->with('title', __('website_response.user_deleted_title'))
+            ->with('message', __('website_response.user_deleted_message'))
+            ->with('status', 'warning');
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => ['required', 'array'],
+            'ids.*' => ['required', 'integer', 'exists:users,id'],
+        ]);
+
+        $ids = $request->input('ids');
+
+        // Don't allow deleting self
+        if (in_array($request->user()->id, $ids)) {
+            return back()
+                ->with('title', __('website_response.user_delete_error_title'))
+                ->with('message', __('website_response.user_delete_error_self_message'))
+                ->with('status', 'error');
+        }
+
+        $count = User::whereIn('id', $ids)->count();
+        User::whereIn('id', $ids)->delete();
+
+        return back()
+            ->with('title', __('website_response.users_deleted_title'))
+            ->with('message', __('website_response.users_deleted_message', ['count' => $count]))
+            ->with('status', 'warning');
+    }
+}
