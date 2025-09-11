@@ -25,4 +25,4 @@ Route::post('/locale', [PreferencesController::class, 'changeLocale'])->name('lo
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
-require __DIR__ . '/FinanceTrack.php';
+require __DIR__ . '/testHost.php';

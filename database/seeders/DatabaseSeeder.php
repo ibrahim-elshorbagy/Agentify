@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     $SystemAdminRole = Role::firstOrCreate(['name' => 'admin']);
     $userRole = Role::firstOrCreate(['name' => 'user']);
 
-    $admin = User::factory()->create([
+    $admin = User::create([
       'id' => 1,
       'name' => 'ibrahim elshorbagy',
       'username' => 'a',
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
 
     $admin->assignRole($SystemAdminRole);
 
-    $user = User::factory()->create([
+    $user = User::create([
       'id' => 2,
       'name' => 'ibrahim elshorbagy',
       'username' => 'u',
