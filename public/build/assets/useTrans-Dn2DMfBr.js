@@ -1,0 +1,1 @@
+import{b as u}from"./app-TmW7H2Wv.js";function i(){const{translations:e}=u().props;function n(t,s={}){let r=e[t]||t;return Object.entries(s).forEach(([a,o])=>{r=r.replace(`:${a}`,o)}),r}return{t:n}}export{i as u};
