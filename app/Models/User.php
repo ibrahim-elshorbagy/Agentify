@@ -50,23 +50,5 @@ class User extends Authenticatable
         ];
     }
 
-    public function wallets()
-    {
-        return $this->hasMany(\App\Models\FinanceTrack\Wallet::class);
-    }
 
-    public function taskSources()
-    {
-        return $this->hasMany(\App\Models\FinanceTrack\TaskSource::class);
-    }
-
-    public function tasks()
-    {
-        return $this->hasMany(\App\Models\FinanceTrack\Task::class);
-    }
-
-    public function transactions()
-    {
-        return $this->hasMany(\App\Models\FinanceTrack\Transaction::class);
-    }
 }

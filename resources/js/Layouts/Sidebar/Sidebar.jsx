@@ -17,6 +17,8 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
 
   const navItems = [
     { name: t('dashboard'), icon: 'fa-chart-line', href: route('dashboard'), route: 'dashboard', role: '' },
+
+    // Admin
     {
       name: t('user_management'),
       icon: 'fa-users',
@@ -33,6 +35,17 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
       role: 'admin',
       submenu: [
         { name: t('plans'), href: route('admin.plans.index'), route: 'admin.plans.*', icon: 'fa-tag' },
+      ],
+    },
+
+    // User
+    {
+      name: t('email_agent'),
+      icon: 'fa-users',
+      route: 'user.email-agent.*',
+      role: 'user',
+      submenu: [
+        { name: t('inbox'), href: route('user.email-agent.inbox.emails'), route: 'user.email-agent.inbox.*', icon: '' },
       ],
     },
 

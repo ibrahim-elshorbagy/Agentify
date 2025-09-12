@@ -26,3 +26,6 @@ Route::post('/locale', [PreferencesController::class, 'changeLocale'])->name('lo
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
 require __DIR__ . '/testHost.php';
+
+// Agents
+require __DIR__ . '/EmailAgent.php';

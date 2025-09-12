@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Agent\EmailAgent\Message;
+use App\Models\Agent\EmailAgent\MessageResponse;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -44,6 +46,14 @@ class DatabaseSeeder extends Seeder
     $this->call(SubscriptionSystemSeeder::class);
 
     // User::factory(100)->create();
+    Message::factory()
+    ->count(100)
+    ->has(
+        MessageResponse::factory()->count(2),
+        'responses' // 👈 relationship in Message model
+    )
+    ->create();
+
 
 
   }
