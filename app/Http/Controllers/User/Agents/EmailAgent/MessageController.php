@@ -108,9 +108,70 @@ class MessageController extends Controller
     ]);
 
     $statusMessage = $request->status === 'sent'
-      ? __('website.response_sent_successfully')
-      : __('website.response_saved_as_draft');
+      ? __('website_response.response_sent_successfully')
+      : __('website_response.response_saved_as_draft');
 
     return back()->with('success', $statusMessage);
+  }
+
+  public function storeMessage(Request $request)
+  {
+    $request->validate([
+      'body_text' => 'required|string',
+      'from_email' => 'required|email',
+      'from_name' => 'required|string|max:255',
+      'to_email' => 'required|email',
+      'to_name' => 'required|string|max:255',
+      'status' => 'required|in:draft,sent',
+      'message_id' => 'required|integer|exists:messages,id',
+    ]);
+
+    $result = $this->emailService->storeMessage($request);
+
+    if ($result['success']) {
+      $statusMessage = $request->status === 'sent'
+        ? __('website_response.message_sent_successfully')
+        : __('website_response.message_saved_as_draft');
+
+      return back()
+        ->with('title', __('website_response.message_response_created_title'))
+        ->with('message', $statusMessage)
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
+  public function updateMessage(Request $request, $id)
+  {
+    $request->validate([
+      'body_text' => 'required|string',
+      'from_email' => 'required|email',
+      'from_name' => 'required|string|max:255',
+      'to_email' => 'required|email',
+      'to_name' => 'required|string|max:255',
+      'status' => 'required|in:draft,sent',
+    ]);
+
+    $result = $this->emailService->updateMessage($request, $id);
+
+    if ($result['success']) {
+      $statusMessage = $request->status === 'sent'
+        ? __('website_response.message_updated_and_sent')
+        : __('website_response.message_updated_successfully');
+
+      return back()
+        ->with('title', __('website_response.message_response_updated_title'))
+        ->with('message', $statusMessage)
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
   }
 }

@@ -3,8 +3,10 @@
 namespace App\Services\Agents\EmailAgent;
 
 use App\Models\Agent\EmailAgent\Message;
+use App\Models\Agent\EmailAgent\MessageResponse;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class EmailFoldersService
@@ -191,6 +193,66 @@ class EmailFoldersService
             return [
                 'success' => false,
                 'message' => __('website.error_updating_email_status')
+            ];
+        }
+    }
+
+    /**
+     * Store a new message response (draft or sent)
+     */
+    public function storeMessage(Request $request)
+    {
+        try {
+            $messageResponse = MessageResponse::create([
+                'message_id' => $request->message_id,
+                'user_id' => Auth::id(),
+                'body_text' => $request->body_text,
+                'from_email' => $request->from_email,
+                'from_name' => $request->from_name,
+                'to_email' => $request->to_email,
+                'to_name' => $request->to_name,
+                'status' => $request->status,
+                'sent_at' => $request->status === 'sent' ? now() : null,
+            ]);
+
+            return [
+                'success' => true,
+                'message' => $messageResponse,
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => __('website.error_storing_message'),
+            ];
+        }
+    }
+
+    /**
+     * Update an existing message response (draft or sent)
+     */
+    public function updateMessage(Request $request, $id)
+    {
+        try {
+            $messageResponse = MessageResponse::where('user_id', Auth::id())->findOrFail($id);
+
+            $messageResponse->update([
+                'body_text' => $request->body_text,
+                'from_email' => $request->from_email,
+                'from_name' => $request->from_name,
+                'to_email' => $request->to_email,
+                'to_name' => $request->to_name,
+                'status' => $request->status,
+                'sent_at' => $request->status === 'sent' ? now() : null,
+            ]);
+
+            return [
+                'success' => true,
+                'message' => $messageResponse,
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => __('website.error_updating_message'),
             ];
         }
     }

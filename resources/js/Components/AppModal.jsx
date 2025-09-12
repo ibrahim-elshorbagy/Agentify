@@ -34,12 +34,14 @@ export default function AppModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-900/70 backdrop-blur-sm">
       <div className={`transition-all duration-300 ease-in-out transform overflow-hidden bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl sm:w-1/2 w-full ${sizeClasses[size]} animate-fadeIn border ${danger ? 'border-red-200 dark:border-red-900/30' : 'border-neutral-300 dark:border-neutral-700'}`}>
         {/* Modal Header */}
-        <div className={`flex items-center gap-2 p-4 border-b ${headerBorderClass} ${headerBgClass}`}>
-          {icon && <i className={`fa-solid ${icon} ${iconColor} text-xl`}></i>}
-          <h2 className="text-xl font-bold dark:text-neutral-100 text-neutral-900">{title}</h2>
+        <div className={`flex items-center justify-between gap-2 p-4 border-b ${headerBorderClass} ${headerBgClass}`}>
+          <div className='flex items-center gap-2'>
+            {icon && <i className={`fa-solid ${icon} ${iconColor} text-xl`}></i>}
+            <h2 className="text-xl font-bold dark:text-neutral-100 text-neutral-900">{title}</h2>
+          </div>
           <button
             onClick={onClose}
-            className="ml-auto rounded-full p-1 text-neutral-600 hover:bg-neutral-300 dark:text-neutral-400 dark:hover:bg-neutral-800"
+            className="rounded-full py-1 px-2 text-neutral-600 hover:bg-neutral-300 dark:text-neutral-400 dark:hover:bg-neutral-800"
           >
             <i className="fa-solid fa-times"></i>
             <span className="sr-only">Close</span>

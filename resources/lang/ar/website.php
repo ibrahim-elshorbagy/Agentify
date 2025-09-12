@@ -97,6 +97,7 @@ return [
   'spam' => 'مزعج',
   'bin' => 'سلة المحذوفات',
   'from' => 'من',
+  'to'=>"الي",
   'subject' => 'الموضوع',
   'received_at' => 'تاريخ الاستلام',
   'unread' => 'غير مقروء',
@@ -553,5 +554,17 @@ return [
 
   "register" => "حساب جديد",
   "login" => "تسجيل الدخول",
-  "logout" => "تسجيل الخروج"
+  "logout" => "تسجيل الخروج",
+
+
+
+  // Modal Labels
+  "create_message" => "إنشاء رسالة",
+  "edit_message" => "تعديل رسالة",
+  "compose_response" => "كتابة رد",
+  "edit_response" => "تعديل رد",
+  "body_text" => "نص الرسالة",
+  "send" => "إرسال",
+  "save_draft" => "حفظ كمسودة",
+  "sent_at" => "تم الإرسال في",
 ];

@@ -115,4 +115,16 @@ return [
     'plan_deleted_message' => 'تم حذف الخطة بنجاح.',
     'plans_deleted_title' => 'تم حذف الخطط',
     'plans_deleted_message' => 'تم حذف :count من الخطط بنجاح.',
+
+    // Message Response Management
+    "message_response_created_title" => "تم إنشاء الرد ",
+    "message_response_created_message" => "تم إنشاء الرد بنجاح.",
+    "message_response_updated_title" => "تم تحديث الرد ",
+    "message_response_updated_message" => "تم تحديث الرد بنجاح.",
+    "message_saved_as_draft" => "تم حفظ الرد كمسودة.",
+    "message_updated_and_sent" => "تم تحديث الرد وارساله بنجاح.",
+    "message_updated_successfully" => "تم التحديث بنجاح.",
+    "error_storing_message" => "حدث خطأ أثناء حفظ .",
+    "error_updating_message" => "حدث خطأ أثناء تحديث .",
+    "error_title" => "خطأ",
 ];

@@ -114,4 +114,18 @@ return [
     'plan_deleted_message' => 'Plan has been deleted successfully.',
     'plans_deleted_title' => 'Plans Deleted',
     'plans_deleted_message' => ':count plans have been deleted successfully.',
+
+
+    // Message Response Management
+    "message_response_created_title" => "Response Created",
+    "message_response_created_message" => "Your response has been created successfully.",
+    "message_response_updated_title" => "Response Updated",
+    "message_response_updated_message" => "Your response has been updated successfully.",
+    "message_saved_as_draft" => "Response saved as draft.",
+    "message_updated_and_sent" => "Response updated and sent successfully.",
+    "message_updated_successfully" => "Response updated successfully.",
+    "error_storing_message" => "An error occurred while storing the response.",
+    "error_updating_message" => "An error occurred while updating the response.",
+    "error_title" => "Error",
+
 ];

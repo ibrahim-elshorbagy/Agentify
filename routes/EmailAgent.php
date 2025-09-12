@@ -18,4 +18,8 @@ Route::middleware( ['auth','role:user'])->prefix('dashboard')->group(function ()
     Route::get('/email-agent/view/{id}', [MessageController::class, 'view'])->name('user.email-agent.view');
     Route::post('/email-agent/response/{id}', [MessageController::class, 'storeResponse'])->name('user.email-agent.store-response');
 
+    // Create and update messages
+    Route::post('/email-agent/message', [MessageController::class, 'storeMessage'])->name('user.email-agent.store-message');
+    Route::put('/email-agent/message/{id}', [MessageController::class, 'updateMessage'])->name('user.email-agent.update-message');
+
 });

@@ -102,6 +102,7 @@ return [
   'spam' => 'Spam',
   'bin' => 'Bin',
   'from' => 'From',
+  'to'=>"To",
   'subject' => 'Subject',
   'received_at' => 'Received At',
   'unread' => 'Unread',
@@ -585,5 +586,21 @@ return [
 
   "register" => "Register",
   "login" => "Login",
-  "logout" => "Logout"
+  "logout" => "Logout",
+
+
+  // Modal Labels
+  "create_message" => "Create Message",
+  "edit_message" => "Edit Message",
+  "compose_response" => "Compose Response",
+  "edit_response" => "Edit Response",
+  "to_email" => "To Email",
+  "to_name" => "To Name",
+  "body_text" => "Message Body",
+  "send" => "Send",
+  "save_draft" => "Save Draft",
+  "cancel" => "Cancel",
+  "update" => "Update",
+  "sent_at" => "Sent At",
+
 ];
