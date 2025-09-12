@@ -23,7 +23,7 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
       route: 'admin.users.*',
       role: 'admin',
       submenu: [
-        { name: t('users'), href: route('admin.users.index'), route: 'admin.users.index', icon: 'fa-user' },
+        { name: t('users'), href: route('admin.users.index'), route: 'admin.users.*', icon: 'fa-user' },
       ],
     },
     {
@@ -32,9 +32,10 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
       route: 'admin.plans.*',
       role: 'admin',
       submenu: [
-        { name: t('plans'), href: route('admin.plans.index'), route: 'admin.plans.index', icon: 'fa-tag' },
+        { name: t('plans'), href: route('admin.plans.index'), route: 'admin.plans.*', icon: 'fa-tag' },
       ],
     },
+
     // { name: t('settings'), icon: 'fa-gear', href: route('profile.edit'), route: 'profile', role: 'admin' },
   ];
 
@@ -80,9 +81,8 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
 
   return (
     <nav
-      className={`fixed left-0 z-30 flex min-h-svh w-60 shrink-0 flex-col border-r border-neutral-300 bg-neutral-200 p-4 transition-transform duration-300 md:w-64 md:translate-x-0 md:relative dark:border-neutral-700 dark:bg-neutral-900 ${
-        sidebarIsOpen ? 'translate-x-0' : '-translate-x-60'
-      }`}
+      className={`fixed left-0 z-30 flex min-h-svh w-60 shrink-0 flex-col border-r border-neutral-300 bg-neutral-200 p-4 transition-transform duration-300 md:w-64 md:translate-x-0 md:relative dark:border-neutral-700 dark:bg-neutral-900 ${sidebarIsOpen ? 'translate-x-0' : '-translate-x-60'
+        }`}
       aria-label="sidebar navigation"
     >
       {/* Logo */}
