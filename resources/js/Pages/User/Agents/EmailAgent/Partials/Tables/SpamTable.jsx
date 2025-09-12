@@ -81,7 +81,7 @@ export default function SpamTable({ emails, queryParams }) {
           </button>
 
           <ActionButton
-            // href={route('user.email-agent.view', email.id)}
+            href={route('user.email-agent.view', email.id)}
             variant="edit"
             icon="fa-eye"
             size="xs"

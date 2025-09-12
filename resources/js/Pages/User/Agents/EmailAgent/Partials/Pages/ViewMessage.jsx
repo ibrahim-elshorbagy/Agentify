@@ -1,283 +1,316 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
-import AppLayout from '@/Layouts/AppLayout';
 import { useTrans } from '@/Hooks/useTrans';
-import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
-import CheckboxInput from '@/Components/CheckboxInput';
-import InputError from '@/Components/InputError';
+import TextArea from '@/Components/TextArea';
+import SelectInput from '@/Components/SelectInput';
 import PrimaryButton from '@/Components/PrimaryButton';
-import SecondaryButton from '@/Components/SecondaryButton';
+import InputLabel from '@/Components/InputLabel';
+import InputError from '@/Components/InputError';
+import AppLayout from '@/Layouts/AppLayout';
 
-export default function ViewMessage({ plan, features }) {
+export default function ViewMessage({ message, responses = [] }) {
   const { t } = useTrans();
-  const { data, setData, put, errors, processing } = useForm({
-    price: plan.price || '',
-    features: plan.features?.map((f) => ({
-      id: f.id,
-      limit_value: f.pivot?.limit_value ?? (f.type === 'boolean' ? 0 : ''),
-      active: f.pivot?.active ?? true,
-    })) || [],
+  const [showReplyForm, setShowReplyForm] = useState(false);
+
+  const { data, setData, post, errors, processing } = useForm({
+    body_text: '',
+    from_email: message.to_email || '',
+    from_name: message.to_name || '',
+    to_email: message.from_email || '',
+    to_name: message.from_name || '',
+    status: 'draft',
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    put(route('admin.plans.update', plan.id), { preserveScroll: true });
-  };
-
-  // Function to update individual feature
-  const updateFeature = (id, field, value, featureType) => {
-    setData(prevData => {
-      let processedValue = value;
-      if (featureType === 'boolean' && field === 'limit_value') {
-        processedValue = value ? 1 : 0;
-      }
-
-      const featureExists = prevData.features.some(f => f.id === id);
-      if (featureExists) {
-        return {
-          ...prevData,
-          features: prevData.features.map(f =>
-            f.id === id ? { ...f, [field]: processedValue } : f
-          ),
-        };
-      } else {
-        const newFeature = {
-          id,
-          limit_value: featureType === 'boolean' ? 0 : '',
-          active: true
-        };
-        newFeature[field] = processedValue;
-        return {
-          ...prevData,
-          features: [...prevData.features, newFeature],
-        };
+    post(route('user.email-agent.store-response', message.id), {
+      onSuccess: () => {
+        setData('body_text', '');
+        setShowReplyForm(false);
       }
     });
   };
 
-  // Function to toggle all features in a section
-  const toggleSectionFeatures = (sectionKey, isActive) => {
-    setData(prevData => {
-      const sectionFeatures = allFeatures.filter(f => f.key.startsWith(sectionKey));
-
-      // Update existing features or add new ones
-      let updatedFeatures = [...prevData.features];
-
-      sectionFeatures.forEach(feature => {
-        const existingIndex = updatedFeatures.findIndex(f => f.id === feature.id);
-
-        if (existingIndex >= 0) {
-          // Update existing feature
-          updatedFeatures[existingIndex] = {
-            ...updatedFeatures[existingIndex],
-            active: isActive
-          };
-        } else {
-          // Add new feature
-          updatedFeatures.push({
-            id: feature.id,
-            limit_value: feature.type === 'boolean' ? 0 : '',
-            active: isActive
-          });
-        }
-      });
-
-      return {
-        ...prevData,
-        features: updatedFeatures
-      };
-    });
-  };
-
-  const allFeatures = features.map((feature) => {
-    const planFeature = plan.features.find(f => f.id === feature.id);
-    return {
-      ...feature,
-      limit_value: planFeature?.pivot?.limit_value ?? (feature.type === 'boolean' ? 0 : null),
-      active: planFeature?.pivot?.active ?? false,
-    };
-  });
-
-  const sections = {
-    email_agent: {
-      title: "📧 Email Agent",
-      key: "email_agent",
-      features: allFeatures.filter(f => f.key.startsWith("email_agent")),
-    },
-    email_smart_answer: {
-      title: "🤖 Email Smart Answer",
-      key: "email_smart_answer",
-      features: allFeatures.filter(f => f.key.startsWith("email_smart_answer")),
-    },
-    reports: {
-      title: "📊 Reports Agent",
-      key: "reports",
-      features: allFeatures.filter(f => f.key.startsWith("reports")),
-    },
-    hr: {
-      title: "👨‍💼 HR Agent",
-      key: "hr",
-      features: allFeatures.filter(f => f.key.startsWith("hr")),
-    },
-  };
-
-  // Helper function to check if all features in a section are active
-  const isSectionActive = (sectionKey) => {
-    const sectionFeatures = allFeatures.filter(f => f.key.startsWith(sectionKey));
-    return sectionFeatures.every(feature => {
-      const current = data.features.find(f => f.id === feature.id);
-      return current?.active ?? feature.active;
-    });
-  };
+  const statusOptions = [
+    { value: 'draft', label: t('draft') },
+    { value: 'sent', label: t('sent') },
+  ];
 
   return (
-    <AppLayout>
-      <Head title={`${t('edit_plan')} - ${plan.name_value}`} />
+    <AppLayout
+
+    >
+      <Head title={`${t('view_message')} - ${message.subject}`} />
+
       <div className="m-3 xl:m-5">
         <div className="overflow-hidden rounded-2xl shadow-lg dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700">
           <div className="p-6 text-neutral-900 dark:text-neutral-100">
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <Link
-                  href={route('admin.plans.index')}
-                  className="flex items-center text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100 transition-colors"
-                >
-                  <i className="fa-solid fa-arrow-left rtl:rotate-180 mx-2"></i>
-                  {t('plans')}
-                </Link>
-                <span className="text-neutral-400 dark:text-neutral-600">/</span>
-                <h1 className="text-2xl font-bold leading-tight text-neutral-900 dark:text-neutral-100">
-                  <i className="fa-solid fa-edit text-green-500 mx-2"></i>
-                  {t('edit_plan')} - {plan.name_value}
-                </h1>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <Link
+                    href={route('user.email-agent.inbox.emails')}
+                    className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+                  >
+                    <i className="fa-solid fa-arrow-left"></i>
+                    {t('back_to_inbox')}
+                  </Link>
+                  /
+                  <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
+                    ${message.subject}
+                  </h2>
+                </div>
+
               </div>
             </div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Basic info */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div>
-                  <InputLabel htmlFor="price" value={t('plan_price')} />
-                  <TextInput
-                    id="price"
-                    type="number"
-                    name="price"
-                    value={data.price}
-                    className="mt-1 block w-1/2"
-                    onChange={(e) => setData('price', e.target.value)}
-                    step="0.01"
-                    min="0"
-                    required
-                  />
-                  <InputError message={errors.price} className="mt-2" />
+            <div className=" mx-auto">
+              {/* Original Message */}
+              <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-neutral-200 dark:border-neutral-700 mb-6">
+                {/* Message Header */}
+                <div className="border-b border-neutral-200 dark:border-neutral-700 p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+                        {message.subject}
+                      </h1>
+                      <div className="flex items-center gap-4 text-sm text-neutral-600 dark:text-neutral-400">
+                        <div className="flex items-center gap-2">
+                          <i className="fa-solid fa-user"></i>
+                          <span className="font-medium">{message.from_name || message.from_email}</span>
+                          <span className="text-neutral-500">&lt;{message.from_email}&gt;</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <i className="fa-solid fa-calendar"></i>
+                          <span>{new Date(message.received_at || message.created_at).toLocaleString()}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* To/From Details */}
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-neutral-700 dark:text-neutral-300">{t('from')}:</span>
+                      <span className="text-neutral-600 dark:text-neutral-400">
+                        {message.from_name} &lt;{message.from_email}&gt;
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-neutral-700 dark:text-neutral-300">{t('to')}:</span>
+                      <span className="text-neutral-600 dark:text-neutral-400">
+                        {message.to_name} &lt;{message.to_email}&gt;
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Message Body */}
+                <div className="p-6">
+                  <div className="prose dark:prose-invert max-w-none">
+                    <div className="whitespace-pre-wrap text-neutral-900 dark:text-neutral-100">
+                      {message.body_text || t('no_message_content')}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="border-t border-neutral-200 dark:border-neutral-700 p-4">
+                  <div className="flex items-center gap-3">
+                    <PrimaryButton
+                      onClick={() => setShowReplyForm(!showReplyForm)}
+                      icon="fa-reply"
+                      className="bg-blue-500 hover:bg-blue-600"
+                    >
+                      {t('reply')}
+                    </PrimaryButton>
+                    <PrimaryButton
+                      icon="fa-trash"
+                      className="bg-red-500 hover:bg-red-600"
+                    >
+                      {t('delete')}
+                    </PrimaryButton>
+                  </div>
                 </div>
               </div>
 
-              {/* Features Sections */}
-              <div className="mt-8 space-y-10">
-                {Object.values(sections).map(section => (
-                  section.features.length > 0 && (
-                    <div key={section.title}>
-                      {/* Section Header with Toggle */}
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-semibold flex items-center">
-                          {section.title}
-                        </h3>
-                        <div className="flex items-center gap-3">
-                          <span className="text-sm text-neutral-600 dark:text-neutral-400">
-                            {isSectionActive(section.key) ? t('active') : t('inactive')}
-                          </span>
-                          <label className="relative inline-flex items-center cursor-pointer">
-                            <input
-                              type="checkbox"
-                              className="sr-only peer"
-                              checked={isSectionActive(section.key)}
-                              onChange={(e) => toggleSectionFeatures(section.key, e.target.checked)}
-                            />
-                            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                          </label>
+              {/* Responses Thread */}
+              {responses.length > 0 && (
+                <div className="space-y-4 mb-6">
+                  <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+                    <i className="fa-solid fa-comments"></i>
+                    {t('responses')} ({responses.length})
+                  </h3>
+
+                  {responses.map((response, index) => (
+                    <div key={response.id} className="bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-neutral-200 dark:border-neutral-700">
+                      {/* Response Header */}
+                      <div className="border-b border-neutral-200 dark:border-neutral-700 p-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-2">
+                              <i className="fa-solid fa-reply text-blue-500"></i>
+                              <span className="font-medium text-neutral-900 dark:text-neutral-100">
+                                {response.from_name}
+                              </span>
+                              <span className="text-neutral-500 text-sm">&lt;{response.from_email}&gt;</span>
+                            </div>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${response.status === 'sent'
+                              ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300'
+                              : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300'
+                              }`}>
+                              {t(response.status)}
+                            </span>
+                          </div>
+                          <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                            {new Date(response.created_at).toLocaleString()}
+                          </div>
                         </div>
                       </div>
 
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-sm border border-neutral-300 dark:border-neutral-700 rounded-lg">
-                          <thead className="bg-neutral-100 dark:bg-neutral-800">
-                            <tr>
-                              <th className="px-4 w-1/2 py-2 rtl:text-right ltr:text-left">{t('feature')}</th>
-                              <th className="px-4 w-1/2 py-2 rtl:text-right ltr:text-left">{t('limit_value')}</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {section.features.map((feature, featureIndex) => {
-                              const current = data.features.find(f => f.id === feature.id);
-                              const currentIndex = data.features.findIndex(f => f.id === feature.id);
-                              const isActive = current?.active ?? feature.active;
-                              const isSectionEnabled = isSectionActive(section.key);
-
-                              return (
-                                <tr
-                                  key={feature.id}
-                                  className={`border-t border-neutral-200 dark:border-neutral-700 ${!isSectionEnabled ? 'opacity-50' : ''
-                                    }`}
-                                >
-                                  <td className="px-4 py-2 font-medium relative group cursor-help">
-                                    <div className="flex items-center gap-2">
-                                      <span>{feature.name_value}</span>
-                                    </div>
-                                    <div className="absolute z-10 hidden group-hover:block bg-green-500 text-white text-xs rounded px-2 py-1 w-90 top-1 ltr:right-0 rtl:left-0">
-                                      {feature.description_value}
-                                    </div>
-                                  </td>
-
-                                  {/* Limit Value Column */}
-                                  <td className="px-4 py-2">
-                                    {feature.type === 'boolean' ? (
-                                      <div className="flex items-center gap-2">
-                                        {/* <CheckboxInput
-                                          checked={current?.limit_value == 1}
-                                          onChange={(e) => updateFeature(feature.id, 'limit_value', e.target.checked, 'boolean')}
-                                          disabled={!isSectionEnabled}
-                                        />
-                                        <span className="text-sm text-neutral-600 dark:text-neutral-400">
-                                          {current?.limit_value == 1 ? t('enabled') : t('disabled')}
-                                        </span> */}
-                                      </div>
-                                    ) : (
-                                      <TextInput
-                                        type="number"
-                                        value={current?.limit_value ?? ''}
-                                        onChange={(e) => updateFeature(feature.id, 'limit_value', e.target.value, 'counter')}
-                                        className="w-24"
-                                        min="0"
-                                        disabled={!isSectionEnabled}
-                                        placeholder={isSectionEnabled ? "0" : "Disabled"}
-                                      />
-                                    )}
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
+                      {/* Response Body */}
+                      <div className="p-4">
+                        <div className="whitespace-pre-wrap text-neutral-900 dark:text-neutral-100">
+                          {response.body_text}
+                        </div>
                       </div>
                     </div>
-                  )
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
 
-              {/* Action Buttons */}
-              <div className="flex items-center justify-end gap-4 pt-6 border-t border-neutral-200 dark:border-neutral-700">
-                <SecondaryButton icon={'fa-times'} as={Link} href={route('admin.plans.index')}>
-                  {t('cancel')}
-                </SecondaryButton>
-                <PrimaryButton icon={"fa-save"} type="submit" disabled={processing}>
-                  {processing ? t('updating') : t('save_changes')}
-                </PrimaryButton>
-              </div>
-            </form>
+              {/* Reply Form */}
+              {showReplyForm && (
+                <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-neutral-200 dark:border-neutral-700">
+                  <div className="border-b border-neutral-200 dark:border-neutral-700 p-4">
+                    <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+                      <i className="fa-solid fa-pencil"></i>
+                      {t('compose_reply')}
+                    </h3>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <InputLabel htmlFor="from_email" value={t('from_email')} required />
+                        <TextInput
+                          id="from_email"
+                          name="from_email"
+                          type="email"
+                          value={data.from_email}
+                          onChange={(e) => setData('from_email', e.target.value)}
+                          icon="fa-envelope"
+                          required
+                        />
+                        <InputError message={errors.from_email} className="mt-2" />
+                      </div>
+
+                      <div>
+                        <InputLabel htmlFor="from_name" value={t('from_name')} required />
+                        <TextInput
+                          id="from_name"
+                          name="from_name"
+                          value={data.from_name}
+                          onChange={(e) => setData('from_name', e.target.value)}
+                          icon="fa-user"
+                          required
+                        />
+                        <InputError message={errors.from_name} className="mt-2" />
+                      </div>
+
+                      <div>
+                        <InputLabel htmlFor="to_email" value={t('to_email')} required />
+                        <TextInput
+                          id="to_email"
+                          name="to_email"
+                          type="email"
+                          value={data.to_email}
+                          onChange={(e) => setData('to_email', e.target.value)}
+                          icon="fa-envelope"
+                          required
+                        />
+                        <InputError message={errors.to_email} className="mt-2" />
+                      </div>
+
+                      <div>
+                        <InputLabel htmlFor="to_name" value={t('to_name')} required />
+                        <TextInput
+                          id="to_name"
+                          name="to_name"
+                          value={data.to_name}
+                          onChange={(e) => setData('to_name', e.target.value)}
+                          icon="fa-user"
+                          required
+                        />
+                        <InputError message={errors.to_name} className="mt-2" />
+                      </div>
+                    </div>
+
+                    <div>
+                      <InputLabel htmlFor="body_text" value={t('message')} required />
+                      <TextArea
+                        id="body_text"
+                        name="body_text"
+                        value={data.body_text}
+                        onChange={(e) => setData('body_text', e.target.value)}
+                        rows={8}
+                        className="resize-none"
+                        placeholder={t('type_your_response')}
+                        required
+                      />
+                      <InputError message={errors.body_text} className="mt-2" />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <SelectInput
+                        label={t('status')}
+                        name="status"
+                        value={data.status}
+                        onChange={(e) => setData('status', e.target.value)}
+                        options={statusOptions}
+                        error={errors.status}
+                        icon="fa-paper-plane"
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4">
+                      <button
+                        type="button"
+                        onClick={() => setShowReplyForm(false)}
+                        className="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+                      >
+                        {t('cancel')}
+                      </button>
+
+                      <div className="flex items-center gap-3">
+                        <PrimaryButton
+                          type="submit"
+                          processing={processing}
+                          icon="fa-save"
+                          className="bg-gray-500 hover:bg-gray-600"
+                          onClick={() => setData('status', 'draft')}
+                        >
+                          {t('save_as_draft')}
+                        </PrimaryButton>
+
+                        <PrimaryButton
+                          type="submit"
+                          processing={processing}
+                          icon="fa-paper-plane"
+                          className="bg-blue-500 hover:bg-blue-600"
+                          onClick={() => setData('status', 'sent')}
+                        >
+                          {t('send_response')}
+                        </PrimaryButton>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              )}
+            </div>
+
           </div>
         </div>
       </div>

@@ -14,4 +14,8 @@ Route::middleware( ['auth','role:user'])->prefix('dashboard')->group(function ()
     // Email actions
     Route::patch('/email-agent/toggle-star/{id}', [MessageController::class, 'toggleStar'])->name('user.email-agent.toggle-star');
 
+    // View and respond to messages
+    Route::get('/email-agent/view/{id}', [MessageController::class, 'view'])->name('user.email-agent.view');
+    Route::post('/email-agent/response/{id}', [MessageController::class, 'storeResponse'])->name('user.email-agent.store-response');
+
 });
