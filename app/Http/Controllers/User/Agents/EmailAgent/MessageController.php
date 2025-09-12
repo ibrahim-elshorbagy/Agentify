@@ -50,4 +50,15 @@ class MessageController extends Controller
       'emailCounts' => $this->emailService->getEmailCounts(),
     ]);
   }
+
+  public function toggleStar(Request $request, $id)
+  {
+    $result = $this->emailService->toggleStar($id);
+
+    if ($result['success']) {
+      return back()->with('success', $result['message']);
+    }
+
+    return back()->with('error', $result['message']);
+  }
 }

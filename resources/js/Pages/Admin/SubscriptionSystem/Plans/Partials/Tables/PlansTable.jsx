@@ -58,7 +58,7 @@ export default function PlansTable({ plans }) {
                 {new Date(plan.updated_at).toLocaleDateString()}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <div className="flex items-center justify-center space-x-2">
+                <div className="flex items-center justify-center gap-2">
                     <ActionButton
                         href={route('admin.plans.edit', plan.id)}
                         variant="edit"

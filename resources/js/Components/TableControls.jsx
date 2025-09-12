@@ -101,12 +101,12 @@ export default function TableControls({
                   {sortOptions.map((option) => (
                     <button
                       key={option.field}
-                      className={`flex items-center w-full px-4 py-2 text-left text-sm hover:bg-neutral-100 dark:hover:bg-neutral-700 ${sortField === option.field ? 'text-green-600 dark:text-green-400' : 'text-neutral-700 dark:text-neutral-200'}`}
+                      className={`flex items-center w-full px-4 py-2 gap-2 text-left text-sm hover:bg-neutral-100 dark:hover:bg-neutral-700 ${sortField === option.field ? 'text-green-600 dark:text-green-400' : 'text-neutral-700 dark:text-neutral-200'}`}
                       onClick={() => handleSort(option.field)}
                     >
                       {option.label}
                       {sortField === option.field && (
-                        <i className={`ml-2 fa-solid ${sortDirection === 'asc' ? 'fa-arrow-up' : 'fa-arrow-down'}`}></i>
+                        <i className={` fa-solid ${sortDirection === 'asc' ? 'fa-arrow-up' : 'fa-arrow-down'}`}></i>
                       )}
                     </button>
                   ))}

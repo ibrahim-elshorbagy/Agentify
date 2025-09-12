@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { useTrans } from '@/Hooks/useTrans';
 import SelectableTable from '@/Components/SelectableTable';
 import ActionButton from '@/Components/ActionButton';
@@ -8,12 +8,19 @@ import SearchBar from '@/Components/SearchBar';
 export default function InboxTable({ emails, queryParams }) {
   const { t } = useTrans();
 
+  // Toggle star function
+  const toggleStar = (emailId) => {
+    router.patch(route('user.email-agent.toggle-star', emailId), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
   // Table configuration
   const columns = [
     { field: 'id', label: t('id'), icon: 'fa-hashtag' },
     { field: 'from', label: t('from'), icon: 'fa-user' },
     { field: 'subject', label: t('subject'), icon: 'fa-envelope' },
-    { field: 'status', label: t('status'), icon: 'fa-circle-info' },
     { field: 'received_at', label: t('received_at'), icon: 'fa-calendar' },
     { field: 'actions', label: t('actions'), icon: 'fa-gear', className: 'flex justify-center' }
   ];
@@ -23,60 +30,56 @@ export default function InboxTable({ emails, queryParams }) {
     { field: 'from_email', label: t('from') },
     { field: 'subject', label: t('subject') },
     { field: 'received_at', label: t('received_at') },
-    { field: 'created_at', label: t('created_at') }
+    { field: 'created_at', label: t('created_at') },
+    { field: 'is_starred', label: t('starred') },
+    { field: 'is_read', label: t('read') }
   ];
 
   const renderRow = (email) => (
     <>
-      <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
+      <td className="px-3 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
         {email.id}
       </td>
-      <td className="px-6 py-4 whitespace-nowrap">
+      <td className="px-3 py-4 whitespace-nowrap">
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
             <i className="fa-solid fa-user text-blue-500"></i>
-            <span className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+            <span className={`text-sm font-medium text-neutral-900 dark:text-neutral-100 ${!email.is_read ? 'font-bold' : 'font-normal'}`}>
               {email.from_name || email.from_email}
             </span>
           </div>
           {email.from_name && (
-            <span className="text-xs text-neutral-500 dark:text-neutral-400 ml-6">
+            <span className="text-xs text-neutral-500 dark:text-neutral-400 mx-6">
               {email.from_email}
             </span>
           )}
         </div>
       </td>
-      <td className="px-6 py-4 whitespace-nowrap">
+      <td className="px-3 py-4 whitespace-nowrap">
         <div className="flex items-center gap-2">
           <i className="fa-solid fa-envelope text-green-500"></i>
-          <span className="text-sm text-neutral-900 dark:text-neutral-100 truncate max-w-xs">
+          <span className={`text-sm text-neutral-900 dark:text-neutral-100 truncate max-w-xs ${!email.is_read ? 'font-bold' : 'font-normal'}`}>
             {email.subject}
           </span>
-        </div>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="flex items-center gap-2">
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-            !email.is_read
-              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300'
-              : 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'
-          }`}>
-            <i className={`fa-solid ${!email.is_read ? 'fa-circle' : 'fa-circle-check'} mr-1`}></i>
-            {!email.is_read ? t('unread') : t('read')}
-          </span>
-          {email.is_starred && (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
-              <i className="fa-solid fa-star mr-1"></i>
-              {t('starred')}
-            </span>
-          )}
         </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-500 dark:text-neutral-400">
         {new Date(email.received_at || email.created_at).toLocaleDateString()}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-        <div className="flex items-center justify-center space-x-2">
+        <div className="flex items-center justify-center gap-2">
+          {/* Star */}
+          <button
+            onClick={() => toggleStar(email.id)}
+            className="hover:scale-110 transition-transform duration-200"
+          >
+            {email.is_starred ? (
+              <i className="fa-solid fa-star text-yellow-500 text-lg hover:text-yellow-600"></i>
+            ) : (
+              <i className="fa-regular fa-star text-gray-400 text-lg hover:text-yellow-500"></i>
+            )}
+          </button>
+
           <ActionButton
             // href={route('user.email-agent.view', email.id)}
             variant="edit"
@@ -90,6 +93,19 @@ export default function InboxTable({ emails, queryParams }) {
       </td>
     </>
   );
+
+  // Gmail-style row styling function
+  const getRowClassName = (email, index, isSelected) => {
+    if (isSelected) return ''; // Let SelectableTable handle selected state
+
+    if (!email.is_read) {
+      // Unread emails have a white/light background (Gmail style)
+      return 'bg-white dark:bg-neutral-800 hover:bg-blue-100/10 dark:hover:bg-blue-100/10';
+    } else {
+      // Read emails have a slightly gray background
+      return 'bg-neutral-50 dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-700';
+    }
+  };
 
   return (
     <>
@@ -116,6 +132,7 @@ export default function InboxTable({ emails, queryParams }) {
         sortOptions={sortOptions}
         defaultSortField="created_at"
         defaultSortDirection="desc"
+        getRowClassName={getRowClassName}
       />
     </>
   );

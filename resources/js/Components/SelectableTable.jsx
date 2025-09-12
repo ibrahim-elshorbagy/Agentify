@@ -20,6 +20,7 @@ export default function SelectableTable({
   defaultSortDirection = 'asc',
   perPageOptions = [10, 25, 50, 100],
   defaultPerPage = 15,
+  getRowClassName = null, // New prop for custom row styling
 }) {
   // Initialize translation
   const { t } = useTrans();
@@ -170,10 +171,13 @@ export default function SelectableTable({
             {data.length > 0 ? (
               data.map((item, index) => {
                 const isSelected = selectedItems.includes(item[idField]);
+                const customRowClass = getRowClassName ? getRowClassName(item, index, isSelected) : '';
+                const defaultRowClass = index % 2 === 0 ? 'bg-neutral-100 dark:bg-neutral-800' : 'bg-neutral-50 dark:bg-neutral-900';
+
                 return (
                   <tr
                     key={item[idField]}
-                    className={`transition-colors ${index % 2 === 0 ? 'bg-neutral-100 dark:bg-neutral-800' : 'bg-neutral-50 dark:bg-neutral-900'} border-b border-neutral-300 dark:border-neutral-800 ${isSelected ? 'bg-green-50 dark:bg-green-950' : ''} ${onRowClick ? 'cursor-pointer' : ''}`}
+                    className={`transition-colors ${customRowClass || defaultRowClass} border-b border-neutral-300 dark:border-neutral-800 ${isSelected ? 'bg-green-50 dark:bg-green-950' : ''} ${onRowClick ? 'cursor-pointer' : ''}`}
                     onClick={onRowClick ? () => onRowClick(item) : undefined}
                   >
                     <td

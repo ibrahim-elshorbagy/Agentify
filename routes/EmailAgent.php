@@ -8,5 +8,10 @@ Route::middleware( ['auth','role:user'])->prefix('dashboard')->group(function ()
 
     // Inbox Emails
     Route::get('/email-agent/inbox', [MessageController::class, 'inbox'])->name(name: 'user.email-agent.inbox.emails');
+    Route::get('/email-agent/bin', [MessageController::class, 'bin'])->name(name: 'user.email-agent.bin.emails');
+    Route::get('/email-agent/spam', [MessageController::class, 'spam'])->name(name: 'user.email-agent.spam.emails');
+
+    // Email actions
+    Route::patch('/email-agent/toggle-star/{id}', [MessageController::class, 'toggleStar'])->name('user.email-agent.toggle-star');
 
 });

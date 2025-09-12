@@ -21,7 +21,7 @@ class EmailFoldersService
             'is_starred' => ['nullable', 'boolean'],
             'date_from' => ['nullable', 'date'],
             'date_to' => ['nullable', 'date', 'after_or_equal:date_from'],
-            'sort' => ['nullable', 'string', 'in:id,from_email,subject,received_at,created_at'],
+            'sort' => ['nullable', 'string', 'in:id,from_email,subject,received_at,created_at,is_starred,is_read'],
             'direction' => ['nullable', 'string', 'in:asc,desc'],
             'per_page' => ['nullable', 'integer', 'min:1', 'max:50'],
         ]);
@@ -57,7 +57,7 @@ class EmailFoldersService
             'is_starred' => ['nullable', 'boolean'],
             'date_from' => ['nullable', 'date'],
             'date_to' => ['nullable', 'date', 'after_or_equal:date_from'],
-            'sort' => ['nullable', 'string', 'in:id,from_email,subject,received_at,created_at'],
+            'sort' => ['nullable', 'string', 'in:id,from_email,subject,received_at,created_at,is_starred,is_read'],
             'direction' => ['nullable', 'string', 'in:asc,desc'],
             'per_page' => ['nullable', 'integer', 'min:1', 'max:50'],
         ]);
@@ -93,7 +93,7 @@ class EmailFoldersService
             'is_starred' => ['nullable', 'boolean'],
             'date_from' => ['nullable', 'date'],
             'date_to' => ['nullable', 'date', 'after_or_equal:date_from'],
-            'sort' => ['nullable', 'string', 'in:id,from_email,subject,received_at,created_at'],
+            'sort' => ['nullable', 'string', 'in:id,from_email,subject,received_at,created_at,is_starred,is_read'],
             'direction' => ['nullable', 'string', 'in:asc,desc'],
             'per_page' => ['nullable', 'integer', 'min:1', 'max:50'],
         ]);
@@ -122,11 +122,12 @@ class EmailFoldersService
      */
     private function applyFilters($query, Request $request)
     {
-        // Combined search in from_email OR from_name
+        // Combined search in from_email, from_name, OR subject
         if ($request->filled('from')) {
             $query->where(function ($q) use ($request) {
                 $q->where('from_email', 'like', '%' . $request->from . '%')
-                  ->orWhere('from_name', 'like', '%' . $request->from . '%');
+                  ->orWhere('from_name', 'like', '%' . $request->from . '%')
+                  ->orWhere('subject', 'like', '%' . $request->from . '%');
             });
         }
 
@@ -165,5 +166,32 @@ class EmailFoldersService
             'bin_unread' => Message::where('folder', 'bin')->where('is_read', false)->count(),
             'starred_total' => Message::where('is_starred', true)->count(),
         ];
+    }
+
+    /**
+     * Toggle star status for an email
+     */
+    public function toggleStar($id)
+    {
+        try {
+            $message = Message::findOrFail($id);
+
+            // Toggle the star status
+            $message->is_starred = !$message->is_starred;
+            $message->save();
+
+            $status = $message->is_starred ? 'starred' : 'unstarred';
+
+            return [
+                'success' => true,
+                'message' => __('website.email_' . $status . '_successfully'),
+                'is_starred' => $message->is_starred
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => __('website.error_updating_email_status')
+            ];
+        }
     }
 }
