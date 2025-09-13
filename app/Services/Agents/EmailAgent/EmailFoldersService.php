@@ -132,15 +132,16 @@ class EmailFoldersService
     {
         // Combined search in from_email, from_name, OR subject
         if ($request->filled('from')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('from_email', 'like', '%' . $request->from . '%')
-                  ->orWhere('from_name', 'like', '%' . $request->from . '%')
-                  ->orWhere('subject', 'like', '%' . $request->from . '%');
+            $searchTerm = '%' . $request->input('from') . '%';
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('from_email', 'like', $searchTerm)
+                  ->orWhere('from_name', 'like', $searchTerm)
+                  ->orWhere('subject', 'like', $searchTerm);
             });
         }
 
         if ($request->filled('subject')) {
-            $query->where('subject', 'like', '%' . $request->subject . '%');
+            $query->where('subject', 'like', '%' . $request->input('subject') . '%');
         }
 
         if ($request->has('is_read') && $request->is_read !== null) {
@@ -152,11 +153,11 @@ class EmailFoldersService
         }
 
         if ($request->filled('date_from')) {
-            $query->whereDate('received_at', '>=', $request->date_from);
+            $query->whereDate('received_at', '>=', $request->input('date_from'));
         }
 
         if ($request->filled('date_to')) {
-            $query->whereDate('received_at', '<=', $request->date_to);
+            $query->whereDate('received_at', '<=', $request->input('date_to'));
         }
     }
 
@@ -368,34 +369,110 @@ class EmailFoldersService
     /**
      * Store a new message response (draft or sent)
      */
-    public function storeMessage(Request $request)
+    public function storeResponse(Request $request, $messageId)
     {
+        // Validate input data
+        $validatedData = $request->validate([
+            'body_text' => ['required', 'string', 'max:10000'],
+            'from_email' => ['required', 'email', 'max:255'],
+            'from_name' => ['required', 'string', 'max:255'],
+            'to_email' => ['required', 'email', 'max:255'],
+            'to_name' => ['required', 'string', 'max:255'],
+            'status' => ['required', 'string', 'in:draft,sent'],
+        ]);
+
         try {
             // Verify the message belongs to the current user
-            $message = Message::where('id', $request->message_id)
+            $message = Message::where('id', $messageId)
                 ->where('user_id', Auth::id())
                 ->firstOrFail();
 
-            $messageResponse = MessageResponse::create([
-                'message_id' => $request->message_id,
+            $response = MessageResponse::create([
+                'message_id' => $message->id,
                 'user_id' => Auth::id(),
-                'body_text' => $request->body_text,
-                'from_email' => $request->from_email,
-                'from_name' => $request->from_name,
-                'to_email' => $request->to_email,
-                'to_name' => $request->to_name,
-                'status' => $request->status,
-                'sent_at' => $request->status === 'sent' ? now() : null,
+                'body_text' => $validatedData['body_text'],
+                'from_email' => $validatedData['from_email'],
+                'from_name' => $validatedData['from_name'],
+                'to_email' => $validatedData['to_email'],
+                'to_name' => $validatedData['to_name'],
+                'status' => $validatedData['status'],
+                'sent_at' => $validatedData['status'] === 'sent' ? now() : null,
             ]);
+
+            $statusMessage = $validatedData['status'] === 'sent'
+                ? __('website_response.response_sent_successfully')
+                : __('website_response.response_saved_as_draft');
 
             return [
                 'success' => true,
-                'message' => $messageResponse,
+                'message' => $statusMessage,
+                'response' => $response,
+            ];
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.unauthorized_access')
             ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => __('website.error_storing_message'),
+                'message' => __('website_response.error_storing_response')
+            ];
+        }
+    }
+
+    /**
+     * Store a new message (draft or sent)
+     */
+    public function storeMessage(Request $request)
+    {
+        // Validate input data
+        $validatedData = $request->validate([
+            'body_text' => ['required', 'string', 'max:10000'],
+            'from_email' => ['required', 'email', 'max:255'],
+            'from_name' => ['required', 'string', 'max:255'],
+            'to_email' => ['required', 'email', 'max:255'],
+            'to_name' => ['required', 'string', 'max:255'],
+            'status' => ['required', 'string', 'in:draft,sent'],
+            'message_id' => ['required', 'integer', 'exists:messages,id'],
+        ]);
+
+        try {
+            // Verify the message belongs to the current user
+            $message = Message::where('id', $validatedData['message_id'])
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
+
+            $messageResponse = MessageResponse::create([
+                'message_id' => $validatedData['message_id'],
+                'user_id' => Auth::id(),
+                'body_text' => $validatedData['body_text'],
+                'from_email' => $validatedData['from_email'],
+                'from_name' => $validatedData['from_name'],
+                'to_email' => $validatedData['to_email'],
+                'to_name' => $validatedData['to_name'],
+                'status' => $validatedData['status'],
+                'sent_at' => $validatedData['status'] === 'sent' ? now() : null,
+            ]);
+
+            $statusMessage = $validatedData['status'] === 'sent'
+                ? __('website_response.message_sent_successfully')
+                : __('website_response.message_saved_as_draft');
+
+            return [
+                'success' => true,
+                'message' => $statusMessage,
+                'response' => $messageResponse,
+            ];
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.unauthorized_access')
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.error_storing_message'),
             ];
         }
     }
@@ -405,27 +482,49 @@ class EmailFoldersService
      */
     public function updateMessage(Request $request, $id)
     {
+        // Validate input data
+        $validatedData = $request->validate([
+            'body_text' => ['required', 'string', 'max:10000'],
+            'from_email' => ['required', 'email', 'max:255'],
+            'from_name' => ['required', 'string', 'max:255'],
+            'to_email' => ['required', 'email', 'max:255'],
+            'to_name' => ['required', 'string', 'max:255'],
+            'status' => ['required', 'string', 'in:draft,sent'],
+        ]);
+
         try {
-            $messageResponse = MessageResponse::where('user_id', Auth::id())->findOrFail($id);
+            $messageResponse = MessageResponse::where('id', $id)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
 
             $messageResponse->update([
-                'body_text' => $request->body_text,
-                'from_email' => $request->from_email,
-                'from_name' => $request->from_name,
-                'to_email' => $request->to_email,
-                'to_name' => $request->to_name,
-                'status' => $request->status,
-                'sent_at' => $request->status === 'sent' ? now() : null,
+                'body_text' => $validatedData['body_text'],
+                'from_email' => $validatedData['from_email'],
+                'from_name' => $validatedData['from_name'],
+                'to_email' => $validatedData['to_email'],
+                'to_name' => $validatedData['to_name'],
+                'status' => $validatedData['status'],
+                'sent_at' => $validatedData['status'] === 'sent' ? now() : null,
             ]);
+
+            $statusMessage = $validatedData['status'] === 'sent'
+                ? __('website_response.message_updated_and_sent')
+                : __('website_response.message_updated_successfully');
 
             return [
                 'success' => true,
-                'message' => $messageResponse,
+                'message' => $statusMessage,
+                'response' => $messageResponse,
+            ];
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.unauthorized_access')
             ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => __('website.error_updating_message'),
+                'message' => __('website_response.error_updating_message'),
             ];
         }
     }
