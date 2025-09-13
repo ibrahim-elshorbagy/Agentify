@@ -148,7 +148,9 @@ class MessageController extends Controller
   {
     $message = Message::with(['responses' => function($query) {
       $query->orderBy('created_at', 'asc');
-    }])->findOrFail($id);
+    }])
+    ->where('user_id', Auth::id())
+    ->findOrFail($id);
 
     // Mark message as read if it's unread
     if (!$message->is_read) {
@@ -172,7 +174,7 @@ class MessageController extends Controller
       'status' => 'required|in:draft,sent',
     ]);
 
-    $message = Message::findOrFail($id);
+    $message = Message::where('user_id', Auth::id())->findOrFail($id);
 
     $response = MessageResponse::create([
       'message_id' => $message->id,

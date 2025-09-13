@@ -32,8 +32,10 @@ class EmailFoldersService
         $sortDirection = $request->input('direction', 'desc');
         $perPage = $request->input('per_page', 15);
 
-        // Inbox emails query
-        $emailsQuery = Message::query()->where('folder', 'inbox');
+        // Inbox emails query - filter by current user
+        $emailsQuery = Message::query()
+            ->where('folder', 'inbox')
+            ->where('user_id', Auth::id());
 
         $this->applyFilters($emailsQuery, $request);
 
@@ -68,8 +70,10 @@ class EmailFoldersService
         $sortDirection = $request->input('direction', 'desc');
         $perPage = $request->input('per_page', 15);
 
-        // Spam emails query
-        $emailsQuery = Message::query()->where('folder', 'spam');
+        // Spam emails query - filter by current user
+        $emailsQuery = Message::query()
+            ->where('folder', 'spam')
+            ->where('user_id', Auth::id());
 
         $this->applyFilters($emailsQuery, $request);
 
@@ -104,8 +108,10 @@ class EmailFoldersService
         $sortDirection = $request->input('direction', 'desc');
         $perPage = $request->input('per_page', 15);
 
-        // Bin emails query
-        $emailsQuery = Message::query()->where('folder', 'bin');
+        // Bin emails query - filter by current user
+        $emailsQuery = Message::query()
+            ->where('folder', 'bin')
+            ->where('user_id', Auth::id());
 
         $this->applyFilters($emailsQuery, $request);
 
@@ -159,14 +165,15 @@ class EmailFoldersService
      */
     public function getEmailCounts()
     {
+        $userId = Auth::id();
         return [
-            'inbox_total' => Message::where('folder', 'inbox')->count(),
-            'inbox_unread' => Message::where('folder', 'inbox')->where('is_read', false)->count(),
-            'spam_total' => Message::where('folder', 'spam')->count(),
-            'spam_unread' => Message::where('folder', 'spam')->where('is_read', false)->count(),
-            'bin_total' => Message::where('folder', 'bin')->count(),
-            'bin_unread' => Message::where('folder', 'bin')->where('is_read', false)->count(),
-            'starred_total' => Message::where('is_starred', true)->count(),
+            'inbox_total' => Message::where('folder', 'inbox')->where('user_id', $userId)->count(),
+            'inbox_unread' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('is_read', false)->count(),
+            'spam_total' => Message::where('folder', 'spam')->where('user_id', $userId)->count(),
+            'spam_unread' => Message::where('folder', 'spam')->where('user_id', $userId)->where('is_read', false)->count(),
+            'bin_total' => Message::where('folder', 'bin')->where('user_id', $userId)->count(),
+            'bin_unread' => Message::where('folder', 'bin')->where('user_id', $userId)->where('is_read', false)->count(),
+            'starred_total' => Message::where('is_starred', true)->where('user_id', $userId)->count(),
         ];
     }
 
@@ -176,7 +183,9 @@ class EmailFoldersService
     public function toggleRead($id)
     {
         try {
-            $message = Message::findOrFail($id);
+            $message = Message::where('id', $id)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
 
             // Toggle the read status
             $message->is_read = !$message->is_read;
@@ -188,6 +197,11 @@ class EmailFoldersService
                 'success' => true,
                 'message' => __('website_response.email_marked_as_' . $status),
                 'is_read' => $message->is_read
+            ];
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.unauthorized_access')
             ];
         } catch (\Exception $e) {
             return [
@@ -203,13 +217,20 @@ class EmailFoldersService
     public function moveToSpam($id)
     {
         try {
-            $message = Message::findOrFail($id);
+            $message = Message::where('id', $id)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
             $message->folder = 'spam';
             $message->save();
 
             return [
                 'success' => true,
                 'message' => __('website_response.email_moved_to_spam')
+            ];
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.unauthorized_access')
             ];
         } catch (\Exception $e) {
             return [
@@ -225,13 +246,20 @@ class EmailFoldersService
     public function moveToBin($id)
     {
         try {
-            $message = Message::findOrFail($id);
+            $message = Message::where('id', $id)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
             $message->folder = 'bin';
             $message->save();
 
             return [
                 'success' => true,
                 'message' => __('website_response.email_moved_to_bin')
+            ];
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.unauthorized_access')
             ];
         } catch (\Exception $e) {
             return [
@@ -247,13 +275,20 @@ class EmailFoldersService
     public function restore($id)
     {
         try {
-            $message = Message::findOrFail($id);
+            $message = Message::where('id', $id)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
             $message->folder = 'inbox';
             $message->save();
 
             return [
                 'success' => true,
                 'message' => __('website_response.email_restored_to_inbox')
+            ];
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.unauthorized_access')
             ];
         } catch (\Exception $e) {
             return [
@@ -269,7 +304,9 @@ class EmailFoldersService
     public function deletePermanently($id)
     {
         try {
-            $message = Message::findOrFail($id);
+            $message = Message::where('id', $id)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
 
             // Delete associated responses first
             $message->responses()->delete();
@@ -280,6 +317,11 @@ class EmailFoldersService
             return [
                 'success' => true,
                 'message' => __('website_response.email_deleted_permanently')
+            ];
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.unauthorized_access')
             ];
         } catch (\Exception $e) {
             return [
@@ -295,7 +337,9 @@ class EmailFoldersService
     public function toggleStar($id)
     {
         try {
-            $message = Message::findOrFail($id);
+            $message = Message::where('id', $id)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
 
             // Toggle the star status
             $message->is_starred = !$message->is_starred;
@@ -307,6 +351,11 @@ class EmailFoldersService
                 'success' => true,
                 'message' => __('website.email_' . $status . '_successfully'),
                 'is_starred' => $message->is_starred
+            ];
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.unauthorized_access')
             ];
         } catch (\Exception $e) {
             return [
@@ -322,6 +371,11 @@ class EmailFoldersService
     public function storeMessage(Request $request)
     {
         try {
+            // Verify the message belongs to the current user
+            $message = Message::where('id', $request->message_id)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
+
             $messageResponse = MessageResponse::create([
                 'message_id' => $request->message_id,
                 'user_id' => Auth::id(),

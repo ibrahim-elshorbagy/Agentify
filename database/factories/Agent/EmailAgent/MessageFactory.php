@@ -16,7 +16,7 @@ class MessageFactory extends Factory
   public function definition()
   {
     return [
-      'user_id' => User::factory(),
+      'user_id' => 2,
       'from_email' => $this->faker->safeEmail(),
       'from_name' => $this->faker->name(),
       'to_email' => $this->faker->safeEmail(),
