@@ -134,10 +134,24 @@ class MessageController extends Controller
   public function deletePermanently(Request $request, Message $message)
   {
     $this->authorize('forceDelete', $message);
-
     $result = $this->emailService->deletePermanently($message->id);
 
     if ($result['success']) {
+      // Check if should redirect to table
+      if ($request->get('redirect_to_table')) {
+        $folderRoute = match ($message->folder) {
+          'bin' => 'user.email-agent.bin.emails',
+          'spam' => 'user.email-agent.spam.emails',
+          default => 'user.email-agent.inbox.emails'
+        };
+
+        return redirect()->route($folderRoute)
+          ->with('title', __('website_response.email_deleted_title'))
+          ->with('message', $result['message'])
+          ->with('status', 'success');
+      }
+
+      // Default behavior - use back()
       return back()
         ->with('title', __('website_response.email_deleted_title'))
         ->with('message', $result['message'])
@@ -149,6 +163,7 @@ class MessageController extends Controller
       ->with('message', $result['message'])
       ->with('status', 'error');
   }
+
 
   public function view(Message $message)
   {

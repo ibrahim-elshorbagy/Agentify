@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { useTrans } from '@/Hooks/useTrans';
 import PrimaryButton from '@/Components/PrimaryButton';
 import AppLayout from '@/Layouts/AppLayout';
@@ -11,15 +11,62 @@ export default function ViewMessage({ message, responses = [] }) {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedResponse, setSelectedResponse] = useState(null);
+
   const folderRoutes = {
     bin: 'user.email-agent.bin.emails',
     spam: 'user.email-agent.spam.emails',
     inbox: 'user.email-agent.inbox.emails'
   };
-  return (
-    <AppLayout
 
-    >
+  // Toggle star function
+  const toggleStar = (emailId) => {
+    router.patch(route('user.email-agent.toggle-star', emailId), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Restore to inbox function
+  const restoreToInbox = (emailId) => {
+    router.patch(route('user.email-agent.restore', emailId), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Move to spam function
+  const moveToSpam = (emailId) => {
+    router.patch(route('user.email-agent.move-to-spam', emailId), {
+      redirect_to_table: true
+    }, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Move to bin function
+  const moveToBin = (emailId) => {
+    router.patch(route('user.email-agent.move-to-bin', emailId), {
+      redirect_to_table: true
+    }, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Delete permanently function
+  const deletePermanently = (emailId) => {
+    if (confirm(t('confirm_delete_permanently'))) {
+      router.delete(route('user.email-agent.delete-permanently', emailId), {
+        data: { redirect_to_table: true },
+        preserveState: false,
+        preserveScroll: false,
+      });
+    }
+  };
+
+  return (
+    <AppLayout>
       <Head title={`${t('view_message')} - ${message.subject}`} />
 
       <div className="m-3 xl:m-5">
@@ -38,23 +85,36 @@ export default function ViewMessage({ message, responses = [] }) {
                   </Link>
                   /
                   <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
-                    ${message.subject}
+                    {message.subject}
                   </h2>
                 </div>
-
               </div>
             </div>
 
-            <div className=" mx-auto">
+            <div className="mx-auto">
               {/* Original Message */}
               <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-neutral-200 dark:border-neutral-700 mb-6">
                 {/* Message Header */}
                 <div className="border-b border-neutral-200 dark:border-neutral-700 p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
-                      <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
-                        {message.subject}
-                      </h1>
+                      <div className="flex items-center gap-3 mb-2">
+                        <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+                          {message.subject}
+                        </h1>
+                        {/* Star Toggle Button */}
+                        <button
+                          onClick={() => toggleStar(message.id)}
+                          className="hover:scale-110 transition-transform duration-200"
+                          title={message.is_starred ? t('remove_star') : t('add_star')}
+                        >
+                          {message.is_starred ? (
+                            <i className="fa-solid fa-star text-yellow-500 text-xl hover:text-yellow-600"></i>
+                          ) : (
+                            <i className="fa-regular fa-star text-gray-400 text-xl hover:text-yellow-500"></i>
+                          )}
+                        </button>
+                      </div>
                       <div className="flex items-center gap-4 text-sm text-neutral-600 dark:text-neutral-400">
                         <div className="flex items-center gap-2">
                           <i className="fa-solid fa-user"></i>
@@ -74,13 +134,13 @@ export default function ViewMessage({ message, responses = [] }) {
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-neutral-700 dark:text-neutral-300">{t('from')}:</span>
                       <span className="text-neutral-600 dark:text-neutral-400">
-                        {message.from_name} &lt;{message.from_email}&gt;
+                        {message.from_name} - {message.from_email}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-neutral-700 dark:text-neutral-300">{t('to')}:</span>
                       <span className="text-neutral-600 dark:text-neutral-400">
-                        {message.to_name} &lt;{message.to_email}&gt;
+                        {message.to_name} - {message.to_email}
                       </span>
                     </div>
                   </div>
@@ -97,7 +157,7 @@ export default function ViewMessage({ message, responses = [] }) {
 
                 {/* Action Buttons */}
                 <div className="border-t border-neutral-200 dark:border-neutral-700 p-4">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap">
                     <PrimaryButton
                       onClick={() => setShowCreateModal(true)}
                       icon="fa-reply"
@@ -106,19 +166,60 @@ export default function ViewMessage({ message, responses = [] }) {
                     >
                       {t('reply')}
                     </PrimaryButton>
+
+                    {/* Show restore to inbox for spam and bin folders */}
+                    {(message.folder === 'spam' || message.folder === 'bin') && (
+                      <PrimaryButton
+                        onClick={() => restoreToInbox(message.id)}
+                        icon="fa-inbox"
+                        rounded="rounded-lg"
+                        withShadow={false}
+                        className="bg-green-500 hover:bg-green-600"
+                      >
+                        {t('restore_to_inbox')}
+                      </PrimaryButton>
+                    )}
+
+                    {/* Show different actions based on current folder */}
+                    {message.folder !== 'spam' && (
+                      <PrimaryButton
+                        onClick={() => moveToSpam(message.id)}
+                        icon="fa-exclamation-circle"
+                        rounded="rounded-lg"
+                        withShadow={false}
+                        className="bg-yellow-500 hover:bg-yellow-600"
+                      >
+                        {t('move_to_spam')}
+                      </PrimaryButton>
+                    )}
+
+                    {message.folder !== 'bin' && (
+                      <PrimaryButton
+                        onClick={() => moveToBin(message.id)}
+                        icon="fa-trash-can"
+                        rounded="rounded-lg"
+                        withShadow={false}
+                        className="bg-orange-500 hover:bg-orange-600"
+                      >
+                        {t('move_to_bin')}
+                      </PrimaryButton>
+                    )}
+
+                    {/* Show delete permanently for bin and spam folders */}
                     <PrimaryButton
+                      onClick={() => deletePermanently(message.id)}
                       icon="fa-trash"
                       rounded="rounded-lg"
                       withShadow={false}
-                      className="bg-red-500 hover:bg-red-600"
+                      className="bg-red-600 hover:bg-red-700"
                     >
-                      {t('delete')}
+                      {t('delete_permanently')}
                     </PrimaryButton>
                   </div>
                 </div>
               </div>
 
-              {/* Responses Thread */}
+              {/* Responses Thread - same as before */}
               {responses.length > 0 && (
                 <div className="space-y-4 mb-6">
                   <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
@@ -198,7 +299,6 @@ export default function ViewMessage({ message, responses = [] }) {
                 message={selectedResponse}
               />
             </div>
-
           </div>
         </div>
       </div>
