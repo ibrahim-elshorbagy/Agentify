@@ -44,7 +44,10 @@ export default function TableControls({
 
     // Show confirmation if required
     if (action.requiresConfirmation) {
-      const confirmMessage = action.confirmMessage || t('confirm_action').replace('{count}', selectedItems.length);
+      const confirmMessage = action.confirmMessageKey
+        ? t(action.confirmMessageKey, { count: selectedItems.length })
+        : action.confirmMessage || t('confirm_action', { count: selectedItems.length });
+
       if (!confirm(confirmMessage)) return;
     }
 
@@ -93,11 +96,16 @@ export default function TableControls({
                       {bulkActions.map((action, index) => (
                         <button
                           key={index}
-                          className={`flex items-center w-full px-4 py-2 gap-2 ltr:text-left rtl:text-right text-sm hover:bg-neutral-100 dark:hover:bg-neutral-700 ${
-                            action.variant === 'delete'
+                          className={`flex items-center w-full px-4 py-2 gap-2 ltr:text-left rtl:text-right text-sm hover:bg-neutral-100 dark:hover:bg-neutral-700 ${action.variant === 'delete'
                               ? 'text-red-600 dark:text-red-400'
-                              : 'text-neutral-700 dark:text-neutral-200'
-                          }`}
+                              : action.variant === 'green'
+                                ? 'text-green-600 dark:text-green-400'
+                                : action.variant === 'blue'
+                                  ? 'text-blue-600 dark:text-blue-400'
+                                  : action.variant === 'yellow'
+                                    ? 'text-yellow-600 dark:text-yellow-400'
+                                    : 'text-neutral-700 dark:text-neutral-200'
+                            }`}
                           onClick={() => handleBulkAction(action)}
                         >
                           {action.icon && <i className={` ${action.icon}`}></i>}
@@ -110,9 +118,9 @@ export default function TableControls({
               </div>
             )}
 
-            <span className="text-neutral-500 dark:text-neutral-400">
+            {/* <span className="text-neutral-500 dark:text-neutral-400">
               {selectedItems.length} {t('selected')}
-            </span>
+            </span> */}
           </div>
         ) : (
           <div className="text-neutral-500 dark:text-neutral-400">

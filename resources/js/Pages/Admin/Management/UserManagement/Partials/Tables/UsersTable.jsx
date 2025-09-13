@@ -17,7 +17,7 @@ export default function UsersTable({ users, onEdit }) {
 
   // Bulk delete handler
   const handleBulkDelete = (ids) => {
-    if (confirm(t('confirm_bulk_delete').replace('{count}', ids.length))) {
+    if (confirm(t('confirm_bulk_delete').replace(':count', ids.length))) {
       router.delete(route('admin.users.bulk-destroy'), {
         data: { ids },
         preserveScroll: true,

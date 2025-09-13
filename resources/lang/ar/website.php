@@ -187,7 +187,7 @@ return [
   'items' => 'عناصر',
   'item' => 'عنصر',
   'per_page' => 'في الصفحة',
-  'confirm_bulk_delete' => 'هل أنت متأكد من حذف {count} عنصر/عناصر محددة؟',
+  'confirm_bulk_delete' => 'هل أنت متأكد من حذف :count عنصر/عناصر محددة؟',
   'no_items_found' => 'لا توجد عناصر.',
   'ascending' => 'تصاعدي',
   'descending' => 'تنازلي',
@@ -586,9 +586,9 @@ return [
   'move_to_bin' => 'نقل إلى سلة المهملات',
   'restore_to_inbox' => 'استعادة إلى الوارد',
   'delete_permanently' => 'حذف نهائي',
-  'confirm_move_to_spam' => 'هل أنت متأكد أنك تريد نقل {count} بريد إلى البريد المزعح',
-  'confirm_move_to_bin' => 'هل أنت متأكد أنك تريد نقل {count} بريد إلى سلة المهملات؟',
-  'confirm_restore_emails' => 'هل أنت متأكد أنك تريد استعادة {count} بريد إلى الوارد؟',
-  'confirm_permanent_delete_bulk' => 'هل أنت متأكد أنك تريد حذف {count} بريد بشكل نهائي؟ هذا الإجراء لا يمكن التراجع عنه.',
+  'confirm_move_to_spam' => 'هل أنت متأكد أنك تريد نقل :count بريد إلى البريد المزعح',
+  'confirm_move_to_bin' => 'هل أنت متأكد أنك تريد نقل :count بريد إلى سلة المهملات؟',
+  'confirm_restore_emails' => 'هل أنت متأكد أنك تريد استعادة :count بريد إلى الوارد؟',
+  'confirm_permanent_delete_bulk' => 'هل أنت متأكد أنك تريد حذف :count بريد بشكل نهائي؟ هذا الإجراء لا يمكن التراجع عنه.',
 
 ];

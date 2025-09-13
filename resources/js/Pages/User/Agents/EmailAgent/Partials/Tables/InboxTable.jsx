@@ -89,33 +89,33 @@ export default function InboxTable({ emails, queryParams }) {
       label: t('mark_as_read'),
       icon: 'fa-solid fa-envelope-open',
       handler: handleBulkMarkAsRead,
-      variant: 'primary'
+      variant: 'green'
     },
     {
       label: t('mark_as_unread'),
       icon: 'fa-solid fa-envelope',
       handler: handleBulkMarkAsUnread,
-      variant: 'primary'
+      variant: 'green'
     },
     {
       label: t('add_star'),
       icon: ' fa-solid fa-star ',
       handler: handleBulkStar,
-      variant: 'primary'
+      variant: 'green'
     },
     {
       label: t('remove_star'),
       icon: ' fa-star fa-regular ',
       handler: handleBulkUnStar,
-      variant: 'primary'
+      variant: 'green'
     },
     {
       label: t('move_to_spam'),
       icon: 'fa-solid fa-exclamation-circle',
       handler: handleBulkMoveToSpam,
-      variant: 'warning',
+      variant: 'yellow',
       requiresConfirmation: true,
-      confirmMessage: t('confirm_move_to_spam').replace('{count}', '{count}')
+      confirmMessageKey: 'confirm_move_to_spam'
     },
     {
       label: t('move_to_bin'),
@@ -123,7 +123,7 @@ export default function InboxTable({ emails, queryParams }) {
       handler: handleBulkMoveToBin,
       variant: 'delete',
       requiresConfirmation: true,
-      confirmMessage: t('confirm_move_to_bin').replace('{count}', '{count}')
+      confirmMessageKey: 'confirm_move_to_bin'
     }
   ];
 
