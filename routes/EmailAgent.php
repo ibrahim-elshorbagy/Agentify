@@ -8,7 +8,7 @@ use Inertia\Inertia;
 
 Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function () {
 
-  // Inbox Emails - with proper validation middleware
+  // Inbox Emails -
   Route::get('/email-agent/inbox', [MessageController::class, 'inbox'])
     ->name('user.email-agent.inbox.emails');
   Route::get('/email-agent/bin', [MessageController::class, 'bin'])
@@ -16,7 +16,7 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
   Route::get('/email-agent/spam', [MessageController::class, 'spam'])
     ->name('user.email-agent.spam.emails');
 
-  // Email actions - with model binding and validation
+  // Email actions - 
   Route::patch('/email-agent/toggle-star/{message}', [MessageController::class, 'toggleStar'])
     ->name('user.email-agent.toggle-star')
     ->where('message', '[0-9]+');

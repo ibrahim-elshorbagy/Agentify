@@ -11,7 +11,11 @@ export default function ViewMessage({ message, responses = [] }) {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedResponse, setSelectedResponse] = useState(null);
-
+  const folderRoutes = {
+    bin: 'user.email-agent.bin.emails',
+  spam: 'user.email-agent.spam.emails',
+  inbox: 'user.email-agent.inbox.emails'
+};
   return (
     <AppLayout
 
@@ -25,12 +29,15 @@ export default function ViewMessage({ message, responses = [] }) {
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
+
+
+
                   <Link
-                    href={route('user.email-agent.inbox.emails')}
+                    href={route(folderRoutes[message.folder] || folderRoutes.inbox)}
                     className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
                   >
-                    <i className="fa-solid fa-arrow-left"></i>
-                    {t('back_to_inbox')}
+                    <i className="fa-solid fa-arrow-left rtl:rotate-180"></i>
+                    {t('back')}
                   </Link>
                   /
                   <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">

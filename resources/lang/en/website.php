@@ -625,5 +625,6 @@ return [
   'confirm_move_to_bin' => 'Are you sure you want to move :count emails to bin?',
   'confirm_restore_emails' => 'Are you sure you want to restore :count emails to inbox?',
   'confirm_permanent_delete_bulk' => 'Are you sure you want to permanently delete :count emails? This action cannot be undone.',
+  "back"=>"Back",
 
 ];

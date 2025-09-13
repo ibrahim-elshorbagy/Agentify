@@ -590,5 +590,6 @@ return [
   'confirm_move_to_bin' => 'هل أنت متأكد أنك تريد نقل :count بريد إلى سلة المهملات؟',
   'confirm_restore_emails' => 'هل أنت متأكد أنك تريد استعادة :count بريد إلى الوارد؟',
   'confirm_permanent_delete_bulk' => 'هل أنت متأكد أنك تريد حذف :count بريد بشكل نهائي؟ هذا الإجراء لا يمكن التراجع عنه.',
+  "back"=>"عوده",
 
 ];
