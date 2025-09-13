@@ -19,6 +19,8 @@ return [
   'all_systems_operational' => 'All systems operational',
 
   // end Dashboard translations
+  'welcome'=>"Welcome 👋",
+
 
   'language' => 'Language',
   'english' => 'English',

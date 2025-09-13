@@ -21,7 +21,7 @@ return [
 
   // end Dashboard translations
 
-
+  'welcome'=>"👋 مرحباً",
   'language' => 'اللغة',
   'english' => 'الإنجليزية',
   'arabic' => 'العربية',

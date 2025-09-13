@@ -31,15 +31,6 @@ export default function Login({ status, canResetPassword }) {
                 </p>
             </div>
 
-            {status && (
-                <div className="mb-4 rounded-lg bg-green-50 p-3 text-sm font-medium text-green-600 dark:bg-green-900/20 dark:text-green-400">
-                    <div className="flex items-center">
-                        <i className="fa-solid fa-check-circle mr-2"></i>
-                        <span>{status}</span>
-                    </div>
-                </div>
-            )}
-
             <div className="rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 overflow-hidden">
                 <div className="p-6">
                     <form onSubmit={submit}>
