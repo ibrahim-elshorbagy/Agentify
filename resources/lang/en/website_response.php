@@ -11,6 +11,7 @@ return [
 
   'language_changed_title' => 'Language Changed',
   'language_changed_message' => 'Language updated successfully.',
+  "blocked_account"=>"Your account has been blocked. Please contact administrator",
 
   /* Profile Controller Responses */
   'profile_updated_title' => 'Profile Updated',

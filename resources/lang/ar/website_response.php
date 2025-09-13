@@ -11,6 +11,7 @@ return [
 
   'language_changed_title' => 'تم تغيير اللغة',
   'language_changed_message' => 'تم تغيير اللغة بنجاح.',
+  "blocked_account"=>"تم حظر حسابك. يُرجى التواصل مع المسؤول.",
 
   /* Profile Controller Responses */
   'profile_updated_title' => 'تم تحديث الملف الشخصي',

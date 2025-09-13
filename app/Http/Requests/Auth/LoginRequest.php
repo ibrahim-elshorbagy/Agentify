@@ -54,7 +54,7 @@ class LoginRequest extends FormRequest
             Auth::logout();
 
             throw ValidationException::withMessages([
-                'username' => 'Your account has been blocked. Please contact administrator.',
+                'username' => __('website_response.blocked_account'),
             ]);
         }
 
