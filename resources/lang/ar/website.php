@@ -97,7 +97,7 @@ return [
   'spam' => 'مزعج',
   'bin' => 'سلة المحذوفات',
   'from' => 'من',
-  'to'=>"الي",
+  'to' => "الي",
   'subject' => 'الموضوع',
   'received_at' => 'تاريخ الاستلام',
   'unread' => 'غير مقروء',
@@ -573,6 +573,22 @@ return [
   "send" => "إرسال",
   "save_draft" => "حفظ كمسودة",
   "sent_at" => "تم الإرسال في",
-  "type_your_message"=>"اكتب رسالتك",
+  "type_your_message" => "اكتب رسالتك",
+
+  // Email Agent Bulk actions
+  'bulk_actions' => 'العمليات',
+  'selected' => 'محدد',
+  'mark_as_read' => 'تعليم كمقروء',
+  'mark_as_unread' => 'تعليم كغير مقروء',
+  'add_star' => 'إضافة نجمة',
+  'remove_star' => 'إزالة النجمة',
+  'move_to_spam' => 'نقل إلى البريد المزعح',
+  'move_to_bin' => 'نقل إلى سلة المهملات',
+  'restore_to_inbox' => 'استعادة إلى الوارد',
+  'delete_permanently' => 'حذف نهائي',
+  'confirm_move_to_spam' => 'هل أنت متأكد أنك تريد نقل {count} بريد إلى البريد المزعح',
+  'confirm_move_to_bin' => 'هل أنت متأكد أنك تريد نقل {count} بريد إلى سلة المهملات؟',
+  'confirm_restore_emails' => 'هل أنت متأكد أنك تريد استعادة {count} بريد إلى الوارد؟',
+  'confirm_permanent_delete_bulk' => 'هل أنت متأكد أنك تريد حذف {count} بريد بشكل نهائي؟ هذا الإجراء لا يمكن التراجع عنه.',
 
 ];

@@ -63,7 +63,7 @@ class MessageController extends Controller
 
     $this->authorize('manage', $message);
     $this->emailService->toggleStar($message->id);
-    
+
   }
 
   public function toggleRead(Request $request, Message $message)
@@ -219,6 +219,206 @@ class MessageController extends Controller
       return back()
         ->with('title', __('website_response.message_response_updated_title'))
         ->with('message', $statusMessage)
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
+  /**
+   * Bulk mark messages as read
+   */
+  public function bulkMarkAsRead(Request $request)
+  {
+    $request->validate([
+      'ids' => ['required', 'array', 'min:1'],
+      'ids.*' => ['integer', 'exists:messages,id'],
+    ]);
+
+    $result = $this->emailService->bulkMarkAsRead($request->ids);
+
+    if ($result['success']) {
+      return back()
+        ->with('title', __('website_response.bulk_action_completed'))
+        ->with('message', $result['message'])
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
+  /**
+   * Bulk mark messages as unread
+   */
+  public function bulkMarkAsUnread(Request $request)
+  {
+    $request->validate([
+      'ids' => ['required', 'array', 'min:1'],
+      'ids.*' => ['integer', 'exists:messages,id'],
+    ]);
+
+    $result = $this->emailService->bulkMarkAsUnread($request->ids);
+
+    if ($result['success']) {
+      return back()
+        ->with('title', __('website_response.bulk_action_completed'))
+        ->with('message', $result['message'])
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
+  /**
+   * Bulk star messages
+   */
+  public function bulkStar(Request $request)
+  {
+    $request->validate([
+      'ids' => ['required', 'array', 'min:1'],
+      'ids.*' => ['integer', 'exists:messages,id'],
+    ]);
+
+    $result = $this->emailService->bulkStar($request->ids);
+
+    if ($result['success']) {
+      return back()
+        ->with('title', __('website_response.bulk_action_completed'))
+        ->with('message', $result['message'])
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
+  /**
+   * Bulk unstar messages
+   */
+  public function bulkUnstar(Request $request)
+  {
+    $request->validate([
+      'ids' => ['required', 'array', 'min:1'],
+      'ids.*' => ['integer', 'exists:messages,id'],
+    ]);
+
+    $result = $this->emailService->bulkUnstar($request->ids);
+
+    if ($result['success']) {
+      return back()
+        ->with('title', __('website_response.bulk_action_completed'))
+        ->with('message', $result['message'])
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
+  /**
+   * Bulk move messages to spam
+   */
+  public function bulkMoveToSpam(Request $request)
+  {
+    $request->validate([
+      'ids' => ['required', 'array', 'min:1'],
+      'ids.*' => ['integer', 'exists:messages,id'],
+    ]);
+
+    $result = $this->emailService->bulkMoveToSpam($request->ids);
+
+    if ($result['success']) {
+      return back()
+        ->with('title', __('website_response.bulk_action_completed'))
+        ->with('message', $result['message'])
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
+  /**
+   * Bulk move messages to bin
+   */
+  public function bulkMoveToBin(Request $request)
+  {
+    $request->validate([
+      'ids' => ['required', 'array', 'min:1'],
+      'ids.*' => ['integer', 'exists:messages,id'],
+    ]);
+
+    $result = $this->emailService->bulkMoveToBin($request->ids);
+
+    if ($result['success']) {
+      return back()
+        ->with('title', __('website_response.bulk_action_completed'))
+        ->with('message', $result['message'])
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
+  /**
+   * Bulk restore messages to inbox
+   */
+  public function bulkRestore(Request $request)
+  {
+    $request->validate([
+      'ids' => ['required', 'array', 'min:1'],
+      'ids.*' => ['integer', 'exists:messages,id'],
+    ]);
+
+    $result = $this->emailService->bulkRestore($request->ids);
+
+    if ($result['success']) {
+      return back()
+        ->with('title', __('website_response.bulk_action_completed'))
+        ->with('message', $result['message'])
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
+  /**
+   * Bulk delete messages permanently
+   */
+  public function bulkDeletePermanently(Request $request)
+  {
+    $request->validate([
+      'ids' => ['required', 'array', 'min:1'],
+      'ids.*' => ['integer', 'exists:messages,id'],
+    ]);
+
+    $result = $this->emailService->bulkDeletePermanently($request->ids);
+
+    if ($result['success']) {
+      return back()
+        ->with('title', __('website_response.bulk_action_completed'))
+        ->with('message', $result['message'])
         ->with('status', 'success');
     }
 

@@ -102,7 +102,7 @@ return [
   'spam' => 'Spam',
   'bin' => 'Bin',
   'from' => 'From',
-  'to'=>"To",
+  'to' => "To",
   'subject' => 'Subject',
   'received_at' => 'Received At',
   'unread' => 'Unread',
@@ -608,6 +608,22 @@ return [
   "cancel" => "Cancel",
   "update" => "Update",
   "sent_at" => "Sent At",
-  "type_your_message"=>"Type Your Message",
+  "type_your_message" => "Type Your Message",
+
+  // Email Agent Bulk Actions
+  'bulk_actions' => 'Bulk Actions',
+  'selected' => 'selected',
+  'mark_as_read' => 'Mark as Read',
+  'mark_as_unread' => 'Mark as Unread',
+  'add_star' => 'Add Star',
+  'remove_star' => 'Remove Star',
+  'move_to_spam' => 'Move to Spam',
+  'move_to_bin' => 'Move to Bin',
+  'restore_to_inbox' => 'Restore to Inbox',
+  'delete_permanently' => 'Delete Permanently',
+  'confirm_move_to_spam' => 'Are you sure you want to move {count} emails to spam?',
+  'confirm_move_to_bin' => 'Are you sure you want to move {count} emails to bin?',
+  'confirm_restore_emails' => 'Are you sure you want to restore {count} emails to inbox?',
+  'confirm_permanent_delete_bulk' => 'Are you sure you want to permanently delete {count} emails? This action cannot be undone.',
 
 ];

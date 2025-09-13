@@ -40,6 +40,94 @@ export default function SpamTable({ emails, queryParams }) {
     });
   };
 
+
+  // Bulk action handlers
+  const handleBulkMarkAsRead = async (ids) => {
+    router.patch(route('user.email-agent.bulk.mark-read'), { ids }, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  const handleBulkMarkAsUnread = async (ids) => {
+    router.patch(route('user.email-agent.bulk.mark-unread'), { ids }, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  const handleBulkStar = async (ids) => {
+    router.patch(route('user.email-agent.bulk.star'), { ids }, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  const handleBulkUnStar = async (ids) => {
+    router.patch(route('user.email-agent.bulk.unstar'), { ids }, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  const handleBulkMoveToSpam = async (ids) => {
+    router.patch(route('user.email-agent.bulk.move-to-spam'), { ids }, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  const handleBulkMoveToBin = async (ids) => {
+    router.patch(route('user.email-agent.bulk.move-to-bin'), { ids }, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Define bulk actions for inbox
+  const bulkActions = [
+    {
+      label: t('mark_as_read'),
+      icon: 'fa-solid fa-envelope-open',
+      handler: handleBulkMarkAsRead,
+      variant: 'primary'
+    },
+    {
+      label: t('mark_as_unread'),
+      icon: 'fa-solid fa-envelope',
+      handler: handleBulkMarkAsUnread,
+      variant: 'primary'
+    },
+    {
+      label: t('add_star'),
+      icon: ' fa-solid fa-star ',
+      handler: handleBulkStar,
+      variant: 'primary'
+    },
+    {
+      label: t('remove_star'),
+      icon: ' fa-star fa-regular ',
+      handler: handleBulkUnStar,
+      variant: 'primary'
+    },
+    {
+      label: t('move_to_spam'),
+      icon: 'fa-solid fa-exclamation-circle',
+      handler: handleBulkMoveToSpam,
+      variant: 'warning',
+      requiresConfirmation: true,
+      confirmMessage: t('confirm_move_to_spam').replace('{count}', '{count}')
+    },
+    {
+      label: t('move_to_bin'),
+      icon: 'fa-solid fa-trash-can',
+      handler: handleBulkMoveToBin,
+      variant: 'delete',
+      requiresConfirmation: true,
+      confirmMessage: t('confirm_move_to_bin').replace('{count}', '{count}')
+    }
+  ];
+
   // Table configuration
   const columns = [
     { field: 'id', label: t('id'), icon: 'fa-hashtag' },
@@ -166,7 +254,7 @@ export default function SpamTable({ emails, queryParams }) {
     <>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold leading-tight text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
-          <i className="fa-solid fa-shield-exclamation text-red-500"></i> {t('spam_emails')}
+          <i className="fa-solid fa-exclamation-circle text-red-500"></i> {t('spam_emails')}
         </h2>
       </div>
       <div className="mb-4">
@@ -188,6 +276,8 @@ export default function SpamTable({ emails, queryParams }) {
         defaultSortField="created_at"
         defaultSortDirection="desc"
         getRowClassName={getRowClassName}
+        bulkActions={bulkActions}
+
       />
     </>
   );

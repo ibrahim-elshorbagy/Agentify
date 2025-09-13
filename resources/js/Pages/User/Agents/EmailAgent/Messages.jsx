@@ -58,7 +58,7 @@ export default function Messages({ type, queryParams = null, emails = [], emailC
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <i className="fa-solid fa-shield-exclamation text-white text-xl"></i>
+                  <i className="fa-solid fa-exclamation-circle text-white text-xl"></i>
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-red-900 dark:text-red-100">{t('spam')}</h3>

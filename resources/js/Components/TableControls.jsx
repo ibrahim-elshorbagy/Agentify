@@ -12,7 +12,8 @@ export default function TableControls({
   onPerPageChange,
   selectedItems = [],
   onSelectAll,
-  onBulkDelete,
+  bulkActions = [],
+  onBulkAction,
   sortOptions = [],
   queryParams = {},
   routeName,
@@ -21,6 +22,7 @@ export default function TableControls({
   const { t } = useTrans();
   const [showPerPage, setShowPerPage] = useState(false);
   const [showSortMenu, setShowSortMenu] = useState(false);
+  const [showBulkMenu, setShowBulkMenu] = useState(false);
   const perPageOptions = [10, 25, 50, 100];
 
   const handleSort = (field) => {
@@ -37,12 +39,17 @@ export default function TableControls({
     setShowPerPage(false);
   };
 
-  const handleBulkDelete = () => {
+  const handleBulkAction = (action) => {
     if (selectedItems.length === 0) return;
 
-    if (confirm(t('confirm_bulk_delete').replace('{count}', selectedItems.length))) {
-      onBulkDelete(selectedItems);
+    // Show confirmation if required
+    if (action.requiresConfirmation) {
+      const confirmMessage = action.confirmMessage || t('confirm_action').replace('{count}', selectedItems.length);
+      if (!confirm(confirmMessage)) return;
     }
+
+    onBulkAction(action, selectedItems);
+    setShowBulkMenu(false);
   };
 
   // Close dropdowns when clicking outside
@@ -50,6 +57,7 @@ export default function TableControls({
     const handleClickOutside = () => {
       setShowPerPage(false);
       setShowSortMenu(false);
+      setShowBulkMenu(false);
     };
 
     document.addEventListener('click', handleClickOutside);
@@ -66,14 +74,46 @@ export default function TableControls({
     <div className="flex flex-wrap items-center justify-between gap-2 mb-4 text-sm">
       <div className="flex items-center gap-2">
         {showSelection && selectedItems.length > 0 ? (
-          <ActionButton
-            variant="delete"
-            icon="fa-trash"
-            size="sm"
-            onClick={handleBulkDelete}
-          >
-            {t('delete_selected')} ({selectedItems.length})
-          </ActionButton>
+          <div className="flex items-center gap-2">
+            {/* Bulk Actions Dropdown */}
+            {bulkActions.length > 0 && (
+              <div className="relative" onClick={stopPropagation}>
+                <ActionButton
+                  variant="primary"
+                  icon="fa-list-check"
+                  size="sm"
+                  onClick={(e) => { e.stopPropagation(); setShowBulkMenu(!showBulkMenu); }}
+                >
+                  {t('bulk_actions')} ({selectedItems.length})
+                </ActionButton>
+
+                {showBulkMenu && (
+                  <div className="absolute ltr:left-0 z-10 mt-1 w-48 rounded-lg shadow-lg bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700">
+                    <div className="py-1">
+                      {bulkActions.map((action, index) => (
+                        <button
+                          key={index}
+                          className={`flex items-center w-full px-4 py-2 gap-2 ltr:text-left rtl:text-right text-sm hover:bg-neutral-100 dark:hover:bg-neutral-700 ${
+                            action.variant === 'delete'
+                              ? 'text-red-600 dark:text-red-400'
+                              : 'text-neutral-700 dark:text-neutral-200'
+                          }`}
+                          onClick={() => handleBulkAction(action)}
+                        >
+                          {action.icon && <i className={` ${action.icon}`}></i>}
+                          {action.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <span className="text-neutral-500 dark:text-neutral-400">
+              {selectedItems.length} {t('selected')}
+            </span>
+          </div>
         ) : (
           <div className="text-neutral-500 dark:text-neutral-400">
             {totalItems} {totalItems !== 1 ? t('items') : t('item')}

@@ -14,13 +14,13 @@ export default function SelectableTable({
   idField = 'id',
   pagination = null,
   onSort = null,
-  onBulkDelete = null,
+  bulkActions = [],
   sortOptions = [],
   defaultSortField = null,
   defaultSortDirection = 'asc',
   perPageOptions = [10, 25, 50, 100],
   defaultPerPage = 15,
-  getRowClassName = null, // New prop for custom row styling
+  getRowClassName = null,
   showSelection = true,
 }) {
   // Initialize translation
@@ -101,10 +101,10 @@ export default function SelectableTable({
     }
   };
 
-  // Handle bulk delete
-  const handleBulkDelete = async (ids) => {
-    if (onBulkDelete) {
-      await onBulkDelete(ids);
+  // Handle bulk actions
+  const handleBulkAction = async (action, ids) => {
+    if (action.handler) {
+      await action.handler(ids);
       setSelectedItems([]);
     }
   };
@@ -120,7 +120,8 @@ export default function SelectableTable({
         onPerPageChange={handlePerPageChange}
         selectedItems={selectedItems}
         onSelectAll={handleSelectAll}
-        onBulkDelete={handleBulkDelete}
+        bulkActions={bulkActions}
+        onBulkAction={handleBulkAction}
         sortOptions={sortOptions}
         queryParams={queryParams}
         routeName={routeName}
