@@ -13,6 +13,35 @@ return [
   'language_changed_message' => 'Language updated successfully.',
   "blocked_account"=>"Your account has been blocked. Please contact administrator",
 
+  /* Auth Controller Responses */
+  'login_successful_title' => 'Login Successful',
+  'login_successful_message' => 'Welcome back! You have been logged in successfully.',
+  'logout_successful_title' => 'Logged Out',
+  'logout_successful_message' => 'You have been logged out successfully.',
+  'registration_successful_title' => 'Registration Successful',
+  'registration_successful_message' => 'Your account has been created successfully. Welcome!',
+  'password_reset_link_sent_title' => 'Password Reset Link Sent',
+  'password_reset_link_sent_message' => 'A password reset link has been sent to your email address.',
+  'password_reset_successful_title' => 'Password Reset Successful',
+  'password_reset_successful_message' => 'Your password has been reset successfully. You can now log in.',
+  'verification_link_sent_title' => 'Verification Link Sent',
+  'verification_link_sent_message' => 'A new verification link has been sent to your email address.',
+  'password_confirmed_title' => 'Password Confirmed',
+  'password_confirmed_message' => 'Your password has been confirmed successfully.',
+
+  /* Auth Validation Messages */
+  'username_required' => 'The username field is required.',
+  'password_required' => 'The password field is required.',
+  'name_required' => 'The name field is required.',
+  'username_unique' => 'This username is already taken.',
+  'email_required' => 'The email field is required.',
+  'email_invalid' => 'Please enter a valid email address.',
+  'email_unique' => 'This email is already registered.',
+  'password_confirmation' => 'The password confirmation does not match.',
+  /* End Auth Validation Messages */
+
+  /* End Auth Controller Responses */
+
   /* Profile Controller Responses */
   'profile_updated_title' => 'Profile Updated',
   'profile_updated_message' => 'Your profile information has been updated successfully.',

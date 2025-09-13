@@ -35,6 +35,15 @@ class RegisteredUserController extends Controller
             'username' => 'required|string|max:255|unique:'.User::class,
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'name.required' => __('website_response.name_required'),
+            'username.required' => __('website_response.username_required'),
+            'username.unique' => __('website_response.username_unique'),
+            'email.required' => __('website_response.email_required'),
+            'email.email' => __('website_response.email_invalid'),
+            'email.unique' => __('website_response.email_unique'),
+            'password.required' => __('website_response.password_required'),
+            'password.confirmed' => __('website_response.password_confirmation'),
         ]);
 
         $user = User::create([
@@ -44,6 +53,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $user->assignRole('user');
         event(new Registered($user));
 
         Auth::login($user);

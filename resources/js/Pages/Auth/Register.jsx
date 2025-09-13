@@ -3,8 +3,10 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useTrans } from '@/Hooks/useTrans';
 
 export default function Register() {
+    const { t } = useTrans();
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         username: '',
@@ -23,12 +25,12 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <Head title="Register" />
+            <Head title={t('auth_register')} />
 
             <div className="mb-6 text-center">
-                <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">Create Account</h1>
+                <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">{t('auth_create_account')}</h1>
                 <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-                    Sign up to get started with Finance Track
+                    {t('auth_join_us_today')}
                 </p>
             </div>
 
@@ -36,7 +38,7 @@ export default function Register() {
                 <div className="p-6">
                     <form onSubmit={submit}>
                         <div className="mb-4">
-                            <InputLabel htmlFor="name" value="Full Name" />
+                            <InputLabel htmlFor="name" value={t('auth_full_name')} />
                             <TextInput
                                 id="name"
                                 name="name"
@@ -52,7 +54,7 @@ export default function Register() {
                         </div>
 
                         <div className="mb-4">
-                            <InputLabel htmlFor="username" value="Username" />
+                            <InputLabel htmlFor="username" value={t('auth_username')} />
                             <TextInput
                                 id="username"
                                 name="username"
@@ -67,7 +69,7 @@ export default function Register() {
                         </div>
 
                         <div className="mb-4">
-                            <InputLabel htmlFor="email" value="Email Address" />
+                            <InputLabel htmlFor="email" value={t('auth_email_address')} />
                             <TextInput
                                 id="email"
                                 type="email"
@@ -83,7 +85,7 @@ export default function Register() {
                         </div>
 
                         <div className="mb-4">
-                            <InputLabel htmlFor="password" value="Password" />
+                            <InputLabel htmlFor="password" value={t('auth_password')} />
                             <TextInput
                                 id="password"
                                 type="password"
@@ -101,7 +103,7 @@ export default function Register() {
                         <div className="mb-6">
                             <InputLabel
                                 htmlFor="password_confirmation"
-                                value="Confirm Password"
+                                value={t('auth_confirm_password')}
                             />
                             <TextInput
                                 id="password_confirmation"
@@ -133,13 +135,13 @@ export default function Register() {
                                 ) : (
                                     <i className="fa-solid fa-user-plus"></i>
                                 )}
-                                Create Account
+                                {t('auth_create_account')}
                             </button>
 
                             <div className="text-center text-sm text-neutral-600 dark:text-neutral-400">
-                                Already have an account?{" "}
+                                {t('auth_already_have_account')}{" "}
                                 <Link href={route('login')} className="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300">
-                                    Sign in
+                                    {t('auth_login')}
                                 </Link>
                             </div>
                         </div>

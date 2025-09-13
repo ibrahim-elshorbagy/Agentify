@@ -1,7 +1,9 @@
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useTrans } from '@/Hooks/useTrans';
 
 export default function VerifyEmail({ status }) {
+    const { t } = useTrans();
     const { post, processing } = useForm({});
 
     const submit = (e) => {
@@ -12,12 +14,12 @@ export default function VerifyEmail({ status }) {
 
     return (
         <GuestLayout>
-            <Head title="Email Verification" />
+            <Head title={t('auth_verify_email')} />
 
             <div className="mb-6 text-center">
-                <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">Verify Your Email</h1>
+                <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">{t('auth_verify_email')}</h1>
                 <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-                    One last step before getting started
+                    {t('auth_one_last_step')}
                 </p>
             </div>
 
@@ -31,10 +33,10 @@ export default function VerifyEmail({ status }) {
 
                     <div className="text-center mb-6 text-neutral-700 dark:text-neutral-300">
                         <p className="mb-2">
-                            We've sent a verification link to your email address.
+                            {t('auth_verification_email_sent')}
                         </p>
                         <p>
-                            Click the link to complete your registration. If you didn't receive the email, click below to request another.
+                            {t('auth_click_link_complete')}
                         </p>
                     </div>
 
@@ -59,7 +61,7 @@ export default function VerifyEmail({ status }) {
                                 ) : (
                                     <i className="fa-solid fa-paper-plane"></i>
                                 )}
-                                Resend Verification Email
+                                {t('auth_resend_verification_email')}
                             </button>
 
                             <Link
@@ -69,7 +71,7 @@ export default function VerifyEmail({ status }) {
                                 className="w-full flex justify-center items-center gap-1 px-4 py-2 font-semibold text-neutral-700 bg-neutral-200 hover:bg-neutral-300 dark:text-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700 rounded-lg transition-all"
                             >
                                 <i className="fa-solid fa-arrow-right-from-bracket"></i>
-                                Log Out
+                                {t('auth_logout')}
                             </Link>
                         </div>
                     </form>

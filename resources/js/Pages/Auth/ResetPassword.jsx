@@ -3,8 +3,10 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, useForm, Link } from '@inertiajs/react';
+import { useTrans } from '@/Hooks/useTrans';
 
 export default function ResetPassword({ token, email }) {
+    const { t } = useTrans();
     const { data, setData, post, processing, errors, reset } = useForm({
         token: token,
         email: email,
@@ -22,12 +24,12 @@ export default function ResetPassword({ token, email }) {
 
     return (
         <GuestLayout>
-            <Head title="Reset Password" />
+            <Head title={t('auth_reset_password')} />
 
             <div className="mb-6 text-center">
-                <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">Reset Password</h1>
+                <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">{t('auth_reset_your_password')}</h1>
                 <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-                    Create a new secure password for your account
+                    {t('auth_enter_new_password')}
                 </p>
             </div>
 
@@ -35,7 +37,7 @@ export default function ResetPassword({ token, email }) {
                 <div className="p-6">
                     <form onSubmit={submit}>
                         <div className="mb-4">
-                            <InputLabel htmlFor="email" value="Email Address" />
+                            <InputLabel htmlFor="email" value={t('auth_email_address')} />
                             <TextInput
                                 id="email"
                                 type="email"
@@ -50,7 +52,7 @@ export default function ResetPassword({ token, email }) {
                         </div>
 
                         <div className="mb-4">
-                            <InputLabel htmlFor="password" value="New Password" />
+                            <InputLabel htmlFor="password" value={t('auth_new_password')} />
                             <TextInput
                                 id="password"
                                 type="password"
@@ -68,7 +70,7 @@ export default function ResetPassword({ token, email }) {
                         <div className="mb-6">
                             <InputLabel
                                 htmlFor="password_confirmation"
-                                value="Confirm New Password"
+                                value={t('auth_confirm_new_password')}
                             />
                             <TextInput
                                 type="password"
@@ -99,13 +101,13 @@ export default function ResetPassword({ token, email }) {
                                 ) : (
                                     <i className="fa-solid fa-key"></i>
                                 )}
-                                Reset Password
+                                {t('auth_reset_password')}
                             </button>
 
                             <div className="text-center text-sm text-neutral-600 dark:text-neutral-400">
-                                Remember your password?{" "}
+                                {t('auth_remember_password')}{" "}
                                 <Link href={route('login')} className="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300">
-                                    Back to login
+                                    {t('auth_back_to_login')}
                                 </Link>
                             </div>
                         </div>

@@ -4,8 +4,10 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useTrans } from '@/Hooks/useTrans';
 
 export default function Login({ status, canResetPassword }) {
+    const { t } = useTrans();
     const { data, setData, post, processing, errors, reset } = useForm({
         username: '',
         password: '',
@@ -22,12 +24,12 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <GuestLayout>
-            <Head title="Log in" />
+            <Head title={t('auth_login')} />
 
             <div className="mb-6 text-center">
-                <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">Welcome Back</h1>
+                <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">{t('auth_welcome_back')}</h1>
                 <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-                    Sign in to access your account
+                    {t('auth_sign_in_to_your_account')}
                 </p>
             </div>
 
@@ -35,7 +37,7 @@ export default function Login({ status, canResetPassword }) {
                 <div className="p-6">
                     <form onSubmit={submit}>
                         <div className="mb-4">
-                            <InputLabel htmlFor="username" value="Username" />
+                            <InputLabel htmlFor="username" value={t('auth_username')} />
                             <TextInput
                                 id="username"
                                 type="text"
@@ -52,13 +54,13 @@ export default function Login({ status, canResetPassword }) {
 
                         <div className="mb-4">
                             <div className="flex items-center justify-between">
-                                <InputLabel htmlFor="password" value="Password" />
+                                <InputLabel htmlFor="password" value={t('auth_password')} />
                                 {canResetPassword && (
                                     <Link
                                         href={route('password.request')}
                                         className="text-xs text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
                                     >
-                                        Forgot password?
+                                        {t('auth_forgot_password')}
                                     </Link>
                                 )}
                             </div>
@@ -85,7 +87,7 @@ export default function Login({ status, canResetPassword }) {
                                     }
                                 />
                                 <span className="ms-2 text-sm text-neutral-700 dark:text-neutral-300">
-                                    Remember me
+                                    {t('auth_remember_me')}
                                 </span>
                             </label>
                         </div>
@@ -101,13 +103,13 @@ export default function Login({ status, canResetPassword }) {
                                 ) : (
                                     <i className="fa-solid fa-right-to-bracket"></i>
                                 )}
-                                Sign In
+                                {t('auth_login')}
                             </button>
 
                             <div className="text-center text-sm text-neutral-600 dark:text-neutral-400">
-                                Don't have an account?{" "}
+                                {t('auth_dont_have_account')}{" "}
                                 <Link href={route('register')} className="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300">
-                                    Sign up
+                                    {t('auth_register')}
                                 </Link>
                             </div>
                         </div>

@@ -3,8 +3,10 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, useForm } from '@inertiajs/react';
+import { useTrans } from '@/Hooks/useTrans';
 
 export default function ConfirmPassword() {
+    const { t } = useTrans();
     const { data, setData, post, processing, errors, reset } = useForm({
         password: '',
     });
@@ -19,12 +21,12 @@ export default function ConfirmPassword() {
 
     return (
         <GuestLayout>
-            <Head title="Confirm Password" />
+            <Head title={t('auth_confirm_password_title')} />
 
             <div className="mb-6 text-center">
-                <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">Security Check</h1>
+                <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">{t('auth_confirm_password_title')}</h1>
                 <p className="mt-2 text-neutral-600 dark:text-neutral-400">
-                    Please confirm your password to continue
+                    {t('auth_confirm_password_subtitle')}
                 </p>
             </div>
 
@@ -32,12 +34,12 @@ export default function ConfirmPassword() {
                 <div className="p-6">
                     <div className="mb-4 flex items-center p-3 rounded-lg bg-amber-50 text-sm text-amber-800 dark:bg-amber-900/20 dark:text-amber-400">
                         <i className="fa-solid fa-shield-halved mr-2"></i>
-                        <span>This is a secure area of the application. Please verify your identity by confirming your password.</span>
+                        <span>{t('auth_secure_area_message')}</span>
                     </div>
 
                     <form onSubmit={submit} className="mt-4">
                         <div className="mb-6">
-                            <InputLabel htmlFor="password" value="Password" />
+                            <InputLabel htmlFor="password" value={t('auth_password')} />
                             <TextInput
                                 id="password"
                                 type="password"
@@ -61,7 +63,7 @@ export default function ConfirmPassword() {
                             ) : (
                                 <i className="fa-solid fa-check-circle"></i>
                             )}
-                            Confirm Password
+                            {t('auth_confirm_password_button')}
                         </button>
                     </form>
                 </div>
