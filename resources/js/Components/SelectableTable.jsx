@@ -21,6 +21,7 @@ export default function SelectableTable({
   perPageOptions = [10, 25, 50, 100],
   defaultPerPage = 15,
   getRowClassName = null, // New prop for custom row styling
+  showSelection = true,
 }) {
   // Initialize translation
   const { t } = useTrans();
@@ -86,7 +87,7 @@ export default function SelectableTable({
 
     if (routeName) {
       // Force navigation to page 1 when changing per_page
-      const routeParams = {...route().params};
+      const routeParams = { ...route().params };
 
       // Remove page parameter to reset to page 1
       if (routeParams.page) {
@@ -129,16 +130,18 @@ export default function SelectableTable({
         <table className="w-full text-sm rtl:text-right ltr:text-left text-neutral-800 dark:text-neutral-200">
           <thead className="text-neutral-700 uppercase border-b-2 border-neutral-500 bg-neutral-100 dark:bg-neutral-800 dark:text-neutral-300">
             <tr>
-              <th className="py-2 px-3 w-10">
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 text-green-600 bg-neutral-100 border-neutral-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-neutral-800 dark:focus:ring-offset-neutral-800 focus:ring-2 dark:bg-neutral-700 dark:border-neutral-600"
-                    checked={data.length > 0 && selectedItems.length === data.length}
-                    onChange={handleSelectAll}
-                  />
-                </div>
-              </th>
+              {showSelection && (
+                <th className="py-2 px-3 w-10">
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      className="w-4 h-4 text-green-600 bg-neutral-100 border-neutral-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-neutral-800 dark:focus:ring-offset-neutral-800 focus:ring-2 dark:bg-neutral-700 dark:border-neutral-600"
+                      checked={data.length > 0 && selectedItems.length === data.length}
+                      onChange={handleSelectAll}
+                    />
+                  </div>
+                </th>
+              )}
               {columns.map(column => (
                 <th
                   key={column.field}
@@ -180,31 +183,33 @@ export default function SelectableTable({
                     className={`transition-colors ${customRowClass || defaultRowClass} border-b border-neutral-300 dark:border-neutral-800 ${isSelected ? 'bg-green-50 dark:bg-green-950' : ''} ${onRowClick ? 'cursor-pointer' : ''}`}
                     onClick={onRowClick ? () => onRowClick(item) : undefined}
                   >
-                    <td
-                      className="px-3 py-2"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSelect(item);
-                      }}
-                    >
-                      <div className="flex items-center">
-                        <input
-                          type="checkbox"
-                          className="w-4 h-4 text-green-600 bg-neutral-100 border-neutral-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-neutral-800 dark:focus:ring-offset-neutral-800 focus:ring-2 dark:bg-neutral-700 dark:border-neutral-600"
-                          checked={isSelected}
-                          onChange={() => {}} // onChange handled by the parent div's onClick
-                        />
-                      </div>
-                    </td>
+                    {showSelection && (
+                      <td
+                        className="px-3 py-2"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleSelect(item);
+                        }}
+                      >
+                        <div className="flex items-center">
+                          <input
+                            type="checkbox"
+                            className="w-4 h-4 text-green-600 bg-neutral-100 border-neutral-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-neutral-800 dark:focus:ring-offset-neutral-800 focus:ring-2 dark:bg-neutral-700 dark:border-neutral-600"
+                            checked={isSelected}
+                            onChange={() => { }}
+                          />
+                        </div>
+                      </td>
+                    )}
                     {renderRow
                       ? renderRow(item, isSelected, handleSelect)
                       : columns.map((column, i) => (
-                          <td key={i} className="px-3 py-2">
-                            {column.render
-                              ? column.render(item)
-                              : item[column.accessor] || '-'}
-                          </td>
-                        ))
+                        <td key={i} className="px-3 py-2">
+                          {column.render
+                            ? column.render(item)
+                            : item[column.accessor] || '-'}
+                        </td>
+                      ))
                     }
                   </tr>
                 );

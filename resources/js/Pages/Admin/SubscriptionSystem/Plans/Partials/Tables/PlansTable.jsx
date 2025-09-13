@@ -83,6 +83,7 @@ export default function PlansTable({ plans }) {
             sortOptions={sortOptions}
             defaultSortField="id"
             defaultSortDirection="desc"
+            showSelection={false}
         />
     );
 }

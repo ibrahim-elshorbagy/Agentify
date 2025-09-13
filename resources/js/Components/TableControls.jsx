@@ -16,6 +16,7 @@ export default function TableControls({
   sortOptions = [],
   queryParams = {},
   routeName,
+  showSelection = true,
 }) {
   const { t } = useTrans();
   const [showPerPage, setShowPerPage] = useState(false);
@@ -64,7 +65,7 @@ export default function TableControls({
   return (
     <div className="flex flex-wrap items-center justify-between gap-2 mb-4 text-sm">
       <div className="flex items-center gap-2">
-        {selectedItems.length > 0 ? (
+        {showSelection && selectedItems.length > 0 ? (
           <ActionButton
             variant="delete"
             icon="fa-trash"
