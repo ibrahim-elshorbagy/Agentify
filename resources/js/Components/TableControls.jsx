@@ -88,7 +88,6 @@ export default function TableControls({
               variant="primary"
               icon="fa-sort"
               size="sm"
-              className="bg-neutral-200 text-neutral-700 dark:bg-neutral-700 dark:text-neutral-300 hover:bg-neutral-300 dark:hover:bg-neutral-600"
               onClick={(e) => { e.stopPropagation(); setShowSortMenu(!showSortMenu); }}
             >
               {t('sort')}

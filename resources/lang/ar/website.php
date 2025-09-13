@@ -127,6 +127,12 @@ return [
   'response_sent_successfully' => 'تم إرسال الرد بنجاح',
   'response_saved_as_draft' => 'تم حفظ الرد كمسودة',
   'no_message_content' => 'لا يوجد محتوى للرسالة',
+  'mark_as_read' => 'تحديد كمقروء',
+  'mark_as_unread' => 'تحديد كغير مقروء',
+  'move_to_spam' => 'نقل إلى المزعج',
+  'move_to_bin' => 'نقل إلى سلة المحذوفات',
+  'delete_permanently' => 'حذف نهائي',
+  'confirm_delete_permanently' => 'هل أنت متأكد من حذف هذا البريد الإلكتروني نهائياً؟ لا يمكن التراجع عن هذا الإجراء.',
 
   /* Task Management */
   'tasks' => 'المهام',

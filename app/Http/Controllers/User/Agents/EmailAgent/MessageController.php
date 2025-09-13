@@ -65,6 +65,85 @@ class MessageController extends Controller
     return back()->with('error', $result['message']);
   }
 
+  public function toggleRead(Request $request, $id)
+  {
+    $result = $this->emailService->toggleRead($id);
+
+    if ($result['success']) {
+      return back()->with('success', $result['message']);
+    }
+
+    return back()->with('error', $result['message']);
+  }
+
+  public function moveToSpam(Request $request, $id)
+  {
+    $result = $this->emailService->moveToSpam($id);
+
+    if ($result['success']) {
+      return back()
+        ->with('title', __('website_response.email_moved_title'))
+        ->with('message', $result['message'])
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
+  public function moveToBin(Request $request, $id)
+  {
+    $result = $this->emailService->moveToBin($id);
+
+    if ($result['success']) {
+      return back()
+        ->with('title', __('website_response.email_moved_title'))
+        ->with('message', $result['message'])
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
+  public function restore(Request $request, $id)
+  {
+    $result = $this->emailService->restore($id);
+
+    if ($result['success']) {
+      return back()
+        ->with('title', __('website_response.email_restored_title'))
+        ->with('message', $result['message'])
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
+  public function deletePermanently(Request $request, $id)
+  {
+    $result = $this->emailService->deletePermanently($id);
+
+    if ($result['success']) {
+      return back()
+        ->with('title', __('website_response.email_deleted_title'))
+        ->with('message', $result['message'])
+        ->with('status', 'success');
+    }
+
+    return back()
+      ->with('title', __('website_response.error_title'))
+      ->with('message', $result['message'])
+      ->with('status', 'error');
+  }
+
   public function view($id)
   {
     $message = Message::with(['responses' => function($query) {

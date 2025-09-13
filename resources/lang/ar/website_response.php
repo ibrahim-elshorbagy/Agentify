@@ -116,15 +116,30 @@ return [
     'plans_deleted_title' => 'تم حذف الخطط',
     'plans_deleted_message' => 'تم حذف :count من الخطط بنجاح.',
 
-    // Message Response Management
+        // Message Response Management
     "message_response_created_title" => "تم إنشاء الرد ",
     "message_response_created_message" => "تم إنشاء الرد بنجاح.",
-    "message_response_updated_title" => "تم تحديث الرد ",
+    "message_response_updated_title" => "تم تحديث الرد",
     "message_response_updated_message" => "تم تحديث الرد بنجاح.",
+
+    /* Email Action Responses */
+    'email_marked_as_read' => 'تم تحديد البريد الإلكتروني كمقروء بنجاح.',
+    'email_marked_as_unread' => 'تم تحديد البريد الإلكتروني كغير مقروء بنجاح.',
+    'email_moved_to_spam' => 'تم نقل البريد الإلكتروني إلى المزعج بنجاح.',
+    'email_moved_to_bin' => 'تم نقل البريد الإلكتروني إلى سلة المحذوفات بنجاح.',
+    'email_restored_to_inbox' => 'تم استعادة البريد الإلكتروني إلى صندوق الوارد بنجاح.',
+    'email_deleted_permanently' => 'تم حذف البريد الإلكتروني نهائياً.',
+    'error_updating_email_status' => 'خطأ في تحديث حالة البريد الإلكتروني.',
+    'error_moving_email' => 'خطأ في نقل البريد الإلكتروني.',
+    'error_restoring_email' => 'خطأ في استعادة البريد الإلكتروني.',
+    'error_deleting_email' => 'خطأ في حذف البريد الإلكتروني.',
+    'email_moved_title' => 'تم نقل البريد',
+    'email_restored_title' => 'تم استعادة البريد',
+    'email_deleted_title' => 'تم حذف البريد',
     "message_saved_as_draft" => "تم حفظ الرد كمسودة.",
-    "message_updated_and_sent" => "تم تحديث الرد وارساله بنجاح.",
-    "message_updated_successfully" => "تم التحديث بنجاح.",
-    "error_storing_message" => "حدث خطأ أثناء حفظ .",
-    "error_updating_message" => "حدث خطأ أثناء تحديث .",
+    "message_updated_and_sent" => "تم تحديث وإرسال الرد بنجاح.",
+    "message_updated_successfully" => "تم تحديث الرد بنجاح.",
+    "error_storing_message" => "حدث خطأ أثناء حفظ الرد.",
+    "error_updating_message" => "حدث خطأ أثناء تحديث الرد.",
     "error_title" => "خطأ",
 ];

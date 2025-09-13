@@ -117,10 +117,26 @@ return [
 
 
     // Message Response Management
+        // Message Response Management
     "message_response_created_title" => "Response Created",
-    "message_response_created_message" => "Your response has been created successfully.",
+    "message_response_created_message" => "Response has been created successfully.",
     "message_response_updated_title" => "Response Updated",
-    "message_response_updated_message" => "Your response has been updated successfully.",
+    "message_response_updated_message" => "Response has been updated successfully.",
+
+    /* Email Action Responses */
+    'email_marked_as_read' => 'Email marked as read successfully.',
+    'email_marked_as_unread' => 'Email marked as unread successfully.',
+    'email_moved_to_spam' => 'Email moved to spam successfully.',
+    'email_moved_to_bin' => 'Email moved to bin successfully.',
+    'email_restored_to_inbox' => 'Email restored to inbox successfully.',
+    'email_deleted_permanently' => 'Email deleted permanently.',
+    'error_updating_email_status' => 'Error updating email status.',
+    'error_moving_email' => 'Error moving email.',
+    'error_restoring_email' => 'Error restoring email.',
+    'error_deleting_email' => 'Error deleting email.',
+    'email_moved_title' => 'Email Moved',
+    'email_restored_title' => 'Email Restored',
+    'email_deleted_title' => 'Email Deleted',
     "message_saved_as_draft" => "Response saved as draft.",
     "message_updated_and_sent" => "Response updated and sent successfully.",
     "message_updated_successfully" => "Response updated successfully.",

@@ -16,6 +16,32 @@ export default function BinTable({ emails, queryParams }) {
     });
   };
 
+  // Toggle read function
+  const toggleRead = (emailId) => {
+    router.patch(route('user.email-agent.toggle-read', emailId), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Restore to inbox function
+  const restore = (emailId) => {
+    router.patch(route('user.email-agent.restore', emailId), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Delete permanently function
+  const deletePermanently = (emailId) => {
+    if (confirm(t('confirm_delete_permanently'))) {
+      router.delete(route('user.email-agent.delete-permanently', emailId), {
+        preserveState: true,
+        preserveScroll: true,
+      });
+    }
+  };
+
   // Table configuration
   const columns = [
     { field: 'id', label: t('id'), icon: 'fa-hashtag' },
@@ -80,9 +106,22 @@ export default function BinTable({ emails, queryParams }) {
             )}
           </button>
 
+          {/* Read/Unread toggle - dimmed for deleted emails */}
+          <button
+            onClick={() => toggleRead(email.id)}
+            className="hover:scale-110 transition-transform duration-200 opacity-50 hover:opacity-70"
+            title={email.is_read ? t('mark_as_unread') : t('mark_as_read')}
+          >
+            {email.is_read ? (
+              <i className="fa-solid fa-envelope-open text-blue-500 text-lg"></i>
+            ) : (
+              <i className="fa-solid fa-envelope text-green-500 text-lg"></i>
+            )}
+          </button>
+
           <ActionButton
             href={route('user.email-agent.view', email.id)}
-            variant="edit"
+            variant="info"
             icon="fa-eye"
             size="xs"
             as="a"
@@ -90,20 +129,20 @@ export default function BinTable({ emails, queryParams }) {
             {t('view')}
           </ActionButton>
           <ActionButton
-            // href={route('user.email-agent.restore', email.id)}
+            onClick={() => restore(email.id)}
             variant="success"
             icon="fa-undo"
             size="xs"
-            as="a"
+            as="button"
           >
             {t('restore')}
           </ActionButton>
           <ActionButton
-            // href={route('user.email-agent.delete-permanently', email.id)}
-            variant="danger"
+            onClick={() => deletePermanently(email.id)}
+            variant="delete"
             icon="fa-trash-can"
             size="xs"
-            as="a"
+            as="button"
           >
             {t('delete')}
           </ActionButton>

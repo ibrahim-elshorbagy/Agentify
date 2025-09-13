@@ -134,6 +134,12 @@ return [
   'response_sent_successfully' => 'Response sent successfully',
   'response_saved_as_draft' => 'Response saved as draft',
   'no_message_content' => 'No message content available',
+  'mark_as_read' => 'Mark as Read',
+  'mark_as_unread' => 'Mark as Unread',
+  'move_to_spam' => 'Move to Spam',
+  'move_to_bin' => 'Move to Bin',
+  'delete_permanently' => 'Delete Permanently',
+  'confirm_delete_permanently' => 'Are you sure you want to delete this email permanently? This action cannot be undone.',
 
   /* Task Management */
   'tasks' => 'Tasks',

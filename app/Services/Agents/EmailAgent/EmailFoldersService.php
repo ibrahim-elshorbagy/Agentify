@@ -171,6 +171,125 @@ class EmailFoldersService
     }
 
     /**
+     * Toggle read status for an email
+     */
+    public function toggleRead($id)
+    {
+        try {
+            $message = Message::findOrFail($id);
+
+            // Toggle the read status
+            $message->is_read = !$message->is_read;
+            $message->save();
+
+            $status = $message->is_read ? 'read' : 'unread';
+
+            return [
+                'success' => true,
+                'message' => __('website_response.email_marked_as_' . $status),
+                'is_read' => $message->is_read
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.error_updating_email_status')
+            ];
+        }
+    }
+
+    /**
+     * Move email to spam folder
+     */
+    public function moveToSpam($id)
+    {
+        try {
+            $message = Message::findOrFail($id);
+            $message->folder = 'spam';
+            $message->save();
+
+            return [
+                'success' => true,
+                'message' => __('website_response.email_moved_to_spam')
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.error_moving_email')
+            ];
+        }
+    }
+
+    /**
+     * Move email to bin folder
+     */
+    public function moveToBin($id)
+    {
+        try {
+            $message = Message::findOrFail($id);
+            $message->folder = 'bin';
+            $message->save();
+
+            return [
+                'success' => true,
+                'message' => __('website_response.email_moved_to_bin')
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.error_moving_email')
+            ];
+        }
+    }
+
+    /**
+     * Restore email to inbox
+     */
+    public function restore($id)
+    {
+        try {
+            $message = Message::findOrFail($id);
+            $message->folder = 'inbox';
+            $message->save();
+
+            return [
+                'success' => true,
+                'message' => __('website_response.email_restored_to_inbox')
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.error_restoring_email')
+            ];
+        }
+    }
+
+    /**
+     * Delete email permanently
+     */
+    public function deletePermanently($id)
+    {
+        try {
+            $message = Message::findOrFail($id);
+
+            // Delete associated responses first
+            $message->responses()->delete();
+
+            // Delete the message
+            $message->delete();
+
+            return [
+                'success' => true,
+                'message' => __('website_response.email_deleted_permanently')
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => __('website_response.error_deleting_email')
+            ];
+        }
+    }
+
+    /**
      * Toggle star status for an email
      */
     public function toggleStar($id)

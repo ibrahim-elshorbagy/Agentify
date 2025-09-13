@@ -16,6 +16,30 @@ export default function SpamTable({ emails, queryParams }) {
     });
   };
 
+  // Toggle read function
+  const toggleRead = (emailId) => {
+    router.patch(route('user.email-agent.toggle-read', emailId), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Restore to inbox function
+  const restore = (emailId) => {
+    router.patch(route('user.email-agent.restore', emailId), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Move to bin function
+  const moveToBin = (emailId) => {
+    router.patch(route('user.email-agent.move-to-bin', emailId), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
   // Table configuration
   const columns = [
     { field: 'id', label: t('id'), icon: 'fa-hashtag' },
@@ -80,9 +104,22 @@ export default function SpamTable({ emails, queryParams }) {
             )}
           </button>
 
+          {/* Read/Unread toggle */}
+          <button
+            onClick={() => toggleRead(email.id)}
+            className="hover:scale-110 transition-transform duration-200"
+            title={email.is_read ? t('mark_as_unread') : t('mark_as_read')}
+          >
+            {email.is_read ? (
+              <i className="fa-solid fa-envelope-open text-blue-500 text-lg hover:text-blue-600"></i>
+            ) : (
+              <i className="fa-solid fa-envelope text-green-500 text-lg hover:text-green-600"></i>
+            )}
+          </button>
+
           <ActionButton
             href={route('user.email-agent.view', email.id)}
-            variant="edit"
+            variant="info"
             icon="fa-eye"
             size="xs"
             as="a"
@@ -90,13 +127,22 @@ export default function SpamTable({ emails, queryParams }) {
             {t('view')}
           </ActionButton>
           <ActionButton
-            // href={route('user.email-agent.restore', email.id)}
-            variant="success"
+            onClick={() => restore(email.id)}
+            variant="edit"
             icon="fa-undo"
             size="xs"
-            as="a"
+            as="button"
           >
             {t('restore')}
+          </ActionButton>
+          <ActionButton
+            onClick={() => moveToBin(email.id)}
+            variant="delete"
+            icon="fa-trash-can"
+            size="xs"
+            as="button"
+          >
+            {t('bin')}
           </ActionButton>
         </div>
       </td>

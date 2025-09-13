@@ -16,6 +16,30 @@ export default function InboxTable({ emails, queryParams }) {
     });
   };
 
+  // Toggle read function
+  const toggleRead = (emailId) => {
+    router.patch(route('user.email-agent.toggle-read', emailId), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Move to spam function
+  const moveToSpam = (emailId) => {
+    router.patch(route('user.email-agent.move-to-spam', emailId), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Move to bin function
+  const moveToBin = (emailId) => {
+    router.patch(route('user.email-agent.move-to-bin', emailId), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
   // Table configuration
   const columns = [
     { field: 'id', label: t('id'), icon: 'fa-hashtag' },
@@ -80,14 +104,45 @@ export default function InboxTable({ emails, queryParams }) {
             )}
           </button>
 
+          {/* Read/Unread toggle */}
+          <button
+            onClick={() => toggleRead(email.id)}
+            className="hover:scale-110 transition-transform duration-200"
+            title={email.is_read ? t('mark_as_unread') : t('mark_as_read')}
+          >
+            {email.is_read ? (
+              <i className="fa-solid fa-envelope-open text-blue-500 text-lg hover:text-blue-600"></i>
+            ) : (
+              <i className="fa-solid fa-envelope text-green-500 text-lg hover:text-green-600"></i>
+            )}
+          </button>
+
           <ActionButton
             href={route('user.email-agent.view', email.id)}
-            variant="edit"
+            variant="info"
             icon="fa-eye"
             size="xs"
             as="a"
           >
             {t('view')}
+          </ActionButton>
+          <ActionButton
+            onClick={() => moveToSpam(email.id)}
+            variant="delete"
+            icon="fa-shield-exclamation"
+            size="xs"
+            as="button"
+          >
+            {t('spam')}
+          </ActionButton>
+          <ActionButton
+            onClick={() => moveToBin(email.id)}
+            variant="delete"
+            icon="fa-trash-can"
+            size="xs"
+            as="button"
+          >
+            {t('bin')}
           </ActionButton>
         </div>
       </td>
