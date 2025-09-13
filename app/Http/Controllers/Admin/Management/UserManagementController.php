@@ -92,18 +92,39 @@ class UserManagementController extends Controller
 
     public function update(Request $request, User $user)
     {
+        // Check if it's a block/unblock request
+        if ($request->has('blocked') && !$request->has('name')) {
+            $request->validate([
+                'blocked' => ['required', 'boolean'],
+            ]);
+
+            $user->update([
+                'blocked' => $request->blocked,
+            ]);
+
+            $status = $request->blocked ? 'blocked' : 'unblocked';
+
+            return back()
+                ->with('title', __("website_response.user_{$status}_title"))
+                ->with('message', __("website_response.user_{$status}_message"))
+                ->with('status', $request->blocked ? 'warning' : 'success');
+        }
+
+        // Regular update request
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'username' => ['required', 'string', 'max:255', 'unique:users,username,' . $user->id],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', 'string', 'exists:roles,name'],
+            'blocked' => ['nullable', 'boolean'],
         ]);
 
         $updateData = [
             'name' => $data['name'],
             'email' => $data['email'],
             'username' => $data['username'],
+            'blocked' => $data['blocked'] ?? false,
         ];
 
         if (!empty($data['password'])) {
@@ -139,7 +160,44 @@ class UserManagementController extends Controller
             ->with('status', 'warning');
     }
 
-    public function bulkDestroy(Request $request)
+    /**
+     * Bulk block users
+     */
+    public function bulkBlock(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:users,id'
+        ]);
+
+        $count = User::whereIn('id', $request->ids)
+            ->where('blocked', false)
+            ->update(['blocked' => true]);
+
+        return back()->with('success', "Successfully blocked {$count} users.");
+    }
+
+    /**
+     * Bulk unblock users
+     */
+    public function bulkUnblock(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:users,id'
+        ]);
+
+        $count = User::whereIn('id', $request->ids)
+            ->where('blocked', true)
+            ->update(['blocked' => false]);
+
+        return back()->with('success', "Successfully unblocked {$count} users.");
+    }
+
+    /**
+     * Bulk delete users
+     */
+    public function bulkDelete(Request $request)
     {
         $request->validate([
             'ids' => ['required', 'array'],

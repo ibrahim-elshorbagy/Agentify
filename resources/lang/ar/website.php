@@ -286,6 +286,24 @@ return [
   'login' => 'تسجيل الدخول',
 
 
+  /* User Management */
+  'user' => 'مستخدم',
+  'created_at' => 'تاريخ الإنشاء',
+  'actions' => 'الإجراءات',
+  'confirm_password' => 'تأكيد كلمة المرور',
+  'username' => 'اسم المستخدم',
+  'blocked' => 'محظور',
+  'block' => 'حظر',
+  'unblock' => 'إلغاء الحظر',
+  'block_users' => 'حظر المستخدمين',
+  'unblock_users' => 'إلغاء حظر المستخدمين',
+  'delete_users' => 'حذف المستخدمين',
+
+  // User Management Bulk Actions
+  'confirm_block_users' => 'هل أنت متأكد أنك تريد حظر :count مستخدمين؟',
+  'confirm_unblock_users' => 'هل أنت متأكد أنك تريد إلغاء حظر :count مستخدمين؟',
+  'confirm_delete_users' => 'هل أنت متأكد أنك تريد حذف :count مستخدمين؟ هذا الإجراء لا يمكن التراجع عنه.',
+
   // User Management
   'admins' => 'المسؤولون',
   'create_user' => 'إنشاء مستخدم',
@@ -302,6 +320,8 @@ return [
   "search_admins" => "البحث عن مسؤولين...",
   'leave_empty_to_keep_current' => 'اتركه فارغًا للاحتفاظ بكلمة المرور الحالية',
   'select_role_required' => '-- اختر الدور --',
+  'add_user' => 'إضافة مستخدم',
+  'search_name_username_email' => 'البحث بالاسم أو اسم المستخدم أو البريد الإلكتروني...',
 
   /* Plans Management */
   'plans' => 'الخطط',

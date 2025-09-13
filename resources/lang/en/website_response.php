@@ -23,6 +23,24 @@ return [
   'profile_image_updated_message' => 'Your profile image has been updated successfully.',
 
 
+  /* User Management Responses */
+  'user_created_title' => 'User Created',
+  'user_created_message' => 'User has been created successfully.',
+  'user_updated_title' => 'User Updated',
+  'user_updated_message' => 'User has been updated successfully.',
+  'user_deleted_title' => 'User Deleted',
+  'user_deleted_message' => 'User has been deleted successfully.',
+  'users_deleted_title' => 'Users Deleted',
+  'users_deleted_message' => ':count users have been deleted successfully.',
+  'user_blocked_title' => 'User Blocked',
+  'user_blocked_message' => 'User has been blocked successfully.',
+  'user_unblocked_title' => 'User Unblocked',
+  'user_unblocked_message' => 'User has been unblocked successfully.',
+  'user_delete_error_title' => 'Delete Error',
+  'user_delete_error_self_message' => 'You cannot delete your own account.',
+
+
+
   /* Plans Controller Responses */
   'plan_created_title' => 'Plan Created',
   'plan_created_message' => 'Plan has been created successfully.',

@@ -11,7 +11,11 @@ Route::middleware( ['auth','role:admin'])->group(function () {
     Route::post('/admin/users', [UserManagementController::class, 'store'])->name('admin.users.store');
     Route::put('/admin/users/{user}', [UserManagementController::class, 'update'])->name('admin.users.update');
     Route::delete('/admin/users/{user}', [UserManagementController::class, 'destroy'])->name('admin.users.destroy');
-    Route::delete('/admin/users-bulk', [UserManagementController::class, 'bulkDestroy'])->name('admin.users.bulk-destroy');
+
+    // User Management bulk actions
+    Route::patch('/admin/users/bulk/block', [UserManagementController::class, 'bulkBlock'])->name('admin.users.bulk.block');
+    Route::patch('/admin/users/bulk/unblock', [UserManagementController::class, 'bulkUnblock'])->name('admin.users.bulk.unblock');
+    Route::delete('/admin/users/bulk/delete', [UserManagementController::class, 'bulkDelete'])->name('admin.users.bulk.delete');
 
     // Plans Management routes
     Route::get('/admin/plans', [PlansController::class, 'index'])->name('admin.plans.index');

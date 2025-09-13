@@ -58,6 +58,17 @@ return [
   'actions' => 'Actions',
   'confirm_password' => 'Confirm Password',
   'username' => 'Username',
+  'blocked' => 'Blocked',
+  'block' => 'Block',
+  'unblock' => 'Unblock',
+  'block_users' => 'Block Users',
+  'unblock_users' => 'Unblock Users',
+  'delete_users' => 'Delete Users',
+
+  // User Management Bulk Actions
+  'confirm_block_users' => 'Are you sure you want to block :count users?',
+  'confirm_unblock_users' => 'Are you sure you want to unblock :count users?',
+  'confirm_delete_users' => 'Are you sure you want to delete :count users? This action cannot be undone.',
 
 
   /* Profile Image Form */

@@ -22,6 +22,23 @@ return [
   'profile_image_updated_title' => 'تم تحديث الصورة ',
   'profile_image_updated_message' => 'تم تحديث صورة الملف الشخصي بنجاح.',
 
+  /* User Management Responses */
+  'user_created_title' => 'تم إنشاء المستخدم',
+  'user_created_message' => 'تم إنشاء المستخدم بنجاح.',
+  'user_updated_title' => 'تم تحديث المستخدم',
+  'user_updated_message' => 'تم تحديث المستخدم بنجاح.',
+  'user_deleted_title' => 'تم حذف المستخدم',
+  'user_deleted_message' => 'تم حذف المستخدم بنجاح.',
+  'users_deleted_title' => 'تم حذف المستخدمين',
+  'users_deleted_message' => 'تم حذف :count من المستخدمين بنجاح.',
+  'user_blocked_title' => 'تم حظر المستخدم',
+  'user_blocked_message' => 'تم حظر المستخدم بنجاح.',
+  'user_unblocked_title' => 'تم إلغاء حظر المستخدم',
+  'user_unblocked_message' => 'تم إلغاء حظر المستخدم بنجاح.',
+  'user_delete_error_title' => 'خطأ في الحذف',
+  'user_delete_error_self_message' => 'لا يمكنك حذف حسابك الخاص.',
+
+
   /* Validation Rules Responses */
   'wallet_currency_mismatch' => 'المحفظة المختارة لا تتطابق مع العملة المختارة.',
 
@@ -87,5 +104,6 @@ return [
   'confirm_restore_emails' => 'هل أنت متأكد أنك تريد استعادة :count بريد إلى الوارد؟',
   'confirm_permanent_delete_bulk' => 'هل أنت متأكد أنك تريد حذف :count بريد بشكل نهائي؟ هذا الإجراء لا يمكن التراجع عنه.',
   'confirm_action' => 'هل أنت متأكد أنك تريد تنفيذ هذا الإجراء على :count عنصر؟',
+
 
 ];
