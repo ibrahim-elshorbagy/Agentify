@@ -85,6 +85,15 @@ export default function BinTable({ emails, queryParams }) {
     });
   };
 
+  const handleBulkDeletePermanently = async (ids) => {
+    router.delete(route('user.email-agent.bulk.delete-permanently'), {
+      data: { ids },
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+
   // Define bulk actions for inbox
   const bulkActions = [
     {
@@ -126,6 +135,14 @@ export default function BinTable({ emails, queryParams }) {
       variant: 'yellow',
       requiresConfirmation: true,
       confirmMessageKey: 'confirm_move_to_spam'
+    },
+    {
+      label: t('delete_permanently'),
+      icon: 'fa-solid fa-trash-can',
+      handler: handleBulkDeletePermanently,
+      variant: 'delete',
+      requiresConfirmation: true,
+      confirmMessageKey: 'confirm_permanent_delete_bulk'
     },
 
   ];
