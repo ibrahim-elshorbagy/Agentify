@@ -9,9 +9,12 @@ use App\Models\Agent\EmailAgent\MessageResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class MessageController extends Controller
 {
+  use AuthorizesRequests;
+
   protected $emailService;
 
   public function __construct(EmailFoldersService $emailService)
@@ -49,7 +52,7 @@ class MessageController extends Controller
 
     return inertia('User/Agents/EmailAgent/Messages', [
       'emails' => $data['emails'],
-      'type'=> 'bin',
+      'type' => 'bin',
       'queryParams' => $data['queryParams'],
       'emailCounts' => $this->emailService->getEmailCounts(),
     ]);
@@ -57,42 +60,23 @@ class MessageController extends Controller
 
   public function toggleStar(Request $request, Message $message)
   {
-    // Ensure the message belongs to the current user
-    if ($message->user_id !== Auth::id()) {
-      abort(403, 'Unauthorized access to this message.');
-    }
 
-    $result = $this->emailService->toggleStar($message->id);
-
-    if ($result['success']) {
-      return back()->with('success', $result['message']);
-    }
-
-    return back()->with('error', $result['message']);
+    $this->authorize('manage', $message);
+    $this->emailService->toggleStar($message->id);
+    
   }
 
   public function toggleRead(Request $request, Message $message)
   {
-    // Ensure the message belongs to the current user
-    if ($message->user_id !== Auth::id()) {
-      abort(403, 'Unauthorized access to this message.');
-    }
 
-    $result = $this->emailService->toggleRead($message->id);
+    $this->authorize('manage', $message);
+    $this->emailService->toggleRead($message->id);
 
-    if ($result['success']) {
-      return back()->with('success', $result['message']);
-    }
-
-    return back()->with('error', $result['message']);
   }
 
   public function moveToSpam(Request $request, Message $message)
   {
-    // Ensure the message belongs to the current user
-    if ($message->user_id !== Auth::id()) {
-      abort(403, 'Unauthorized access to this message.');
-    }
+    $this->authorize('manage', $message);
 
     $result = $this->emailService->moveToSpam($message->id);
 
@@ -111,10 +95,7 @@ class MessageController extends Controller
 
   public function moveToBin(Request $request, Message $message)
   {
-    // Ensure the message belongs to the current user
-    if ($message->user_id !== Auth::id()) {
-      abort(403, 'Unauthorized access to this message.');
-    }
+    $this->authorize('manage', $message);
 
     $result = $this->emailService->moveToBin($message->id);
 
@@ -133,10 +114,7 @@ class MessageController extends Controller
 
   public function restore(Request $request, Message $message)
   {
-    // Ensure the message belongs to the current user
-    if ($message->user_id !== Auth::id()) {
-      abort(403, 'Unauthorized access to this message.');
-    }
+    $this->authorize('manage', $message);
 
     $result = $this->emailService->restore($message->id);
 
@@ -155,10 +133,7 @@ class MessageController extends Controller
 
   public function deletePermanently(Request $request, Message $message)
   {
-    // Ensure the message belongs to the current user
-    if ($message->user_id !== Auth::id()) {
-      abort(403, 'Unauthorized access to this message.');
-    }
+    $this->authorize('forceDelete', $message);
 
     $result = $this->emailService->deletePermanently($message->id);
 
@@ -177,14 +152,13 @@ class MessageController extends Controller
 
   public function view(Message $message)
   {
-    // Ensure the message belongs to the current user
-    if ($message->user_id !== Auth::id()) {
-      abort(403, 'Unauthorized access to this message.');
-    }
+    $this->authorize('view', $message);
 
-    $message->load(['responses' => function($query) {
-      $query->orderBy('created_at', 'asc');
-    }]);
+    $message->load([
+      'responses' => function ($query) {
+        $query->orderBy('created_at', 'asc');
+      }
+    ]);
 
     // Mark message as read if it's unread
     if (!$message->is_read) {
@@ -199,10 +173,7 @@ class MessageController extends Controller
 
   public function storeResponse(Request $request, Message $message)
   {
-    // Ensure the message belongs to the current user
-    if ($message->user_id !== Auth::id()) {
-      abort(403, 'Unauthorized access to this message.');
-    }
+    $this->authorize('manage', $message);
 
     $result = $this->emailService->storeResponse($request, $message->id);
 
@@ -236,10 +207,7 @@ class MessageController extends Controller
 
   public function updateMessage(Request $request, MessageResponse $messageResponse)
   {
-    // Ensure the message response belongs to the current user
-    if ($messageResponse->user_id !== Auth::id()) {
-      abort(403, 'Unauthorized access to this message response.');
-    }
+    $this->authorize('manage', $messageResponse);
 
     $result = $this->emailService->updateMessage($request, $messageResponse->id);
 

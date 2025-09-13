@@ -608,5 +608,6 @@ return [
   "cancel" => "Cancel",
   "update" => "Update",
   "sent_at" => "Sent At",
+  "type_your_message"=>"Type Your Message",
 
 ];

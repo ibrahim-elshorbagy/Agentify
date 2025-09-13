@@ -199,12 +199,7 @@ class EmailFoldersService
                 'message' => __('website_response.email_marked_as_' . $status),
                 'is_read' => $message->is_read
             ];
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return [
-                'success' => false,
-                'message' => __('website_response.unauthorized_access')
-            ];
-        } catch (\Exception $e) {
+        }  catch (\Exception $e) {
             return [
                 'success' => false,
                 'message' => __('website_response.error_updating_email_status')
@@ -228,12 +223,7 @@ class EmailFoldersService
                 'success' => true,
                 'message' => __('website_response.email_moved_to_spam')
             ];
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return [
-                'success' => false,
-                'message' => __('website_response.unauthorized_access')
-            ];
-        } catch (\Exception $e) {
+        }  catch (\Exception $e) {
             return [
                 'success' => false,
                 'message' => __('website_response.error_moving_email')
@@ -257,12 +247,7 @@ class EmailFoldersService
                 'success' => true,
                 'message' => __('website_response.email_moved_to_bin')
             ];
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return [
-                'success' => false,
-                'message' => __('website_response.unauthorized_access')
-            ];
-        } catch (\Exception $e) {
+        }  catch (\Exception $e) {
             return [
                 'success' => false,
                 'message' => __('website_response.error_moving_email')
@@ -286,12 +271,7 @@ class EmailFoldersService
                 'success' => true,
                 'message' => __('website_response.email_restored_to_inbox')
             ];
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return [
-                'success' => false,
-                'message' => __('website_response.unauthorized_access')
-            ];
-        } catch (\Exception $e) {
+        }  catch (\Exception $e) {
             return [
                 'success' => false,
                 'message' => __('website_response.error_restoring_email')
@@ -319,12 +299,7 @@ class EmailFoldersService
                 'success' => true,
                 'message' => __('website_response.email_deleted_permanently')
             ];
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return [
-                'success' => false,
-                'message' => __('website_response.unauthorized_access')
-            ];
-        } catch (\Exception $e) {
+        }  catch (\Exception $e) {
             return [
                 'success' => false,
                 'message' => __('website_response.error_deleting_email')
@@ -350,18 +325,13 @@ class EmailFoldersService
 
             return [
                 'success' => true,
-                'message' => __('website.email_' . $status . '_successfully'),
+                'message' => __('website_response.email_' . $status . '_successfully'),
                 'is_starred' => $message->is_starred
             ];
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        }  catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => __('website_response.unauthorized_access')
-            ];
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => __('website.error_updating_email_status')
+                'message' => __('website_response.error_updating_email_status')
             ];
         }
     }
@@ -408,12 +378,7 @@ class EmailFoldersService
                 'message' => $statusMessage,
                 'response' => $response,
             ];
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return [
-                'success' => false,
-                'message' => __('website_response.unauthorized_access')
-            ];
-        } catch (\Exception $e) {
+        }  catch (\Exception $e) {
             return [
                 'success' => false,
                 'message' => __('website_response.error_storing_response')
@@ -464,12 +429,7 @@ class EmailFoldersService
                 'message' => $statusMessage,
                 'response' => $messageResponse,
             ];
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return [
-                'success' => false,
-                'message' => __('website_response.unauthorized_access')
-            ];
-        } catch (\Exception $e) {
+        }  catch (\Exception $e) {
             return [
                 'success' => false,
                 'message' => __('website_response.error_storing_message'),
@@ -516,12 +476,7 @@ class EmailFoldersService
                 'message' => $statusMessage,
                 'response' => $messageResponse,
             ];
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return [
-                'success' => false,
-                'message' => __('website_response.unauthorized_access')
-            ];
-        } catch (\Exception $e) {
+        }  catch (\Exception $e) {
             return [
                 'success' => false,
                 'message' => __('website_response.error_updating_message'),
