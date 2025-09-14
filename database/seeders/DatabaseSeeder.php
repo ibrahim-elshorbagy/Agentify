@@ -30,15 +30,23 @@ class DatabaseSeeder extends Seeder
       'email' => 'ibrahim.elshorbagy47@gmail.com',
       'password' => Hash::make('a'),
     ]);
+    $admin = User::create([
+      'id' => 3,
+      'name' => 'ihab',
+      'username' => 'i',
+      'email' => 'ihab@gmail.com',
+      'password' => Hash::make('i'),
+    ]);
+
 
     $admin->assignRole($SystemAdminRole);
 
     $user = User::create([
       'id' => 2,
-      'name' => 'ibrahim elshorbagy',
-      'username' => 'u',
-      'email' => 'e.mohmed55@gmail.com',
-      'password' => Hash::make('u'),
+      'name' => 'saad',
+      'username' => 's',
+      'email' => 'saad@gmail.com',
+      'password' => Hash::make('s'),
     ]);
 
     $user->assignRole($userRole);
@@ -47,12 +55,12 @@ class DatabaseSeeder extends Seeder
 
     // User::factory(100)->create();
     Message::factory()
-    ->count(100)
-    ->has(
+      ->count(100)
+      ->has(
         MessageResponse::factory()->count(2),
         'responses' // 👈 relationship in Message model
-    )
-    ->create();
+      )
+      ->create();
 
 
 
