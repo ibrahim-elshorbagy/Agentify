@@ -30,7 +30,7 @@ export default function ErrorPage({ status }) {
     <ErrorLayout status={status}>
       <Head title={title} />
       <div className="rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 overflow-hidden">
-        <div className="p-6">
+        <div className="p-6 min-w-[300px] lg:min-w-[400px]">
           <div className="mb-4 flex justify-center">
             <i className="fa-solid fa-triangle-exclamation text-6xl text-red-500"></i>
           </div>

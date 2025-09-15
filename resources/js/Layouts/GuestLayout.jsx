@@ -54,7 +54,7 @@ export default function GuestLayout({ children, title = 'Authentication' }) {
       </header>
 
       {/* Main Content */}
-      <main className="flex min-h-screen items-center justify-center bg-neutral-50 dark:bg-neutral-950 pt-20">
+      <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-green-50 via-neutral-50 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 pt-20">
 
         <div className="w-full max-w-md px-4 sm:px-0">
           {children}
