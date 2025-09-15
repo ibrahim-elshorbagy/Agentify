@@ -47,6 +47,25 @@ export default function PricingSection({ plans = [] }) {
     return Math.max(0, monthlyTotal - yearlyCost);
   };
 
+  const calculateAverageDiscount = (plans) => {
+    const yearlyPlans = plans.filter(p => p.type === 'yearly');
+    let percents = [];
+
+    yearlyPlans.forEach(yearly => {
+      const monthly = plans.find(
+        m => m.type === 'monthly' && m.name.en === yearly.name.en.replace(' Yearly', '')
+      );
+      if (monthly) {
+        const savings = (monthly.price * 12 - yearly.price);
+        const percent = Math.round((savings / (monthly.price * 12)) * 100);
+        percents.push(percent);
+      }
+    });
+
+    return percents.length ? Math.max(...percents) : 0; // show biggest discount
+  };
+  const discount = calculateAverageDiscount(plans);
+
   // Organize features by sections with proper translation
   const organizeFeatures = (planFeatures) => {
     if (!planFeatures || !Array.isArray(planFeatures)) return {};
@@ -189,36 +208,35 @@ export default function PricingSection({ plans = [] }) {
           <div className="inline-flex items-center bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 rounded-2xl p-2 shadow-lg">
             <button
               onClick={() => setIsYearly(false)}
-              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium transition-all duration-300 text-sm sm:text-base ${
-                !isYearly
+              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium transition-all duration-300 text-sm sm:text-base ${!isYearly
                   ? 'bg-green-600 text-white shadow-lg'
                   : 'text-neutral-600 dark:text-neutral-300 hover:text-green-600 dark:hover:text-green-400'
-              }`}
+                }`}
             >
               {t('monthly')}
             </button>
             <button
               onClick={() => setIsYearly(true)}
-              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium transition-all duration-300 relative text-sm sm:text-base ${
-                isYearly
+              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium transition-all duration-300 relative text-sm sm:text-base ${isYearly
                   ? 'bg-green-600 text-white shadow-lg'
                   : 'text-neutral-600 dark:text-neutral-300 hover:text-green-600 dark:hover:text-green-400'
-              }`}
+                }`}
             >
               {t('yearly')}
-              <span className="absolute -top-2 rtl:-left-2 ltr-right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
-                {t('save_20%')}
-              </span>
+              {discount > 0 && (
+                <span className="absolute -top-2 rtl:-left-2 ltr:-right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full whitespace-nowrap">
+                  {t('save')} {discount}%
+                </span>
+              )}
             </button>
           </div>
         </div>
 
         {/* Plans Grid */}
-        <div className={`grid grid-cols-1 sm:grid-cols-2 gap-12 md:gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto ${
-          displayPlans.length === 4 ? 'lg:grid-cols-4' :
-          displayPlans.length === 3 ? 'lg:grid-cols-3' :
-          'lg:grid-cols-3'
-        }`}>
+        <div className={`grid grid-cols-1 sm:grid-cols-2 gap-12 md:gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto ${displayPlans.length === 4 ? 'lg:grid-cols-4' :
+            displayPlans.length === 3 ? 'lg:grid-cols-3' :
+              'lg:grid-cols-3'
+          }`}>
           {displayPlans.map((plan, index) => {
             const color = getPlanColor(plan);
             const isPopular = isPlanPopular(plan);
@@ -230,11 +248,10 @@ export default function PricingSection({ plans = [] }) {
             return (
               <div
                 key={plan.id}
-                className={`relative bg-white dark:bg-neutral-900 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 ${
-                  isPopular
+                className={`relative bg-white dark:bg-neutral-900 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 ${isPopular
                     ? `${colorClasses.popular} scale-105 order-first sm:order-none`
                     : `${colorClasses.border} hover:border-green-300 dark:hover:border-green-600`
-                }`}
+                  }`}
               >
                 {/* Popular Badge */}
                 {isPopular && (
@@ -287,20 +304,17 @@ export default function PricingSection({ plans = [] }) {
                           <ul className="space-y-2 sm:space-y-3">
                             {section.features.map((feature, featureIndex) => (
                               <li key={featureIndex} className="flex items-start gap-2 sm:gap-3">
-                                <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                                  feature.included
+                                <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${feature.included
                                     ? 'bg-green-100 dark:bg-green-900/30'
                                     : 'bg-neutral-100 dark:bg-neutral-700'
-                                }`}>
-                                  <i className={`fa-solid ${
-                                    feature.included ? 'fa-check text-green-600 dark:text-green-400' : 'fa-times text-neutral-400'
-                                  } text-xs`}></i>
+                                  }`}>
+                                  <i className={`fa-solid ${feature.included ? 'fa-check text-green-600 dark:text-green-400' : 'fa-times text-neutral-400'
+                                    } text-xs`}></i>
                                 </div>
-                                <span className={`text-xs sm:text-sm leading-relaxed ${
-                                  feature.included
+                                <span className={`text-xs sm:text-sm leading-relaxed ${feature.included
                                     ? 'text-neutral-700 dark:text-neutral-300'
                                     : 'text-neutral-400 dark:text-neutral-500 line-through'
-                                }`}>
+                                  }`}>
                                   {feature.name}
                                 </span>
                               </li>
@@ -314,20 +328,17 @@ export default function PricingSection({ plans = [] }) {
                     <ul className="space-y-2 sm:space-y-3">
                       {keyFeatures.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-start gap-2 sm:gap-3">
-                          <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                            feature.included
+                          <div className={`w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${feature.included
                               ? 'bg-green-100 dark:bg-green-900/30'
                               : 'bg-neutral-100 dark:bg-neutral-700'
-                          }`}>
-                            <i className={`fa-solid ${
-                              feature.included ? 'fa-check text-green-600 dark:text-green-400' : 'fa-times text-neutral-400'
-                            } text-xs`}></i>
+                            }`}>
+                            <i className={`fa-solid ${feature.included ? 'fa-check text-green-600 dark:text-green-400' : 'fa-times text-neutral-400'
+                              } text-xs`}></i>
                           </div>
-                          <span className={`text-xs sm:text-sm leading-relaxed ${
-                            feature.included
+                          <span className={`text-xs sm:text-sm leading-relaxed ${feature.included
                               ? 'text-neutral-700 dark:text-neutral-300'
                               : 'text-neutral-400 dark:text-neutral-500 line-through'
-                          }`}>
+                            }`}>
                             {feature.name}
                           </span>
                         </li>

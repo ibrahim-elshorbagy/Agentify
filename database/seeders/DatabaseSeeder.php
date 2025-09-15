@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
       'email' => 'ibrahim.elshorbagy47@gmail.com',
       'password' => Hash::make('a'),
     ]);
+    $admin->assignRole($SystemAdminRole);
+
     $admin = User::create([
       'id' => 3,
       'name' => 'ihab',
