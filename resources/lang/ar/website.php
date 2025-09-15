@@ -86,6 +86,7 @@ return [
   'theme_mode' => 'وضع السمة',
   'choose_theme' => 'اختر بين الوضع الفاتح أو الداكن أو تفضيلات النظام',
   'danger_zone' => 'منطقة الخطر',
+  "email_verified"=>"تم التحقق من البريد الإلكتروني",
 
   /* Profile Information Form */
   'update_profile_info' => 'تحديث معلومات الملف الشخصي وعنوان البريد الإلكتروني للحساب',

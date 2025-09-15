@@ -104,6 +104,15 @@ export default function UpdateProfileInformation({
             )}
           </div>
         )}
+        {mustVerifyEmail && user.email_verified_at !== null && (
+          <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-900/30 rounded-lg">
+            <p className="text-sm text-green-800 dark:text-green-200 flex items-center gap-2">
+              <i className="fa-solid fa-circle-check"></i>
+              <span>{t('email_verified')}</span>
+            </p>
+          </div>
+        )}
+
 
         <div className="pt-4 flex items-center gap-4">
           <PrimaryButton

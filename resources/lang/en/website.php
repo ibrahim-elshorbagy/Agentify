@@ -86,6 +86,8 @@ return [
   'theme_mode' => 'Theme Mode',
   'choose_theme' => 'Choose between light, dark, or system preference',
   'danger_zone' => 'Danger Zone',
+  "email_verified"=>"Email Verified",
+
 
   /* Profile Information Form */
   'update_profile_info' => 'Update your account\'s profile information and email address',
