@@ -48,7 +48,7 @@ export default function UsersTable({ users, onEdit }) {
       preserveScroll: true,
     });
   };
-  
+
   // Define bulk actions for users
   const bulkActions = [
     {
