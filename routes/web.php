@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
 
 });
 // User preferences routes
-Route::post('/locale', [PreferencesController::class, 'changeLocale'])->name('locale.change');
+Route::any('/locale', [PreferencesController::class, 'changeLocale'])->name('locale.change');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

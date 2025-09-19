@@ -1,7 +1,5 @@
-import { usePage } from '@inertiajs/react'
-
 export function useTrans() {
-  const { translations } = usePage().props
+  const translations = window.translations || {}
 
   function t(key, replacements = {}) {
     let value = translations[key] || key

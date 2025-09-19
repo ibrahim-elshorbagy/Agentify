@@ -1,4 +1,4 @@
-import { usePage, router } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import { useEffect } from "react";
 import { useTrans } from "@/Hooks/useTrans";
 import SelectInput from "@/Components/SelectInput";
@@ -10,11 +10,28 @@ export default function UpdateLanguagePreferences() {
   const handleLanguageChange = (e) => {
     const newLocale = e.target.value;
 
-    router.post(
-      route("locale.change"),
-      { locale: newLocale },
-      { preserveScroll: true }
-    );
+    // Create and submit a form dynamically
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = route("locale.change");
+
+    // Add CSRF token
+    const csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = '_token';
+    csrfInput.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    form.appendChild(csrfInput);
+
+    // Add locale input
+    const localeInput = document.createElement('input');
+    localeInput.type = 'hidden';
+    localeInput.name = 'locale';
+    localeInput.value = newLocale;
+    form.appendChild(localeInput);
+
+    // Submit the form
+    document.body.appendChild(form);
+    form.submit();
   };
 
   // Debugging logs

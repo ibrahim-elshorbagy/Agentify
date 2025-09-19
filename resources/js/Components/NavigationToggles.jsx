@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { router, usePage } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 import { useTrans } from '@/Hooks/useTrans';
 
 export default function NavigationToggles({
@@ -23,7 +23,6 @@ export default function NavigationToggles({
 
   useEffect(() => {
     const root = window.document.documentElement;
-
     if (theme === 'dark') {
       root.classList.add('dark');
       localStorage.theme = 'dark';
@@ -42,15 +41,6 @@ export default function NavigationToggles({
 
   const toggleTheme = () => {
     setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
-
-  const toggleLocale = () => {
-    const newLocale = locale === 'en' ? 'ar' : 'en';
-    router.post(route('locale.change'), {
-      locale: newLocale
-    }, {
-      preserveScroll: true
-    });
   };
 
   const getThemeIcon = () => {
@@ -98,16 +88,32 @@ export default function NavigationToggles({
         {showLabels && <span className="text-sm">{getThemeText()}</span>}
       </button>
 
-      {/* Language Toggle */}
-      <button
-        onClick={toggleLocale}
-        className={buttonClass}
-        aria-label={`Toggle to ${locale === 'en' ? 'Arabic' : 'English'} language`}
-        title={`Switch to ${locale === 'en' ? 'Arabic' : 'English'}`}
+      {/* Language Toggle Form */}
+      <form
+        action={route('locale.change')}
+        method="POST"
+        style={{ display: 'inline' }}
       >
-        <i className="fa-solid fa-language"></i>
-        {showLabels && <span className="text-sm">{getLanguageText()}</span>}
-      </button>
+        <input
+          type="hidden"
+          name="_token"
+          value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')}
+        />
+        <input
+          type="hidden"
+          name="locale"
+          value={locale === 'en' ? 'ar' : 'en'}
+        />
+        <button
+          type="submit"
+          className={buttonClass}
+          aria-label={`Toggle to ${locale === 'en' ? 'Arabic' : 'English'} language`}
+          title={`Switch to ${locale === 'en' ? 'Arabic' : 'English'}`}
+        >
+          <i className="fa-solid fa-language"></i>
+          {showLabels && <span className="text-sm">{getLanguageText()}</span>}
+        </button>
+      </form>
     </div>
   );
 }
