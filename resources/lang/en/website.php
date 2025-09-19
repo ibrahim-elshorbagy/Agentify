@@ -203,6 +203,7 @@ return [
   "draft_emails"=>"Draft Emails",
   "delete_drafts"=>"Delete Drafts",
   "send_drafts"=>"Sent Drafts",
+  "search"=>"Search",
 
   /* Draft/Sent Bulk Action Confirmations */
   'confirm_send_drafts' => 'Are you sure you want to send :count draft messages?',

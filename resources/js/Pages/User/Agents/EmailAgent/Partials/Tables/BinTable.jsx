@@ -279,9 +279,9 @@ export default function BinTable({ emails, queryParams }) {
       </div>
       <div className="mb-4">
         <SearchBar
-          placeholder={t('search_deleted_emails')}
-          defaultValue={queryParams.from || queryParams.subject || ''}
-          queryKey="from"
+          placeholder={t('search')}
+          defaultValue={queryParams.search || ''}
+          queryKey="search"
           routeName="user.email-agent.bin.emails"
           icon="fa-magnifying-glass"
         />

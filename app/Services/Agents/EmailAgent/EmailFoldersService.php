@@ -17,8 +17,7 @@ class EmailFoldersService
   public function inboxEmails(Request $request)
   {
     $request->validate([
-      'from' => ['nullable', 'string', 'max:255'],
-      'subject' => ['nullable', 'string', 'max:255'],
+      'search' => ['nullable', 'string', 'max:255'],
       'is_read' => ['nullable', 'boolean'],
       'is_starred' => ['nullable', 'boolean'],
       'date_from' => ['nullable', 'date'],
@@ -55,8 +54,7 @@ class EmailFoldersService
   public function spamEmails(Request $request)
   {
     $request->validate([
-      'from' => ['nullable', 'string', 'max:255'],
-      'subject' => ['nullable', 'string', 'max:255'],
+      'search' => ['nullable', 'string', 'max:255'],
       'is_read' => ['nullable', 'boolean'],
       'is_starred' => ['nullable', 'boolean'],
       'date_from' => ['nullable', 'date'],
@@ -93,8 +91,7 @@ class EmailFoldersService
   public function binEmails(Request $request)
   {
     $request->validate([
-      'from' => ['nullable', 'string', 'max:255'],
-      'subject' => ['nullable', 'string', 'max:255'],
+      'search' => ['nullable', 'string', 'max:255'],
       'is_read' => ['nullable', 'boolean'],
       'is_starred' => ['nullable', 'boolean'],
       'date_from' => ['nullable', 'date'],
@@ -131,20 +128,21 @@ class EmailFoldersService
   private function applyFilters($query, Request $request)
   {
     // Combined search in from_email, from_name, OR subject
-    if ($request->filled('from')) {
-      $searchTerm = '%' . $request->input('from') . '%';
+    if ($request->filled('search')) {
+      $searchTerm = '%' . trim($request->input('search')) . '%';
+
       $query->where(function ($q) use ($searchTerm) {
         $q->where('from_email', 'like', $searchTerm)
           ->orWhere('from_name', 'like', $searchTerm)
-          ->orWhere('subject', 'like', $searchTerm);
+          ->orWhere('to_email', 'like', $searchTerm)
+          ->orWhere('to_name', 'like', $searchTerm)
+          ->orWhere('subject', 'like', $searchTerm)
+          ->orWhere('body_text', 'like', $searchTerm);
       });
     }
 
-    if ($request->filled('subject')) {
-      $query->where('subject', 'like', '%' . $request->input('subject') . '%');
-    }
 
-    if ($request->has('is_read') && $request->is_read !== null) {
+    if ($request->has(key: 'is_read') && $request->is_read !== null) {
       $query->where('is_read', $request->boolean('is_read'));
     }
 

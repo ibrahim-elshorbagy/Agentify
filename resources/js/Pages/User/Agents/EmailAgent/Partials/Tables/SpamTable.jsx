@@ -259,9 +259,9 @@ export default function SpamTable({ emails, queryParams }) {
       </div>
       <div className="mb-4">
         <SearchBar
-          placeholder={t('search_spam_emails')}
-          defaultValue={queryParams.from || queryParams.subject || ''}
-          queryKey="from"
+          placeholder={t('search')}
+          defaultValue={queryParams.search || ''}
+          queryKey="search"
           routeName="user.email-agent.spam.emails"
           icon="fa-magnifying-glass"
         />

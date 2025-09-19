@@ -133,9 +133,9 @@ export default function SentTable({ emails, queryParams }) {
       </div>
       <div className="mb-4">
         <SearchBar
-          placeholder={t('search_to_from_email')}
-          defaultValue={queryParams.to_email || queryParams.from_email || ''}
-          queryKey="to_email"
+          placeholder={t('search')}
+          defaultValue={queryParams.search || ''}
+          queryKey="search"
           routeName="user.email-agent.sent.emails"
           icon="fa-magnifying-glass"
         />
