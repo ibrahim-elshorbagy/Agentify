@@ -61,7 +61,6 @@ export default function UpdateProfileInformation({
               isFocused
               autoComplete="username"
               icon="fa-user"
-              disabled
             />
             <InputError className="mt-2" message={errors.name} />
           </div>
@@ -76,7 +75,6 @@ export default function UpdateProfileInformation({
               required
               autoComplete="username"
               icon="fa-envelope"
-              disabled
             />
             <InputError className="mt-2" message={errors.email} />
           </div>

@@ -16,7 +16,7 @@ class PlansController extends Controller
   {
     $request->validate([
       'name' => ['nullable', 'string', 'max:255'],
-      'sort' => ['nullable', 'string', 'in:id,price,type,created_at'],
+      'sort' => ['nullable', 'string', 'in:id,price,type,updated_at'],
       'direction' => ['nullable', 'string', 'in:asc,desc'],
       'per_page' => ['nullable', 'integer', 'min:1'],
     ]);
