@@ -11,10 +11,12 @@ export default function DraftTable({ emails, queryParams }) {
 
   // Delete draft function
   const deleteDraft = (emailId) => {
-    router.delete(route('user.email-agent.response.delete-draft', emailId), {
-      preserveState: true,
-      preserveScroll: true,
-    });
+    if (confirm(t('confirm_delete_draft_permanently'))) {
+      router.delete(route('user.email-agent.response.delete-draft', emailId), {
+        preserveState: true,
+        preserveScroll: true,
+      });
+    }
   };
 
   // Send draft function

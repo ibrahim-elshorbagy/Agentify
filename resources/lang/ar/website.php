@@ -177,6 +177,7 @@ return [
   'move_to_bin' => 'نقل إلى سلة المحذوفات',
   'delete_permanently' => 'حذف نهائي',
   'confirm_delete_permanently' => 'هل أنت متأكد من حذف هذا البريد الإلكتروني نهائياً؟ لا يمكن التراجع عن هذا الإجراء.',
+  'confirm_delete_draft_permanently' => 'هل أنت متأكد من حذف هذه المسودة نهائياً؟ لا يمكن التراجع عن هذا الإجراء.',
   "sent_emails" => "رسائل المرسلة",
   "draft_emails" => "رسائل المسودة",
   "delete_drafts" => "حذف المسودات",

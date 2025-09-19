@@ -199,6 +199,8 @@ return [
   'move_to_bin' => 'Move to Bin',
   'delete_permanently' => 'Delete Permanently',
   'confirm_delete_permanently' => 'Are you sure you want to delete this email permanently? This action cannot be undone.',
+  'confirm_delete_draft_permanently' => 'Are you sure you want to delete this draft permanently? This action cannot be undone.',
+
   "sent_emails"=>"Sent Emails",
   "draft_emails"=>"Draft Emails",
   "delete_drafts"=>"Delete Drafts",

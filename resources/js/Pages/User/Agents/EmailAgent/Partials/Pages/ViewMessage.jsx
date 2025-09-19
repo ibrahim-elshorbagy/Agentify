@@ -54,6 +54,16 @@ export default function ViewMessage({ message, responses = [] }) {
     });
   };
 
+  // Delete draft function
+  const deleteDraft = (emailId) => {
+    if (confirm(t('confirm_delete_draft_permanently'))) {
+      router.delete(route('user.email-agent.response.delete-draft', emailId), {
+        preserveState: true,
+        preserveScroll: true,
+      });
+    }
+  };
+
   // Delete permanently function
   const deletePermanently = (emailId) => {
     if (confirm(t('confirm_delete_permanently'))) {
@@ -166,7 +176,6 @@ export default function ViewMessage({ message, responses = [] }) {
                     >
                       {t('reply')}
                     </PrimaryButton>
-
                     {/* Show restore to inbox for spam and bin folders */}
                     {(message.folder === 'spam' || message.folder === 'bin') && (
                       <PrimaryButton
@@ -254,18 +263,31 @@ export default function ViewMessage({ message, responses = [] }) {
                             {response.sent_at && (t('sent_at') + ': ' + new Date(response.sent_at).toLocaleString())}
                           </div>
                           {response.status === 'draft' && (
-                            <PrimaryButton
-                              onClick={() => {
-                                setSelectedResponse(response);
-                                setShowEditModal(true);
-                              }}
-                              icon="fa-pen-to-square"
-                              rounded="rounded-lg"
-                              size="sm"
-                              withShadow={false}
-                            >
-                              {t('edit')}
-                            </PrimaryButton>
+                            <div className='flex items-center gap-4'>
+                              <PrimaryButton
+                                onClick={() => deleteDraft(response.id)}
+                                variant="delete"
+                                icon="fa-trash-can"
+                                size="xs"
+                                as="button"
+                                className='bg-red-600'
+                              >
+                                {t('delete')}
+                              </PrimaryButton>
+
+                              <PrimaryButton
+                                onClick={() => {
+                                  setSelectedResponse(response);
+                                  setShowEditModal(true);
+                                }}
+                                icon="fa-pen-to-square"
+                                rounded="rounded-lg"
+                                size="sm"
+                                withShadow={false}
+                              >
+                                {t('edit')}
+                              </PrimaryButton>
+                            </div>
                           )}
                         </div>
                       </div>
