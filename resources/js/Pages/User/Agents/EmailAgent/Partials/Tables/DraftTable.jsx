@@ -35,7 +35,7 @@ export default function DraftTable({ emails, queryParams }) {
   };
 
   const handleBulkSendDrafts = async (ids) => {
-    router.patch(route('user.email-agent.response.bulk.send-drafts'),{ ids }, {
+    router.patch(route('user.email-agent.response.bulk.send-drafts'), { ids }, {
       preserveState: true,
       preserveScroll: true,
     });
@@ -169,6 +169,8 @@ export default function DraftTable({ emails, queryParams }) {
           queryKey="search"
           routeName="user.email-agent.draft.emails"
           icon="fa-magnifying-glass"
+          pageParam="draft_page"
+
         />
       </div>
       <SelectableTable
@@ -182,6 +184,8 @@ export default function DraftTable({ emails, queryParams }) {
         defaultSortDirection="desc"
         getRowClassName={getRowClassName}
         bulkActions={bulkActions}
+        pageParam="draft_page"
+
       />
     </>
   );

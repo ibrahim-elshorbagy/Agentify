@@ -8,20 +8,23 @@ export default function SearchBar({
   routeName,
   icon,
   routeParams = {},
+  pageParam = 'page',
 }) {
   const handleKeyPress = (e) => {
     if (e.key !== "Enter") return;
 
-    let queryParams = { ...Object.fromEntries(new URLSearchParams(window.location.search)) };
+    let queryString = { ...Object.fromEntries(new URLSearchParams(window.location.search)) };
 
     if (e.target.value) {
-      queryParams[queryKey] = e.target.value;
+      queryString[queryKey] = e.target.value;
     } else {
-      delete queryParams[queryKey];
+      delete queryString[queryKey];
     }
-    delete queryParams.page;
 
-    router.get(route(routeName, routeParams), queryParams, {
+    // Reset page to 1 when searching
+    queryString[pageParam] = 1;
+
+    router.get(route(routeName, routeParams), queryString, {
       preserveState: true,
       replace: true,
     });

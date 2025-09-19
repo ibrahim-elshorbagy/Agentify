@@ -284,6 +284,7 @@ export default function BinTable({ emails, queryParams }) {
           queryKey="search"
           routeName="user.email-agent.bin.emails"
           icon="fa-magnifying-glass"
+          pageParam="bin_page"
         />
       </div>
       <SelectableTable
@@ -297,6 +298,8 @@ export default function BinTable({ emails, queryParams }) {
         defaultSortDirection="desc"
         getRowClassName={getRowClassName}
         bulkActions={bulkActions}
+        pageParam="bin_page"
+
 
       />
     </>

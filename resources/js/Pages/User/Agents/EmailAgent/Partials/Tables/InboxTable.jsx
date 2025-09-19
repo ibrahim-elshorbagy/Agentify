@@ -263,6 +263,8 @@ export default function InboxTable({ emails, queryParams }) {
           queryKey="search"
           routeName="user.email-agent.inbox.emails"
           icon="fa-magnifying-glass"
+        pageParam="inbox_page"
+
         />
       </div>
       <SelectableTable
@@ -276,6 +278,7 @@ export default function InboxTable({ emails, queryParams }) {
         defaultSortDirection="desc"
         getRowClassName={getRowClassName}
         bulkActions={bulkActions}
+        pageParam="inbox_page"
       />
     </>
   );

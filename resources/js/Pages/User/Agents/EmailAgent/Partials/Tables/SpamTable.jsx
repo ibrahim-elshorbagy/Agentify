@@ -264,6 +264,8 @@ export default function SpamTable({ emails, queryParams }) {
           queryKey="search"
           routeName="user.email-agent.spam.emails"
           icon="fa-magnifying-glass"
+          pageParam="spam_page"
+
         />
       </div>
       <SelectableTable
@@ -277,6 +279,7 @@ export default function SpamTable({ emails, queryParams }) {
         defaultSortDirection="desc"
         getRowClassName={getRowClassName}
         bulkActions={bulkActions}
+        pageParam="spam_page"
 
       />
     </>

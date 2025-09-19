@@ -18,6 +18,8 @@ export default function TableControls({
   queryParams = {},
   routeName,
   showSelection = true,
+  pageParam = 'page',
+
 }) {
   const { t } = useTrans();
   const [showPerPage, setShowPerPage] = useState(false);
@@ -30,15 +32,46 @@ export default function TableControls({
     if (field === sortField && sortDirection === 'asc') {
       direction = 'desc';
     }
-    onSort(field, direction);
+
+    if (onSort) {
+      onSort(field, direction);
+    } else if (routeName) {
+      // Get current URL query parameters instead of using props queryParams
+      let queryString = { ...Object.fromEntries(new URLSearchParams(window.location.search)) };
+      queryString.sort = field;
+      queryString.direction = direction;
+
+      // Explicitly set page to 1 to reset pagination
+      queryString[pageParam] = 1;
+
+      router.get(route(routeName, route().params), queryString, {
+        preserveState: true,
+        replace: true
+      });
+    }
+
     setShowSortMenu(false);
   };
 
   const handlePerPageChange = (value) => {
-    onPerPageChange(value);
+    if (onPerPageChange) {
+      onPerPageChange(value);
+    } else if (routeName) {
+      // Get current URL query parameters instead of using props queryParams
+      let queryString = { ...Object.fromEntries(new URLSearchParams(window.location.search)) };
+      queryString.per_page = value;
+
+      // Explicitly set page to 1 to reset pagination
+      queryString[pageParam] = 1;
+
+      router.get(route(routeName, route().params), queryString, {
+        preserveState: true,
+        replace: true
+      });
+    }
+
     setShowPerPage(false);
   };
-
   const handleBulkAction = (action) => {
     if (selectedItems.length === 0) return;
 
@@ -97,14 +130,14 @@ export default function TableControls({
                         <button
                           key={index}
                           className={`flex items-center w-full px-4 py-2 gap-2 ltr:text-left rtl:text-right text-sm hover:bg-neutral-100 dark:hover:bg-neutral-700 ${action.variant === 'delete'
-                              ? 'text-red-600 dark:text-red-400'
-                              : action.variant === 'green'
-                                ? 'text-green-600 dark:text-green-400'
-                                : action.variant === 'blue'
-                                  ? 'text-blue-600 dark:text-blue-400'
-                                  : action.variant === 'yellow'
-                                    ? 'text-yellow-600 dark:text-yellow-400'
-                                    : 'text-neutral-700 dark:text-neutral-200'
+                            ? 'text-red-600 dark:text-red-400'
+                            : action.variant === 'green'
+                              ? 'text-green-600 dark:text-green-400'
+                              : action.variant === 'blue'
+                                ? 'text-blue-600 dark:text-blue-400'
+                                : action.variant === 'yellow'
+                                  ? 'text-yellow-600 dark:text-yellow-400'
+                                  : 'text-neutral-700 dark:text-neutral-200'
                             }`}
                           onClick={() => handleBulkAction(action)}
                         >

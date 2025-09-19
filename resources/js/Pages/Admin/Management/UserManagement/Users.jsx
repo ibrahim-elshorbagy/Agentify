@@ -51,6 +51,7 @@ export default function Users({ auth, users, admins, roles, queryParams = null }
         <SearchBar
           placeholder={t('search_users')}
           defaultValue={queryParams.name || ''}
+          pageParam="users_page"
           queryKey="name"
           routeName="admin.users.index"
           icon="fa-magnifying-glass"
@@ -58,7 +59,7 @@ export default function Users({ auth, users, admins, roles, queryParams = null }
       </div>
 
 
-      <UsersTable users={users} onEdit={toggleEditModal} />
+      <UsersTable users={users} onEdit={toggleEditModal} pageParam="users_page" />
     </div>
   );
 
@@ -89,7 +90,7 @@ export default function Users({ auth, users, admins, roles, queryParams = null }
         />
       </div>
 
-      <UsersTable users={admins} onEdit={toggleEditModal} />
+      <UsersTable users={admins} onEdit={toggleEditModal} pageParam="admins_page"/>
     </div>
   );
 

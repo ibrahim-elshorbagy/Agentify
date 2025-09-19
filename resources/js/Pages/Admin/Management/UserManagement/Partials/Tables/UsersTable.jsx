@@ -4,7 +4,7 @@ import React from 'react';
 import { useTrans } from '@/Hooks/useTrans';
 import { router } from '@inertiajs/react';
 
-export default function UsersTable({ users, onEdit }) {
+export default function UsersTable({ users, onEdit,pageParam }) {
   const { t } = useTrans();
 
   // Individual user actions
@@ -228,6 +228,7 @@ export default function UsersTable({ users, onEdit }) {
       renderRow={renderRow}
       getRowClassName={getRowClassName}
       bulkActions={bulkActions}
+      pageParam={pageParam}
     />
   );
 }

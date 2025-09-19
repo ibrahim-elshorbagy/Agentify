@@ -138,6 +138,8 @@ export default function SentTable({ emails, queryParams }) {
           queryKey="search"
           routeName="user.email-agent.sent.emails"
           icon="fa-magnifying-glass"
+          pageParam="sent_page"
+
         />
       </div>
       <SelectableTable
@@ -151,6 +153,8 @@ export default function SentTable({ emails, queryParams }) {
         defaultSortDirection="desc"
         getRowClassName={getRowClassName}
         bulkActions={bulkActions}
+        pageParam="sent_page"
+
       />
     </>
   );

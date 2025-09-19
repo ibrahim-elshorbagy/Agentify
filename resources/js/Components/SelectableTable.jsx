@@ -22,6 +22,8 @@ export default function SelectableTable({
   defaultPerPage = 15,
   getRowClassName = null,
   showSelection = true,
+  pageParam = 'page',
+
 }) {
   // Initialize translation
   const { t } = useTrans();
@@ -70,14 +72,18 @@ export default function SelectableTable({
     if (onSort) {
       onSort(field, direction);
     } else if (routeName) {
-      // Default behavior - update URL params
-      const params = new URLSearchParams(queryParams);
-      params.set('sort', field);
-      params.set('direction', direction);
-      router.get(route(routeName, {
-        ...route().params,
-        ...Object.fromEntries(params)
-      }), {}, { preserveState: true });
+      // Get current URL query parameters instead of using props queryParams
+      let queryString = { ...Object.fromEntries(new URLSearchParams(window.location.search)) };
+      queryString.sort = field;
+      queryString.direction = direction;
+
+      // Reset page to 1 when sorting
+      queryString[pageParam] = 1;
+
+      router.get(route(routeName, route().params), queryString, {
+        preserveState: true,
+        replace: true
+      });
     }
   };
 
@@ -86,18 +92,17 @@ export default function SelectableTable({
     setPerPage(value);
 
     if (routeName) {
-      // Force navigation to page 1 when changing per_page
-      const routeParams = { ...route().params };
+      // Get current URL query parameters instead of using props queryParams
+      let queryString = { ...Object.fromEntries(new URLSearchParams(window.location.search)) };
+      queryString.per_page = value;
 
-      // Remove page parameter to reset to page 1
-      if (routeParams.page) {
-        delete routeParams.page;
-      }
+      // Reset page to 1 when changing per page
+      queryString[pageParam] = 1;
 
-      // Set the new per_page value
-      routeParams.per_page = value;
-
-      router.get(route(routeName, routeParams), {}, { preserveState: true });
+      router.get(route(routeName, route().params), queryString, {
+        preserveState: true,
+        replace: true
+      });
     }
   };
 
@@ -125,6 +130,8 @@ export default function SelectableTable({
         sortOptions={sortOptions}
         queryParams={queryParams}
         routeName={routeName}
+        pageParam={pageParam}
+
       />
 
       <div className="overflow-auto">
