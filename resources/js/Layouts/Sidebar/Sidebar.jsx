@@ -46,6 +46,8 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
       role: 'user',
       submenu: [
         { name: t('inbox'), href: route('user.email-agent.inbox.emails'), route: 'user.email-agent.inbox.*', icon: 'fa-inbox' },
+        { name: t('sent'), href: route('user.email-agent.sent.emails'), route: 'user.email-agent.sent.*', icon: 'fa-paper-plane' },
+        { name: t('draft'), href: route('user.email-agent.draft.emails'), route: 'user.email-agent.draft.*', icon: 'fa-file' },
         { name: t('spam'), href: route('user.email-agent.spam.emails'), route: 'user.email-agent.spam.*', icon: 'fa-exclamation-circle' },
         { name: t('bin'), href: route('user.email-agent.bin.emails'), route: 'user.email-agent.bin.*', icon: 'fa-trash' },
       ],

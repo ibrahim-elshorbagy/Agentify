@@ -199,6 +199,17 @@ return [
   'move_to_bin' => 'Move to Bin',
   'delete_permanently' => 'Delete Permanently',
   'confirm_delete_permanently' => 'Are you sure you want to delete this email permanently? This action cannot be undone.',
+  "sent_emails"=>"Sent Emails",
+  "draft_emails"=>"Draft Emails",
+  "delete_drafts"=>"Delete Drafts",
+  "send_drafts"=>"Sent Drafts",
+
+  /* Draft/Sent Bulk Action Confirmations */
+  'confirm_send_drafts' => 'Are you sure you want to send :count draft messages?',
+  'confirm_delete_drafts' => 'Are you sure you want to delete :count draft messages?',
+  'confirm_delete_sent_messages' => 'Are you sure you want to delete :count sent messages?',
+
+  /* End Email Agent Response Messages */
 
   /* Task Management */
   'tasks' => 'Tasks',

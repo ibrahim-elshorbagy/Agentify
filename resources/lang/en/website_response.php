@@ -135,4 +135,21 @@ return [
   'confirm_permanent_delete_bulk' => 'Are you sure you want to permanently delete :count emails? This action cannot be undone.',
   'confirm_action' => 'Are you sure you want to perform this action on :count items?',
 
+  /* Email Agent Response Messages */
+  'draft_deleted_title' => 'Draft Deleted',
+  'draft_deleted_successfully' => 'Draft message has been deleted successfully.',
+  'error_deleting_draft' => 'An error occurred while deleting the draft message.',
+  'draft_sent_title' => 'Draft Sent',
+  'draft_sent_successfully' => 'Draft message has been sent successfully.',
+  'error_sending_draft' => 'An error occurred while sending the draft message.',
+  'draft_updated_title' => 'Draft Updated',
+  'draft_updated_successfully' => 'Draft message has been updated successfully.',
+  'error_updating_draft' => 'An error occurred while updating the draft message.',
+  'bulk_drafts_deleted' => ':count draft messages have been deleted successfully.',
+  'bulk_drafts_sent' => ':count draft messages have been sent successfully.',
+  'bulk_sent_deleted' => ':count sent messages have been deleted successfully.',
+  'bulk_action_success' => 'Bulk Action Completed',
+  'error_title' => 'Error',
+  /* End Email Agent Response Messages */
+
 ];

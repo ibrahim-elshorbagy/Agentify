@@ -135,5 +135,20 @@ return [
   'confirm_permanent_delete_bulk' => 'هل أنت متأكد أنك تريد حذف :count بريد بشكل نهائي؟ هذا الإجراء لا يمكن التراجع عنه.',
   'confirm_action' => 'هل أنت متأكد أنك تريد تنفيذ هذا الإجراء على :count عنصر؟',
 
+  /* Email Agent Response Messages */
+  'draft_deleted_title' => 'تم حذف المسودة',
+  'draft_deleted_successfully' => 'تم حذف رسالة المسودة بنجاح.',
+  'error_deleting_draft' => 'حدث خطأ أثناء حذف رسالة المسودة.',
+  'draft_sent_title' => 'تم إرسال المسودة',
+  'draft_sent_successfully' => 'تم إرسال رسالة المسودة بنجاح.',
+  'error_sending_draft' => 'حدث خطأ أثناء إرسال رسالة المسودة.',
+  'draft_updated_title' => 'تم تحديث المسودة',
+  'draft_updated_successfully' => 'تم تحديث رسالة المسودة بنجاح.',
+  'error_updating_draft' => 'حدث خطأ أثناء تحديث رسالة المسودة.',
+  'bulk_drafts_deleted' => 'تم حذف :count رسائل مسودة بنجاح.',
+  'bulk_drafts_sent' => 'تم إرسال :count رسائل مسودة بنجاح.',
+  'bulk_sent_deleted' => 'تم حذف :count رسائل مرسلة بنجاح.',
+  'bulk_action_success' => 'تم إكمال العملية الجماعية',
+  /* End Email Agent Response Messages */
 
 ];

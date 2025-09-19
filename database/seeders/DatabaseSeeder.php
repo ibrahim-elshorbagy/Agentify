@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
 
     // User::factory(100)->create();
     Message::factory()
-      ->count(100)
+      ->count(10)
       ->has(
         MessageResponse::factory()->count(2),
         'responses' // 👈 relationship in Message model

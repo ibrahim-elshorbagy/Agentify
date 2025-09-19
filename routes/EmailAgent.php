@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\User\Agents\EmailAgent\MessageController;
+use App\Http\Controllers\User\Agents\EmailAgent\ResponseMessageController;
 use App\Models\Agent\EmailAgent\Message;
 use App\Models\Agent\EmailAgent\MessageResponse;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +17,13 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
   Route::get('/email-agent/spam', [MessageController::class, 'spam'])
     ->name('user.email-agent.spam.emails');
 
-  // Email actions - 
+  // Sent and Draft Emails - Response Messages
+  Route::get('/email-agent/sent', [ResponseMessageController::class, 'sent'])
+    ->name('user.email-agent.sent.emails');
+  Route::get('/email-agent/draft', [ResponseMessageController::class, 'draft'])
+    ->name('user.email-agent.draft.emails');
+
+  // Email actions -
   Route::patch('/email-agent/toggle-star/{message}', [MessageController::class, 'toggleStar'])
     ->name('user.email-agent.toggle-star')
     ->where('message', '[0-9]+');
@@ -40,6 +47,19 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
   Route::delete('/email-agent/delete-permanently/{message}', [MessageController::class, 'deletePermanently'])
     ->name('user.email-agent.delete-permanently')
     ->where('message', '[0-9]+');
+
+  // Response Message actions
+  Route::delete('/email-agent/response/delete-draft/{messageResponse}', [ResponseMessageController::class, 'deleteDraft'])
+    ->name('user.email-agent.response.delete-draft')
+    ->where('messageResponse', '[0-9]+');
+
+  Route::patch('/email-agent/response/send-draft/{messageResponse}', [ResponseMessageController::class, 'sendDraft'])
+    ->name('user.email-agent.response.send-draft')
+    ->where('messageResponse', '[0-9]+');
+
+  Route::put('/email-agent/response/update-draft/{messageResponse}', [ResponseMessageController::class, 'updateDraft'])
+    ->name('user.email-agent.response.update-draft')
+    ->where('messageResponse', '[0-9]+');
 
   // View and respond to messages - with model binding
   Route::get('/email-agent/view/{message}', [MessageController::class, 'view'])
@@ -81,5 +101,15 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
 
   Route::delete('/email-agent/bulk/delete-permanently', [MessageController::class, 'bulkDeletePermanently'])
     ->name('user.email-agent.bulk.delete-permanently');
+
+  // Bulk actions for response messages (sent/draft)
+  Route::delete('/email-agent/response/bulk/delete-drafts', [ResponseMessageController::class, 'bulkDeleteDrafts'])
+    ->name('user.email-agent.response.bulk.delete-drafts');
+
+  Route::patch('/email-agent/response/bulk/send-drafts', [ResponseMessageController::class, 'bulkSendDrafts'])
+    ->name(name: 'user.email-agent.response.bulk.send-drafts');
+
+  Route::delete('/email-agent/response/bulk/delete-sent', [ResponseMessageController::class, 'bulkDeleteSent'])
+    ->name('user.email-agent.response.bulk.delete-sent');
 
 });
