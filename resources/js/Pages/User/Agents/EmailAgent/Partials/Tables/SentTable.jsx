@@ -40,7 +40,7 @@ export default function SentTable({ emails, queryParams }) {
 
   // Table configuration
   const columns = [
-    { field: 'id', label: t('id'), icon: 'fa-hashtag' },
+    { field: 'row_number', label: t('serial'), icon: 'fa-hashtag' },
     { field: 'to_email', label: t('to'), icon: 'fa-user' },
     { field: 'from_email', label: t('from'), icon: 'fa-user' },
     { field: 'sent_at', label: t('sent_at'), icon: 'fa-calendar' },
@@ -48,7 +48,7 @@ export default function SentTable({ emails, queryParams }) {
   ];
 
   const sortOptions = [
-    { field: 'id', label: t('id') },
+    // { field: 'id', label: t('id') },
     { field: 'to_email', label: t('to') },
     { field: 'from_email', label: t('from') },
     { field: 'sent_at', label: t('sent_at') },
@@ -58,7 +58,7 @@ export default function SentTable({ emails, queryParams }) {
   const renderRow = (email) => (
     <>
       <td className="px-3 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-        {email.id}
+        {email.row_number}
       </td>
       <td className="px-3 py-4 whitespace-nowrap">
         <div className="flex flex-col">

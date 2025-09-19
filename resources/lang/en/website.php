@@ -206,6 +206,7 @@ return [
   "delete_drafts"=>"Delete Drafts",
   "send_drafts"=>"Sent Drafts",
   "search"=>"Search",
+  "serial"=>"Serial",
 
   /* Draft/Sent Bulk Action Confirmations */
   'confirm_send_drafts' => 'Are you sure you want to send :count draft messages?',

@@ -26,8 +26,10 @@ class MessageController extends Controller
   {
     $data = $this->emailService->inboxEmails($request);
 
+    $emails = $this->addRowNumbers($data['emails']);
+
     return inertia('User/Agents/EmailAgent/Messages', [
-      'emails' => $data['emails'],
+      'emails' => $emails,
       'type' => 'inbox',
       'queryParams' => $data['queryParams'],
       'emailCounts' => $this->emailService->getEmailCounts(),
@@ -37,9 +39,11 @@ class MessageController extends Controller
   public function spam(Request $request)
   {
     $data = $this->emailService->spamEmails($request);
+    
+    $emails = $this->addRowNumbers($data['emails']);
 
     return inertia('User/Agents/EmailAgent/Messages', [
-      'emails' => $data['emails'],
+      'emails' => $emails,
       'type' => 'spam',
       'queryParams' => $data['queryParams'],
       'emailCounts' => $this->emailService->getEmailCounts(),
@@ -50,8 +54,10 @@ class MessageController extends Controller
   {
     $data = $this->emailService->binEmails($request);
 
+    $emails = $this->addRowNumbers($data['emails']);
+
     return inertia('User/Agents/EmailAgent/Messages', [
-      'emails' => $data['emails'],
+      'emails' => $emails,
       'type' => 'bin',
       'queryParams' => $data['queryParams'],
       'emailCounts' => $this->emailService->getEmailCounts(),

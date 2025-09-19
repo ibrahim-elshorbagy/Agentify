@@ -150,7 +150,7 @@ export default function BinTable({ emails, queryParams }) {
 
   // Table configuration
   const columns = [
-    { field: 'id', label: t('id'), icon: 'fa-hashtag' },
+    { field: 'row_number', label: t('serial'), icon: 'fa-hashtag' },
     { field: 'from', label: t('from'), icon: 'fa-user' },
     { field: 'subject', label: t('subject'), icon: 'fa-envelope' },
     { field: 'received_at', label: t('received_at'), icon: 'fa-calendar' },
@@ -158,7 +158,7 @@ export default function BinTable({ emails, queryParams }) {
   ];
 
   const sortOptions = [
-    { field: 'id', label: t('id') },
+    // { field: 'id', label: t('id') },
     { field: 'from_email', label: t('from') },
     { field: 'subject', label: t('subject') },
     { field: 'received_at', label: t('received_at') },
@@ -170,7 +170,7 @@ export default function BinTable({ emails, queryParams }) {
   const renderRow = (email) => (
     <>
       <td className="px-3 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100 opacity-70">
-        {email.id}
+        {email.row_number}
       </td>
       <td className="px-3 py-4 whitespace-nowrap">
         <div className="flex flex-col opacity-70">

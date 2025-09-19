@@ -183,6 +183,8 @@ return [
   "delete_drafts" => "حذف المسودات",
   "send_drafts" => "ارسال المسودات",
   "search"=>"بحث",
+  "serial"=>"تسلسل",
+
   /* Draft/Sent Bulk Action Confirmations */
   'confirm_send_drafts' => 'هل أنت متأكد أنك تريد إرسال :count من الرسائل المسودة؟',
   'confirm_delete_drafts' => 'هل أنت متأكد أنك تريد حذف :count من الرسائل المسودة؟',

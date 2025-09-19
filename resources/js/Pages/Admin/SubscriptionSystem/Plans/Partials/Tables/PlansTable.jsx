@@ -18,7 +18,7 @@ export default function PlansTable({ plans }) {
     ];
 
     const sortOptions = [
-        { field: 'id', label: t('id') },
+        // { field: 'id', label: t('id') },
         { field: 'price', label: t('price') },
         { field: 'type', label: t('type') },
         { field: 'updated_at', label: t('updated_at') }
@@ -27,7 +27,7 @@ export default function PlansTable({ plans }) {
     const renderRow = (plan) => (
         <>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
-                {plan.id}
+                {plan.row_number}
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center gap-2">
@@ -81,7 +81,7 @@ export default function PlansTable({ plans }) {
             pagination={plans}
             routeName="admin.plans.index"
             sortOptions={sortOptions}
-            defaultSortField="id"
+            defaultSortField="price"
             defaultSortDirection="desc"
             showSelection={false}
         />

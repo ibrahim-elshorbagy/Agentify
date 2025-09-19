@@ -42,6 +42,7 @@ class EmailFoldersService
       ->paginate($perPage, ['*'], 'inbox_page')
       ->withQueryString();
 
+
     return [
       'emails' => $emails,
       'queryParams' => $request->query() ?: null,

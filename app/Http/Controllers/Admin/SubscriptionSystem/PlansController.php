@@ -16,12 +16,12 @@ class PlansController extends Controller
   {
     $request->validate([
       'name' => ['nullable', 'string', 'max:255'],
-      'sort' => ['nullable', 'string', 'in:id,price,type,updated_at'],
+      'sort' => ['nullable', 'string', 'in:price,type,updated_at'],
       'direction' => ['nullable', 'string', 'in:asc,desc'],
       'per_page' => ['nullable', 'integer', 'min:1'],
     ]);
 
-    $sortField = $request->input('sort', 'id');
+    $sortField = $request->input('sort', 'price');
     $sortDirection = $request->input('direction', 'desc');
     $perPage = $request->input('per_page', 15);
 
@@ -47,6 +47,10 @@ class PlansController extends Controller
     $yearlyPlans = $yearlyQuery->orderBy($sortField, $sortDirection)
       ->paginate($perPage, ['*'], 'yearly_page')
       ->withQueryString();
+
+    // Add row numbers using the base controller method
+    $monthlyPlans = $this->addRowNumbers($monthlyPlans);
+    $yearlyPlans = $this->addRowNumbers($yearlyPlans);
 
     // Features for dropdown in modals
     $features = Feature::all();
