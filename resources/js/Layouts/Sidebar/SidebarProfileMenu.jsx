@@ -6,7 +6,7 @@ import { useTrans } from '@/Hooks/useTrans';
 
 export default function SidebarProfileMenu() {
   const { t } = useTrans();
-  const { auth } = usePage().props;
+  const { auth, impersonate_admin_id } = usePage().props;
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -87,6 +87,18 @@ export default function SidebarProfileMenu() {
           <div className="flex flex-col py-1.5">
               <LanguageToggle className="w-full justify-start px-2 py-1.5 text-sm font-medium text-neutral-800 underline-offset-2 hover:bg-green-500/5 hover:text-black focus-visible:underline focus:outline-hidden dark:text-neutral-300 dark:hover:bg-green-400/5 dark:hover:text-neutral-100" />
           </div>
+          {impersonate_admin_id && (
+            <div className="flex flex-col py-1.5">
+              <button
+                onClick={() => router.post(route('admin.return_to_admin'), {}, { preserveScroll: true })}
+                className="flex items-center gap-2 px-2 py-1.5 text-sm font-medium text-blue-800 underline-offset-2 hover:bg-blue-500/10 hover:text-blue-900 focus-visible:underline focus:outline-hidden dark:text-blue-300 dark:hover:bg-blue-400/10 dark:hover:text-blue-100"
+                role="menuitem"
+              >
+                <i className="fa-solid fa-user-shield shrink-0" aria-hidden="true"></i>
+                <span>{t('return_to_admin')}</span>
+              </button>
+            </div>
+          )}
           <div className="flex flex-col py-1.5">
             <button onClick={HandleLogout} className="flex items-center gap-2 px-2 py-1.5 text-sm font-medium text-neutral-800 underline-offset-2 hover:bg-green-500/5 hover:text-black focus-visible:underline focus:outline-hidden dark:text-neutral-300 dark:hover:bg-green-400/5 dark:hover:text-neutral-100" role="menuitem">
               <i className="fa-solid fa-right-from-bracket shrink-0" aria-hidden="true"></i>

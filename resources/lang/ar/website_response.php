@@ -151,4 +151,14 @@ return [
   'bulk_action_success' => 'تم إكمال العملية الجماعية',
   /* End Email Agent Response Messages */
 
+  /* Admin Impersonation Responses */
+  'impersonation_success_title' => 'تم تسجيل الدخول كمستخدم',
+  'impersonation_success_message' => 'تم تسجيل الدخول بنجاح كمستخدم: :name',
+  'impersonation_return_title' => 'تم العودة إلى المدير',
+  'impersonation_return_message' => 'تم العودة إلى حساب المدير بنجاح.',
+  'impersonation_failed_title' => 'فشل العودة',
+  'impersonation_failed_message' => 'تعذر العودة إلى حساب المدير.',
+
+  
+
 ];

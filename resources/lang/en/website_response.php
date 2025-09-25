@@ -11,7 +11,7 @@ return [
 
   'language_changed_title' => 'Language Changed',
   'language_changed_message' => 'Language updated successfully.',
-  "blocked_account"=>"Your account has been blocked. Please contact administrator",
+  "blocked_account" => "Your account has been blocked. Please contact administrator",
 
   /* Auth Controller Responses */
   'login_successful_title' => 'Login Successful',
@@ -152,4 +152,11 @@ return [
   'error_title' => 'Error',
   /* End Email Agent Response Messages */
 
+  /* Admin Impersonation Responses */
+  'impersonation_success_title' => 'Logged in as user',
+  'impersonation_success_message' => 'Successfully logged in as user: :name',
+  'impersonation_return_title' => 'Returned to admin',
+  'impersonation_return_message' => 'Successfully returned to the admin account.',
+  'impersonation_failed_title' => 'Return failed',
+  'impersonation_failed_message' => 'Could not return to the admin account.',
 ];

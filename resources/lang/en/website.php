@@ -63,7 +63,7 @@ return [
   'auth_secure_area_message' => 'This is a secure area of the application. Please verify your identity by confirming your password.',
   // end Auth Pages
 
-  'welcome'=>"Welcome 👋",
+  'welcome' => "Welcome 👋",
 
 
   'language' => 'Language',
@@ -86,7 +86,7 @@ return [
   'theme_mode' => 'Theme Mode',
   'choose_theme' => 'Choose between light, dark, or system preference',
   'danger_zone' => 'Danger Zone',
-  "email_verified"=>"Email Verified",
+  "email_verified" => "Email Verified",
 
 
   /* Profile Information Form */
@@ -201,12 +201,12 @@ return [
   'confirm_delete_permanently' => 'Are you sure you want to delete this email permanently? This action cannot be undone.',
   'confirm_delete_draft_permanently' => 'Are you sure you want to delete this draft permanently? This action cannot be undone.',
 
-  "sent_emails"=>"Sent Emails",
-  "draft_emails"=>"Draft Emails",
-  "delete_drafts"=>"Delete Drafts",
-  "send_drafts"=>"Sent Drafts",
-  "search"=>"Search",
-  "serial"=>"Serial",
+  "sent_emails" => "Sent Emails",
+  "draft_emails" => "Draft Emails",
+  "delete_drafts" => "Delete Drafts",
+  "send_drafts" => "Sent Drafts",
+  "search" => "Search",
+  "serial" => "Serial",
 
   /* Draft/Sent Bulk Action Confirmations */
   'confirm_send_drafts' => 'Are you sure you want to send :count draft messages?',
@@ -699,6 +699,11 @@ return [
   'confirm_move_to_bin' => 'Are you sure you want to move :count emails to bin?',
   'confirm_restore_emails' => 'Are you sure you want to restore :count emails to inbox?',
   'confirm_permanent_delete_bulk' => 'Are you sure you want to permanently delete :count emails? This action cannot be undone.',
-  "back"=>"Back",
+  "back" => "Back",
+
+  // Admin Impersonation
+  'login_as' => 'Login as',
+  'are_you_sure_login_as' => 'Are you sure you want to login as',
+  'return_to_admin' => 'Return to admin',
 
 ];

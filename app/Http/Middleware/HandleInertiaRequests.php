@@ -42,6 +42,7 @@ class HandleInertiaRequests extends Middleware
         'status' => session('status'), //success / error / warning
         'type' => session('type'),
       ],
+      'impersonate_admin_id' => session('impersonate_admin_id'),
 
       // 'translations' => fn () => __('website'),
       'available_locales' => ['en', 'ar'],

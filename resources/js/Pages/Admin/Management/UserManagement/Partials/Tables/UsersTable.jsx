@@ -4,7 +4,7 @@ import React from 'react';
 import { useTrans } from '@/Hooks/useTrans';
 import { router } from '@inertiajs/react';
 
-export default function UsersTable({ users, onEdit,pageParam }) {
+export default function UsersTable({ users, onEdit, pageParam }) {
   const { t } = useTrans();
 
   // Individual user actions
@@ -128,11 +128,10 @@ export default function UsersTable({ users, onEdit,pageParam }) {
         </div>
       </td>
       <td className="px-3 py-4 whitespace-nowrap">
-        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-          user.blocked
+        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.blocked
             ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
             : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-        }`}>
+          }`}>
           <i className={`fa-solid ${user.blocked ? 'fa-ban' : 'fa-check-circle'} mr-1`}></i>
           {user.blocked ? t('blocked') : t('active')}
         </span>
@@ -141,11 +140,10 @@ export default function UsersTable({ users, onEdit,pageParam }) {
         {user.roles.map(role => (
           <span
             key={role.id}
-            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium mr-1 ${
-              role.name === 'admin'
+            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium mr-1 ${role.name === 'admin'
                 ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
                 : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-            }`}
+              }`}
           >
             <i className="fa-solid fa-shield mr-1"></i>
             {role.name === 'admin' ? t('admin') : t('user_role')}
@@ -173,9 +171,23 @@ export default function UsersTable({ users, onEdit,pageParam }) {
           <ActionButton
             onClick={(e) => {
               e.stopPropagation();
+              if (confirm(t('are_you_sure_login_as') + ` \"${user.name}\"?`)) {
+                router.post(route('admin.login_as', user.id), {}, { preserveScroll: true });
+              }
+            }}
+            variant="info"
+            icon="fa-right-to-bracket"
+            size="xs"
+            as="button"
+          >
+            {t('login_as')}
+          </ActionButton>
+          <ActionButton
+            onClick={(e) => {
+              e.stopPropagation();
               toggleBlock(user.id, user.blocked);
             }}
-            variant={user.blocked ? "green" : "yellow"}
+            variant={user.blocked ? "success" : "delete"}
             icon={user.blocked ? "fa-check-circle" : "fa-ban"}
             size="xs"
             as="button"

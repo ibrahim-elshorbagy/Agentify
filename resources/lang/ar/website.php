@@ -639,4 +639,9 @@ return [
   'confirm_permanent_delete_bulk' => 'هل أنت متأكد أنك تريد حذف :count بريد بشكل نهائي؟ هذا الإجراء لا يمكن التراجع عنه.',
   "back" => "عوده",
 
+  // Admin Impersonation
+  'login_as' => 'تسجيل الدخول كـ',
+  'are_you_sure_login_as' => 'هل أنت متأكد أنك تريد تسجيل الدخول كـ',
+  'return_to_admin' => 'العودة إلى حساب المدير',
+
 ];
