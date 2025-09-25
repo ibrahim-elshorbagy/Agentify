@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Sidebar from './Sidebar/Sidebar';
 import { usePage, Link } from '@inertiajs/react';
-import Toastify from './Partials/toastify';
+import Toastify from './Partials/Toastify';
 import { useTrans } from '@/Hooks/useTrans';
 import SidebarProfileMenu from './Sidebar/SidebarProfileMenu';
 

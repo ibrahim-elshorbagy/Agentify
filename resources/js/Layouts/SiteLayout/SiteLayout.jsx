@@ -1,6 +1,6 @@
 import React from 'react';
 import { Head, usePage } from '@inertiajs/react';
-import Toastify from '../Partials/toastify';
+import Toastify from '../Partials/Toastify';
 import Header from './Header';
 import Footer from './Footer';
 import { useTrans } from '@/Hooks/useTrans';
