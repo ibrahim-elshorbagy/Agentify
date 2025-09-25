@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PreferencesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\Settings\UserSettingsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,6 +19,15 @@ Route::middleware('auth')->group(function () {
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
   Route::post('/profile/image', [ProfileController::class, 'uploadProfileImage'])->name('profile.image.update');
+
+  // User Settings routes
+  Route::prefix('settings')->name('settings.')->group(function () {
+    Route::get('/', [UserSettingsController::class, 'index'])->name('index');
+    Route::post('/', [UserSettingsController::class, 'store'])->name('store');
+    Route::put('/{setting}', [UserSettingsController::class, 'update'])->name('update');
+    Route::delete('/{setting}', [UserSettingsController::class, 'destroy'])->name('destroy');
+    Route::delete('/bulk/delete', [UserSettingsController::class, 'bulkDelete'])->name('bulk.delete');
+  });
 
 });
 // User preferences routes

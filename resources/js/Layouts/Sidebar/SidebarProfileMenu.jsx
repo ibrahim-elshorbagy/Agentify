@@ -80,6 +80,10 @@ export default function SidebarProfileMenu() {
               <i className="fa-solid fa-user shrink-0" aria-hidden="true"></i>
               <span>{t('profile')}</span>
             </Link>
+            <Link href={route('settings.index')} className="flex items-center gap-2 px-2 py-1.5 text-sm font-medium text-neutral-800 underline-offset-2 hover:bg-green-500/5 hover:text-black focus-visible:underline focus:outline-hidden dark:text-neutral-300 dark:hover:bg-green-400/5 dark:hover:text-neutral-100" role="menuitem">
+              <i className="fa-solid fa-gear shrink-0" aria-hidden="true"></i>
+              <span>{t('settings')}</span>
+            </Link>
           </div>
           <div className="flex flex-col py-1.5">
               <ThemeToggle className="w-full justify-start px-2 py-1.5 text-sm font-medium text-neutral-800 underline-offset-2 hover:bg-green-500/5 hover:text-black focus-visible:underline focus:outline-hidden dark:text-neutral-300 dark:hover:bg-green-400/5 dark:hover:text-neutral-100" />

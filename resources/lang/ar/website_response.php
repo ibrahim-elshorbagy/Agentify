@@ -159,6 +159,15 @@ return [
   'impersonation_failed_title' => 'فشل العودة',
   'impersonation_failed_message' => 'تعذر العودة إلى حساب المدير.',
 
-  
+  /* Settings Responses */
+  'setting_created_title' => 'تم إنشاء الإعداد',
+  'setting_created_message' => 'تم إنشاء الإعداد بنجاح.',
+  'setting_updated_title' => 'تم تحديث الإعداد',
+  'setting_updated_message' => 'تم تحديث الإعداد بنجاح.',
+  'setting_deleted_title' => 'تم حذف الإعداد',
+  'setting_deleted_message' => 'تم حذف الإعداد بنجاح.',
+  'settings_deleted_title' => 'تم حذف الإعدادات',
+  'settings_deleted_message' => 'تم حذف :count إعداد بنجاح.',
+  'setting_key_exists' => 'يوجد بالفعل إعداد بهذا المفتاح.',
 
 ];

@@ -159,4 +159,15 @@ return [
   'impersonation_return_message' => 'Successfully returned to the admin account.',
   'impersonation_failed_title' => 'Return failed',
   'impersonation_failed_message' => 'Could not return to the admin account.',
+
+  /* Settings Responses */
+  'setting_created_title' => 'Setting Created',
+  'setting_created_message' => 'Setting has been created successfully.',
+  'setting_updated_title' => 'Setting Updated',
+  'setting_updated_message' => 'Setting has been updated successfully.',
+  'setting_deleted_title' => 'Setting Deleted',
+  'setting_deleted_message' => 'Setting has been deleted successfully.',
+  'settings_deleted_title' => 'Settings Deleted',
+  'settings_deleted_message' => ':count settings have been deleted successfully.',
+  'setting_key_exists' => 'A setting with this key already exists.',
 ];

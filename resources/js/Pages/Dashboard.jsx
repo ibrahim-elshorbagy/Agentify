@@ -7,21 +7,7 @@ export default function Dashboard() {
   const user = usePage().props.auth.user;
 
   return (
-    <AppLayout
-      header={
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-            {t('dashboard')}
-          </h2>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              {t('all_systems_operational')}
-            </div>
-          </div>
-        </div>
-      }
-    >
+    <AppLayout>
       <Head title={t('dashboard')} />
 
       <div className="py-8 bg-gradient-to-br from-green-50 via-neutral-50 to-green-100 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 min-h-screen">
