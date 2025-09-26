@@ -63,7 +63,7 @@ export default function ChatInterface({
               {/* Mobile Sidebar Toggle Button */}
               <button
                 onClick={onToggleSidebar}
-                className="lg:hidden p-2 text-green-600 hover:text-green-700 bg-green-50 hover:bg-green-100 dark:hover:bg-green-900/20 rounded-lg transition-colors"
+                className="xl:hidden p-2 text-green-600 hover:text-green-700 bg-green-50 hover:bg-green-100 dark:hover:bg-green-900/20 rounded-lg transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-3.582 8-8 8a8.955 8.955 0 01-3.774-.9L3 21l1.9-6.226A8.955 8.955 0 013 12a8 8 0 018-8c4.418 0 8 3.582 8 8z" />
@@ -105,7 +105,7 @@ export default function ChatInterface({
             {/* Mobile Sidebar Toggle Button */}
             <button
               onClick={onToggleSidebar}
-              className="lg:hidden p-2 text-green-600 hover:text-green-700 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
+              className="xl:hidden p-2 text-green-600 hover:text-green-700 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-3.582 8-8 8a8.955 8.955 0 01-3.774-.9L3 21l1.9-6.226A8.955 8.955 0 013 12a8 8 0 018-8c4.418 0 8 3.582 8 8z" />

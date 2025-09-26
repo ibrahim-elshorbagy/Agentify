@@ -34,7 +34,7 @@ export default function ReportAgent({
 
   // Handle conversation click (close sidebar on mobile)
   const handleConversationClick = () => {
-    if (window.innerWidth < 1024) { // lg breakpoint
+    if (window.innerWidth < 1280) { // xl breakpoint
       setIsSidebarOpen(false);
     }
   };
@@ -64,7 +64,7 @@ export default function ReportAgent({
         />
 
         {/* Main Chat Area */}
-        <div className={`flex-1 flex flex-col h-full overflow-hidden ${isSidebarOpen ? 'lg:ml-0' : ''}`}>
+        <div className={`flex-1 flex flex-col h-full overflow-hidden ${isSidebarOpen ? 'xl:ml-0' : ''}`}>
           {!hasFiles && !currentConversation ? (
             <FileUploadPrompt onUploadFiles={toggleFileUploadModal} />
           ) : (

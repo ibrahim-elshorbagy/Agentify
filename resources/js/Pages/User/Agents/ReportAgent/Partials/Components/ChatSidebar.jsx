@@ -34,16 +34,16 @@ export default function ChatSidebar({
       {/* Sidebar */}
       <div className={`
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        lg:translate-x-0
-        fixed lg:relative
+        xl:translate-x-0
+        fixed xl:relative
         top-0 left-0
-        w-80 lg:w-80
+        w-80 xl:w-80
         h-full
         bg-white dark:bg-neutral-900
         border-r border-neutral-200 dark:border-neutral-700
         flex flex-col
         transition-transform duration-300 ease-in-out
-        z-40 lg:z-auto
+        z-40 xl:z-auto
         ${className}
       `.trim()}>
 
@@ -57,7 +57,7 @@ export default function ChatSidebar({
             {/* Mobile Close Button */}
             <button
               onClick={onToggle}
-              className="lg:hidden p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 transition-colors"
+              className="xl:hidden p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -158,7 +158,7 @@ export default function ChatSidebar({
       {/* Mobile Overlay */}
       {isOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
+          className="xl:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
           onClick={onToggle}
         />
       )}
