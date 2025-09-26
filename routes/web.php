@@ -42,3 +42,4 @@ require __DIR__ . '/testHost.php';
 
 // Agents
 require __DIR__ . '/EmailAgent.php';
+require __DIR__ . '/ReportsAgent.php';

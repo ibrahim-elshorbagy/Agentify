@@ -43,7 +43,7 @@ export default function SidebarProfileMenu() {
     <div className="mt-auto relative" ref={menuRef} >
       <button
         type="button"
-        className={`flex w-full items-center rounded-xl gap-2 p-2 text-left text-neutral-800 hover:bg-green-500/5 hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500 dark:text-neutral-300 dark:hover:bg-green-400/5 dark:hover:text-neutral-100 dark:focus-visible:outline-green-400 ${menuIsOpen ? 'bg-green-500/10 dark:bg-green-400/10' : ''}`}
+        className={`flex w-full min-w-[200px] items-center rounded-xl gap-2 p-2 text-left text-neutral-800 hover:bg-green-500/5 hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500 dark:text-neutral-300 dark:hover:bg-green-400/5 dark:hover:text-neutral-100 dark:focus-visible:outline-green-400 ${menuIsOpen ? 'bg-green-500/10 dark:bg-green-400/10' : ''}`}
         aria-haspopup="true"
         aria-expanded={menuIsOpen}
         onClick={() => setMenuIsOpen((v) => !v)}
@@ -70,7 +70,7 @@ export default function SidebarProfileMenu() {
       {/* Menu */}
       {menuIsOpen && (
         <div
-          className="absolute w-full md:w-48  md:bottom-0 ltr:md:right-[-195px] rtl:md:left-[-195px] z-20   border divide-y divide-neutral-300 border-neutral-300 bg-neutral-100 dark:divide-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 rounded-xl
+          className="absolute w-full md:w-48  md:bottom-0 ltr:md:right-[-195px] rtl:md:left-[-195px] z-[500]   border divide-y divide-neutral-300 border-neutral-300 bg-neutral-100 dark:divide-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 rounded-xl
           animate-fade-in"
           role="menu"
 

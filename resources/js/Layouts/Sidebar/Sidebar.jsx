@@ -41,7 +41,7 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
     // User
     {
       name: t('email_agent'),
-      icon: 'fa-users',
+      icon: 'fa-envelope',
       route: 'user.email-agent.*',
       role: 'user',
       submenu: [
@@ -50,6 +50,16 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
         { name: t('draft'), href: route('user.email-agent.draft.emails'), route: 'user.email-agent.draft.*', icon: 'fa-file' },
         { name: t('spam'), href: route('user.email-agent.spam.emails'), route: 'user.email-agent.spam.*', icon: 'fa-exclamation-circle' },
         { name: t('bin'), href: route('user.email-agent.bin.emails'), route: 'user.email-agent.bin.*', icon: 'fa-trash' },
+      ],
+    },
+    {
+      name: t('report_agent'),
+      icon: 'fa-chart-bar',
+      route: 'user.report-agent.*',
+      role: 'user',
+      submenu: [
+        { name: t('chat'), href: route('user.report-agent.chat'), route: 'user.report-agent.chat*', icon: 'fa-comments' },
+        { name: t('files'), href: route('user.report-agent.files'), route: 'user.report-agent.files*', icon: 'fa-folder' },
       ],
     },
 

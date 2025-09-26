@@ -30,7 +30,7 @@ export default function AppLayout({ children, title }) {
           >
             <i className="fa-solid fa-bars size-6"></i>
           </button>
-          <div className="w-8" />
+          {/* <div className="w-8" /> */}
           {/* Profile menu at the bottom */}
           <SidebarProfileMenu />
         </nav>

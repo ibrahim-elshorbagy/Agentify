@@ -170,4 +170,24 @@ return [
   'settings_deleted_message' => 'تم حذف :count إعداد بنجاح.',
   'setting_key_exists' => 'يوجد بالفعل إعداد بهذا المفتاح.',
 
+  /* Report Agent Controller Responses */
+  'files_uploaded_title' => 'تم رفع الملفات',
+  'files_uploaded_message' => 'تم رفع :count ملف بنجاح.',
+  'file_updated_title' => 'تم تحديث الملف',
+  'file_updated_message' => 'تم تحديث الملف بنجاح.',
+  'file_deleted_title' => 'تم حذف الملف',
+  'file_deleted_message' => 'تم حذف الملف بنجاح.',
+  'conversation_created_title' => 'تم إنشاء المحادثة',
+  'conversation_created_message' => 'تم إنشاء المحادثة الجديدة بنجاح.',
+  'conversation_updated_title' => 'تم تحديث المحادثة',
+  'conversation_updated_message' => 'تم تحديث المحادثة بنجاح.',
+  'conversation_deleted_title' => 'تم حذف المحادثة',
+  'conversation_deleted_message' => 'تم حذف المحادثة بنجاح.',
+  'message_sent_title' => 'تم إرسال الرسالة',
+  'message_sent_message' => 'تم إرسال ومعالجة رسالتك.',
+  'message_error_title' => 'خطأ في الرسالة',
+  'message_error_message' => 'فشل في معالجة رسالتك. الرجاء المحاولة مرة أخرى.',
+  'access_denied_title' => 'تم رفض الوصول',
+  'access_denied_message' => 'ليس لديك صلاحية للوصول إلى هذا المورد.',
+
 ];
