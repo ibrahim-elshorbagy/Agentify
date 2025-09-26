@@ -30,6 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
     $middleware->alias([
       'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
       'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+      'n8n.auth' => \App\Http\Middleware\N8nApiAuth::class,
     ]);
   })
   ->withExceptions(function (Exceptions $exceptions): void {

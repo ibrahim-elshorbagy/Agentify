@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\Agents\AgentSettingsController;
 
 
 // Agent Settings API Routes
-Route::prefix('agents')->group(function () {
+Route::prefix('agents')->middleware('n8n.auth')->group(function () {
     Route::get('/users', [AgentSettingsController::class, 'getAllUsers']);
     Route::get('/users/{userId}', [AgentSettingsController::class, 'getUser']);
 });

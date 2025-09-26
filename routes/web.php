@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Agents\AgentSettingsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PreferencesController;
 use App\Http\Controllers\ProfileController;
@@ -29,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/bulk/delete', [UserSettingsController::class, 'bulkDelete'])->name('bulk.delete');
   });
 
+  // N8N Webhook trigger
+  Route::post('/trigger-n8n', [AgentSettingsController::class, 'triggerN8nWebhook'])->name('n8n.trigger');
 });
 // User preferences routes
 Route::any('/locale', [PreferencesController::class, 'changeLocale'])->name('locale.change');

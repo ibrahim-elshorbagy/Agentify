@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'n8n' => [
+        'webhook_url' => env('N8N_WEBHOOK_URL'),
+        'username' => env('N8N_USERNAME'),
+        'password' => env('N8N_PASSWORD'),
+        'api_key' => env('N8N_API_KEY'),
+    ],
+
 ];

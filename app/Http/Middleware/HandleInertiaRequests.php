@@ -41,6 +41,7 @@ class HandleInertiaRequests extends Middleware
         'message' => session('message'),
         'status' => session('status'), //success / error / warning
         'type' => session('type'),
+        'webhookResponse' => session('webhookResponse'),
       ],
       'impersonate_admin_id' => session('impersonate_admin_id'),
 
