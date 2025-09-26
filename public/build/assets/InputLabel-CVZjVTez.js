@@ -1,1 +1,0 @@
-import{j as n}from"./app-TmW7H2Wv.js";function x({message:t,className:r="",...e}){return t?n.jsx("p",{...e,className:"text-sm text-red-600 dark:text-red-400 "+r,children:t}):null}function l({value:t,className:r="",children:e,...a}){return n.jsx("label",{...a,className:"block text-sm font-medium text-gray-700 dark:text-gray-300 "+r,children:t||e})}export{l as I,x as a};
