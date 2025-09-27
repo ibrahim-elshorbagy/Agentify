@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Agents\AgentSettingsController;
+use App\Http\Controllers\Api\Agents\ReportAgentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PreferencesController;
 use App\Http\Controllers\ProfileController;
@@ -32,6 +33,10 @@ Route::middleware('auth')->group(function () {
 
   // N8N Webhook trigger
   Route::post('/trigger-n8n', [AgentSettingsController::class, 'triggerN8nWebhook'])->name('n8n.trigger');
+
+  // ReportAgent Webhook trigger
+  Route::post('/trigger-report-agent', [ReportAgentController::class, 'triggerReportWebhook'])->name('report-agent.trigger');
+  
 });
 // User preferences routes
 Route::any('/locale', [PreferencesController::class, 'changeLocale'])->name('locale.change');

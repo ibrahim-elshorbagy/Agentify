@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User\Agents\ReportAgent\Conversation;
 use App\Models\User\Agents\ReportAgent\ConversationMessage;
 use App\Models\User\Agents\ReportAgent\ReportFile;
+use App\Services\Agents\ReportAgentService;
 use App\Services\N8nWebhookService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -124,6 +125,18 @@ class ReportAgentController extends Controller
       ]);
 
       $uploadedFiles[] = $reportFile;
+
+      // Trigger webhook for each uploaded file
+      $webhookService = new ReportAgentService();
+      $webhookData = [
+        'user_id' => $user->id,
+        'file_id' => $reportFile->id,
+        'file_name' => $originalName,
+        'source' => 'url',
+        'file_url' => asset('storage/' . $path)
+      ];
+
+      $webhookService->triggerWebhook($webhookData);
     }
 
     return back()

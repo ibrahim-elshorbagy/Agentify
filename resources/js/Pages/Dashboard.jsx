@@ -6,7 +6,7 @@ export default function Dashboard() {
   const { t } = useTrans();
   const user = usePage().props.auth.user;
   const { flash } = usePage().props;
-  const webhookResponse = flash?.response;
+  const webhookResponse = flash?.webhookResponse;
 
 
   const triggerN8nWebhook = () => {
@@ -14,6 +14,19 @@ export default function Dashboard() {
       data: {
         message: 'Triggered from Dashboard',
         user_name: user.name
+      }
+    }, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  const triggerReportAgentWebhook = () => {
+    router.post(route('report-agent.trigger'), {
+      data: {
+        message: 'ReportAgent triggered from Dashboard',
+        user_name: user.name,
+        agent_type: 'report_agent'
       }
     }, {
       preserveState: true,
@@ -37,13 +50,19 @@ export default function Dashboard() {
                   </h1>
                 </div>
 
-                {/* N8N Webhook Trigger */}
-                <div>
+                {/* Webhook Triggers */}
+                <div className="flex gap-3">
                   <button
                     onClick={triggerN8nWebhook}
                     className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200"
                   >
                     Trigger N8N Workflow
+                  </button>
+                  <button
+                    onClick={triggerReportAgentWebhook}
+                    className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors duration-200"
+                  >
+                    Trigger ReportAgent
                   </button>
                 </div>
               </div>
