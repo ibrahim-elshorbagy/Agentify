@@ -41,10 +41,16 @@ return [
         'password' => env('N8N_PASSWORD'),
         'api_key' => env('N8N_API_KEY'),
     ],
-    
+
     'report_agent' => [
         'webhook_url' => env('REPORT_AGENT_WEBHOOK_URL'),
-        'bearer_token' => env('REPORT_AGENT_BEARER_TOKEN'),
+        'api_key' => env('REPORT_AGENT_API_KEY'),
+    ],
+
+    'report_agent_chat' => [
+        'webhook_url' => env('REPORT_AGENT_CHAT_WEBHOOK_URL'),
+        'api_key' => env('REPORT_AGENT_CHAT_API_KEY'),
+        'jwt_secret' => env('REPORT_AGENT_CHAT_JWT_SECRET'),
     ],
 
 ];

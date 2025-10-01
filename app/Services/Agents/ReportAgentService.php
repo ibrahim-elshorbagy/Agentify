@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Log;
 class ReportAgentService
 {
     private string $webhookUrl;
-    private string $bearerToken;
+    private string $apiKey;
 
     public function __construct()
     {
         $this->webhookUrl = config('services.report_agent.webhook_url');
-        $this->bearerToken = config('services.report_agent.bearer_token');
+        $this->apiKey = config('services.report_agent.api_key');
     }
 
     /**
@@ -25,8 +25,14 @@ class ReportAgentService
     public function triggerWebhook(array $data = []): array
     {
         try {
-            $response = Http::withToken($this->bearerToken)
-                ->timeout(30)
+
+          $response = Http::
+          withHeaders([
+                    'X-API-Key' => $this->apiKey,
+                    'Content-Type' => 'application/json',
+                ])
+                ->
+                timeout(30)
                 ->post($this->webhookUrl, $data);
 
             if ($response->successful()) {

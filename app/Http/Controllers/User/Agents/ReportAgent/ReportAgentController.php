@@ -7,11 +7,13 @@ use App\Models\User\Agents\ReportAgent\Conversation;
 use App\Models\User\Agents\ReportAgent\ConversationMessage;
 use App\Models\User\Agents\ReportAgent\ReportFile;
 use App\Services\Agents\ReportAgentService;
+use App\Services\Agents\ReportAgentChatService;
 use App\Services\N8nWebhookService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Log;
 
 class ReportAgentController extends Controller
 {
@@ -132,7 +134,7 @@ class ReportAgentController extends Controller
         'user_id' => $user->id,
         'file_id' => $reportFile->id,
         'file_name' => $originalName,
-        'source' => 'url',
+        'mime'=> $file->getMimeType(),
         'file_url' => asset('storage/' . $path)
       ];
 
@@ -319,33 +321,41 @@ class ReportAgentController extends Controller
     // Update conversation timestamp
     $conversation->touch();
 
-    // Get user files for N8N context
+    // Get user files for chat context
     $files = ReportFile::where('user_id', $user->id)->get();
 
-    // Trigger N8N webhook
-    $webhookService = new N8nWebhookService();
-    $data = [
+    // Prepare data for chat webhook
+    $chatData = [
       'user_id' => $user->id,
       'conversation_id' => $conversation->id,
-      'message' => $request->message,
-      'files' => $files->map(function ($file) {
-        return [
-          'id' => $file->id,
-          'path' => asset('storage/' . $file->path),
-          'name' => $file->original_name,
-          'size' => $file->file_size,
-          'type' => $file->mime_type,
-        ];
-      }),
+      'chatInput' => $request->message,
     ];
 
-    $result = $webhookService->triggerWebhook($data);
+    // Log the data being sent
+    Log::info('ReportAgentController: Sending message to chat webhook', [
+      'user_id' => $user->id,
+      'conversation_id' => $conversation->id,
+      'message_length' => strlen($request->message),
+      'files_count' => $files->count()
+    ]);
+
+    // Trigger Report Agent Chat webhook
+    $chatService = new ReportAgentChatService();
+    $result = $chatService->sendMessage($chatData);
 
     if ($result['success']) {
-      // Save AI response (this would typically come from a webhook response)
+      // Extract AI response from webhook result
+      $aiResponse = $result['data']['response'] ?? $result['data']['message'] ?? 'Processing your request...';
+
+      Log::info('ReportAgentController: Chat webhook successful', [
+        'conversation_id' => $conversation->id,
+        'response_received' => !empty($aiResponse)
+      ]);
+
+      // Save AI response
       ConversationMessage::create([
         'conversation_id' => $conversation->id,
-        'message' => $result['data']['response'] ?? 'Processing your request...',
+        'message' => $aiResponse,
         'sender_type' => 'ai',
       ]);
 
@@ -354,6 +364,19 @@ class ReportAgentController extends Controller
         ->with('message', __('website_response.message_sent_message'))
         ->with('status', 'success');
     } else {
+      Log::error('ReportAgentController: Chat webhook failed', [
+        'conversation_id' => $conversation->id,
+        'error' => $result['error'] ?? 'Unknown error',
+        'status_code' => $result['status_code'] ?? null
+      ]);
+
+      // Save error message as AI response for user feedback
+      ConversationMessage::create([
+        'conversation_id' => $conversation->id,
+        'message' => 'Sorry, I encountered an error processing your request. Please try again later.',
+        'sender_type' => 'ai',
+      ]);
+
       return back()
         ->with('title', __('website_response.message_error_title'))
         ->with('message', __('website_response.message_error_message'))
