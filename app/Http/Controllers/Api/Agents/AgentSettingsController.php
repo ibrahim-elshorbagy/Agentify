@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\User\UserSettings;
 use App\Services\N8nWebhookService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class AgentSettingsController extends Controller
 {
@@ -76,14 +77,36 @@ class AgentSettingsController extends Controller
         // Prepare data to send to n8n
         $user = $request->user();
         $data = [
-            'trigger_source' => 'laravel_dashboard',
-            'timestamp' => now()->toISOString(),
             'user_id' => $user ? $user->id : null,
             'user_email' => $user ? $user->email : null,
-            'custom_data' => $request->input('data', [])
         ];
 
-        $result = $webhookService->triggerWebhook($data);
+    // Get Azure token if credentials are configured
+    $azureConfig = config('services.azure');
+    if (!empty($azureConfig['tenant_id']) && !empty($azureConfig['client_id']) && !empty($azureConfig['client_secret'])) {
+        try {
+            $url = 'https://login.microsoftonline.com/' . $azureConfig['tenant_id'] . '/oauth2/v2.0/token';
+            $response = Http::asForm()->post($url, [
+                'grant_type' => 'client_credentials',
+                'client_id' => $azureConfig['client_id'],
+                'client_secret' => $azureConfig['client_secret'],
+                'scope' => $azureConfig['scope'] ?? 'https://graph.microsoft.com/.default',
+            ]);
+
+            if ($response->successful()) {
+                $tokenData = $response->json();
+                $data['azure_token'] = $tokenData['access_token'];
+            } else {
+                $data['azure_error'] = 'Failed to obtain Azure token: ' . $response->body();
+            }
+        } catch (\Exception $e) {
+            $data['azure_error'] = 'Exception while obtaining Azure token: ' . $e->getMessage();
+        }
+    }
+
+    // Trigger the webhook
+
+    $result = $webhookService->triggerWebhook($data);
 
         if ($result['success']) {
             return back()

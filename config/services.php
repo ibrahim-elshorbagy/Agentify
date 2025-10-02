@@ -42,6 +42,13 @@ return [
         'api_key' => env('N8N_API_KEY'),
     ],
 
+    'azure' => [
+        'tenant_id' => env('AZURE_TENANT_ID'),
+        'client_id' => env('AZURE_CLIENT_ID'),
+        'client_secret' => env('AZURE_CLIENT_SECRET'),
+        'scope' => env('AZURE_SCOPE', 'https://graph.microsoft.com/.default'),
+    ],
+
     'report_agent' => [
         'webhook_url' => env('REPORT_AGENT_WEBHOOK_URL'),
         'api_key' => env('REPORT_AGENT_API_KEY'),
