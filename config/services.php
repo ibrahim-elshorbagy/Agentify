@@ -36,10 +36,10 @@ return [
     ],
 
     'n8n' => [
-        'webhook_url' => env('N8N_WEBHOOK_URL'),
+        'webhook_url' => env('Outlook_Agent_WEBHOOK_URL'),
         'username' => env('N8N_USERNAME'),
         'password' => env('N8N_PASSWORD'),
-        'api_key' => env('N8N_API_KEY'),
+        'api_key' => env('Outlook_Agent_API'),
     ],
 
     'azure' => [
