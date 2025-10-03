@@ -54,26 +54,29 @@ class ReportAgentChatService
   {
     try {
       // Generate JWT token for authentication
-      $jwtToken = $this->generateJWTToken([
-        'user_id' => $data['user_id'] ?? null,
-        'conversation_id' => $data['conversation_id'] ?? null,
-      ]);
+      // $jwtToken = $this->generateJWTToken([
+      //   'user_id' => $data['user_id'] ?? null,
+      //   'conversation_id' => $data['conversation_id'] ?? null,
+      // ]);
 
       // Prepare the payload according to N8N workflow requirements
-      $payload = [
-        'jwt' => $jwtToken,
-        'chatInput' => $data['chatInput'] ?? '',
-        'user_id' => $data['user_id'] ?? null,
-        'conversation_id' => $data['conversation_id'] ?? null,
-      ];
+      // $payload = [
+      //   'jwt' => $jwtToken,
+      //   'chatInput' => $data['chatInput'] ?? '',
+      //   'user_id' => $data['user_id'] ?? null,
+      //   'conversation_id' => $data['conversation_id'] ?? null,
+      // ];
 
-      Log::info('ReportAgentChatService: Sending message to webhook', [
-        'webhook_url' => $this->chatWebhookUrl,
-        'payload' => $payload
-      ]);
+      // Log::info('ReportAgentChatService: Sending message to webhook', [
+      //   'webhook_url' => $this->chatWebhookUrl,
+      //   'payload' => $payload
+      // ]);
 
-      $response = Http::timeout(60) // Increased timeout for chat responses
-        ->post($this->chatWebhookUrl, $payload);
+      // $response = Http::timeout(60) // Increased timeout for chat responses
+      //   ->post($this->chatWebhookUrl, $payload);
+
+      $response = Http::timeout(6000000) // Increased timeout for chat responses
+        ->post($this->chatWebhookUrl, $data);
 
       if ($response->successful()) {
         Log::info('ReportAgentChatService: Chat webhook response received successfully', [

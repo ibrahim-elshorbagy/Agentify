@@ -326,8 +326,8 @@ class ReportAgentController extends Controller
 
     // Prepare data for chat webhook
     $chatData = [
-      'user_id' => $user->id,
-      'conversation_id' => $conversation->id,
+      'userId' => $user->id,
+      'sessionId' => $conversation->id,
       'chatInput' => $request->message,
     ];
 

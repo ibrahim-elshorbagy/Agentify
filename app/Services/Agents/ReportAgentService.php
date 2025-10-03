@@ -32,7 +32,7 @@ class ReportAgentService
                     'Content-Type' => 'application/json',
                 ])
                 ->
-                timeout(30)
+                timeout(6000000)
                 ->post($this->webhookUrl, $data);
 
             if ($response->successful()) {

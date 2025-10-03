@@ -22,9 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-      // if ($this->app->environment('local', 'production')) {
-      //   URL::forceScheme('https');
-      // }
+
         Vite::prefetch(concurrency: 3);
+
+        // Increase maximum execution time to 5 minutes
+        ini_set('max_execution_time', 600000);
     }
 }
