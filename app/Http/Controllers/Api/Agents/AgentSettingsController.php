@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Agents;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\User\UserSettings;
-use App\Services\N8nWebhookService;
+use App\Services\OutLockWebhookService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -72,7 +72,7 @@ class AgentSettingsController extends Controller
      */
     public function triggerN8nWebhook(Request $request)
     {
-        $webhookService = new N8nWebhookService();
+        $webhookService = new OutLockWebhookService();
 
         // Prepare data to send to n8n
         $user = $request->user();
