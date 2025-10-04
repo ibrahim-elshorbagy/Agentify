@@ -103,7 +103,7 @@ class ReportAgentController extends Controller
   {
     $request->validate([
       'files' => 'required|array|max:10',
-      'files.*' => 'required|file|mimes:pdf,doc,docx,txt,xlsx,xls,csv',
+      'files.*' => 'required|file|mimes:pdf,txt,xlsx,xls,csv',
     ]);
 
     $user = Auth::user();
@@ -146,7 +146,7 @@ class ReportAgentController extends Controller
 
     return back()
       ->with('title', __('website_response.files_uploaded_title'))
-      ->with('message', __('website_response.files_uploaded_message', ['count' => count($uploadedFiles)]))
+      ->with('message', __('website_response.files_uploaded_message', ['count' => count($uploadedFiles)]) . ' File processing may take 15-30 minutes to complete.')
       ->with('status', 'success');
   }
 
@@ -192,7 +192,7 @@ class ReportAgentController extends Controller
 
     return back()
       ->with('title', __('website_response.file_updated_title'))
-      ->with('message', __('website_response.file_updated_message'))
+      ->with('message', __('website_response.file_updated_message') . ' File processing may take 15-30 minutes to complete.')
       ->with('status', 'success');
   }
 
