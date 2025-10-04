@@ -103,7 +103,7 @@ class ReportAgentController extends Controller
   {
     $request->validate([
       'files' => 'required|array|max:10',
-      'files.*' => 'required|file|mimes:pdf,txt,xlsx,xls,csv',
+      'files.*' => 'required|file|mimes:pdf,txt,xlsx,csv',
     ]);
 
     $user = Auth::user();
@@ -164,7 +164,7 @@ class ReportAgentController extends Controller
     }
 
     $request->validate([
-      'file' => 'required|file|max:10240|mimes:pdf,doc,docx,txt,xlsx,xls,csv',
+      'file' => 'required|file|max:10240|mimes:pdf,txt,xlsx,csv',
     ]);
 
     $user = Auth::user();

@@ -56,12 +56,12 @@ export default function FileUploadModal({ isOpen, onClose }) {
           id="file-upload"
           multiple={true}
           maxFiles={10}
-          accept=".pdf,.txt,.xlsx,.xls,.csv"
+          accept=".pdf,.txt,.xlsx,.csv"
           onChange={handleFilesChange}
           value={selectedFiles}
           disabled={processing}
           error={errors.files || errors['files.0']}
-          helperText="PDF, TXT, XLS, XLSX, CSV files are supported"
+          helperText="PDF, TXT, XLSX, CSV files are supported"
         />
 
         {/* Buttons */}

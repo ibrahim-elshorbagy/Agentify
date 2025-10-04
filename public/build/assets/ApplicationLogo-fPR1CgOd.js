@@ -1,1 +1,0 @@
-import{j as t}from"./app-BKZ3C6aq.js";function r(s){return t.jsx(t.Fragment,{children:t.jsx("img",{className:"object-contain filter dark:invert",src:"/assets/settings/logo.png",alt:""})})}export{r as A};
