@@ -116,6 +116,7 @@ class ReportAgentController extends Controller
 
       // Store the file
       $path = $file->storeAs($userPath, $fileName, 'public');
+      $extension = $file->getClientOriginalExtension();
 
       // Save to database
       $reportFile = ReportFile::create([
@@ -135,8 +136,11 @@ class ReportAgentController extends Controller
         'file_id' => $reportFile->id,
         'file_name' => $originalName,
         'mime'=> $file->getMimeType(),
-        'file_url' => asset('storage/' . $path)
+        'file_url' => asset('storage/' . $path),
+        'extension' => $extension,
+        'extension_with_dot' => '.' . $extension,
       ];
+      dd($webhookData);
 
       $webhookService->triggerWebhook($webhookData);
     }
@@ -345,7 +349,7 @@ class ReportAgentController extends Controller
 
     if ($result['success']) {
       // Extract AI response from webhook result
-      $aiResponse = $result['data']['response'] ?? $result['data']['message'] ?? 'Processing your request...';
+      $aiResponse = $result['data']['output'] ?? $result['data']['output'] ?? 'Processing your request...';
 
       Log::info('ReportAgentController: Chat webhook successful', [
         'conversation_id' => $conversation->id,
