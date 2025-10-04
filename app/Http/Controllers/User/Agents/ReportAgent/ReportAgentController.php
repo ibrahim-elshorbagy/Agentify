@@ -363,10 +363,10 @@ class ReportAgentController extends Controller
         'sender_type' => 'ai',
       ]);
 
-      return back()
-        ->with('title', __('website_response.message_sent_title'))
-        ->with('message', __('website_response.message_sent_message'))
-        ->with('status', 'success');
+      return back();
+        // ->with('title', __('website_response.message_sent_title'))
+        // ->with('message', __('website_response.message_sent_message'))
+        // ->with('status', 'success');
     } else {
       Log::error('ReportAgentController: Chat webhook failed', [
         'conversation_id' => $conversation->id,
