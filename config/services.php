@@ -51,12 +51,12 @@ return [
 
     'report_agent' => [
         'webhook_url' => env('REPORT_AGENT_WEBHOOK_URL'),
-        'api_key' => env('REPORT_AGENT_API_KEY'),
+        'api_key' => env('REPORTS_AGENT_UPLOADFILES'),
     ],
 
     'report_agent_chat' => [
         'webhook_url' => env('REPORT_AGENT_CHAT_WEBHOOK_URL'),
-        'api_key' => env('REPORT_AGENT_CHAT_API_KEY'),
+        'api_key' => env('REPORTS_AGENT_CHAT'),
         'jwt_secret' => env('REPORT_AGENT_CHAT_JWT_SECRET'),
     ],
 
