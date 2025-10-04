@@ -348,7 +348,8 @@ class ReportAgentController extends Controller
 
     if ($result['success']) {
       // Extract AI response from webhook result
-      $aiResponse = $result['data']['output'] ?? $result['data']['output'] ?? 'Processing your request...';
+      $result = is_string($result) ? json_decode($result, true) : $result;
+      $aiResponse = $result['data'][0]['output'] ?? ($result['data']['output'] ?? 'Processing your request...');
 
       Log::info('ReportAgentController: Chat webhook successful', [
         'conversation_id' => $conversation->id,

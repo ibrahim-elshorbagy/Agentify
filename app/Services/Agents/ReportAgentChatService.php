@@ -63,7 +63,7 @@ class ReportAgentChatService
       $payload = [
         'chatInput' => $data['chatInput'] ?? '',
         'userId' => $data['userId'] ?? null,
-        'conversationId' => $data['conversationId'] ?? null,
+        'sessionId' => $data['conversationId'] ?? null,
       ];
 
       Log::info('ReportAgentChatService: Sending message to webhook', [
