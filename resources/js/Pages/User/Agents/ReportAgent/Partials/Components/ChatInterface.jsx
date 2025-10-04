@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
 import { useTrans } from '@/Hooks/useTrans';
-import TextArea from '@/Components/TextArea';
+import AutoResizeTextarea from '@/Components/AutoResizeTextarea';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 
@@ -153,11 +153,10 @@ export default function ChatInterface({
               className={`flex ${message.sender_type === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                  message.sender_type === 'user'
+                className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.sender_type === 'user'
                     ? 'bg-green-500 text-white'
                     : 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 border border-neutral-200 dark:border-neutral-700'
-                }`}
+                  }`}
               >
                 <div className="flex items-start gap-2">
                   {message.sender_type === 'ai' && (
@@ -167,11 +166,10 @@ export default function ChatInterface({
                   )}
                   <div className="flex-1">
                     <p className="whitespace-pre-wrap">{message.message}</p>
-                    <p className={`text-xs mt-1 ${
-                      message.sender_type === 'user'
+                    <p className={`text-xs mt-1 ${message.sender_type === 'user'
                         ? 'text-green-100'
                         : 'text-neutral-500 dark:text-neutral-400'
-                    }`}>
+                      }`}>
                       {new Date(message.created_at).toLocaleTimeString()}
                     </p>
                   </div>
@@ -195,14 +193,12 @@ export default function ChatInterface({
         )}
         <form onSubmit={handleSubmit} className="flex gap-2">
           <div className="flex-1">
-            <TextArea
+            <AutoResizeTextarea
               ref={textareaRef}
               value={data.message}
               onChange={(e) => setData('message', e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={hasFiles ? t('type_message_placeholder') : t('upload_files_to_chat')}
-              rows={2}
-              className="resize-none min-h-[40px] max-h-32"
               disabled={processing || !hasFiles}
             />
           </div>
