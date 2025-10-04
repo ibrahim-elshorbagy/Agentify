@@ -131,15 +131,15 @@ export default function Files({ files = [] }) {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex items-center gap-2">
-                      <SecondaryButton
+                    <div className="flex items-center justify-end gap-2">
+                      {/* <SecondaryButton
                         onClick={() => toggleEditModal(file)}
                         icon="fa-edit"
                         size="small"
                         className="flex-1 text-xs sm:text-sm"
                       >
                         <span className=" sm:inline">{t('replace')}</span>
-                      </SecondaryButton>
+                      </SecondaryButton> */}
 
                       <button
                         onClick={() => deleteFile(file)}
