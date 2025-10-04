@@ -154,8 +154,8 @@ export default function ChatInterface({
             >
               <div
                 className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.sender_type === 'user'
-                    ? 'bg-green-500 text-white'
-                    : 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 border border-neutral-200 dark:border-neutral-700'
+                  ? 'bg-green-500 text-white'
+                  : 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 border border-neutral-200 dark:border-neutral-700'
                   }`}
               >
                 <div className="flex items-start gap-2">
@@ -165,11 +165,15 @@ export default function ChatInterface({
                     </div>
                   )}
                   <div className="flex-1">
-                    <p className="whitespace-pre-wrap">{message.message}</p>
-                    <p className={`text-xs mt-1 ${message.sender_type === 'user'
-                        ? 'text-green-100'
-                        : 'text-neutral-500 dark:text-neutral-400'
-                      }`}>
+                    <p className="whitespace-pre-wrap break-words break-all">
+                      {message.message}
+                    </p>
+                    <p
+                      className={`text-xs mt-1 ${message.sender_type === 'user'
+                          ? 'text-green-100'
+                          : 'text-neutral-500 dark:text-neutral-400'
+                        }`}
+                    >
                       {new Date(message.created_at).toLocaleTimeString()}
                     </p>
                   </div>
