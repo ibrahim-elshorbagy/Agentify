@@ -28,7 +28,7 @@ class ReportAgentService
 
           $response = Http::
           withHeaders([
-                    'X-API-Key' => $this->apiKey,
+                    'REPORTS_AGENT_UPLOADFILES' => $this->apiKey,
                     'Content-Type' => 'application/json',
                 ])
                 ->

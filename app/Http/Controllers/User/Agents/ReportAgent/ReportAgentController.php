@@ -140,7 +140,6 @@ class ReportAgentController extends Controller
         'extension' => $extension,
         'extension_with_dot' => '.' . $extension,
       ];
-      dd($webhookData);
 
       $webhookService->triggerWebhook($webhookData);
     }
