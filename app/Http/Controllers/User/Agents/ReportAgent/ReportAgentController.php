@@ -111,12 +111,14 @@ class ReportAgentController extends Controller
 
     foreach ($request->file('files') as $file) {
       $originalName = $file->getClientOriginalName();
-      $fileName = time() . '_' . $originalName;
+      $extension = $file->getClientOriginalExtension();
+
+      // Generate a clean, URL-safe filename using userId and timestamp
+      $sanitizedFileName = "user{$user->id}_" . time() . "_" . uniqid() . ".{$extension}";
       $userPath = "user_{$user->id}/Agents/ReportAgent/files";
 
-      // Store the file
-      $path = $file->storeAs($userPath, $fileName, 'public');
-      $extension = $file->getClientOriginalExtension();
+      // Store the file with sanitized name
+      $path = $file->storeAs($userPath, $sanitizedFileName, 'public');
 
       // Save to database
       $reportFile = ReportFile::create([
@@ -129,12 +131,12 @@ class ReportAgentController extends Controller
 
       $uploadedFiles[] = $reportFile;
 
-      // Trigger webhook for each uploaded file
+      // Trigger webhook for each uploaded file with sanitized filename
       $webhookService = new ReportAgentService();
       $webhookData = [
         'user_id' => $user->id,
         'file_id' => $reportFile->id,
-        'file_name' => $originalName,
+        'file_name' => $sanitizedFileName, // Use sanitized name for webhook
         'mime'=> $file->getMimeType(),
         'file_url' => asset('storage/' . $path),
         'extension' => $extension,
