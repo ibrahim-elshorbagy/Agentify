@@ -155,7 +155,7 @@ export default function ChatInterface({
               className={`flex ${message.sender_type === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${message.sender_type === 'user'
+                className={`max-w-sm lg:max-w-2xl px-4 py-2 rounded-lg ${message.sender_type === 'user'
                   ? 'bg-green-500 text-white'
                   : 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 border border-neutral-200 dark:border-neutral-700'
                   }`}
@@ -167,7 +167,7 @@ export default function ChatInterface({
                     </div>
                   )}
                   <div className="flex-1">
-                    <p className="whitespace-pre-wrap break-words break-all">
+                    <p className="whitespace-pre-wrap break-words break-all" dir="auto">
                       {message.message}
                     </p>
                     <p
