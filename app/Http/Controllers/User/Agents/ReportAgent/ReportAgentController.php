@@ -113,12 +113,13 @@ class ReportAgentController extends Controller
       $originalName = $file->getClientOriginalName();
       $extension = $file->getClientOriginalExtension();
 
-      // Generate a clean, URL-safe filename using userId and timestamp
-      $sanitizedFileName = "user{$user->id}_" . time() . "_" . uniqid() . ".{$extension}";
+      // Replace spaces with hyphens to avoid URL encoding issues
+      $sanitizedFileName = str_replace(' ', '-', $originalName);
+      $fileName = time() . '_' . $sanitizedFileName;
       $userPath = "user_{$user->id}/Agents/ReportAgent/files";
 
       // Store the file with sanitized name
-      $path = $file->storeAs($userPath, $sanitizedFileName, 'public');
+      $path = $file->storeAs($userPath, $fileName, 'public');
 
       // Save to database
       $reportFile = ReportFile::create([
