@@ -23,14 +23,14 @@ class DatabaseSeeder extends Seeder
     $SystemAdminRole = Role::firstOrCreate(['name' => 'admin']);
     $userRole = Role::firstOrCreate(['name' => 'user']);
 
-    $admin = User::create([
-      'id' => 1,
-      'name' => 'ibrahim elshorbagy',
-      'username' => 'a',
-      'email' => 'ibrahim.elshorbagy47@gmail.com',
-      'password' => Hash::make('a'),
-    ]);
-    $admin->assignRole($SystemAdminRole);
+    // $admin = User::create([
+    //   'id' => 1,
+    //   'name' => 'ibrahim elshorbagy',
+    //   'username' => 'a',
+    //   'email' => 'ibrahim.elshorbagy47@gmail.com',
+    //   'password' => Hash::make('a'),
+    // ]);
+    // $admin->assignRole($SystemAdminRole);
 
     $admin = User::create([
       'id' => 3,
