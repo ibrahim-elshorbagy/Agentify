@@ -17,7 +17,7 @@ class UserManagementController extends Controller
     $request->validate([
       'name' => ['nullable', 'string', 'max:255'],
       'email' => ['nullable', 'string', 'max:255'],
-      'username' => ['nullable', 'string', 'max:255'],
+      'username' => ['nullable', 'string', 'max:255', 'regex:/^[a-z0-9-_]+$/'],
       'sort' => ['nullable', 'string', 'in:name,email,username,created_at'],
       'direction' => ['nullable', 'string', 'in:asc,desc'],
       'per_page' => ['nullable', 'integer', 'min:1'],
@@ -74,9 +74,11 @@ class UserManagementController extends Controller
     $data = $request->validate([
       'name' => ['required', 'string', 'max:255'],
       'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-      'username' => ['required', 'string', 'max:255', 'unique:users'],
+      'username' => ['required', 'string', 'max:255', 'unique:users', 'regex:/^[a-z0-9-_]+$/'],
       'password' => ['required', 'confirmed', Rules\Password::defaults()],
       'role' => ['required', 'string', 'exists:roles,name'],
+    ], [
+      'username.regex' => __('website_response.username_regex'),
     ]);
 
     $user = User::create([
@@ -122,6 +124,9 @@ class UserManagementController extends Controller
       'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
       'role' => ['required', 'string', 'exists:roles,name'],
       'blocked' => ['nullable', 'boolean'],
+    ],
+    [
+      'username.regex' => __('website_response.username_regex'),
     ]);
 
     $updateData = [
