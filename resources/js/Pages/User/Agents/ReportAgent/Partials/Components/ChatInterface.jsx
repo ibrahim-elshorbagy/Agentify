@@ -155,25 +155,29 @@ export default function ChatInterface({
               className={`flex ${message.sender_type === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               <div
-                className={`max-w-sm lg:max-w-2xl px-4 py-2 rounded-lg ${message.sender_type === 'user'
+                className={`max-w-sm lg:max-w-2xl px-4 py-2 rounded-lg min-w-0 ${message.sender_type === 'user'
                   ? 'bg-green-500 text-white'
                   : 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 border border-neutral-200 dark:border-neutral-700'
                   }`}
               >
-                <div className="flex items-start gap-2">
+                <div className="flex items-start gap-2 min-w-0">
                   {message.sender_type === 'ai' && (
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
                       <i className="fa-solid fa-robot text-xs text-green-500"></i>
                     </div>
                   )}
-                  <div className="flex-1">
-                    <p className="whitespace-pre-wrap break-words break-all" dir="auto">
+                  <div className="flex-1 min-w-0">
+                    <p
+                      className="whitespace-pre-line break-words leading-relaxed"
+                      dir="auto"
+                    >
                       {message.message}
                     </p>
+
                     <p
                       className={`text-xs mt-1 ${message.sender_type === 'user'
-                          ? 'text-green-100'
-                          : 'text-neutral-500 dark:text-neutral-400'
+                        ? 'text-green-100'
+                        : 'text-neutral-500 dark:text-neutral-400'
                         }`}
                     >
                       {new Date(message.created_at).toLocaleTimeString()}
@@ -183,6 +187,7 @@ export default function ChatInterface({
               </div>
             </div>
           ))
+
         )}
         <div ref={messagesEndRef} />
       </div>
