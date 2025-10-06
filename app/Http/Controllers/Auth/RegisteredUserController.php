@@ -32,13 +32,20 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name'=>'required|string|max:255',
-            'username' => 'required|string|max:255|unique:'.User::class,
+            'username' => [
+              'required',
+              'string',
+              'max:255',
+              'unique:users,username',
+              'regex:/^[a-z0-9-_]+$/',
+            ],
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], [
             'name.required' => __('website_response.name_required'),
             'username.required' => __('website_response.username_required'),
             'username.unique' => __('website_response.username_unique'),
+            'username.regex' => __('website_response.username_regex'),
             'email.required' => __('website_response.email_required'),
             'email.email' => __('website_response.email_invalid'),
             'email.unique' => __('website_response.email_unique'),

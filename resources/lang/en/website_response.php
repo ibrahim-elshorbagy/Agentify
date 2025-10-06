@@ -34,6 +34,7 @@ return [
   'password_required' => 'The password field is required.',
   'name_required' => 'The name field is required.',
   'username_unique' => 'This username is already taken.',
+  "username_regex" => "The username may only contain lowercase letters, numbers, hyphens, and underscores.",
   'email_required' => 'The email field is required.',
   'email_invalid' => 'Please enter a valid email address.',
   'email_unique' => 'This email is already registered.',
