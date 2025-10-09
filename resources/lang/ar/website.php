@@ -552,6 +552,7 @@ return [
   'processing_emails' => 'معالجة الرسائل',
   'analyzing_data' => 'تحليل البيانات',
   'parsing_cvs' => 'تحليل السير الذاتية',
+  "candidate_name" => "اسم المرشح",
 
   // Platform Benefits
   'ai_powered_automation' => 'أتمتة مدعومة بالذكاء الاصطناعي',

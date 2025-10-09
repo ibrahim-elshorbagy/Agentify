@@ -613,6 +613,7 @@ return [
   'processing_emails' => 'Processing emails',
   'analyzing_data' => 'Analyzing data',
   'parsing_cvs' => 'Parsing CVs',
+  "candidate_name" => "Candidate Name",
 
   // Platform Benefits
   'ai_powered_automation' => 'AI-powered automation',
