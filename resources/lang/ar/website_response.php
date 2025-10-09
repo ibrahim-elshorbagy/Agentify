@@ -83,6 +83,10 @@ return [
   'plans_deleted_title' => 'تم حذف الخطط',
   'plans_deleted_message' => 'تم حذف :count من الخطط بنجاح.',
 
+  /* HR Agent Responses */
+  'hr_candidate_deleted_title' => 'تم حذف مرشح الموارد البشرية',
+  'hr_candidate_deleted_message' => 'تم حذف مرشح الموارد البشرية بنجاح.',
+
   // Message Response Management
   "message_response_created_title" => "تم إنشاء الرد ",
   "message_response_created_message" => "تم إنشاء الرد بنجاح.",
@@ -135,61 +139,5 @@ return [
   'confirm_restore_emails' => 'هل أنت متأكد أنك تريد استعادة :count بريد إلى الوارد؟',
   'confirm_permanent_delete_bulk' => 'هل أنت متأكد أنك تريد حذف :count بريد بشكل نهائي؟ هذا الإجراء لا يمكن التراجع عنه.',
   'confirm_action' => 'هل أنت متأكد أنك تريد تنفيذ هذا الإجراء على :count عنصر؟',
-
-  /* Email Agent Response Messages */
-  'draft_deleted_title' => 'تم حذف المسودة',
-  'draft_deleted_successfully' => 'تم حذف رسالة المسودة بنجاح.',
-  'error_deleting_draft' => 'حدث خطأ أثناء حذف رسالة المسودة.',
-  'draft_sent_title' => 'تم إرسال المسودة',
-  'draft_sent_successfully' => 'تم إرسال رسالة المسودة بنجاح.',
-  'error_sending_draft' => 'حدث خطأ أثناء إرسال رسالة المسودة.',
-  'draft_updated_title' => 'تم تحديث المسودة',
-  'draft_updated_successfully' => 'تم تحديث رسالة المسودة بنجاح.',
-  'error_updating_draft' => 'حدث خطأ أثناء تحديث رسالة المسودة.',
-  'bulk_drafts_deleted' => 'تم حذف :count رسائل مسودة بنجاح.',
-  'bulk_drafts_sent' => 'تم إرسال :count رسائل مسودة بنجاح.',
+  'confirm_delete_hr_candidate' => 'هل أنت متأكد من حذف هذا المرشح؟',
   'deleted_successfully' => 'تم حذف :count عنصر بنجاح.',
-  'bulk_sent_deleted' => 'تم حذف :count رسائل مرسلة بنجاح.',
-  'bulk_action_success' => 'تم إكمال العملية الجماعية',
-  /* End Email Agent Response Messages */
-
-  /* Admin Impersonation Responses */
-  'impersonation_success_title' => 'تم تسجيل الدخول كمستخدم',
-  'impersonation_success_message' => 'تم تسجيل الدخول بنجاح كمستخدم: :name',
-  'impersonation_return_title' => 'تم العودة إلى المدير',
-  'impersonation_return_message' => 'تم العودة إلى حساب المدير بنجاح.',
-  'impersonation_failed_title' => 'فشل العودة',
-  'impersonation_failed_message' => 'تعذر العودة إلى حساب المدير.',
-
-  /* Settings Responses */
-  'setting_created_title' => 'تم إنشاء الإعداد',
-  'setting_created_message' => 'تم إنشاء الإعداد بنجاح.',
-  'setting_updated_title' => 'تم تحديث الإعداد',
-  'setting_updated_message' => 'تم تحديث الإعداد بنجاح.',
-  'setting_deleted_title' => 'تم حذف الإعداد',
-  'setting_deleted_message' => 'تم حذف الإعداد بنجاح.',
-  'settings_deleted_title' => 'تم حذف الإعدادات',
-  'settings_deleted_message' => 'تم حذف :count إعداد بنجاح.',
-  'setting_key_exists' => 'يوجد بالفعل إعداد بهذا المفتاح.',
-
-  /* Report Agent Controller Responses */
-  'files_uploaded_title' => 'تم رفع الملفات',
-  'files_uploaded_message' => 'تم رفع :count ملف بنجاح.',
-  'file_updated_title' => 'تم تحديث الملف',
-  'file_updated_message' => 'تم تحديث الملف بنجاح.',
-  'file_deleted_title' => 'تم حذف الملف',
-  'file_deleted_message' => 'تم حذف الملف بنجاح.',
-  'conversation_created_title' => 'تم إنشاء المحادثة',
-  'conversation_created_message' => 'تم إنشاء المحادثة الجديدة بنجاح.',
-  'conversation_updated_title' => 'تم تحديث المحادثة',
-  'conversation_updated_message' => 'تم تحديث المحادثة بنجاح.',
-  'conversation_deleted_title' => 'تم حذف المحادثة',
-  'conversation_deleted_message' => 'تم حذف المحادثة بنجاح.',
-  'message_sent_title' => 'تم إرسال الرسالة',
-  'message_sent_message' => 'تم إرسال ومعالجة رسالتك.',
-  'message_error_title' => 'خطأ في الرسالة',
-  'message_error_message' => 'فشل في معالجة رسالتك. الرجاء المحاولة مرة أخرى.',
-  'access_denied_title' => 'تم رفض الوصول',
-  'access_denied_message' => 'ليس لديك صلاحية للوصول إلى هذا المورد.',
-
-];

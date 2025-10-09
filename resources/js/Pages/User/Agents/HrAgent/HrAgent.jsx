@@ -18,6 +18,16 @@ export default function Index({ hrAgents, queryParams }) {
     });
   };
 
+  // Single delete handler
+  const handleDelete = (hrAgentId) => {
+    if (confirm(t('confirm_delete_hr_candidate'))) {
+      router.delete(route('user.hr-agent.destroy', hrAgentId), {
+        preserveState: true,
+        preserveScroll: true,
+      });
+    }
+  };
+
   // Define bulk actions
   const bulkActions = [
     {
@@ -32,6 +42,7 @@ export default function Index({ hrAgents, queryParams }) {
 
   // Table configuration
   const columns = [
+    { field: 'row_number', label: t('serial'), icon: 'fa-hashtag' },
     { field: 'candidate_name', label: t('name'), icon: 'fa-user' },
     { field: 'email_address', label: t('email_address'), icon: 'fa-envelope' },
     { field: 'contact_number', label: t('contact_number'), icon: 'fa-phone' },
@@ -51,6 +62,9 @@ export default function Index({ hrAgents, queryParams }) {
   // Render row actions
   const renderRow = (hrAgent) => (
     <>
+      <td className="px-3 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
+        {hrAgent.row_number}
+      </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-900 dark:text-neutral-100">
         <div className="flex items-center gap-2">
           <i className="fa-solid fa-user text-blue-500"></i>
@@ -85,9 +99,19 @@ export default function Index({ hrAgents, queryParams }) {
         <Link
           href={route('user.hr-agent.view', hrAgent.id)}
           className="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300"
+          onClick={(e) => e.stopPropagation()}
         >
           <i className="fa-solid fa-eye"></i>
         </Link>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDelete(hrAgent.id);
+          }}
+          className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+        >
+          <i className="fa-solid fa-trash-can"></i>
+        </button>
       </td>
     </>
   );

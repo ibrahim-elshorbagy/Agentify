@@ -41,6 +41,7 @@ class HrAgentController extends Controller
 
         $perPage = $request->get('per_page', 15);
         $hrAgents = $query->paginate($perPage);
+        $hrAgents = $this->addRowNumbers($hrAgents);
 
         return inertia('User/Agents/HrAgent/HrAgent', [
             'hrAgents' => $hrAgents,
@@ -61,6 +62,24 @@ class HrAgentController extends Controller
         return inertia('User/Agents/HrAgent/Pages/View', [
             'hrAgent' => $hrAgent,
         ]);
+    }
+
+    /**
+     * Delete a specific HR agent candidate
+     */
+    public function destroy(HrAgent $hrAgent)
+    {
+        // Ensure the HR agent belongs to the authenticated user
+        if ($hrAgent->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $hrAgent->delete();
+
+        return back()
+            ->with('title', __('website_response.hr_candidate_deleted_title'))
+            ->with('message', __('website_response.hr_candidate_deleted_message'))
+            ->with('status', 'success');
     }
 
     /**

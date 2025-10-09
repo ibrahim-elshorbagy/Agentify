@@ -82,6 +82,9 @@ return [
   'plans_deleted_title' => 'Plans Deleted',
   'plans_deleted_message' => ':count plans have been deleted successfully.',
 
+  /* HR Agent Responses */
+  'hr_candidate_deleted_title' => 'HR Candidate Deleted',
+  'hr_candidate_deleted_message' => 'HR candidate has been deleted successfully.',
 
   // Message Response Management
   "message_response_created_title" => "Response Created",
@@ -115,7 +118,6 @@ return [
   "error_storing_response" => "An error occurred while storing the response.",
   "error_storing_message" => "An error occurred while storing the response.",
   "error_updating_message" => "An error occurred while updating the response.",
-  "error_title" => "Error",
 
   /* Email Bulk Action Responses */
 
@@ -135,6 +137,7 @@ return [
   'confirm_restore_emails' => 'Are you sure you want to restore :count emails to inbox?',
   'confirm_permanent_delete_bulk' => 'Are you sure you want to permanently delete :count emails? This action cannot be undone.',
   'confirm_action' => 'Are you sure you want to perform this action on :count items?',
+  'confirm_delete_hr_candidate' => 'Are you sure you want to delete this HR candidate?',
 
   /* Email Agent Response Messages */
   'draft_deleted_title' => 'Draft Deleted',
@@ -151,7 +154,6 @@ return [
   'deleted_successfully' => ':count items have been deleted successfully.',
   'bulk_sent_deleted' => ':count sent messages have been deleted successfully.',
   'bulk_action_success' => 'Bulk Action Completed',
-  'error_title' => 'Error',
   /* End Email Agent Response Messages */
 
   /* Admin Impersonation Responses */

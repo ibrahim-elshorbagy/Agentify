@@ -8,5 +8,6 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
     // HR Agent routes
     Route::get('/hr-agent', [HrAgentController::class, 'index'])->name('user.hr-agent.index');
     Route::get('/hr-agent/{hrAgent}', [HrAgentController::class, 'view'])->name('user.hr-agent.view');
+    Route::delete('/hr-agent/delete/{hrAgent}', [HrAgentController::class, 'destroy'])->name('user.hr-agent.destroy');
     Route::delete('/hr-agent/bulk-delete', [HrAgentController::class, 'bulkDelete'])->name('user.hr-agent.bulk.delete');
 });
