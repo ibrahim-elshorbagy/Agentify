@@ -148,6 +148,7 @@ return [
   'error_updating_draft' => 'An error occurred while updating the draft message.',
   'bulk_drafts_deleted' => ':count draft messages have been deleted successfully.',
   'bulk_drafts_sent' => ':count draft messages have been sent successfully.',
+  'deleted_successfully' => ':count items have been deleted successfully.',
   'bulk_sent_deleted' => ':count sent messages have been deleted successfully.',
   'bulk_action_success' => 'Bulk Action Completed',
   'error_title' => 'Error',

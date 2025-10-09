@@ -62,6 +62,15 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
         { name: t('files'), href: route('user.report-agent.files'), route: 'user.report-agent.files*', icon: 'fa-folder' },
       ],
     },
+    {
+      name: t('hr_agent'),
+      icon: 'fa-users',
+      route: 'user.hr-agent.*',
+      role: 'user',
+      submenu: [
+        { name: t('candidates'), href: route('user.hr-agent.index'), route: 'user.hr-agent.*', icon: 'fa-user-tie' },
+      ],
+    },
 
     // { name: t('settings'), icon: 'fa-gear', href: route('profile.edit'), route: 'profile', role: 'admin' },
   ];

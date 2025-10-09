@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
 
   // ReportAgent Webhook trigger
   Route::post('/trigger-report-agent', [ReportAgentController::class, 'triggerReportWebhook'])->name('report-agent.trigger');
-  
+
 });
 // User preferences routes
 Route::any('/locale', [PreferencesController::class, 'changeLocale'])->name('locale.change');
@@ -48,3 +48,4 @@ require __DIR__ . '/testHost.php';
 // Agents
 require __DIR__ . '/EmailAgent.php';
 require __DIR__ . '/ReportsAgent.php';
+require __DIR__ . '/HrAgent.php';

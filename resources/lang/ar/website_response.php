@@ -148,6 +148,7 @@ return [
   'error_updating_draft' => 'حدث خطأ أثناء تحديث رسالة المسودة.',
   'bulk_drafts_deleted' => 'تم حذف :count رسائل مسودة بنجاح.',
   'bulk_drafts_sent' => 'تم إرسال :count رسائل مسودة بنجاح.',
+  'deleted_successfully' => 'تم حذف :count عنصر بنجاح.',
   'bulk_sent_deleted' => 'تم حذف :count رسائل مرسلة بنجاح.',
   'bulk_action_success' => 'تم إكمال العملية الجماعية',
   /* End Email Agent Response Messages */
