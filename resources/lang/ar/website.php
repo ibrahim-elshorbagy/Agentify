@@ -552,7 +552,7 @@ return [
   'confirm_delete_hr_candidate' => 'هل أنت متأكد من حذف هذا المرشح؟',
   'contact_number' => 'رقم الاتصال',
   'score' => 'النتيجة',
-  'analyzed_at' => 'تم التحليل في',
+  'analyzed_at' => 'تاريخ الانشاء',
   'processing_emails' => 'معالجة الرسائل',
   'analyzing_data' => 'تحليل البيانات',
   'parsing_cvs' => 'تحليل السير الذاتية',
@@ -742,6 +742,5 @@ return [
   'save_changes' => 'حفظ التغييرات',
   'contact_number' => 'رقم الاتصال',
   'score' => 'النتيجة',
-  'analyzed_at' => 'تاريخ التحليل',
 
 ];

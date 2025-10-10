@@ -614,7 +614,7 @@ return [
   'contact_number' => 'Contact Number',
   'email_address' => 'Email Address',
   'score' => 'Score',
-  'analyzed_at' => 'Analyzed At',
+  'analyzed_at' => 'Created At',
   'processing_emails' => 'Processing emails',
   'analyzing_data' => 'Analyzing data',
   'parsing_cvs' => 'Parsing CVs',
@@ -805,6 +805,5 @@ return [
   'save_changes' => 'Save Changes',
   'contact_number' => 'Contact Number',
   'score' => 'Score',
-  'analyzed_at' => 'Analyzed At',
 
 ];
