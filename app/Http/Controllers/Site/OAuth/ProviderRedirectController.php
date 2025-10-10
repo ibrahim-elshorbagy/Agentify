@@ -46,13 +46,11 @@ class ProviderRedirectController extends Controller
 
       $driver = Socialite::driver($provider);
 
-      // Configure Google-specific settings for email reading
+      // Configure Google-specific settings for email reading ONLY
       if ($provider === 'google') {
         return $driver
           ->scopes([
-            'https://www.googleapis.com/auth/gmail.readonly',
-            'https://www.googleapis.com/auth/userinfo.email',
-            'https://www.googleapis.com/auth/userinfo.profile'
+            'https://www.googleapis.com/auth/gmail.readonly'
           ])
           ->with([
             'access_type' => 'offline',
@@ -61,12 +59,11 @@ class ProviderRedirectController extends Controller
           ->redirect();
       }
 
-      // Configure Outlook-specific settings for email reading
+      // Configure Outlook-specific settings for email reading ONLY
       if ($provider === 'outlook') {
         return $driver
           ->scopes([
             'https://graph.microsoft.com/Mail.Read',
-            'https://graph.microsoft.com/User.Read',
             'offline_access'
           ])
           ->redirect();
