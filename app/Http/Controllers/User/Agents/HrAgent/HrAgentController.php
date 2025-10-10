@@ -123,19 +123,29 @@ class HrAgentController extends Controller
     ]);
 
     try {
-      $fileUrls = [];
+      $uploadedFiles = [];
 
       foreach ($request->file('files') as $file) {
+        $originalName = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+
         // Store file
         $path = $file->store('user_'.Auth::id().'/Agents/HrAgent/uploads', 'public');
-        $fileUrls[] = Storage::url($path);
+
+        $uploadedFiles[] = [
+          'file_name' => $originalName,
+          'mime' => $file->getMimeType(),
+          'file_url' => asset('storage/' . $path),
+          'extension' => $extension,
+          'extension_with_dot' => '.' . $extension,
+        ];
       }
 
       // Prepare data for N8N webhook
       $data = [
         'user_id' => Auth::id(),
         'source' => 'website',
-        'files' => $fileUrls
+        'files' => $uploadedFiles,
       ];
 
       // Call HR Agent service
