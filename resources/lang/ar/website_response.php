@@ -87,6 +87,24 @@ return [
   'hr_candidate_deleted_title' => 'تم حذف مرشح الموارد البشرية',
   'hr_candidate_deleted_message' => 'تم حذف مرشح الموارد البشرية بنجاح.',
 
+  /* HR Agent N8N Integration Responses */
+  'hr_files_uploaded_title' => 'تم رفع الملفات بنجاح',
+  'hr_files_uploaded_message' => 'تم رفع ملفات السير الذاتية وإرسالها للتحليل.',
+  'hr_upload_failed_title' => 'فشل الرفع',
+  'hr_upload_failed_message' => 'فشل في رفع ملفات السير الذاتية. يرجى المحاولة مرة أخرى.',
+  'hr_gmail_processing_title' => 'تم بدء معالجة Gmail',
+  'hr_gmail_processing_message' => 'جاري معالجة رسائل Gmail لتحليل المرشحين.',
+  'hr_gmail_failed_title' => 'فشلت معالجة Gmail',
+  'hr_gmail_failed_message' => 'فشل في معالجة رسائل Gmail. يرجى المحاولة مرة أخرى.',
+  'hr_gmail_no_credential_title' => 'Gmail غير متصل',
+  'hr_gmail_no_credential_message' => 'يرجى ربط حساب Gmail أولاً.',
+  'hr_outlook_processing_title' => 'تم بدء معالجة Outlook',
+  'hr_outlook_processing_message' => 'جاري معالجة رسائل Outlook لتحليل المرشحين.',
+  'hr_outlook_failed_title' => 'فشلت معالجة Outlook',
+  'hr_outlook_failed_message' => 'فشل في معالجة رسائل Outlook. يرجى المحاولة مرة أخرى.',
+  'hr_outlook_no_credential_title' => 'Outlook غير متصل',
+  'hr_outlook_no_credential_message' => 'يرجى ربط حساب Outlook أولاً.',
+
   // Message Response Management
   "message_response_created_title" => "تم إنشاء الرد ",
   "message_response_created_message" => "تم إنشاء الرد بنجاح.",

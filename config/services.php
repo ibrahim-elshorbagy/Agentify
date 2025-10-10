@@ -59,6 +59,14 @@ return [
     'jwt_secret' => env('REPORTS_AGENT_CHAT'),
   ],
 
+  'hr_agent' => [
+    'upload_file_url' => env('HR_AGENT_UPLOAD_FILE_URL'),
+    'get_gmail_url' => env('HR_AGENT_GET_GMAIL_URL'),
+    'get_outlook_url' => env('HR_AGENT_GET_OUTLOOK_URL'),
+    'api_key' => env('HR_AGENT_CVINTAKE'),
+    'password' => env('HR_AGENT_CVINTAKE'),
+  ],
+
   'google' => [
     'client_id' => env('GOOGLE_CLIENT_ID'),
     'client_secret' => env('GOOGLE_CLIENT_SECRET'),

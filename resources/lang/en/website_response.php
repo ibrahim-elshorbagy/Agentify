@@ -86,6 +86,24 @@ return [
   'hr_candidate_deleted_title' => 'HR Candidate Deleted',
   'hr_candidate_deleted_message' => 'HR candidate has been deleted successfully.',
 
+  /* HR Agent N8N Integration Responses */
+  'hr_files_uploaded_title' => 'Files Uploaded Successfully',
+  'hr_files_uploaded_message' => 'CV files have been uploaded and sent for analysis.',
+  'hr_upload_failed_title' => 'Upload Failed',
+  'hr_upload_failed_message' => 'Failed to upload CV files. Please try again.',
+  'hr_gmail_processing_title' => 'Gmail Processing Started',
+  'hr_gmail_processing_message' => 'Gmail emails are being processed for candidate analysis.',
+  'hr_gmail_failed_title' => 'Gmail Processing Failed',
+  'hr_gmail_failed_message' => 'Failed to process Gmail emails. Please try again.',
+  'hr_gmail_no_credential_title' => 'Gmail Not Connected',
+  'hr_gmail_no_credential_message' => 'Please connect your Gmail account first.',
+  'hr_outlook_processing_title' => 'Outlook Processing Started',
+  'hr_outlook_processing_message' => 'Outlook emails are being processed for candidate analysis.',
+  'hr_outlook_failed_title' => 'Outlook Processing Failed',
+  'hr_outlook_failed_message' => 'Failed to process Outlook emails. Please try again.',
+  'hr_outlook_no_credential_title' => 'Outlook Not Connected',
+  'hr_outlook_no_credential_message' => 'Please connect your Outlook account first.',
+
   // Message Response Management
   "message_response_created_title" => "Response Created",
   "message_response_created_message" => "Response has been created successfully.",

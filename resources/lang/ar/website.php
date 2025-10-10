@@ -558,6 +558,13 @@ return [
   'parsing_cvs' => 'تحليل السير الذاتية',
   "candidate_name" => "اسم المرشح",
 
+  // HR Agent N8N Integration
+  'upload_cv_files' => 'رفع ملفات السير الذاتية',
+  'get_gmail' => 'تحليل رسائل Gmail',
+  'get_outlook' => 'تحليل رسائل Outlook',
+  'confirm_get_gmail' => 'هل أنت متأكد من جلب رسائل Gmail للتحليل؟',
+  'confirm_get_outlook' => 'هل أنت متأكد من جلب رسائل Outlook للتحليل؟',
+
   // Platform Benefits
   'ai_powered_automation' => 'أتمتة مدعومة بالذكاء الاصطناعي',
   'leverage_advanced_ai_to_handle_repetitive_tasks_automatically' => 'استفد من الذكاء الاصطناعي المتقدم للتعامل مع المهام المتكررة تلقائيًا',

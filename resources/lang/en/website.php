@@ -618,6 +618,13 @@ return [
   'processing_emails' => 'Processing emails',
   'analyzing_data' => 'Analyzing data',
   'parsing_cvs' => 'Parsing CVs',
+
+  // HR Agent N8N Integration
+  'upload_cv_files' => 'Upload CV Files',
+  'get_gmail' => 'Analyzing Gmail Emails',
+  'get_outlook' => 'Analyzing Outlook Emails',
+  'confirm_get_gmail' => 'Are you sure you want to fetch emails from Gmail for analysis?',
+  'confirm_get_outlook' => 'Are you sure you want to fetch emails from Outlook for analysis?',
   "candidate_name" => "Candidate Name",
 
   // Platform Benefits

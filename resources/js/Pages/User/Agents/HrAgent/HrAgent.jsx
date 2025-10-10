@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import { useTrans } from '@/Hooks/useTrans';
 import SelectableTable from '@/Components/SelectableTable';
 import ActionButton from '@/Components/ActionButton';
 import SearchBar from '@/Components/SearchBar';
+import PrimaryButton from '@/Components/PrimaryButton';
 import { Link, router } from '@inertiajs/react';
+import UploadFileModal from './Partials/UploadFileModal';
 
 export default function Index({ hrAgents, queryParams }) {
   const { t } = useTrans();
+
+  // Modal states
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+
+  // Toggle modals
+  const toggleUploadModal = () => setIsUploadModalOpen(!isUploadModalOpen);
 
   // Bulk action handlers
   const handleBulkDelete = async (ids) => {
@@ -26,6 +34,22 @@ export default function Index({ hrAgents, queryParams }) {
         preserveScroll: true,
       });
     }
+  };
+
+  // Handle Gmail button click
+  const handleGetGmail = () => {
+    router.post(route('user.hr-agent.get-gmail'), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Handle Outlook button click
+  const handleGetOutlook = () => {
+    router.post(route('user.hr-agent.get-outlook'), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
   };
 
   // Define bulk actions
@@ -133,6 +157,36 @@ export default function Index({ hrAgents, queryParams }) {
               <h2 className="text-2xl font-bold leading-tight text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
                 <i className="fa-solid fa-users text-blue-500"></i> {t('hr_agent')}
               </h2>
+
+              {/* Action buttons */}
+              <div className="flex gap-3">
+                <PrimaryButton
+                  onClick={toggleUploadModal}
+                  icon="fa-upload"
+                  variant="success"
+                  size="sm"
+                >
+                  {t('upload_cv_files')}
+                </PrimaryButton>
+
+                <PrimaryButton
+                  onClick={handleGetGmail}
+                  icon="fa-envelope"
+                  variant="info"
+                  size="sm"
+                >
+                  {t('get_gmail')}
+                </PrimaryButton>
+
+                <PrimaryButton
+                  onClick={handleGetOutlook}
+                  icon="fa-envelope-open"
+                  variant="warning"
+                  size="sm"
+                >
+                  {t('get_outlook')}
+                </PrimaryButton>
+              </div>
             </div>
             <div className="mb-4">
               <SearchBar
@@ -162,6 +216,12 @@ export default function Index({ hrAgents, queryParams }) {
           </div>
         </div>
       </div>
+
+      {/* Upload File Modal */}
+      <UploadFileModal
+        isOpen={isUploadModalOpen}
+        onClose={toggleUploadModal}
+      />
     </AppLayout>
   );
 }
