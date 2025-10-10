@@ -61,7 +61,7 @@ export default function UploadFileModal({ isOpen, onClose }) {
           value={selectedFiles}
           disabled={processing}
           error={errors.files || errors['files.0']}
-          helperText="PDF, Doc files are supported"
+          helperText="PDF files are supported"
         />
 
         {/* Buttons */}
