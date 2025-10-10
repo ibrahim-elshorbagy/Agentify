@@ -815,6 +815,8 @@ return [
   'connect_outlook' => 'Connect Outlook',
   'disconnect' => 'Disconnect',
   'test_connection' => 'Test Connection',
+  'fetch_latest_email' => 'Fetch Latest Email',
+  'close' => 'Close',
   'about_email_connections' => 'About Email Connections',
   'email_connections_description' => 'By connecting your email accounts, you allow our AI agents to read your emails for processing and analysis. Your credentials are stored securely and encrypted.',
   'confirm_disconnect_provider' => 'Are you sure you want to disconnect :provider? This will remove access to your email account.',

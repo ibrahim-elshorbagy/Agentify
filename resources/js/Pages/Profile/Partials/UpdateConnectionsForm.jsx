@@ -4,6 +4,7 @@ import { useTrans } from '@/Hooks/useTrans';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 import DangerButton from '@/Components/DangerButton';
+import EmailTestModal from './Modals/EmailTestModal';
 
 export default function UpdateConnectionsForm({ className = '' }) {
   const { t } = useTrans();
@@ -16,6 +17,10 @@ export default function UpdateConnectionsForm({ className = '' }) {
     google: hasGmailConnected || false,
     outlook: hasOutlookConnected || false,
   });
+
+  // Email test modal state
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [emailTestData, setEmailTestData] = useState(null);
 
   const handleConnect = (provider) => {
     setProcessing(true);
@@ -40,20 +45,27 @@ export default function UpdateConnectionsForm({ className = '' }) {
       const response = await fetch(route('connections.test', { provider }));
       const data = await response.json();
 
-      if (data.success) {
-        alert(data.message);
+      if (data.success && data.data) {
+        // Show email data in modal
+        setEmailTestData(data.data);
+        setIsEmailModalOpen(true);
+      } else if (data.success) {
+        alert(`✅ ${data.message}`);
       } else {
-        alert(data.message);
+        alert(`❌ Test Failed: ${data.message}`);
       }
     } catch (error) {
       console.error('Test connection failed:', error);
-      alert(t('connection_test_failed'));
+      alert('❌ Connection test failed. Please try again.');
     } finally {
       setProcessing(false);
     }
   };
 
-  return (
+  const closeEmailModal = () => {
+    setIsEmailModalOpen(false);
+    setEmailTestData(null);
+  };  return (
     <section className={className}>
       <header>
         <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
@@ -87,11 +99,11 @@ export default function UpdateConnectionsForm({ className = '' }) {
                   type="button"
                   onClick={() => handleTest('google')}
                   disabled={processing}
-                  icon="fa-plug-circle-check"
+                  icon="fa-envelope-open-text"
                 className='min-w-[180px]'
 
                 >
-                  {t('test_connection')}
+                  {t('fetch_latest_email')}
                 </SecondaryButton>
                 <DangerButton
                   type="button"
@@ -140,11 +152,11 @@ export default function UpdateConnectionsForm({ className = '' }) {
                   type="button"
                   onClick={() => handleTest('outlook')}
                   disabled={processing}
-                  icon="fa-plug-circle-check"
+                  icon="fa-envelope-open-text"
                 className='min-w-[180px]'
 
                 >
-                  {t('test_connection')}
+                  {t('fetch_latest_email')}
                 </SecondaryButton>
                 <DangerButton
                   type="button"
@@ -188,6 +200,13 @@ export default function UpdateConnectionsForm({ className = '' }) {
           </div>
         </div>
       </div>
+
+      {/* Email Test Modal */}
+      <EmailTestModal
+        isOpen={isEmailModalOpen}
+        onClose={closeEmailModal}
+        emailData={emailTestData}
+      />
     </section>
   );
 }
