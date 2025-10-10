@@ -4,6 +4,7 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import UpdateLanguagePreferences from './Partials/UpdateLanguagePreferences';
 import UpdateProfileImageForm from './Partials/UpdateProfileImageForm';
+import UpdateConnectionsForm from './Partials/UpdateConnectionsForm';
 import AppLayout from '@/Layouts/AppLayout';
 import ThemeToggle from '@/Components/ThemeToggle';
 import { useState, useEffect } from 'react';
@@ -87,6 +88,13 @@ export default function Edit({ mustVerifyEmail, status }) {
                   <span>{t('account_management')}</span>
                 </button>
                 <button
+                  onClick={() => handleMenuClick('connections')}
+                  className={`flex w-full items-center gap-2 p-2 rounded-lg text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-all ${activeSection === 'connections' ? 'bg-green-500/10 text-black dark:text-white font-medium' : ''}`}
+                >
+                  <i className={`fa-solid fa-link ${activeSection === 'connections' ? 'text-green-500' : ''}`}></i>
+                  <span>{t('email_connections')}</span>
+                </button>
+                <button
                   onClick={() => handleMenuClick('appearance')}
                   className={`flex w-full items-center gap-2 p-2 rounded-lg text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-all ${activeSection === 'appearance' ? 'bg-green-500/10 text-black dark:text-white font-medium' : ''}`}
                 >
@@ -147,6 +155,21 @@ export default function Edit({ mustVerifyEmail, status }) {
                 </div>
                 <div className="p-6">
                   <DeleteUserForm />
+                </div>
+              </div>
+            )}
+
+            {/* Email Connections Section */}
+            {activeSection === 'connections' && (
+              <div className="bg-neutral-100 dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden animate-fadeIn">
+                <div className="p-4 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950/30 flex items-center justify-between">
+                  <h2 className="font-semibold text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+                    <i className="fa-solid fa-link text-green-500"></i>
+                    {t('email_connections')}
+                  </h2>
+                </div>
+                <div className="p-6">
+                  <UpdateConnectionsForm />
                 </div>
               </div>
             )}

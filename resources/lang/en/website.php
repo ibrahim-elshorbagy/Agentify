@@ -806,4 +806,18 @@ return [
   'contact_number' => 'Contact Number',
   'score' => 'Score',
 
+  // Email Connections
+  'email_connections' => 'Email Connections',
+  'connect_email_accounts_description' => 'Connect your email accounts to enable reading emails from Gmail and Outlook.',
+  'connected' => 'Connected',
+  'not_connected' => 'Not Connected',
+  'connect_gmail' => 'Connect Gmail',
+  'connect_outlook' => 'Connect Outlook',
+  'disconnect' => 'Disconnect',
+  'test_connection' => 'Test Connection',
+  'about_email_connections' => 'About Email Connections',
+  'email_connections_description' => 'By connecting your email accounts, you allow our AI agents to read your emails for processing and analysis. Your credentials are stored securely and encrypted.',
+  'confirm_disconnect_provider' => 'Are you sure you want to disconnect :provider? This will remove access to your email account.',
+  'connection_test_failed' => 'Connection test failed. Please try reconnecting your account.',
+
 ];

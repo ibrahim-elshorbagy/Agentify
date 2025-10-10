@@ -19,9 +19,13 @@ class ProfileController extends Controller
    */
   public function edit(Request $request): Response
   {
+    $user = Auth::user();
+
     return Inertia::render('Profile/Edit', [
       'mustVerifyEmail' => true,
       'status' => session('status'),
+      'hasGmailConnected' => $user->hasGmailConnected(),
+      'hasOutlookConnected' => $user->hasOutlookConnected(),
     ]);
   }
 

@@ -11,54 +11,94 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
-    use HasRoles;
-    use HasApiTokens;
+  /** @use HasFactory<\Database\Factories\UserFactory> */
+  use HasFactory, Notifiable;
+  use HasRoles;
+  use HasApiTokens;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'username',
-        'image_url',
-        'blocked',
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var list<string>
+   */
+  protected $fillable = [
+    'name',
+    'email',
+    'password',
+    'username',
+    'image_url',
+    'blocked',
+  ];
+
+  /**
+   * The attributes that should be hidden for serialization.
+   *
+   * @var list<string>
+   */
+  protected $hidden = [
+    'password',
+    'remember_token',
+  ];
+
+  /**
+   * Get the attributes that should be cast.
+   *
+   * @return array<string, string>
+   */
+  protected function casts(): array
+  {
+    return [
+      'email_verified_at' => 'datetime',
+      'password' => 'hashed',
     ];
+  }
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+  /**
+   * Get the user's settings.
+   */
+  public function userSettings()
+  {
+    return $this->hasMany(\App\Models\User\UserSettings::class);
+  }
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+  /**
+   * Get the user's credentials.
+   */
+  public function credentials()
+  {
+    return $this->hasMany(\App\Models\Site\UserCredential::class);
+  }
 
-    /**
-     * Get the user's settings.
-     */
-    public function userSettings()
-    {
-        return $this->hasMany(\App\Models\User\UserSettings::class);
-    }
+  /**
+   * Get Gmail credentials for the user.
+   */
+  public function gmailCredential()
+  {
+    return $this->hasOne(\App\Models\Site\UserCredential::class)->where('provider_name', 'google');
+  }
+
+  /**
+   * Get Outlook credentials for the user.
+   */
+  public function outlookCredential()
+  {
+    return $this->hasOne(\App\Models\Site\UserCredential::class)->where('provider_name', 'outlook');
+  }
+
+  /**
+   * Check if user has Gmail connected.
+   */
+  public function hasGmailConnected(): bool
+  {
+    return $this->gmailCredential()->exists();
+  }
+
+  /**
+   * Check if user has Outlook connected.
+   */
+  public function hasOutlookConnected(): bool
+  {
+    return $this->outlookCredential()->exists();
+  }
 
 }

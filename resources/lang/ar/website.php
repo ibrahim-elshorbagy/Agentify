@@ -743,4 +743,18 @@ return [
   'contact_number' => 'رقم الاتصال',
   'score' => 'النتيجة',
 
+  // اتصالات البريد الإلكتروني
+  'email_connections' => 'اتصالات البريد الإلكتروني',
+  'connect_email_accounts_description' => 'اربط حسابات بريدك الإلكتروني لتمكين قراءة الرسائل من Gmail و Outlook.',
+  'connected' => 'متصل',
+  'not_connected' => 'غير متصل',
+  'connect_gmail' => 'اربط Gmail',
+  'connect_outlook' => 'اربط Outlook',
+  'disconnect' => 'قطع الاتصال',
+  'test_connection' => 'اختبار الاتصال',
+  'about_email_connections' => 'حول اتصالات البريد الإلكتروني',
+  'email_connections_description' => 'عند ربط حسابات بريدك الإلكتروني، فإنك تسمح لوكلاء الذكاء الاصطناعي لدينا بقراءة رسائل البريد الإلكتروني للمعالجة والتحليل. يتم تخزين بيانات الاعتماد الخاصة بك بشكل آمن ومشفر.',
+  'confirm_disconnect_provider' => 'هل أنت متأكد من قطع الاتصال عن :provider؟ سيؤدي هذا إلى إزالة الوصول لحساب بريدك الإلكتروني.',
+  'connection_test_failed' => 'فشل اختبار الاتصال. يرجى محاولة إعادة الاتصال بحسابك.',
+
 ];
