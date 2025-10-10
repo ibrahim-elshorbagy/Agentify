@@ -182,9 +182,7 @@ class HrAgentController extends Controller
       $data = [
         'user_id' => Auth::id(),
         'source' => 'gmail',
-        'tokens' => [
-          'access_token' => $gmailCredential->provider_token
-        ]
+        'access_token' => $gmailCredential->provider_token
       ];
 
       // Call HR Agent service
@@ -231,9 +229,7 @@ class HrAgentController extends Controller
       $data = [
         'user_id' => Auth::id(),
         'source' => 'outlook',
-        'tokens' => [
-          'access_token' => $outlookCredential->provider_token
-        ]
+        'access_token' => $outlookCredential->provider_token
       ];
 
       // Call HR Agent service
