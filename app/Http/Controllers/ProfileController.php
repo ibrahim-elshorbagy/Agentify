@@ -25,7 +25,7 @@ class ProfileController extends Controller
       'mustVerifyEmail' => true,
       'status' => session('status'),
       'hasGmailConnected' => $user->hasGmailConnected(),
-      'hasOutlookConnected' => $user->hasOutlookConnected(),
+      'hasMicrosoftConnected' => $user->hasMicrosoftConnected(),
     ]);
   }
 

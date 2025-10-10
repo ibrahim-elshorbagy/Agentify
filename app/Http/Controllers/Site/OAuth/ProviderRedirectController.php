@@ -15,8 +15,8 @@ class ProviderRedirectController extends Controller
    */
   public function __invoke(Request $request, string $provider)
   {
-    // Only allow google and outlook providers for email connections
-    if (!in_array($provider, ['google', 'outlook']) || !config("services.{$provider}")) {
+    // Only allow google and microsoft providers for email connections
+    if (!in_array($provider, ['google', 'microsoft']) || !config("services.{$provider}")) {
       return redirect()->route('profile.edit', ['section' => 'connections'])->with([
         'title' => __('website_response.oauth_provider_invalid_title'),
         'message' => __('website_response.oauth_provider_invalid_message'),
@@ -59,8 +59,8 @@ class ProviderRedirectController extends Controller
           ->redirect();
       }
 
-      // Configure Outlook-specific settings for email reading ONLY
-      if ($provider === 'outlook') {
+      // Configure Microsoft-specific settings for email reading ONLY
+      if ($provider === 'microsoft') {
         return $driver
           ->scopes([
             'https://graph.microsoft.com/Mail.Read',

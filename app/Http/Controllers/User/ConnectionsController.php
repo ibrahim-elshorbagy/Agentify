@@ -16,7 +16,7 @@ class ConnectionsController extends Controller
    */
   public function connect(string $provider)
   {
-    if (!in_array($provider, ['google', 'outlook'])) {
+    if (!in_array($provider, ['google', 'microsoft'])) {
       return back()->with([
         'title' => __('website_response.oauth_provider_invalid_title'),
         'message' => __('website_response.oauth_provider_invalid_message'),
@@ -37,7 +37,7 @@ class ConnectionsController extends Controller
    */
   public function disconnect(Request $request, string $provider)
   {
-    if (!in_array($provider, ['google', 'outlook'])) {
+    if (!in_array($provider, ['google', 'microsoft'])) {
       return back()->with([
         'title' => __('website_response.oauth_provider_invalid_title'),
         'message' => __('website_response.oauth_provider_invalid_message'),
@@ -119,8 +119,8 @@ class ConnectionsController extends Controller
 
       if ($provider === 'google') {
         $latestEmail = $this->fetchLatestGmailEmail($credential->provider_token);
-      } elseif ($provider === 'outlook') {
-        $latestEmail = $this->fetchLatestOutlookEmail($credential->provider_token);
+      } elseif ($provider === 'microsoft') {
+        $latestEmail = $this->fetchLatestMicrosoftEmail($credential->provider_token);
       }
 
       if ($latestEmail) {
@@ -208,9 +208,9 @@ class ConnectionsController extends Controller
   }
 
   /**
-   * Fetch latest Outlook email using Microsoft Graph API
+   * Fetch latest Microsoft email using Microsoft Graph API
    */
-  private function fetchLatestOutlookEmail(string $accessToken)
+  private function fetchLatestMicrosoftEmail(string $accessToken)
   {
     try {
       $response = Http::withHeaders([

@@ -78,11 +78,11 @@ class User extends Authenticatable
   }
 
   /**
-   * Get Outlook credentials for the user.
+   * Get Microsoft credentials for the user.
    */
-  public function outlookCredential()
+  public function microsoftCredential()
   {
-    return $this->hasOne(\App\Models\Site\UserCredential::class)->where('provider_name', 'outlook');
+    return $this->hasOne(\App\Models\Site\UserCredential::class)->where('provider_name', 'microsoft');
   }
 
   /**
@@ -94,11 +94,11 @@ class User extends Authenticatable
   }
 
   /**
-   * Check if user has Outlook connected.
+   * Check if user has Microsoft connected.
    */
-  public function hasOutlookConnected(): bool
+  public function hasMicrosoftConnected(): bool
   {
-    return $this->outlookCredential()->exists();
+    return $this->microsoftCredential()->exists();
   }
 
 }

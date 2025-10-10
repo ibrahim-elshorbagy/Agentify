@@ -40,11 +40,11 @@ class UserCredential extends Model
     }
 
     /**
-     * Check if the credential is for Outlook
+     * Check if the credential is for Microsoft
      */
-    public function isOutlook(): bool
+    public function isMicrosoft(): bool
     {
-        return $this->provider_name === 'outlook';
+        return $this->provider_name === 'microsoft';
     }
 
     /**
@@ -54,7 +54,7 @@ class UserCredential extends Model
     {
         return match($this->provider_name) {
             'google' => 'Gmail',
-            'outlook' => 'Outlook',
+            'microsoft' => 'Outlook',
             default => ucfirst($this->provider_name)
         };
     }

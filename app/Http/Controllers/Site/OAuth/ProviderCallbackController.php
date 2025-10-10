@@ -15,8 +15,8 @@ class ProviderCallbackController extends Controller
    */
   public function __invoke(string $provider)
   {
-    // Only allow google and outlook providers for email connections
-    if (!in_array($provider, ['google', 'outlook']) || !config("services.{$provider}")) {
+    // Only allow google and microsoft providers for email connections
+    if (!in_array($provider, ['google', 'microsoft']) || !config("services.{$provider}")) {
       return redirect()->route('profile.edit', ['section' => 'connections'])->with([
         'title' => __('website_response.oauth_provider_invalid_title'),
         'message' => __('website_response.oauth_provider_invalid_message'),

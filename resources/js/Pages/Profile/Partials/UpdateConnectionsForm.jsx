@@ -12,10 +12,10 @@ export default function UpdateConnectionsForm({ className = '' }) {
   const [processing, setProcessing] = useState(false);
 
   // Get connection status from server props
-  const { hasGmailConnected, hasOutlookConnected } = usePage().props;
+  const { hasGmailConnected, hasMicrosoftConnected } = usePage().props;
   const [connections, setConnections] = useState({
     google: hasGmailConnected || false,
-    outlook: hasOutlookConnected || false,
+    microsoft: hasMicrosoftConnected || false,
   });
 
   // Email test modal state
@@ -130,7 +130,7 @@ export default function UpdateConnectionsForm({ className = '' }) {
           </div>
         </div>
 
-        {/* Outlook Connection */}
+        {/* Microsoft Connection */}
         <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
           <div className="flex items-center space-x-3">
             <div className="flex-shrink-0">
@@ -141,16 +141,16 @@ export default function UpdateConnectionsForm({ className = '' }) {
                 Outlook
               </h3>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                {connections.outlook ? t('connected') : t('not_connected')}
+                {connections.microsoft ? t('connected') : t('not_connected')}
               </p>
             </div>
           </div>
           <div className="flex items-center space-x-2">
-            {connections.outlook ? (
+            {connections.microsoft ? (
               <>
                 <SecondaryButton
                   type="button"
-                  onClick={() => handleTest('outlook')}
+                  onClick={() => handleTest('microsoft')}
                   disabled={processing}
                   icon="fa-envelope-open-text"
                 className='min-w-[180px]'
@@ -160,7 +160,7 @@ export default function UpdateConnectionsForm({ className = '' }) {
                 </SecondaryButton>
                 <DangerButton
                   type="button"
-                  onClick={() => handleDisconnect('outlook')}
+                  onClick={() => handleDisconnect('microsoft')}
                   disabled={processing}
                   icon="fa-unlink"
                 className='min-w-[180px]'
@@ -172,7 +172,7 @@ export default function UpdateConnectionsForm({ className = '' }) {
             ) : (
               <PrimaryButton
                 type="button"
-                onClick={() => handleConnect('outlook')}
+                onClick={() => handleConnect('microsoft')}
                 disabled={processing}
                 icon="fa-link"
                 className='min-w-[180px]'
