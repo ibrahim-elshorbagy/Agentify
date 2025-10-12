@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Agent\HrAgent\HrAgent;
 use App\Models\Site\UserCredential;
 use App\Services\Agents\HrAgent\HrAgentService;
+use App\Services\OAuth\GoogleOAuthService;
+use App\Services\OAuth\MicrosoftOAuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -16,10 +18,17 @@ class HrAgentController extends Controller
   use AuthorizesRequests;
 
   protected HrAgentService $hrAgentService;
+  protected GoogleOAuthService $googleOAuthService;
+  protected MicrosoftOAuthService $microsoftOAuthService;
 
-  public function __construct(HrAgentService $hrAgentService)
-  {
+  public function __construct(
+    HrAgentService $hrAgentService,
+    GoogleOAuthService $googleOAuthService,
+    MicrosoftOAuthService $microsoftOAuthService
+  ) {
     $this->hrAgentService = $hrAgentService;
+    $this->googleOAuthService = $googleOAuthService;
+    $this->microsoftOAuthService = $microsoftOAuthService;
   }
 
   /**
@@ -188,11 +197,21 @@ class HrAgentController extends Controller
           ->with('status', 'error');
       }
 
+      // Get a fresh, valid access token
+      $validAccessToken = $this->googleOAuthService->getValidAccessToken($gmailCredential);
+
+      if (!$validAccessToken) {
+        return back()
+          ->with('title', __('website_response.hr_gmail_token_expired_title'))
+          ->with('message', __('website_response.hr_gmail_token_expired_message'))
+          ->with('status', 'error');
+      }
+
       // Prepare data for N8N webhook
       $data = [
         'user_id' => Auth::id(),
         'source' => 'gmail',
-        'access_token' => $gmailCredential->provider_token
+        'access_token' => $validAccessToken
       ];
 
       // Call HR Agent service
@@ -235,11 +254,21 @@ class HrAgentController extends Controller
           ->with('status', 'error');
       }
 
+      // Get a fresh, valid access token
+      $validAccessToken = $this->microsoftOAuthService->getValidAccessToken($outlookCredential);
+
+      if (!$validAccessToken) {
+        return back()
+          ->with('title', __('website_response.hr_outlook_token_expired_title'))
+          ->with('message', __('website_response.hr_outlook_token_expired_message'))
+          ->with('status', 'error');
+      }
+
       // Prepare data for N8N webhook
       $data = [
         'user_id' => Auth::id(),
         'source' => 'outlook',
-        'access_token' => $outlookCredential->provider_token
+        'access_token' => $validAccessToken
       ];
 
       // Call HR Agent service

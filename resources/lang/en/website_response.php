@@ -103,6 +103,10 @@ return [
   'hr_outlook_failed_message' => 'Failed to process Outlook emails. Please try again.',
   'hr_outlook_no_credential_title' => 'Outlook Not Connected',
   'hr_outlook_no_credential_message' => 'Please connect your Outlook account first.',
+  'hr_gmail_token_expired_title' => 'Gmail Access Expired',
+  'hr_gmail_token_expired_message' => 'Your Gmail access has expired. Please reconnect your account.',
+  'hr_outlook_token_expired_title' => 'Outlook Access Expired',
+  'hr_outlook_token_expired_message' => 'Your Outlook access has expired. Please reconnect your account.',
 
   // Message Response Management
   "message_response_created_title" => "Response Created",
