@@ -36,10 +36,10 @@ Route::middleware('auth')->group(function () {
   Route::post('/profile/image', [ProfileController::class, 'uploadProfileImage'])->name('profile.image.update');
 
   // OAuth Connections routes
-  Route::prefix('connections')->name('connections.')->group(function () {
-    Route::get('/connect/{provider}', [ConnectionsController::class, 'connect'])->name('connect');
-    Route::delete('/disconnect/{provider}', [ConnectionsController::class, 'disconnect'])->name('disconnect');
-    Route::get('/test/{provider}', [ConnectionsController::class, 'testConnection'])->name('test');
+  Route::prefix('connections')->group(function () {
+    Route::get('/connect/{provider}', [ConnectionsController::class, 'connect'])->name('connections.connect');
+    Route::delete('/disconnect/{provider}', [ConnectionsController::class, 'disconnect'])->name('connections.disconnect');
+    Route::get('/test/{provider}', [ConnectionsController::class, 'testConnection'])->name('connections.test');
   });
 
   // User Settings routes
