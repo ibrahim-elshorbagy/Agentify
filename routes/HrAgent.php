@@ -17,5 +17,5 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
     Route::post('/hr-agent/get-outlook', [HrAgentController::class, 'getOutlook'])->name('user.hr-agent.get-outlook');
 
     // Test route
-    Route::get('/hr-agent/test-gmail-token', [HrAgentController::class, 'testGmailToken'])->name('user.hr-agent.test-gmail-token');
+    Route::get('/test/hr-agent/test-gmail-token', [HrAgentController::class, 'testGmailToken'])->name('user.hr-agent.test-gmail-token');
 });
