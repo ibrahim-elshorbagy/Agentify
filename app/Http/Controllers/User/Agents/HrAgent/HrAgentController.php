@@ -10,6 +10,7 @@ use App\Services\OAuth\GoogleOAuthService;
 use App\Services\OAuth\MicrosoftOAuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -311,6 +312,66 @@ class HrAgentController extends Controller
         ->with('title', __('website_response.hr_outlook_failed_title'))
         ->with('message', $e->getMessage())
         ->with('status', 'error');
+    }
+  }
+
+  /**
+   * Test Gmail API directly with the token
+   */
+  public function testGmailToken()
+  {
+    try {
+      // Get user's Gmail credentials
+      $gmailCredential = UserCredential::forUser(Auth::id())
+        ->forProvider('google')
+        ->first();
+
+      if (!$gmailCredential) {
+        return response()->json(['error' => 'No Gmail credentials found']);
+      }
+
+      $accessToken = $gmailCredential->provider_token;
+
+      if (!$accessToken) {
+        return response()->json(['error' => 'No access token found']);
+      }
+
+      Log::info('Testing Gmail token directly', [
+        'user_id' => Auth::id(),
+        'token' => $accessToken
+      ]);
+
+      // Test the exact same API call that N8N is making
+      $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . $accessToken,
+        'Accept' => 'application/json'
+      ])->get('https://gmail.googleapis.com/gmail/v1/users/me/messages', [
+        'q' => 'is:unread has:attachment',
+        'maxResults' => 100
+      ]);
+
+      Log::info('Gmail API test result', [
+        'status_code' => $response->status(),
+        'successful' => $response->successful(),
+        'body' => $response->body()
+      ]);
+
+      return response()->json([
+        'success' => $response->successful(),
+        'status_code' => $response->status(),
+        'response' => $response->json(),
+        'token_used' => $accessToken
+      ]);
+
+    } catch (\Exception $e) {
+      Log::error('Gmail token test failed', [
+        'error' => $e->getMessage()
+      ]);
+
+      return response()->json([
+        'success' => false,
+        'error' => $e->getMessage()
+      ]);
     }
   }
 }
