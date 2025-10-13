@@ -10,6 +10,7 @@ use App\Services\OAuth\GoogleOAuthService;
 use App\Services\OAuth\MicrosoftOAuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -197,6 +198,18 @@ class HrAgentController extends Controller
           ->with('status', 'error');
       }
 
+      // Log the credential details for debugging
+      Log::info('HrAgentController: Gmail credential details', [
+        'user_id' => Auth::id(),
+        'credential_id' => $gmailCredential->id,
+        'provider_name' => $gmailCredential->provider_name,
+        'has_token' => !empty($gmailCredential->provider_token),
+        'has_refresh_token' => !empty($gmailCredential->provider_refresh_token),
+        'database_token' => $gmailCredential->provider_token,
+        'token_length' => strlen($gmailCredential->provider_token ?? ''),
+        'updated_at' => $gmailCredential->updated_at
+      ]);
+
       // Get a fresh, valid access token
       $validAccessToken = $this->googleOAuthService->getValidAccessToken($gmailCredential);
 
@@ -206,6 +219,14 @@ class HrAgentController extends Controller
           ->with('message', __('website_response.hr_gmail_token_expired_message'))
           ->with('status', 'error');
       }
+
+      // Log the final token being sent to webhook
+      Log::info('HrAgentController: Final token being sent to webhook', [
+        'user_id' => Auth::id(),
+        'final_token' => $validAccessToken,
+        'token_length' => strlen($validAccessToken),
+        'is_same_as_database' => $validAccessToken === $gmailCredential->provider_token
+      ]);
 
       // Prepare data for N8N webhook
       $data = [

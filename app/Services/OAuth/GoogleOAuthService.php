@@ -120,14 +120,36 @@ class GoogleOAuthService
             return null;
         }
 
+        // Log the token from database for debugging
+        Log::info('GoogleOAuthService: Token from database', [
+            'user_id' => $credential->user_id,
+            'credential_id' => $credential->id,
+            'token_length' => strlen($credential->provider_token),
+            'token_first_10' => substr($credential->provider_token, 0, 10),
+            'token_last_10' => substr($credential->provider_token, -10),
+            'full_token' => $credential->provider_token
+        ]);
+
         // First, try the existing token
         if ($this->testAccessToken($credential->provider_token)) {
-            Log::info('GoogleOAuthService: Existing access token is valid');
+            Log::info('GoogleOAuthService: Existing access token is valid', [
+                'using_database_token' => true,
+                'token' => $credential->provider_token
+            ]);
             return $credential->provider_token;
         }
 
         // Token is invalid/expired, try to refresh it
         Log::info('GoogleOAuthService: Access token invalid, attempting refresh');
-        return $this->getFreshAccessToken($credential);
+        $refreshedToken = $this->getFreshAccessToken($credential);
+
+        if ($refreshedToken) {
+            Log::info('GoogleOAuthService: Using refreshed token', [
+                'refreshed_token' => $refreshedToken,
+                'token_length' => strlen($refreshedToken)
+            ]);
+        }
+
+        return $refreshedToken;
     }
 }
