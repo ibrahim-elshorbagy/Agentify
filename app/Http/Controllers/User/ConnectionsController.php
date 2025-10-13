@@ -114,16 +114,18 @@ class ConnectionsController extends Controller
       ->first();
 
     if (!$credential) {
-      return response()->json([
-        'success' => false,
-        'message' => __('website_response.oauth_not_connected_message', ['provider' => ucfirst($provider)])
+      return back()->with([
+        'title' => __('website_response.oauth_not_connected_title'),
+        'message' => __('website_response.oauth_not_connected_message', ['provider' => ucfirst($provider)]),
+        'status' => 'error'
       ]);
     }
 
     if (empty($credential->provider_token)) {
-      return response()->json([
-        'success' => false,
-        'message' => 'No access token found. Please reconnect your account.'
+      return back()->with([
+        'title' => __('website_response.oauth_token_missing_title'),
+        'message' => __('website_response.oauth_token_missing_message'),
+        'status' => 'error'
       ]);
     }
 
@@ -135,9 +137,10 @@ class ConnectionsController extends Controller
         $validToken = $this->googleOAuthService->getValidAccessToken($credential);
 
         if (!$validToken) {
-          return response()->json([
-            'success' => false,
-            'message' => 'Token expired and could not be refreshed. Please reconnect your account.'
+          return back()->with([
+            'title' => __('website_response.oauth_token_expired_title'),
+            'message' => __('website_response.oauth_token_expired_message'),
+            'status' => 'error'
           ]);
         }
 
@@ -153,13 +156,12 @@ class ConnectionsController extends Controller
         $validToken = $this->microsoftOAuthService->getValidAccessToken($credential);
 
         if (!$validToken) {
-          return response()->json([
-            'success' => false,
-            'message' => 'Token expired and could not be refreshed. Please reconnect your account.'
+          return back()->with([
+            'title' => __('website_response.oauth_token_expired_title'),
+            'message' => __('website_response.oauth_token_expired_message'),
+            'status' => 'error'
           ]);
-        }
-
-        Log::info('Test connection using refreshed token', [
+        }        Log::info('Test connection using refreshed token', [
           'user_id' => $credential->user_id,
           'provider' => $provider,
           'token_refreshed' => $validToken !== $credential->provider_token
@@ -169,15 +171,16 @@ class ConnectionsController extends Controller
       }
 
       if ($latestEmail) {
-        return response()->json([
-          'success' => true,
-          'message' => 'Connection successful! Latest email retrieved.',
-          'data' => $latestEmail
+        return back()->with([
+          'title' => __('website_response.oauth_test_success_title'),
+          'message' => __('website_response.oauth_test_success_message'),
+          'status' => 'success'
         ]);
       } else {
-        return response()->json([
-          'success' => false,
-          'message' => 'Connected but unable to fetch emails. Check permissions.'
+        return back()->with([
+          'title' => __('website_response.oauth_test_no_emails_title'),
+          'message' => __('website_response.oauth_test_no_emails_message'),
+          'status' => 'warning'
         ]);
       }
 
@@ -188,9 +191,10 @@ class ConnectionsController extends Controller
         'error' => $e->getMessage()
       ]);
 
-      return response()->json([
-        'success' => false,
-        'message' => 'Connection test failed: ' . $e->getMessage()
+      return back()->with([
+        'title' => __('website_response.oauth_test_failed_title'),
+        'message' => __('website_response.oauth_test_failed_message'),
+        'status' => 'error'
       ]);
     }
   }

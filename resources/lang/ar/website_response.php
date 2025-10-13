@@ -183,5 +183,15 @@ return [
   'oauth_connection_error_message' => 'فشل في ربط حساب :provider الخاص بك. يرجى المحاولة مرة أخرى.',
   'oauth_redirect_error_title' => 'فشل التوجيه',
   'oauth_redirect_error_message' => 'فشل في التوجيه إلى :provider. يرجى المحاولة مرة أخرى.',
+  'oauth_token_missing_title' => 'رمز الوصول مفقود',
+  'oauth_token_missing_message' => 'لم يتم العثور على رمز وصول. يرجى إعادة ربط حسابك.',
+  'oauth_token_expired_title' => 'انتهت صلاحية رمز الوصول',
+  'oauth_token_expired_message' => 'انتهت صلاحية رمز الوصول الخاص بك ولم يتمكن من التجديد. يرجى إعادة ربط حسابك.',
+  'oauth_test_success_title' => 'اختبار الاتصال نجح',
+  'oauth_test_success_message' => 'الاتصال ناجح! تم استرداد آخر رسالة بريد إلكتروني.',
+  'oauth_test_no_emails_title' => 'متصل ولكن لا توجد رسائل',
+  'oauth_test_no_emails_message' => 'تم الاتصال بنجاح ولكن تعذر جلب رسائل البريد الإلكتروني. تحقق من الأذونات.',
+  'oauth_test_failed_title' => 'فشل اختبار الاتصال',
+  'oauth_test_failed_message' => 'فشل اختبار الاتصال. يرجى التحقق من اتصالك والمحاولة مرة أخرى.',
 
 ];
