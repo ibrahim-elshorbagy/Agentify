@@ -4,6 +4,8 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Site\UserCredential;
+use App\Services\OAuth\GoogleOAuthService;
+use App\Services\OAuth\MicrosoftOAuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -11,6 +13,17 @@ use Illuminate\Support\Facades\Http;
 
 class ConnectionsController extends Controller
 {
+  protected GoogleOAuthService $googleOAuthService;
+  protected MicrosoftOAuthService $microsoftOAuthService;
+
+  public function __construct(
+    GoogleOAuthService $googleOAuthService,
+    MicrosoftOAuthService $microsoftOAuthService
+  ) {
+    $this->googleOAuthService = $googleOAuthService;
+    $this->microsoftOAuthService = $microsoftOAuthService;
+  }
+
   /**
    * Initiate connection to a provider
    */
@@ -118,9 +131,41 @@ class ConnectionsController extends Controller
       $latestEmail = null;
 
       if ($provider === 'google') {
-        $latestEmail = $this->fetchLatestGmailEmail($credential->provider_token);
+        // Use GoogleOAuthService to get valid token (same as HR Agent)
+        $validToken = $this->googleOAuthService->getValidAccessToken($credential);
+
+        if (!$validToken) {
+          return response()->json([
+            'success' => false,
+            'message' => 'Token expired and could not be refreshed. Please reconnect your account.'
+          ]);
+        }
+
+        Log::info('Test connection using refreshed token', [
+          'user_id' => $credential->user_id,
+          'provider' => $provider,
+          'token_refreshed' => $validToken !== $credential->provider_token
+        ]);
+
+        $latestEmail = $this->fetchLatestGmailEmail($validToken);
       } elseif ($provider === 'microsoft') {
-        $latestEmail = $this->fetchLatestMicrosoftEmail($credential->provider_token);
+        // Use MicrosoftOAuthService to get valid token (same as HR Agent)
+        $validToken = $this->microsoftOAuthService->getValidAccessToken($credential);
+
+        if (!$validToken) {
+          return response()->json([
+            'success' => false,
+            'message' => 'Token expired and could not be refreshed. Please reconnect your account.'
+          ]);
+        }
+
+        Log::info('Test connection using refreshed token', [
+          'user_id' => $credential->user_id,
+          'provider' => $provider,
+          'token_refreshed' => $validToken !== $credential->provider_token
+        ]);
+
+        $latestEmail = $this->fetchLatestMicrosoftEmail($validToken);
       }
 
       if ($latestEmail) {
