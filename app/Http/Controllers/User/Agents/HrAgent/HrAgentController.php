@@ -184,9 +184,13 @@ class HrAgentController extends Controller
   /**
    * Get Gmail emails via HR Agent
    */
-  public function getGmail()
+  public function getGmail(Request $request)
   {
     try {
+      // If test parameter is provided, run the token test instead
+      if ($request->has('test')) {
+        return $this->testGmailToken();
+      }
       // Get user's Gmail credentials
       $gmailCredential = UserCredential::forUser(Auth::id())
         ->forProvider('google')
@@ -200,31 +204,28 @@ class HrAgentController extends Controller
       }
 
       // Get a fresh, valid access token
-      // $validAccessToken = $this->googleOAuthService->getValidAccessToken($gmailCredential);
+      $validAccessToken = $this->googleOAuthService->getValidAccessToken($gmailCredential);
 
-      // if (!$validAccessToken) {
-      //   return back()
-      //     ->with('title', __('website_response.hr_gmail_token_expired_title'))
-      //     ->with('message', __('website_response.hr_gmail_token_expired_message'))
-      //     ->with('status', 'error');
-      // }
+      if (!$validAccessToken) {
+        return back()
+          ->with('title', __('website_response.hr_gmail_token_expired_title'))
+          ->with('message', __('website_response.hr_gmail_token_expired_message'))
+          ->with('status', 'error');
+      }
 
-      // Use the database token directly (same as test connection)
-      $accessToken = $gmailCredential->provider_token;
-
-
-      // Log the token being sent (same as test connection approach)
-      Log::info('HrAgentController: Using database token directly (like test connection)', [
+      // Log the final token being sent to webhook
+      Log::info('HrAgentController: Final token being sent to webhook', [
         'user_id' => Auth::id(),
-        'database_token' => $accessToken,
-        'token_length' => strlen($accessToken)
+        'final_token' => $validAccessToken,
+        'token_length' => strlen($validAccessToken),
+        'is_same_as_database' => $validAccessToken === $gmailCredential->provider_token
       ]);
 
       // Prepare data for N8N webhook
       $data = [
         'user_id' => Auth::id(),
         'source' => 'gmail',
-        'access_token' => $accessToken
+        'access_token' => $validAccessToken
       ];
 
       // Call HR Agent service
