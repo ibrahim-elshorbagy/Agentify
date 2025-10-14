@@ -23,14 +23,6 @@ export default function UpdateConnectionsForm({ className = '' }) {
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [emailTestData, setEmailTestData] = useState(null);
 
-  // Check for email modal data from flash
-  useEffect(() => {
-    if (flash?.showEmailModal && flash?.emailData) {
-      setEmailTestData(flash.emailData);
-      setIsEmailModalOpen(true);
-    }
-  }, [flash]);
-
   const handleConnect = (provider) => {
     setProcessing(true);
     window.location.href = route('connections.connect', { provider });
@@ -48,22 +40,27 @@ export default function UpdateConnectionsForm({ className = '' }) {
     }
   };
 
-  const handleTest = (provider) => {
-    setProcessing(true);
+  const handleTest = async (provider) => {
+    try {
+      setProcessing(true);
+      const response = await fetch(route('connections.test', { provider }));
+      const data = await response.json();
 
-    router.get(route('connections.test', { provider }), {}, {
-      preserveScroll: true,
-      onSuccess: (page) => {
-        // The response will be handled by Inertia's flash messages
-        // which will show as notifications in the UI
-      },
-      onError: (errors) => {
-        console.error('Test connection failed:', errors);
-      },
-      onFinish: () => {
-        setProcessing(false);
+      if (data.success && data.data) {
+        // Show email data in modal
+        setEmailTestData(data.data);
+        setIsEmailModalOpen(true);
+      } else if (data.success) {
+        alert(`✅ ${data.message}`);
+      } else {
+        alert(`❌ Test Failed: ${data.message}`);
       }
-    });
+    } catch (error) {
+      console.error('Test connection failed:', error);
+      alert('❌ Connection test failed. Please try again.');
+    } finally {
+      setProcessing(false);
+    }
   };
 
   const closeEmailModal = () => {

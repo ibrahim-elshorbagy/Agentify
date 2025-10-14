@@ -114,19 +114,17 @@ class ConnectionsController extends Controller
       ->first();
 
     if (!$credential) {
-      return back()->with([
-        'title' => __('website_response.oauth_not_connected_title'),
-        'message' => __('website_response.oauth_not_connected_message', ['provider' => ucfirst($provider)]),
-        'status' => 'error'
-      ]);
+      return response()->json([
+        'success' => false,
+        'message' => __('website_response.oauth_not_connected_message', ['provider' => ucfirst($provider)])
+      ], 400);
     }
 
     if (empty($credential->provider_token)) {
-      return back()->with([
-        'title' => __('website_response.oauth_token_missing_title'),
-        'message' => __('website_response.oauth_token_missing_message'),
-        'status' => 'error'
-      ]);
+      return response()->json([
+        'success' => false,
+        'message' => __('website_response.oauth_token_missing_message')
+      ], 400);
     }
 
     try {
@@ -173,18 +171,16 @@ class ConnectionsController extends Controller
       }
 
       if ($latestEmail) {
-        return back()->with([
-          'title' => __('website_response.oauth_test_success_title'),
+        return response()->json([
+          'success' => true,
           'message' => __('website_response.oauth_test_success_message'),
-          'status' => 'success',
-          'emailData' => $latestEmail,
-          'showEmailModal' => true
+          'data' => $latestEmail
         ]);
       } else {
-        return back()->with([
-          'title' => __('website_response.oauth_test_no_emails_title'),
+        return response()->json([
+          'success' => true,
           'message' => __('website_response.oauth_test_no_emails_message'),
-          'status' => 'warning'
+          'warning' => true
         ]);
       }
 
@@ -195,11 +191,10 @@ class ConnectionsController extends Controller
         'error' => $e->getMessage()
       ]);
 
-      return back()->with([
-        'title' => __('website_response.oauth_test_failed_title'),
-        'message' => __('website_response.oauth_test_failed_message'),
-        'status' => 'error'
-      ]);
+      return response()->json([
+        'success' => false,
+        'message' => __('website_response.oauth_test_failed_message')
+      ], 500);
     }
   }
 
