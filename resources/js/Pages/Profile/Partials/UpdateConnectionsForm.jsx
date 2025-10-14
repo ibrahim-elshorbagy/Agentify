@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePage, router } from '@inertiajs/react';
 import { useTrans } from '@/Hooks/useTrans';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -9,6 +9,7 @@ import EmailTestModal from './Modals/EmailTestModal';
 export default function UpdateConnectionsForm({ className = '' }) {
   const { t } = useTrans();
   const user = usePage().props.auth.user;
+  const { flash } = usePage().props;
   const [processing, setProcessing] = useState(false);
 
   // Get connection status from server props
@@ -21,6 +22,14 @@ export default function UpdateConnectionsForm({ className = '' }) {
   // Email test modal state
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [emailTestData, setEmailTestData] = useState(null);
+
+  // Check for email modal data from flash
+  useEffect(() => {
+    if (flash?.showEmailModal && flash?.emailData) {
+      setEmailTestData(flash.emailData);
+      setIsEmailModalOpen(true);
+    }
+  }, [flash]);
 
   const handleConnect = (provider) => {
     setProcessing(true);
@@ -39,27 +48,22 @@ export default function UpdateConnectionsForm({ className = '' }) {
     }
   };
 
-  const handleTest = async (provider) => {
-    try {
-      setProcessing(true);
-      const response = await fetch(route('connections.test', { provider }));
-      const data = await response.json();
+  const handleTest = (provider) => {
+    setProcessing(true);
 
-      if (data.success && data.data) {
-        // Show email data in modal
-        setEmailTestData(data.data);
-        setIsEmailModalOpen(true);
-      } else if (data.success) {
-        alert(`✅ ${data.message}`);
-      } else {
-        alert(`❌ Test Failed: ${data.message}`);
+    router.get(route('connections.test', { provider }), {}, {
+      preserveScroll: true,
+      onSuccess: (page) => {
+        // The response will be handled by Inertia's flash messages
+        // which will show as notifications in the UI
+      },
+      onError: (errors) => {
+        console.error('Test connection failed:', errors);
+      },
+      onFinish: () => {
+        setProcessing(false);
       }
-    } catch (error) {
-      console.error('Test connection failed:', error);
-      alert('❌ Connection test failed. Please try again.');
-    } finally {
-      setProcessing(false);
-    }
+    });
   };
 
   const closeEmailModal = () => {

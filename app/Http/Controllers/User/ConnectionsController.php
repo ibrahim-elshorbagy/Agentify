@@ -175,8 +175,10 @@ class ConnectionsController extends Controller
       if ($latestEmail) {
         return back()->with([
           'title' => __('website_response.oauth_test_success_title'),
-          'message' => __('website_response.oauth_test_success_message') . ' Subject: ' . $latestEmail['subject'] . ' | From: ' . $latestEmail['from'],
-          'status' => 'success'
+          'message' => __('website_response.oauth_test_success_message'),
+          'status' => 'success',
+          'emailData' => $latestEmail,
+          'showEmailModal' => true
         ]);
       } else {
         return back()->with([

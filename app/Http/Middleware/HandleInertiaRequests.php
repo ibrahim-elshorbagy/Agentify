@@ -42,6 +42,8 @@ class HandleInertiaRequests extends Middleware
         'status' => session('status'), //success / error / warning
         'type' => session('type'),
         'webhookResponse' => session('webhookResponse'),
+        'emailData' => session('emailData'), // For email test modal
+        'showEmailModal' => session('showEmailModal'), // Flag to show modal
       ],
       'impersonate_admin_id' => session('impersonate_admin_id'),
 
