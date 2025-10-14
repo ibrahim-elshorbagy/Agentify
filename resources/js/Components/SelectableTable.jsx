@@ -23,6 +23,7 @@ export default function SelectableTable({
   getRowClassName = null,
   showSelection = true,
   pageParam = 'page',
+  MoreButtons = null,
 
 }) {
   // Initialize translation
@@ -131,6 +132,7 @@ export default function SelectableTable({
         queryParams={queryParams}
         routeName={routeName}
         pageParam={pageParam}
+        MoreButtons={MoreButtons}
 
       />
 

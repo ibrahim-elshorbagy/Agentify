@@ -19,6 +19,7 @@ export default function TableControls({
   routeName,
   showSelection = true,
   pageParam = 'page',
+  MoreButtons = null,
 
 }) {
   const { t } = useTrans();
@@ -162,7 +163,8 @@ export default function TableControls({
         )}
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
+        {MoreButtons}
         {/* Sort dropdown */}
         {sortOptions.length > 0 && (
           <div className="relative" onClick={stopPropagation}>

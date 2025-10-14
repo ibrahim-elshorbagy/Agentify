@@ -560,8 +560,8 @@ return [
 
   // HR Agent N8N Integration
   'upload_cv_files' => 'رفع ملفات السير الذاتية',
-  'get_gmail' => 'تحليل رسائل Gmail',
-  'get_outlook' => 'تحليل رسائل Outlook',
+  'get_gmail' => 'احضر رسائل Gmail',
+  'get_outlook' => 'احضر رسائل Outlook',
   'confirm_get_gmail' => 'هل أنت متأكد من جلب رسائل Gmail للتحليل؟',
   'confirm_get_outlook' => 'هل أنت متأكد من جلب رسائل Outlook للتحليل؟',
 

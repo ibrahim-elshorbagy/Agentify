@@ -158,35 +158,7 @@ export default function Index({ hrAgents, queryParams }) {
                 <i className="fa-solid fa-users text-blue-500"></i> {t('hr_agent')}
               </h2>
 
-              {/* Action buttons */}
-              <div className="flex gap-3">
-                <PrimaryButton
-                  onClick={toggleUploadModal}
-                  icon="fa-upload"
-                  variant="success"
-                  size="sm"
-                >
-                  {t('upload_cv_files')}
-                </PrimaryButton>
 
-                <PrimaryButton
-                  onClick={handleGetGmail}
-                  icon="fa-envelope"
-                  variant="info"
-                  size="sm"
-                >
-                  {t('get_gmail')}
-                </PrimaryButton>
-
-                <PrimaryButton
-                  onClick={handleGetOutlook}
-                  icon="fa-envelope-open"
-                  variant="warning"
-                  size="sm"
-                >
-                  {t('get_outlook')}
-                </PrimaryButton>
-              </div>
             </div>
             <div className="mb-4">
               <SearchBar
@@ -198,6 +170,7 @@ export default function Index({ hrAgents, queryParams }) {
                 routeParams={{}}
               />
             </div>
+
 
             <SelectableTable
               columns={columns}
@@ -212,6 +185,37 @@ export default function Index({ hrAgents, queryParams }) {
               defaultSortField="analyzed_at"
               defaultSortDirection="desc"
               getRowClassName={getRowClassName}
+              MoreButtons={
+                <>
+                  {/* Action buttons */}
+                  <ActionButton
+                    onClick={toggleUploadModal}
+                    icon="fa-upload"
+                    variant="purple"
+                    size="sm"
+                  >
+                    {t('upload_cv_files')}
+                  </ActionButton>
+
+                  <ActionButton
+                    onClick={handleGetGmail}
+                    icon="fa-envelope"
+                    variant="delete"
+                    size="sm"
+                  >
+                    {t('get_gmail')}
+                  </ActionButton>
+
+                  <ActionButton
+                    onClick={handleGetOutlook}
+                    icon="fa-envelope-open"
+                    variant="info"
+                    size="sm"
+                  >
+                    {t('get_outlook')}
+                  </ActionButton>
+                </>
+              }
             />
           </div>
         </div>
