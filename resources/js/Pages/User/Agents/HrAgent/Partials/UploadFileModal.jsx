@@ -55,13 +55,13 @@ export default function UploadFileModal({ isOpen, onClose }) {
         <DragFileInput
           id="file-upload"
           multiple={true}
-          maxFiles={10}
-          accept=".pdf,.txt,.xlsx,.csv"
+          maxFiles={5}
+          accept=".pdf,.doc"
           onChange={handleFilesChange}
           value={selectedFiles}
           disabled={processing}
           error={errors.files || errors['files.0']}
-          helperText="PDF files are supported"
+          helperText="PDF and DOCX files are supported"
         />
 
         {/* Buttons */}

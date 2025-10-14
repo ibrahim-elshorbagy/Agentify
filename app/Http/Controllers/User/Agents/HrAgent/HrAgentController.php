@@ -130,7 +130,7 @@ class HrAgentController extends Controller
   {
     $request->validate([
       'files' => ['required', 'array', 'min:1'],
-      'files.*' => ['file', 'mimes:pdf', 'max:10240'], // 10MB max per file
+      'files.*' => ['file', 'mimes:pdf,docx', 'max:5120'], // 5MB max per file
     ]);
 
     try {
