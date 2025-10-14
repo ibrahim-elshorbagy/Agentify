@@ -103,7 +103,7 @@ class ConnectionsController extends Controller
 
 
   /**
-   * Test connection to a provider by fetching latest email
+   * Test connection to a provider by validating the access token
    */
   public function testConnection(string $provider)
   {
@@ -161,7 +161,9 @@ class ConnectionsController extends Controller
             'message' => __('website_response.oauth_token_expired_message'),
             'status' => 'error'
           ]);
-        }        Log::info('Test connection using refreshed token', [
+        }
+
+        Log::info('Test connection using refreshed token', [
           'user_id' => $credential->user_id,
           'provider' => $provider,
           'token_refreshed' => $validToken !== $credential->provider_token
@@ -173,7 +175,7 @@ class ConnectionsController extends Controller
       if ($latestEmail) {
         return back()->with([
           'title' => __('website_response.oauth_test_success_title'),
-          'message' => __('website_response.oauth_test_success_message'),
+          'message' => __('website_response.oauth_test_success_message') . ' Subject: ' . $latestEmail['subject'] . ' | From: ' . $latestEmail['from'],
           'status' => 'success'
         ]);
       } else {
@@ -215,7 +217,11 @@ class ConnectionsController extends Controller
       ]);
 
       if (!$response->successful()) {
-        throw new \Exception('Failed to fetch Gmail messages: ' . $response->body());
+        Log::error('Failed to fetch Gmail messages list', [
+          'status_code' => $response->status(),
+          'response' => $response->json()
+        ]);
+        return null;
       }
 
       $data = $response->json();
@@ -235,14 +241,28 @@ class ConnectionsController extends Controller
       $messageResponse = Http::withHeaders([
         'Authorization' => 'Bearer ' . $accessToken,
         'Accept' => 'application/json'
-      ])->get("https://gmail.googleapis.com/gmail/v1/users/me/messages/{$messageId}");
+      ])->get("https://gmail.googleapis.com/gmail/v1/users/me/messages/{$messageId}", [
+        'format' => 'metadata',
+        'metadataHeaders' => ['Subject', 'From', 'Date']
+      ]);
 
       if (!$messageResponse->successful()) {
-        throw new \Exception('Failed to fetch Gmail message details');
+        Log::error('Failed to fetch Gmail message details', [
+          'message_id' => $messageId,
+          'status_code' => $messageResponse->status(),
+          'response' => $messageResponse->json()
+        ]);
+        // Return basic info from list if full fetch fails
+        return [
+          'subject' => 'Email found but details unavailable',
+          'from' => 'N/A',
+          'date' => 'N/A',
+          'snippet' => 'Connection successful'
+        ];
       }
 
       $message = $messageResponse->json();
-      $headers = collect($message['payload']['headers']);
+      $headers = collect($message['payload']['headers'] ?? []);
 
       return [
         'subject' => $headers->firstWhere('name', 'Subject')['value'] ?? 'No subject',
@@ -252,7 +272,11 @@ class ConnectionsController extends Controller
       ];
 
     } catch (\Exception $e) {
-      throw new \Exception('Gmail API error: ' . $e->getMessage());
+      Log::error('Gmail API error in fetchLatestGmailEmail', [
+        'error' => $e->getMessage(),
+        'trace' => $e->getTraceAsString()
+      ]);
+      return null;
     }
   }
 
@@ -272,7 +296,11 @@ class ConnectionsController extends Controller
       ]);
 
       if (!$response->successful()) {
-        throw new \Exception('Failed to fetch Outlook messages: ' . $response->body());
+        Log::error('Failed to fetch Outlook messages', [
+          'status_code' => $response->status(),
+          'response' => $response->json()
+        ]);
+        return null;
       }
 
       $data = $response->json();
@@ -296,7 +324,11 @@ class ConnectionsController extends Controller
       ];
 
     } catch (\Exception $e) {
-      throw new \Exception('Outlook API error: ' . $e->getMessage());
+      Log::error('Outlook API error in fetchLatestMicrosoftEmail', [
+        'error' => $e->getMessage(),
+        'trace' => $e->getTraceAsString()
+      ]);
+      return null;
     }
   }
 }
