@@ -729,6 +729,7 @@ return [
   'files_available' => ':count ملف متاح',
   'start_conversation' => 'ابدأ محادثتك',
   'start_conversation_description' => 'اسأل أسئلة حول مستنداتك المرفوعة واحصل على رؤى مدعومة بالذكاء الاصطناعي.',
+  'qna_start_conversation_description' => 'اسأل أسئلة حول رسائلك الاكترونيه المرفوعة واحصل على رؤى مدعومة بالذكاء الاصطناعي.',
   'type_message_placeholder' => 'اكتب رسالتك هنا...',
   'upload_files_to_chat' => 'ارفع الملفات أولاً لتمكين المراسلة...',
   'upload_files_to_enable_messaging' => 'ارفع الملفات لتمكين المراسلة',

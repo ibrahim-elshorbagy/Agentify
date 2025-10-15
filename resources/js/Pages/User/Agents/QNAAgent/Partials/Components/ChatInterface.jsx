@@ -56,37 +56,41 @@ export default function ChatInterface({
     return (
       <div className="flex-1 flex flex-col h-full overflow-hidden">
         {/* Header with Toggle Button */}
-        <div className="flex-shrink-0 p-6 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-xl border-b border-neutral-200/50 dark:border-neutral-700/50 shadow-sm">
+        <div className="flex-shrink-0 p-6 bg-gradient-to-r from-green-50/95 via-emerald-50/95 to-teal-50/95 dark:from-green-900/95 dark:via-emerald-900/95 dark:to-teal-900/95 backdrop-blur-xl border-b border-green-200/60 dark:border-green-700/60 shadow-lg shadow-green-500/10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               {/* Mobile Sidebar Toggle Button */}
               <button
                 onClick={onToggleSidebar}
-                className="xl:hidden p-3 text-green-600 bg-gradient-to-r from-green-50 to-green-100 dark:from-green-800 dark:to-green-900 hover:from-green-100 hover:to-green-200 dark:hover:from-green-700 dark:hover:to-green-800 rounded-2xl transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="xl:hidden p-3 text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 dark:from-green-600 dark:to-emerald-600 dark:hover:from-green-700 dark:hover:to-emerald-700 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/25 transform hover:scale-105"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-3.582 8-8 8a8.955 8.955 0 01-3.774-.9L3 21l1.9-6.226A8.955 8.955 0 013 12a8 8 0 018-8c4.418 0 8 3.582 8 8z" />
                 </svg>
               </button>
 
-
-              <h1 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 tracking-tight">
-                {t('report_agent')}
-              </h1>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 dark:from-green-500 dark:to-emerald-600 flex items-center justify-center shadow-lg shadow-green-500/20">
+                  <i className="fa-solid fa-comments text-white text-lg"></i>
+                </div>
+                <h1 className="text-xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent tracking-tight">
+                  {t('qna_agent')}
+                </h1>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Content */}
-        <div className="flex-1 flex items-center justify-center p-8">
+        <div className="flex-1 flex items-center justify-center p-8 bg-gradient-to-b from-transparent via-green-50/20 to-transparent dark:via-green-900/10">
           <div className="text-center">
-            <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-              <i className="fa-solid fa-comments text-2xl text-green-500"></i>
+            <div className="w-28 h-28 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 dark:from-green-500 dark:via-emerald-600 dark:to-teal-600 flex items-center justify-center shadow-2xl shadow-green-500/30 animate-pulse">
+              <i className="fa-solid fa-comments text-3xl text-white drop-shadow-lg"></i>
             </div>
-            <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-2">
+            <h3 className="text-2xl font-bold bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 dark:from-green-400 dark:via-emerald-400 dark:to-teal-400 bg-clip-text text-transparent mb-4 tracking-tight">
               {t('select_conversation')}
             </h3>
-            <p className="text-neutral-600 dark:text-neutral-400">
+            <p className="text-green-700 dark:text-green-300 font-medium leading-relaxed">
               {t('select_conversation_description')}
             </p>
           </div>
@@ -99,13 +103,13 @@ export default function ChatInterface({
     <div className="flex-1 flex flex-col h-full overflow-hidden">
 
       {/* Chat Header */}
-      <div className="flex-shrink-0 p-6 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-xl border-b border-neutral-200/50 dark:border-neutral-700/50 shadow-sm">
+      <div className="flex-shrink-0 p-6 bg-gradient-to-r from-green-50/95 via-emerald-50/95 to-teal-50/95 dark:from-neutral-950/95 dark:via-neutral-900/95 dark:to-neutral-950/95 backdrop-blur-xl border-b border-green-200/60 dark:border-neutral-700/60 shadow-lg shadow-green-500/10 dark:shadow-neutral-800/20">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             {/* Mobile Sidebar Toggle Button */}
             <button
               onClick={onToggleSidebar}
-              className="xl:hidden p-3 text-green-600 bg-gradient-to-r from-green-50 to-green-100 dark:from-green-800 dark:to-green-900 hover:from-green-100 hover:to-green-200 dark:hover:from-green-700 dark:hover:to-green-800 rounded-2xl transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="xl:hidden p-3 text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 dark:from-green-600 dark:to-emerald-600 dark:hover:from-green-700 dark:hover:to-emerald-700 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-green-500/25 transform hover:scale-105"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-3.582 8-8 8a8.955 8.955 0 01-3.774-.9L3 21l1.9-6.226A8.955 8.955 0 013 12a8 8 0 018-8c4.418 0 8 3.582 8 8z" />
@@ -113,20 +117,23 @@ export default function ChatInterface({
             </button>
 
 
-            <div>
-              <h1 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 tracking-tight">
-                {currentConversation.name}
-              </h1>
-              {/* <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                {t('files_available', { count: files.length })}
-              </p> */}
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 dark:from-green-500 dark:to-emerald-600 flex items-center justify-center shadow-lg shadow-green-500/20">
+                <i className="fa-solid fa-comments text-white text-lg"></i>
+              </div>
+              <div>
+                <h1 className="text-xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent tracking-tight">
+                  {currentConversation.name}
+                </h1>
+              </div>
             </div>
           </div>
 
           <ActionButton
             onClick={() => onEditConversation(currentConversation)}
             icon="fa-edit"
-            variant='info'
+            variant='success'
+            size="md"
             className="rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
           >
             {t('edit')}
@@ -135,51 +142,58 @@ export default function ChatInterface({
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6 min-h-0">
+      <div className="flex-1 overflow-y-auto p-6 space-y-6 min-h-0 bg-gradient-to-b from-transparent via-green-50/20 to-transparent dark:via-green-900/10">
         {messages.length === 0 ? (
           <div className="text-center py-12">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-green-100 to-green-200 dark:from-green-800 dark:to-green-900 flex items-center justify-center shadow-xl">
-              <i className="fa-solid fa-robot text-3xl text-green-600 dark:text-green-400"></i>
+            <div className="w-24 h-24 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 dark:from-green-500 dark:via-emerald-600 dark:to-teal-600 flex items-center justify-center shadow-2xl shadow-green-500/30 animate-pulse">
+              <i className="fa-solid fa-robot text-4xl text-white drop-shadow-lg"></i>
             </div>
-            <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-3 tracking-tight">
+            <h3 className="text-3xl font-bold bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 dark:from-green-400 dark:via-emerald-400 dark:to-teal-400 bg-clip-text text-transparent mb-4 tracking-tight">
               {t('start_conversation')}
             </h3>
-            <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-md mx-auto">
-              {t('start_conversation_description')}
+            <p className="text-green-700 dark:text-green-300 leading-relaxed max-w-md mx-auto font-medium">
+              {t('qna_start_conversation_description')}
             </p>
           </div>
         ) : (
           messages.map((message) => (
             <div
               key={message.id}
-              className={`flex ${message.sender_type === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`flex ${message.sender_type === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}
             >
               <div
-                className={`max-w-sm lg:max-w-2xl px-6 py-4 rounded-2xl min-w-0 shadow-lg transition-all duration-200 hover:shadow-xl ${
+                className={`max-w-sm lg:max-w-2xl px-6 py-5 rounded-3xl min-w-0 shadow-xl transition-all duration-300 hover:shadow-2xl transform hover:scale-[1.02] ${
                   message.sender_type === 'user'
-                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-green-500/25'
-                    : 'bg-white/90 dark:bg-neutral-800/90 text-neutral-900 dark:text-neutral-100 border border-neutral-200/50 dark:border-neutral-700/50 backdrop-blur-sm'
+                    ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 text-white shadow-green-500/30 border border-green-400/20'
+                    : 'bg-gradient-to-br from-white/95 via-green-50/80 to-emerald-50/80 dark:from-neutral-800/95 dark:via-neutral-750/80 dark:to-neutral-800/95 text-neutral-900 dark:text-neutral-100 border-2 border-green-200/40 dark:border-neutral-600/40 backdrop-blur-lg shadow-green-500/10 dark:shadow-neutral-800/20'
                 }`}
               >
-                <div className="flex items-start gap-3 min-w-0">
+                <div className="flex items-start gap-4 min-w-0">
                   {message.sender_type === 'ai' && (
-                    <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-br from-green-100 to-green-200 dark:from-green-800 dark:to-green-900 flex items-center justify-center shadow-md">
-                      <i className="fa-solid fa-robot text-sm text-green-600 dark:text-green-400"></i>
+                    <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 dark:from-green-500 dark:via-emerald-600 dark:to-teal-600 flex items-center justify-center shadow-lg shadow-green-500/30">
+                      <i className="fa-solid fa-robot text-sm text-white drop-shadow-sm"></i>
+                    </div>
+                  )}
+                  {message.sender_type === 'user' && (
+                    <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 flex items-center justify-center shadow-lg">
+                      <i className="fa-solid fa-user text-sm text-white drop-shadow-sm"></i>
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
                     <p
-                      className="whitespace-pre-line break-words leading-relaxed text-sm"
+                      className={`whitespace-pre-line break-words leading-relaxed text-sm font-medium ${
+                        message.sender_type === 'user' ? 'text-white' : 'text-green-900 dark:text-green-100'
+                      }`}
                       dir="auto"
                     >
                       {message.message}
                     </p>
 
                     <p
-                      className={`text-xs mt-3 font-medium ${
+                      className={`text-xs mt-4 font-semibold ${
                         message.sender_type === 'user'
                           ? 'text-green-100'
-                          : 'text-neutral-500 dark:text-neutral-400'
+                          : 'text-green-600 dark:text-green-400'
                         }`}
                     >
                       {new Date(message.created_at).toLocaleTimeString()}
@@ -195,7 +209,7 @@ export default function ChatInterface({
       </div>
 
       {/* Message Input */}
-      <div className="flex-shrink-0 p-6 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-xl border-t border-neutral-200/50 dark:border-neutral-700/50 shadow-lg">
+      <div className="flex-shrink-0 p-6 bg-gradient-to-r from-green-50/95 via-emerald-50/95 to-teal-50/95 dark:from-neutral-950/95 dark:via-neutral-900/95 dark:to-neutral-950/95 backdrop-blur-xl border-t-2 border-green-200/60 dark:border-neutral-700/60 shadow-2xl shadow-green-500/20 dark:shadow-neutral-800/30">
         <form onSubmit={handleSubmit} className="flex gap-4">
           <div className="flex-1">
             <AutoResizeTextarea
@@ -205,7 +219,7 @@ export default function ChatInterface({
               onKeyDown={handleKeyDown}
               placeholder={t('type_message_placeholder')}
               disabled={processing}
-              className="rounded-2xl border-neutral-200/50 dark:border-neutral-700/50 focus:border-green-300 dark:focus:border-green-600 focus:ring-green-300 dark:focus:ring-green-600 shadow-sm"
+              className="rounded-3xl border-2 border-green-200/60 dark:border-green-700/60 focus:border-green-400 dark:focus:border-green-500 focus:ring-4 focus:ring-green-300/30 dark:focus:ring-green-600/30 shadow-lg bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:shadow-green-500/10"
             />
           </div>
 

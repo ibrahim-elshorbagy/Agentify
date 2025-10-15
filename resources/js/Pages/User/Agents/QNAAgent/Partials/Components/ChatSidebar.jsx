@@ -37,9 +37,9 @@ export default function ChatSidebar({
         top-0 left-0
         w-80 xl:w-80
         h-full
-        bg-white/95 dark:bg-neutral-900/95
+        bg-gradient-to-b from-white/95 via-green-50/90 to-emerald-50/95 dark:from-neutral-950/95 dark:via-neutral-900/90 dark:to-neutral-950/95
         backdrop-blur-xl
-        border-r border-neutral-200/50 dark:border-neutral-700/50
+        border-r-2 border-green-200/60 dark:border-neutral-700/80
         flex flex-col
         transition-all duration-300 ease-in-out
         z-40 xl:z-auto
@@ -48,11 +48,11 @@ export default function ChatSidebar({
       `.trim()}>
 
         {/* Header */}
-        <div className="p-6 border-b border-neutral-200/50 dark:border-neutral-700/50">
+        <div className="p-6 border-b-2 border-green-200/60 dark:border-neutral-700/70 ">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100 flex items-center gap-3 tracking-tight">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center shadow-lg">
-                <i className="fa-solid fa-chart-bar text-white text-sm"></i>
+            <h2 className="text-xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent flex items-center gap-3 tracking-tight">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-500 via-emerald-500 to-green-600 dark:from-green-600 dark:via-emerald-600 dark:to-green-700 flex items-center justify-center shadow-xl shadow-green-500/30">
+                <i className="fa-solid fa-comments text-white text-lg drop-shadow-sm"></i>
               </div>
               {t('qna_agent')}
             </h2>
@@ -82,21 +82,21 @@ export default function ChatSidebar({
       {/* Conversations List */}
       <div className="flex-1 overflow-y-auto">
         {conversations.length === 0 ? (
-          <div className="p-6 text-center text-neutral-500 dark:text-neutral-400">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-700 flex items-center justify-center">
-              <i className="fa-solid fa-comments text-lg text-neutral-400 dark:text-neutral-500"></i>
+          <div className="p-6 text-center text-green-600 dark:text-green-400">
+            <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-green-100 via-emerald-100 to-teal-100 dark:from-green-800 dark:via-emerald-800 dark:to-teal-800 flex items-center justify-center shadow-lg shadow-green-500/20">
+              <i className="fa-solid fa-comments text-xl text-green-500 dark:text-green-400"></i>
             </div>
-            {t('no_conversations_yet')}
+            <p className="font-semibold">{t('no_conversations_yet')}</p>
           </div>
         ) : (
           <div className="p-3 space-y-2">
             {conversations.map((conversation) => (
               <div
                 key={conversation.id}
-                className={`mb-2 rounded-2xl border transition-all duration-200 hover:scale-[1.02] ${
+                className={`mb-3 rounded-3xl border-2 transition-all duration-300 hover:scale-[1.03] transform ${
                   currentConversation?.id === conversation.id
-                    ? 'bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 border-green-200 dark:border-green-700 shadow-lg shadow-green-500/10'
-                    : 'bg-white/60 dark:bg-neutral-800/60 border-neutral-200/50 dark:border-neutral-700/50 hover:bg-white/80 dark:hover:bg-neutral-800/80 hover:shadow-md backdrop-blur-sm'
+                    ? 'bg-gradient-to-r from-green-100 via-emerald-50 to-green-100 dark:from-green-900/40 dark:via-emerald-900/30 dark:to-green-800/40 border-green-300 dark:border-green-600 shadow-xl shadow-green-500/20'
+                    : 'bg-gradient-to-br from-white/70 via-green-50/40 to-emerald-50/60 dark:from-neutral-800/70 dark:via-green-900/20 dark:to-emerald-900/30 border-green-200/40 dark:border-green-700/40 hover:bg-gradient-to-br hover:from-white/90 hover:via-green-50/60 hover:to-emerald-50/80 dark:hover:from-neutral-800/90 dark:hover:via-green-900/30 dark:hover:to-emerald-900/40 hover:shadow-lg hover:shadow-green-500/10 backdrop-blur-sm'
                 }`}
               >
                 <Link
@@ -106,15 +106,27 @@ export default function ChatSidebar({
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-neutral-900 dark:text-neutral-100 truncate group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                      <h3 className={`font-bold truncate transition-colors duration-300 ${
+                        currentConversation?.id === conversation.id
+                          ? 'text-green-700 dark:text-green-300'
+                          : 'text-neutral-900 dark:text-neutral-100 group-hover:text-green-600 dark:group-hover:text-green-400'
+                      }`}>
                         {conversation.name}
                       </h3>
                       {conversation.latest_message && (
-                        <p className="text-sm text-neutral-600 dark:text-neutral-400 truncate mt-1.5 leading-relaxed">
+                        <p className={`text-sm truncate mt-2 leading-relaxed font-medium ${
+                          currentConversation?.id === conversation.id
+                            ? 'text-green-600 dark:text-green-400'
+                            : 'text-neutral-600 dark:text-neutral-400 group-hover:text-green-500 dark:group-hover:text-green-400'
+                        }`}>
                           {conversation.latest_message.message}
                         </p>
                       )}
-                      <p className="text-xs text-neutral-500 dark:text-neutral-500 mt-2 font-medium">
+                      <p className={`text-xs mt-3 font-semibold ${
+                        currentConversation?.id === conversation.id
+                          ? 'text-green-500 dark:text-green-400'
+                          : 'text-neutral-500 dark:text-neutral-500 group-hover:text-green-500'
+                      }`}>
                         {new Date(conversation.updated_at).toLocaleDateString()}
                       </p>
                     </div>

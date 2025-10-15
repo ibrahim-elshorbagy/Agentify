@@ -792,6 +792,7 @@ return [
   'files_available' => ':count files available',
   'start_conversation' => 'Start Your Conversation',
   'start_conversation_description' => 'Ask questions about your uploaded documents and get AI-powered insights.',
+  'qna_start_conversation_description' => 'Ask questions about your emails and get AI-powered insights.',
   'type_message_placeholder' => 'Type your message here...',
   'upload_files_to_chat' => 'Upload files first to enable messaging...',
   'upload_files_to_enable_messaging' => 'Upload files to enable messaging',
