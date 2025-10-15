@@ -116,6 +116,15 @@ class QNAController extends Controller
    */
   public function deleteConversation(Request $request, QNAConversation $conversation)
   {
+    // Ensure the conversation belongs to the authenticated user
+    if ($conversation->user_id !== Auth::id()) {
+      return back()
+        ->with('title', __('website_response.access_denied_title'))
+        ->with('message', __('website_response.access_denied_message'))
+        ->with('status', 'error');
+    }
+
+    $conversation->delete();
 
     return redirect()->route('user.qna-agent.chat')
       ->with('title', __('website_response.conversation_deleted_title'))
