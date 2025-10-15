@@ -759,6 +759,8 @@ return [
 
   // Report Agent translations
   'report_agent' => 'Report Agent',
+  'qna_agent' => 'QNA Agent',
+  'qna' => 'QNA',
   'chat' => 'Chat',
   'files' => 'Files',
   'manage_files' => 'Manage Files',

@@ -1,7 +1,6 @@
 <?php
 
 return [
-
   /*
   |--------------------------------------------------------------------------
   | Third Party Services
@@ -59,6 +58,11 @@ return [
     'jwt_secret' => env('REPORTS_AGENT_CHAT'),
   ],
 
+  'qna_agent_chat' => [
+    'webhook_url' => env('QNA_AGENT_CHAT_WEBHOOK_URL'),
+    'jwt_secret' => env('QNA_AGENT_CHAT_JWT_SECRET'),
+  ],
+
   'hr_agent' => [
     'upload_file_url' => env('HR_AGENT_UPLOAD_FILE_URL'),
     'get_gmail_url' => env('HR_AGENT_GET_GMAIL_URL'),
@@ -78,5 +82,4 @@ return [
     'redirect' => env('MICROSOFT_REDIRECT_URI'),
     'tenant' => env('MICROSOFT_TENANT_ID', 'common'),
   ],
-
 ];

@@ -696,6 +696,8 @@ return [
 
   // Report Agent translations
   'report_agent' => 'وكيل التقارير',
+  'qna_agent' => 'وكيل الأسئلة والأجوبة',
+  'qna' => 'الأسئلة والأجوبة',
   'chat' => 'محادثة',
   'files' => 'الملفات',
   'manage_files' => 'إدارة الملفات',

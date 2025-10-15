@@ -9,9 +9,7 @@ import ActionButton from '@/Components/ActionButton';
 export default function ChatInterface({
   currentConversation,
   messages = [],
-  files = [],
   onEditConversation,
-  hasFiles = false,
   onToggleSidebar,
   isSidebarOpen = false
 }) {
@@ -36,9 +34,9 @@ export default function ChatInterface({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!data.message.trim() || !currentConversation || !hasFiles) return;
+    if (!data.message.trim() || !currentConversation) return;
 
-    post(route('user.report-agent.messages.send'), {
+    post(route('user.qna-agent.messages.send'), {
       preserveScroll: true,
       onSuccess: () => {
         reset('message');
@@ -195,14 +193,6 @@ export default function ChatInterface({
 
       {/* Message Input */}
       <div className="flex-shrink-0 p-4 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-700">
-        {!hasFiles && (
-          <div className="mb-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-            <div className="flex items-center gap-2 text-yellow-800 dark:text-yellow-200">
-              <i className="fa-solid fa-exclamation-triangle text-sm"></i>
-              <span className="text-sm font-medium">{t('upload_files_to_enable_messaging')}</span>
-            </div>
-          </div>
-        )}
         <form onSubmit={handleSubmit} className="flex gap-2">
           <div className="flex-1">
             <AutoResizeTextarea
@@ -210,15 +200,15 @@ export default function ChatInterface({
               value={data.message}
               onChange={(e) => setData('message', e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={hasFiles ? t('type_message_placeholder') : t('upload_files_to_chat')}
-              disabled={processing || !hasFiles}
+              placeholder={t('type_message_placeholder')}
+              disabled={processing}
             />
           </div>
 
           <PrimaryButton
             type="submit"
             icon="fa-paper-plane"
-            disabled={processing || !data.message.trim() || !hasFiles}
+            disabled={processing || !data.message.trim()}
             className="px-4 py-2 self-end mb-2"
           >
             {processing ? t('sending') : t('send')}

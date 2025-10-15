@@ -69,3 +69,4 @@ require __DIR__ . '/testHost.php';
 require __DIR__ . '/EmailAgent.php';
 require __DIR__ . '/ReportsAgent.php';
 require __DIR__ . '/HrAgent.php';
+require __DIR__ . '/QNAAgent.php';

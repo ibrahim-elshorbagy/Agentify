@@ -50,6 +50,7 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
         { name: t('draft'), href: route('user.email-agent.draft.emails'), route: 'user.email-agent.draft.*', icon: 'fa-file' },
         { name: t('spam'), href: route('user.email-agent.spam.emails'), route: 'user.email-agent.spam.*', icon: 'fa-exclamation-circle' },
         { name: t('bin'), href: route('user.email-agent.bin.emails'), route: 'user.email-agent.bin.*', icon: 'fa-trash' },
+        { name: t('qna'), href: route('user.qna-agent.chat'), route: 'user.qna-agent.*', icon: 'fa-comments' },
       ],
     },
     {
