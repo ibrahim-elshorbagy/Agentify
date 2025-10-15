@@ -42,7 +42,16 @@ export default function QNAAgent({
     <AppLayout>
       <Head title={t('qna_agent')} />
 
-      <div className="h-screen flex bg-gradient-to-br from-green-50 via-neutral-50 to-green-100 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 overflow-hidden relative">
+      <div className="h-screen flex bg-gradient-to-br from-green-50 via-neutral-50 to-green-100 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 overflow-hidden relative"
+           style={{
+             backgroundImage: `
+               radial-gradient(circle at 25% 25%, rgba(34, 197, 94, 0.15) 2px, transparent 2px),
+               radial-gradient(circle at 75% 75%, rgba(34, 197, 94, 0.12) 1px, transparent 1px),
+               radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.08) 1.5px, transparent 1.5px)
+             `,
+             backgroundSize: '60px 60px, 40px 40px, 80px 80px',
+             backgroundPosition: '0 0, 20px 20px, 40px 40px'
+           }}>
 
         {/* Chat Sidebar */}
         <ChatSidebar
@@ -60,13 +69,17 @@ export default function QNAAgent({
           {!currentConversation ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
-                <i className="fa-solid fa-comments text-4xl text-gray-400 dark:text-gray-500 mb-4 block"></i>
-                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
-                  {t('select_conversation')}
-                </h3>
-                <p className="text-gray-500 dark:text-gray-400 max-w-md">
-                  {t('select_conversation_description')}
-                </p>
+                <div className="backdrop-blur-sm bg-white/80 dark:bg-neutral-900/80 rounded-3xl p-8 mx-4 shadow-2xl border border-neutral-200/50 dark:border-neutral-700/50">
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-green-100 to-green-200 dark:from-green-800 dark:to-green-900 flex items-center justify-center shadow-lg">
+                    <i className="fa-solid fa-comments text-3xl text-green-600 dark:text-green-400"></i>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 tracking-tight">
+                    {t('select_conversation')}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 max-w-md leading-relaxed">
+                    {t('select_conversation_description')}
+                  </p>
+                </div>
               </div>
             </div>
           ) : (
