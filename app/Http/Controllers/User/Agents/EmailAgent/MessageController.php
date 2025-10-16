@@ -124,19 +124,19 @@ class MessageController extends Controller
       'ids.*' => ['integer', 'exists:messages,id'],
     ]);
 
-    $result = $this->emailService->bulkMarkAsRead($request->ids);
+    try {
+      $updated = $this->emailService->bulkMarkAsRead($request->ids);
 
-    if ($result['success']) {
       return back()
         ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', $result['message'])
+        ->with('message', __('website_response.bulk_marked_as_read', ['count' => $updated]))
         ->with('status', 'success');
+    } catch (\Exception $e) {
+      return back()
+        ->with('title', 'Error')
+        ->with('message', __('website_response.error_bulk_action'))
+        ->with('status', 'error');
     }
-
-    return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
   }
 
   /**
@@ -149,19 +149,19 @@ class MessageController extends Controller
       'ids.*' => ['integer', 'exists:messages,id'],
     ]);
 
-    $result = $this->emailService->bulkMarkAsUnread($request->ids);
+    try {
+      $updated = $this->emailService->bulkMarkAsUnread($request->ids);
 
-    if ($result['success']) {
       return back()
         ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', $result['message'])
+        ->with('message', __('website_response.bulk_marked_as_unread', ['count' => $updated]))
         ->with('status', 'success');
+    } catch (\Exception $e) {
+      return back()
+        ->with('title', 'Error')
+        ->with('message', __('website_response.error_bulk_action'))
+        ->with('status', 'error');
     }
-
-    return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
   }
 
   /**
@@ -174,19 +174,19 @@ class MessageController extends Controller
       'ids.*' => ['integer', 'exists:messages,id'],
     ]);
 
-    $result = $this->emailService->bulkStar($request->ids);
+    try {
+      $updated = $this->emailService->bulkStar($request->ids);
 
-    if ($result['success']) {
       return back()
         ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', $result['message'])
+        ->with('message', __('website_response.bulk_starred', ['count' => $updated]))
         ->with('status', 'success');
+    } catch (\Exception $e) {
+      return back()
+        ->with('title', 'Error')
+        ->with('message', __('website_response.error_bulk_action'))
+        ->with('status', 'error');
     }
-
-    return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
   }
 
   /**
@@ -199,19 +199,19 @@ class MessageController extends Controller
       'ids.*' => ['integer', 'exists:messages,id'],
     ]);
 
-    $result = $this->emailService->bulkUnstar($request->ids);
+    try {
+      $updated = $this->emailService->bulkUnstar($request->ids);
 
-    if ($result['success']) {
       return back()
         ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', $result['message'])
+        ->with('message', __('website_response.bulk_unstarred', ['count' => $updated]))
         ->with('status', 'success');
+    } catch (\Exception $e) {
+      return back()
+        ->with('title', 'Error')
+        ->with('message', __('website_response.error_bulk_action'))
+        ->with('status', 'error');
     }
-
-    return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
   }
 
   /**
@@ -224,19 +224,19 @@ class MessageController extends Controller
       'ids.*' => ['integer', 'exists:messages,id'],
     ]);
 
-    $result = $this->emailService->bulkMoveToSpam($request->ids);
+    try {
+      $updated = $this->emailService->bulkMoveToSpam($request->ids);
 
-    if ($result['success']) {
       return back()
         ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', $result['message'])
+        ->with('message', __('website_response.bulk_moved_to_spam', ['count' => $updated]))
         ->with('status', 'success');
+    } catch (\Exception $e) {
+      return back()
+        ->with('title', 'Error')
+        ->with('message', __('website_response.error_bulk_action'))
+        ->with('status', 'error');
     }
-
-    return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
   }
 
   /**
@@ -249,19 +249,19 @@ class MessageController extends Controller
       'ids.*' => ['integer', 'exists:messages,id'],
     ]);
 
-    $result = $this->emailService->bulkMoveToBin($request->ids);
+    try {
+      $updated = $this->emailService->bulkMoveToBin($request->ids);
 
-    if ($result['success']) {
       return back()
         ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', $result['message'])
+        ->with('message', __('website_response.bulk_moved_to_bin', ['count' => $updated]))
         ->with('status', 'success');
+    } catch (\Exception $e) {
+      return back()
+        ->with('title', 'Error')
+        ->with('message', __('website_response.error_bulk_action'))
+        ->with('status', 'error');
     }
-
-    return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
   }
 
   /**
@@ -274,19 +274,19 @@ class MessageController extends Controller
       'ids.*' => ['integer', 'exists:messages,id'],
     ]);
 
-    $result = $this->emailService->bulkRestore($request->ids);
+    try {
+      $updated = $this->emailService->bulkRestore($request->ids);
 
-    if ($result['success']) {
       return back()
         ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', $result['message'])
+        ->with('message', __('website_response.bulk_restored_to_inbox', ['count' => $updated]))
         ->with('status', 'success');
+    } catch (\Exception $e) {
+      return back()
+        ->with('title', 'Error')
+        ->with('message', __('website_response.error_bulk_action'))
+        ->with('status', 'error');
     }
-
-    return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
   }
 
   /**
@@ -299,18 +299,18 @@ class MessageController extends Controller
       'ids.*' => ['integer', 'exists:messages,id'],
     ]);
 
-    $result = $this->emailService->bulkDeletePermanently($request->ids);
+    try {
+      $deletedCount = $this->emailService->bulkDeletePermanently($request->ids);
 
-    if ($result['success']) {
       return back()
         ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', $result['message'])
+        ->with('message', __('website_response.bulk_deleted_permanently', ['count' => $deletedCount]))
         ->with('status', 'success');
+    } catch (\Exception $e) {
+      return back()
+        ->with('title', 'Error')
+        ->with('message', __('website_response.error_bulk_action'))
+        ->with('status', 'error');
     }
-
-    return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
   }
 }

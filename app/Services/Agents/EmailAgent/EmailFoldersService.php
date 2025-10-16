@@ -261,21 +261,9 @@ class EmailFoldersService
    */
   public function bulkMarkAsRead(array $ids)
   {
-    try {
-      $updated = Message::whereIn('id', $ids)
-        ->where('user_id', Auth::id())
-        ->update(['is_read' => true]);
-
-      return [
-        'success' => true,
-        'message' => __('website_response.bulk_marked_as_read', ['count' => $updated])
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_bulk_action')
-      ];
-    }
+    return Message::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->update(['is_read' => true]);
   }
 
   /**
@@ -283,21 +271,9 @@ class EmailFoldersService
    */
   public function bulkMarkAsUnread(array $ids)
   {
-    try {
-      $updated = Message::whereIn('id', $ids)
-        ->where('user_id', Auth::id())
-        ->update(['is_read' => false]);
-
-      return [
-        'success' => true,
-        'message' => __('website_response.bulk_marked_as_unread', ['count' => $updated])
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_bulk_action')
-      ];
-    }
+    return Message::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->update(['is_read' => false]);
   }
 
   /**
@@ -305,21 +281,9 @@ class EmailFoldersService
    */
   public function bulkStar(array $ids)
   {
-    try {
-      $updated = Message::whereIn('id', $ids)
-        ->where('user_id', Auth::id())
-        ->update(['is_starred' => true]);
-
-      return [
-        'success' => true,
-        'message' => __('website_response.bulk_starred', ['count' => $updated])
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_bulk_action')
-      ];
-    }
+    return Message::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->update(['is_starred' => true]);
   }
 
   /**
@@ -327,21 +291,9 @@ class EmailFoldersService
    */
   public function bulkUnstar(array $ids)
   {
-    try {
-      $updated = Message::whereIn('id', $ids)
-        ->where('user_id', Auth::id())
-        ->update(['is_starred' => false]);
-
-      return [
-        'success' => true,
-        'message' => __('website_response.bulk_unstarred', ['count' => $updated])
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_bulk_action')
-      ];
-    }
+    return Message::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->update(['is_starred' => false]);
   }
 
   /**
@@ -349,21 +301,9 @@ class EmailFoldersService
    */
   public function bulkMoveToSpam(array $ids)
   {
-    try {
-      $updated = Message::whereIn('id', $ids)
-        ->where('user_id', Auth::id())
-        ->update(['folder' => 'spam']);
-
-      return [
-        'success' => true,
-        'message' => __('website_response.bulk_moved_to_spam', ['count' => $updated])
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_bulk_action')
-      ];
-    }
+    return Message::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->update(['folder' => 'spam']);
   }
 
   /**
@@ -371,21 +311,9 @@ class EmailFoldersService
    */
   public function bulkMoveToBin(array $ids)
   {
-    try {
-      $updated = Message::whereIn('id', $ids)
-        ->where('user_id', Auth::id())
-        ->update(['folder' => 'bin']);
-
-      return [
-        'success' => true,
-        'message' => __('website_response.bulk_moved_to_bin', ['count' => $updated])
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_bulk_action')
-      ];
-    }
+    return Message::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->update(['folder' => 'bin']);
   }
 
   /**
@@ -393,21 +321,9 @@ class EmailFoldersService
    */
   public function bulkRestore(array $ids)
   {
-    try {
-      $updated = Message::whereIn('id', $ids)
-        ->where('user_id', Auth::id())
-        ->update(['folder' => 'inbox']);
-
-      return [
-        'success' => true,
-        'message' => __('website_response.bulk_restored_to_inbox', ['count' => $updated])
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_bulk_action')
-      ];
-    }
+    return Message::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->update(['folder' => 'inbox']);
   }
 
   /**
@@ -415,32 +331,22 @@ class EmailFoldersService
    */
   public function bulkDeletePermanently(array $ids)
   {
-    try {
-      // Get messages that belong to the user
-      $messages = Message::whereIn('id', $ids)
-        ->where('user_id', Auth::id())
-        ->get();
+    // Get messages that belong to the user
+    $messages = Message::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->get();
 
-      $deletedCount = 0;
+    $deletedCount = 0;
 
-      foreach ($messages as $message) {
-        // Delete associated responses first
-        $message->responses()->delete();
+    foreach ($messages as $message) {
+      // Delete associated responses first
+      $message->responses()->delete();
 
-        // Delete the message
-        $message->delete();
-        $deletedCount++;
-      }
-
-      return [
-        'success' => true,
-        'message' => __('website_response.bulk_deleted_permanently', ['count' => $deletedCount])
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_bulk_action')
-      ];
+      // Delete the message
+      $message->delete();
+      $deletedCount++;
     }
+
+    return $deletedCount;
   }
 }
