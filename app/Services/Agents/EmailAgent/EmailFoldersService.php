@@ -12,10 +12,15 @@ use Illuminate\Http\Request;
 class EmailFoldersService
 {
   /**
-   * Get inbox emails with filters and pagination
+   * Get emails for any folder with filters and pagination
    */
-  public function inboxEmails(Request $request)
+  public function getEmails(Request $request, $folder)
   {
+    // Validate folder parameter
+    if (!in_array($folder, ['inbox', 'spam', 'bin'])) {
+      throw new \InvalidArgumentException('Invalid folder type');
+    }
+
     $request->validate([
       'search' => ['nullable', 'string', 'max:255'],
       'is_read' => ['nullable', 'boolean'],
@@ -31,90 +36,15 @@ class EmailFoldersService
     $sortDirection = $request->input('direction', 'desc');
     $perPage = $request->input('per_page', 15);
 
-    // Inbox emails query - filter by current user
+    // Emails query - filter by current user and folder
     $emailsQuery = Message::query()
-      ->where('folder', 'inbox')
+      ->where('folder', $folder)
       ->where('user_id', Auth::id());
 
     $this->applyFilters($emailsQuery, $request);
 
     $emails = $emailsQuery->orderBy($sortField, $sortDirection)
-      ->paginate($perPage, ['*'], 'inbox_page')
-      ->withQueryString();
-
-
-    return [
-      'emails' => $emails,
-      'queryParams' => $request->query() ?: null,
-    ];
-  }
-
-  /**
-   * Get spam emails with filters and pagination
-   */
-  public function spamEmails(Request $request)
-  {
-    $request->validate([
-      'search' => ['nullable', 'string', 'max:255'],
-      'is_read' => ['nullable', 'boolean'],
-      'is_starred' => ['nullable', 'boolean'],
-      'date_from' => ['nullable', 'date'],
-      'date_to' => ['nullable', 'date', 'after_or_equal:date_from'],
-      'sort' => ['nullable', 'string', 'in:id,from_email,subject,received_at,created_at,is_starred,is_read'],
-      'direction' => ['nullable', 'string', 'in:asc,desc'],
-      'per_page' => ['nullable', 'integer', 'min:1', 'max:50'],
-    ]);
-
-    $sortField = $request->input('sort', 'created_at');
-    $sortDirection = $request->input('direction', 'desc');
-    $perPage = $request->input('per_page', 15);
-
-    // Spam emails query - filter by current user
-    $emailsQuery = Message::query()
-      ->where('folder', 'spam')
-      ->where('user_id', Auth::id());
-
-    $this->applyFilters($emailsQuery, $request);
-
-    $emails = $emailsQuery->orderBy($sortField, $sortDirection)
-      ->paginate($perPage, ['*'], 'spam_page')
-      ->withQueryString();
-
-    return [
-      'emails' => $emails,
-      'queryParams' => $request->query() ?: null,
-    ];
-  }
-
-  /**
-   * Get bin emails with filters and pagination
-   */
-  public function binEmails(Request $request)
-  {
-    $request->validate([
-      'search' => ['nullable', 'string', 'max:255'],
-      'is_read' => ['nullable', 'boolean'],
-      'is_starred' => ['nullable', 'boolean'],
-      'date_from' => ['nullable', 'date'],
-      'date_to' => ['nullable', 'date', 'after_or_equal:date_from'],
-      'sort' => ['nullable', 'string', 'in:id,from_email,subject,received_at,created_at,is_starred,is_read'],
-      'direction' => ['nullable', 'string', 'in:asc,desc'],
-      'per_page' => ['nullable', 'integer', 'min:1', 'max:50'],
-    ]);
-
-    $sortField = $request->input('sort', 'created_at');
-    $sortDirection = $request->input('direction', 'desc');
-    $perPage = $request->input('per_page', 15);
-
-    // Bin emails query - filter by current user
-    $emailsQuery = Message::query()
-      ->where('folder', 'bin')
-      ->where('user_id', Auth::id());
-
-    $this->applyFilters($emailsQuery, $request);
-
-    $emails = $emailsQuery->orderBy($sortField, $sortDirection)
-      ->paginate($perPage, ['*'], 'bin_page')
+      ->paginate($perPage, ['*'], $folder . '_page')
       ->withQueryString();
 
     return [

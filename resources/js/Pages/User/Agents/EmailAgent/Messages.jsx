@@ -1,26 +1,11 @@
 import React, { useState } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import { useTrans } from '@/Hooks/useTrans';
-import InboxTable from './Partials/Tables/InboxTable';
-import SpamTable from './Partials/Tables/SpamTable';
-import BinTable from './Partials/Tables/BinTable';
+import EmailTable from './Partials/Tables/EmailTable';
 
 export default function Messages({ type, queryParams = null, emails = [], emailCounts = {} }) {
   queryParams = queryParams || {};
   const { t } = useTrans();
-
-  const renderTable = () => {
-    switch (type) {
-      case 'inbox':
-        return <InboxTable emails={emails} queryParams={queryParams} />;
-      case 'spam':
-        return <SpamTable emails={emails} queryParams={queryParams} />;
-      case 'bin':
-        return <BinTable emails={emails} queryParams={queryParams} />;
-      default:
-        return <InboxTable emails={emails} queryParams={queryParams} />;
-    }
-  };
 
   return (
     <AppLayout>
@@ -108,7 +93,7 @@ export default function Messages({ type, queryParams = null, emails = [], emailC
 
         <div className="overflow-hidden rounded-2xl shadow-lg dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700">
           <div className="p-4 text-neutral-900 dark:text-neutral-100">
-            {renderTable()}
+            <EmailTable emails={emails} queryParams={queryParams} type={type} />
           </div>
         </div>
       </div>

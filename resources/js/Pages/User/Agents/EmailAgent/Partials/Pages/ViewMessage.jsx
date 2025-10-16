@@ -13,9 +13,9 @@ export default function ViewMessage({ message, responses = [] }) {
   const [selectedResponse, setSelectedResponse] = useState(null);
 
   const folderRoutes = {
-    bin: 'user.email-agent.bin.emails',
-    spam: 'user.email-agent.spam.emails',
-    inbox: 'user.email-agent.inbox.emails'
+    bin: 'user.email-agent.emails',
+    spam: 'user.email-agent.emails',
+    inbox: 'user.email-agent.emails'
   };
 
   // Toggle star function
@@ -87,7 +87,7 @@ export default function ViewMessage({ message, responses = [] }) {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <Link
-                    href={route(folderRoutes[message.folder] || folderRoutes.inbox)}
+                    href={route(folderRoutes[message.folder] || folderRoutes.inbox, { folder: message.folder || 'inbox' })}
                     className="flex items-center gap-2 text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
                   >
                     <i className="fa-solid fa-arrow-left rtl:rotate-180"></i>

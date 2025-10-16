@@ -22,7 +22,7 @@ return new class extends Migration {
       $table->string('subject')->index();
       $table->longText('body_text')->nullable();
 
-      $table->enum('folder', ['inbox', 'spam', 'bin'])->default('inbox')->index();
+      $table->string('folder')->default('inbox')->index();
       $table->boolean('is_read')->default(false)->index();
       $table->boolean('is_starred')->default(false)->index();
 

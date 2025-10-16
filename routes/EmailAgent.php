@@ -9,13 +9,10 @@ use Inertia\Inertia;
 
 Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function () {
 
-  // Inbox Emails -
-  Route::get('/email-agent/inbox', [MessageController::class, 'inbox'])
-    ->name('user.email-agent.inbox.emails');
-  Route::get('/email-agent/bin', [MessageController::class, 'bin'])
-    ->name('user.email-agent.bin.emails');
-  Route::get('/email-agent/spam', [MessageController::class, 'spam'])
-    ->name('user.email-agent.spam.emails');
+  // Unified Email Folders - with folder parameter
+  Route::get('/email-agent/{folder}', [MessageController::class, 'emails'])
+    ->name('user.email-agent.emails')
+    ->where('folder', 'inbox|spam|bin');
 
   // Sent and Draft Emails - Response Messages
   Route::get('/email-agent/sent', [ResponseMessageController::class, 'sent'])

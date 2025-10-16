@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import SidebarSubmenuItem from './SidebarSubmenuItem';
 
 export default function SidebarSubmenu({ item }) {
-  // Check if any submenu item is active by checking route patterns
+  // Check if any submenu item is active by checking route patterns and folder parameters
   const isAnySubmenuActive = item.submenu.some(sub => {
-    // Check both exact route and wildcard pattern
+    // For folder-based routes, check both route and folder parameter
+    if (sub.folder) {
+      return route().current(sub.route) && route().params.folder === sub.folder;
+    }
+    // For other routes, check both exact route and wildcard pattern
     return route().current(sub.route) || route().current(sub.route + '.*');
   });
 
@@ -34,16 +38,23 @@ export default function SidebarSubmenu({ item }) {
       </button>
       {isExpanded && (
         <ul className="flex flex-col gap-0.5 mt-1">
-          {item.submenu.map(sub => (
-            <SidebarSubmenuItem
-              key={sub.route}
-              href={sub.href}
-              active={route().current(sub.route) || route().current(sub.route + '.*')}
-              icon={sub.icon}
-            >
-              {sub.name}
-            </SidebarSubmenuItem>
-          ))}
+          {item.submenu.map((sub, index) => {
+            // For folder-based routes, check both route and folder parameter
+            const isActive = sub.folder
+              ? route().current(sub.route) && route().params.folder === sub.folder
+              : route().current(sub.route) || route().current(sub.route + '.*');
+
+            return (
+              <SidebarSubmenuItem
+                key={`${sub.route}-${sub.name}-${sub.folder || 'no-folder'}-${index}`}
+                href={sub.href}
+                active={isActive}
+                icon={sub.icon}
+              >
+                {sub.name}
+              </SidebarSubmenuItem>
+            );
+          })}
         </ul>
       )}
     </div>

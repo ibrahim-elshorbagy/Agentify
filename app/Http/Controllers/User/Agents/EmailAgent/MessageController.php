@@ -22,43 +22,20 @@ class MessageController extends Controller
     $this->emailService = $emailService;
   }
 
-  public function inbox(Request $request)
+  public function emails(Request $request, $folder)
   {
-    $data = $this->emailService->inboxEmails($request);
+    // Validate folder parameter from route
+    if (!in_array($folder, ['inbox', 'spam', 'bin'])) {
+      abort(404);
+    }
+
+    $data = $this->emailService->getEmails($request, $folder);
 
     $emails = $this->addRowNumbers($data['emails']);
 
     return inertia('User/Agents/EmailAgent/Messages', [
       'emails' => $emails,
-      'type' => 'inbox',
-      'queryParams' => $data['queryParams'],
-      'emailCounts' => $this->emailService->getEmailCounts(),
-    ]);
-  }
-
-  public function spam(Request $request)
-  {
-    $data = $this->emailService->spamEmails($request);
-    
-    $emails = $this->addRowNumbers($data['emails']);
-
-    return inertia('User/Agents/EmailAgent/Messages', [
-      'emails' => $emails,
-      'type' => 'spam',
-      'queryParams' => $data['queryParams'],
-      'emailCounts' => $this->emailService->getEmailCounts(),
-    ]);
-  }
-
-  public function bin(Request $request)
-  {
-    $data = $this->emailService->binEmails($request);
-
-    $emails = $this->addRowNumbers($data['emails']);
-
-    return inertia('User/Agents/EmailAgent/Messages', [
-      'emails' => $emails,
-      'type' => 'bin',
+      'type' => $folder,
       'queryParams' => $data['queryParams'],
       'emailCounts' => $this->emailService->getEmailCounts(),
     ]);

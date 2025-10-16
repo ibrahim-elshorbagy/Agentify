@@ -3,12 +3,8 @@
 namespace Database\Factories\Agent\EmailAgent;
 
 use App\Models\Agent\EmailAgent\Message;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Agent\EmailAgent\Message>
- */
 class MessageFactory extends Factory
 {
   protected $model = Message::class;
@@ -23,6 +19,7 @@ class MessageFactory extends Factory
       'to_name' => $this->faker->name(),
       'subject' => $this->faker->sentence(6),
       'body_text' => $this->faker->paragraphs(3, true),
+      'source' => $this->faker->randomElement(['google', 'microsoft']),
       'folder' => $this->faker->randomElement(['inbox', 'spam', 'bin']),
       'is_read' => $this->faker->boolean(50),
       'is_starred' => $this->faker->boolean(20),
