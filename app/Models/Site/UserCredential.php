@@ -18,11 +18,6 @@ class UserCredential extends Model
         'provider_refresh_token'
     ];
 
-    protected $casts = [
-        'provider_token' => 'encrypted',
-        'provider_refresh_token' => 'encrypted'
-    ];
-
     /**
      * Get the user that owns the credential
      */
