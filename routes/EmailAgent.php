@@ -20,30 +20,7 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
   Route::get('/email-agent/draft', [ResponseMessageController::class, 'draft'])
     ->name('user.email-agent.draft.emails');
 
-  // Email actions -
-  Route::patch('/email-agent/toggle-star/{message}', [MessageController::class, 'toggleStar'])
-    ->name('user.email-agent.toggle-star')
-    ->where('message', '[0-9]+');
-
-  Route::patch('/email-agent/toggle-read/{message}', [MessageController::class, 'toggleRead'])
-    ->name('user.email-agent.toggle-read')
-    ->where('message', '[0-9]+');
-
-  Route::patch('/email-agent/move-to-spam/{message}', [MessageController::class, 'moveToSpam'])
-    ->name('user.email-agent.move-to-spam')
-    ->where('message', '[0-9]+');
-
-  Route::patch('/email-agent/move-to-bin/{message}', [MessageController::class, 'moveToBin'])
-    ->name('user.email-agent.move-to-bin')
-    ->where('message', '[0-9]+');
-
-  Route::patch('/email-agent/restore/{message}', [MessageController::class, 'restore'])
-    ->name('user.email-agent.restore')
-    ->where('message', '[0-9]+');
-
-  Route::delete('/email-agent/delete-permanently/{message}', [MessageController::class, 'deletePermanently'])
-    ->name('user.email-agent.delete-permanently')
-    ->where('message', '[0-9]+');
+  // All email actions now use bulk routes only
 
   // Response Message actions
   Route::delete('/email-agent/response/delete-draft/{messageResponse}', [ResponseMessageController::class, 'deleteDraft'])

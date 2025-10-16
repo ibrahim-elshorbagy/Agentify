@@ -18,43 +18,52 @@ export default function ViewMessage({ message, responses = [] }) {
     inbox: 'user.email-agent.emails'
   };
 
-  // Toggle star function
-  const toggleStar = (emailId) => {
-    router.patch(route('user.email-agent.toggle-star', emailId), {}, {
+  // Toggle star function - use bulk star/unstar action based on current state
+  const toggleStar = (emailId, isStarred) => {
+    const route_name = isStarred ? 'user.email-agent.bulk.unstar' : 'user.email-agent.bulk.star';
+    router.patch(route(route_name), {
+      ids: [emailId]
+    }, {
       preserveState: true,
       preserveScroll: true,
     });
   };
 
-  // Restore to inbox function
+  // Restore to inbox function - use bulk restore action
   const restoreToInbox = (emailId) => {
-    router.patch(route('user.email-agent.restore', emailId), {}, {
+    router.patch(route('user.email-agent.bulk.restore'), {
+      ids: [emailId]
+    }, {
       preserveState: true,
       preserveScroll: true,
     });
   };
 
-  // Move to spam function
+  // Move to spam function - use bulk move-to-spam action and redirect
   const moveToSpam = (emailId) => {
-    router.patch(route('user.email-agent.move-to-spam', emailId), {
-      redirect_to_table: true
+    router.patch(route('user.email-agent.bulk.move-to-spam'), {
+      ids: [emailId]
     }, {
-      preserveState: true,
-      preserveScroll: true,
+      onSuccess: () => {
+        // Redirect to spam folder after successful move
+        router.visit(route('user.email-agent.emails', { folder: 'spam' }));
+      }
     });
   };
 
-  // Move to bin function
+  // Move to bin function - use bulk move-to-bin action and redirect
   const moveToBin = (emailId) => {
-    router.patch(route('user.email-agent.move-to-bin', emailId), {
-      redirect_to_table: true
+    router.patch(route('user.email-agent.bulk.move-to-bin'), {
+      ids: [emailId]
     }, {
-      preserveState: true,
-      preserveScroll: true,
+      onSuccess: () => {
+        // Redirect to bin folder after successful move
+        router.visit(route('user.email-agent.emails', { folder: 'bin' }));
+      }
     });
   };
 
-  // Delete draft function
+  // Delete draft function - keep as is (this is for response messages, not main messages)
   const deleteDraft = (emailId) => {
     if (confirm(t('confirm_delete_draft_permanently'))) {
       router.delete(route('user.email-agent.response.delete-draft', emailId), {
@@ -64,13 +73,15 @@ export default function ViewMessage({ message, responses = [] }) {
     }
   };
 
-  // Delete permanently function
+  // Delete permanently function - use bulk delete-permanently action and redirect
   const deletePermanently = (emailId) => {
     if (confirm(t('confirm_delete_permanently'))) {
-      router.delete(route('user.email-agent.delete-permanently', emailId), {
-        data: { redirect_to_table: true },
-        preserveState: false,
-        preserveScroll: false,
+      router.delete(route('user.email-agent.bulk.delete-permanently'), {
+        data: { ids: [emailId] },
+        onSuccess: () => {
+          // Redirect to bin folder after successful deletion
+          router.visit(route('user.email-agent.emails', { folder: 'bin' }));
+        }
       });
     }
   };
@@ -114,7 +125,7 @@ export default function ViewMessage({ message, responses = [] }) {
                         </h1>
                         {/* Star Toggle Button */}
                         <button
-                          onClick={() => toggleStar(message.id)}
+                          onClick={() => toggleStar(message.id, message.is_starred)}
                           className="hover:scale-110 transition-transform duration-200"
                           title={message.is_starred ? t('remove_star') : t('add_star')}
                         >

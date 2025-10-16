@@ -7,49 +7,62 @@ import ActionButton from "@/Components/ActionButton";
 export default function EmailTable({ emails, queryParams, type }) {
   const { t } = useTrans();
 
-  // Toggle star function
-  const toggleStar = (emailId) => {
-    router.patch(route('user.email-agent.toggle-star', { message: emailId }), {}, {
+  // Toggle star function - use appropriate bulk action based on current star state
+  const toggleStar = (emailId, isStarred) => {
+    const route_name = isStarred ? 'user.email-agent.bulk.unstar' : 'user.email-agent.bulk.star';
+    router.patch(route(route_name), {
+      ids: [emailId]
+    }, {
       preserveState: true,
       preserveScroll: true,
     });
   };
 
-  // Toggle read function
-  const toggleRead = (emailId) => {
-    router.patch(route('user.email-agent.toggle-read', { message: emailId }), {}, {
+  // Toggle read function - use appropriate bulk action based on current read state
+  const toggleRead = (emailId, isRead) => {
+    const route_name = isRead ? 'user.email-agent.bulk.mark-unread' : 'user.email-agent.bulk.mark-read';
+    router.patch(route(route_name), {
+      ids: [emailId]
+    }, {
       preserveState: true,
       preserveScroll: true,
     });
   };
 
-  // Move to spam function
+  // Move to spam function - use bulk move-to-spam action with single ID
   const moveToSpam = (emailId) => {
-    router.patch(route('user.email-agent.move-to-spam', { message: emailId }), {}, {
+    router.patch(route('user.email-agent.bulk.move-to-spam'), {
+      ids: [emailId]
+    }, {
       preserveState: true,
       preserveScroll: true,
     });
   };
 
-  // Move to bin function
+  // Move to bin function - use bulk move-to-bin action with single ID
   const moveToBin = (emailId) => {
-    router.patch(route('user.email-agent.move-to-bin', { message: emailId }), {}, {
+    router.patch(route('user.email-agent.bulk.move-to-bin'), {
+      ids: [emailId]
+    }, {
       preserveState: true,
       preserveScroll: true,
     });
   };
 
-  // Restore to inbox function
+  // Restore to inbox function - use bulk restore action with single ID
   const restore = (emailId) => {
-    router.patch(route('user.email-agent.restore', { message: emailId }), {}, {
+    router.patch(route('user.email-agent.bulk.restore'), {
+      ids: [emailId]
+    }, {
       preserveState: true,
       preserveScroll: true,
     });
   };
 
-  // Delete permanently function
+  // Delete permanently function - use bulk delete-permanently action with single ID
   const deletePermanently = (emailId) => {
-    router.delete(route('user.email-agent.delete-permanently', { message: emailId }), {
+    router.delete(route('user.email-agent.bulk.delete-permanently'), {
+      data: { ids: [emailId] },
       preserveState: true,
       preserveScroll: true,
     });
@@ -385,7 +398,7 @@ export default function EmailTable({ emails, queryParams, type }) {
           <div className="flex items-center justify-center gap-2">
             {/* Star */}
             <button
-              onClick={() => toggleStar(email.id)}
+              onClick={() => toggleStar(email.id, email.is_starred)}
               className="hover:scale-110 transition-transform duration-200"
             >
               {email.is_starred ? (
@@ -397,7 +410,7 @@ export default function EmailTable({ emails, queryParams, type }) {
 
             {/* Read/Unread toggle */}
             <button
-              onClick={() => toggleRead(email.id)}
+              onClick={() => toggleRead(email.id, email.is_read)}
               className="hover:scale-110 transition-transform duration-200"
               title={email.is_read ? t('mark_as_unread') : t('mark_as_read')}
             >
