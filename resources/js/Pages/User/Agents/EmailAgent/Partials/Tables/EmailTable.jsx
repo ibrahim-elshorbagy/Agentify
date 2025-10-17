@@ -29,9 +29,9 @@ export default function EmailTable({ emails, queryParams, type }) {
     });
   };
 
-  // Move to spam function - use bulk move-to-spam action with single ID
-  const moveToSpam = (emailId) => {
-    router.patch(route('user.email-agent.bulk.move-to-spam'), {
+  // Update folder function - unified function to move messages to any folder
+  const updateFolder = (emailId, folder) => {
+    router.patch(route('user.email-agent.bulk.update-folder', { folder }), {
       ids: [emailId]
     }, {
       preserveState: true,
@@ -39,25 +39,10 @@ export default function EmailTable({ emails, queryParams, type }) {
     });
   };
 
-  // Move to bin function - use bulk move-to-bin action with single ID
-  const moveToBin = (emailId) => {
-    router.patch(route('user.email-agent.bulk.move-to-bin'), {
-      ids: [emailId]
-    }, {
-      preserveState: true,
-      preserveScroll: true,
-    });
-  };
-
-  // Restore to inbox function - use bulk restore action with single ID
-  const restore = (emailId) => {
-    router.patch(route('user.email-agent.bulk.restore'), {
-      ids: [emailId]
-    }, {
-      preserveState: true,
-      preserveScroll: true,
-    });
-  };
+  // Individual action functions using the unified updateFolder
+  const moveToSpam = (emailId) => updateFolder(emailId, 'spam');
+  const moveToBin = (emailId) => updateFolder(emailId, 'bin');
+  const restore = (emailId) => updateFolder(emailId, 'inbox');
 
   // Delete permanently function - use bulk delete-permanently action with single ID
   const deletePermanently = (emailId) => {
@@ -105,8 +90,9 @@ export default function EmailTable({ emails, queryParams, type }) {
     });
   };
 
-  const handleBulkMoveToSpam = async (ids) => {
-    router.patch(route('user.email-agent.bulk.move-to-spam'), {
+  // Unified bulk update folder function
+  const handleBulkUpdateFolder = async (ids, folder) => {
+    router.patch(route('user.email-agent.bulk.update-folder', { folder }), {
       ids
     }, {
       preserveState: true,
@@ -114,23 +100,10 @@ export default function EmailTable({ emails, queryParams, type }) {
     });
   };
 
-  const handleBulkMoveToBin = async (ids) => {
-    router.patch(route('user.email-agent.bulk.move-to-bin'), {
-      ids
-    }, {
-      preserveState: true,
-      preserveScroll: true,
-    });
-  };
-
-  const handleBulkRestore = async (ids) => {
-    router.patch(route('user.email-agent.bulk.restore'), {
-      ids
-    }, {
-      preserveState: true,
-      preserveScroll: true,
-    });
-  };
+  // Bulk action handlers using the unified function
+  const handleBulkMoveToSpam = async (ids) => handleBulkUpdateFolder(ids, 'spam');
+  const handleBulkMoveToBin = async (ids) => handleBulkUpdateFolder(ids, 'bin');
+  const handleBulkRestore = async (ids) => handleBulkUpdateFolder(ids, 'inbox');
 
   const handleBulkDeletePermanently = async (ids) => {
     router.delete(route('user.email-agent.bulk.delete-permanently'), {

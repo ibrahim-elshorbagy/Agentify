@@ -48,14 +48,9 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
   Route::patch('/email-agent/bulk/unstar', [MessageController::class, 'bulkUnstar'])
     ->name('user.email-agent.bulk.unstar');
 
-  Route::patch('/email-agent/bulk/move-to-spam', [MessageController::class, 'bulkMoveToSpam'])
-    ->name('user.email-agent.bulk.move-to-spam');
-
-  Route::patch('/email-agent/bulk/move-to-bin', [MessageController::class, 'bulkMoveToBin'])
-    ->name('user.email-agent.bulk.move-to-bin');
-
-  Route::patch('/email-agent/bulk/restore', [MessageController::class, 'bulkRestore'])
-    ->name('user.email-agent.bulk.restore');
+  Route::patch('/email-agent/bulk/update-folder/{folder}', [MessageController::class, 'bulkUpdateFolder'])
+    ->name('user.email-agent.bulk.update-folder')
+    ->where('folder', 'inbox|spam|bin');
 
   Route::delete('/email-agent/bulk/delete-permanently', [MessageController::class, 'bulkDeletePermanently'])
     ->name('user.email-agent.bulk.delete-permanently');

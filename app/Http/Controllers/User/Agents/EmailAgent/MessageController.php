@@ -215,21 +215,32 @@ class MessageController extends Controller
   }
 
   /**
-   * Bulk move messages to spam
+   * Bulk update messages folder
    */
-  public function bulkMoveToSpam(Request $request)
+  public function bulkUpdateFolder(Request $request, $folder)
   {
     $request->validate([
       'ids' => ['required', 'array', 'min:1'],
       'ids.*' => ['integer', 'exists:messages,id'],
     ]);
 
+    // Validate folder parameter from route
+    if (!in_array($folder, ['inbox', 'spam', 'bin'])) {
+      abort(404);
+    }
+
     try {
-      $updated = $this->emailService->bulkMoveToSpam($request->ids);
+      $updated = $this->emailService->bulkUpdateFolder($request->ids, $folder);
+
+      $messages = [
+        'inbox' => __('website_response.bulk_restored_to_inbox', ['count' => $updated]),
+        'spam' => __('website_response.bulk_moved_to_spam', ['count' => $updated]),
+        'bin' => __('website_response.bulk_moved_to_bin', ['count' => $updated]),
+      ];
 
       return back()
         ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', __('website_response.bulk_moved_to_spam', ['count' => $updated]))
+        ->with('message', $messages[$folder])
         ->with('status', 'success');
     } catch (\Exception $e) {
       return back()
@@ -239,55 +250,7 @@ class MessageController extends Controller
     }
   }
 
-  /**
-   * Bulk move messages to bin
-   */
-  public function bulkMoveToBin(Request $request)
-  {
-    $request->validate([
-      'ids' => ['required', 'array', 'min:1'],
-      'ids.*' => ['integer', 'exists:messages,id'],
-    ]);
 
-    try {
-      $updated = $this->emailService->bulkMoveToBin($request->ids);
-
-      return back()
-        ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', __('website_response.bulk_moved_to_bin', ['count' => $updated]))
-        ->with('status', 'success');
-    } catch (\Exception $e) {
-      return back()
-        ->with('title', 'Error')
-        ->with('message', __('website_response.error_bulk_action'))
-        ->with('status', 'error');
-    }
-  }
-
-  /**
-   * Bulk restore messages to inbox
-   */
-  public function bulkRestore(Request $request)
-  {
-    $request->validate([
-      'ids' => ['required', 'array', 'min:1'],
-      'ids.*' => ['integer', 'exists:messages,id'],
-    ]);
-
-    try {
-      $updated = $this->emailService->bulkRestore($request->ids);
-
-      return back()
-        ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', __('website_response.bulk_restored_to_inbox', ['count' => $updated]))
-        ->with('status', 'success');
-    } catch (\Exception $e) {
-      return back()
-        ->with('title', 'Error')
-        ->with('message', __('website_response.error_bulk_action'))
-        ->with('status', 'error');
-    }
-  }
 
   /**
    * Bulk delete messages permanently

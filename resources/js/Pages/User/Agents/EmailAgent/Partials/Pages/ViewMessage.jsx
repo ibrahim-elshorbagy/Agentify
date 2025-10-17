@@ -29,39 +29,22 @@ export default function ViewMessage({ message, responses = [] }) {
     });
   };
 
-  // Restore to inbox function - use bulk restore action
-  const restoreToInbox = (emailId) => {
-    router.patch(route('user.email-agent.bulk.restore'), {
-      ids: [emailId]
-    }, {
-      preserveState: true,
-      preserveScroll: true,
-    });
-  };
-
-  // Move to spam function - use bulk move-to-spam action and redirect
-  const moveToSpam = (emailId) => {
-    router.patch(route('user.email-agent.bulk.move-to-spam'), {
+  // Unified function to update folder and redirect
+  const updateFolderAndRedirect = (emailId, folder) => {
+    router.patch(route('user.email-agent.bulk.update-folder', { folder }), {
       ids: [emailId]
     }, {
       onSuccess: () => {
-        // Redirect to spam folder after successful move
-        router.visit(route('user.email-agent.emails', { folder: 'spam' }));
+        // Redirect to the target folder after successful move
+        router.visit(route('user.email-agent.emails', { folder }));
       }
     });
   };
 
-  // Move to bin function - use bulk move-to-bin action and redirect
-  const moveToBin = (emailId) => {
-    router.patch(route('user.email-agent.bulk.move-to-bin'), {
-      ids: [emailId]
-    }, {
-      onSuccess: () => {
-        // Redirect to bin folder after successful move
-        router.visit(route('user.email-agent.emails', { folder: 'bin' }));
-      }
-    });
-  };
+  // Individual action functions using the unified function
+  const restoreToInbox = (emailId) => updateFolderAndRedirect(emailId, 'inbox');
+  const moveToSpam = (emailId) => updateFolderAndRedirect(emailId, 'spam');
+  const moveToBin = (emailId) => updateFolderAndRedirect(emailId, 'bin');
 
   // Delete draft function - use bulk delete action for response messages
   const deleteDraft = (emailId) => {

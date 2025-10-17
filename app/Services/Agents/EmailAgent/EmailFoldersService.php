@@ -312,33 +312,18 @@ class EmailFoldersService
   }
 
   /**
-   * Bulk move messages to spam
+   * Bulk update messages folder (inbox, spam, bin)
    */
-  public function bulkMoveToSpam(array $ids)
+  public function bulkUpdateFolder(array $ids, string $folder)
   {
-    return Message::whereIn('id', $ids)
-      ->where('user_id', Auth::id())
-      ->update(['folder' => 'spam']);
-  }
+    // Validate folder parameter
+    if (!in_array($folder, ['inbox', 'spam', 'bin'])) {
+      throw new \InvalidArgumentException('Invalid folder type');
+    }
 
-  /**
-   * Bulk move messages to bin
-   */
-  public function bulkMoveToBin(array $ids)
-  {
     return Message::whereIn('id', $ids)
       ->where('user_id', Auth::id())
-      ->update(['folder' => 'bin']);
-  }
-
-  /**
-   * Bulk restore messages to inbox
-   */
-  public function bulkRestore(array $ids)
-  {
-    return Message::whereIn('id', $ids)
-      ->where('user_id', Auth::id())
-      ->update(['folder' => 'inbox']);
+      ->update(['folder' => $folder]);
   }
 
   /**
