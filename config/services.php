@@ -34,20 +34,17 @@ return [
     ],
   ],
 
-  'n8n' => [
-    'webhook_url' => env('Outlook_Agent_WEBHOOK_URL'),
-    'username' => env('N8N_USERNAME'),
-    'password' => env('N8N_PASSWORD'),
-    'api_key' => env('Outlook_Agent_API'),
-  ],
+  // Start Email Agent + QNA
 
-  'azure' => [
-    'tenant_id' => env('AZURE_TENANT_ID'),
-    'client_id' => env('AZURE_CLIENT_ID'),
-    'client_secret' => env('AZURE_CLIENT_SECRET'),
-    'scope' => env('AZURE_SCOPE', 'https://graph.microsoft.com/.default'),
-  ],
 
+  // QNA
+  'qna_agent_chat' => [
+    'webhook_url' => env('QNA_AGENT_CHAT_WEBHOOK_URL'),
+    'jwt_secret' => env('QNA_AGENT_CHAT_JWT_SECRET'),
+  ],
+  // End Email Agent + QNA
+
+  //Start Report Agent
   'report_agent' => [
     'webhook_url' => env('REPORT_AGENT_WEBHOOK_URL'),
     'api_key' => env('REPORTS_AGENT_UPLOADFILES'),
@@ -58,10 +55,10 @@ return [
     'jwt_secret' => env('REPORTS_AGENT_CHAT'),
   ],
 
-  'qna_agent_chat' => [
-    'webhook_url' => env('QNA_AGENT_CHAT_WEBHOOK_URL'),
-    'jwt_secret' => env('QNA_AGENT_CHAT_JWT_SECRET'),
-  ],
+
+  //End Report Agent
+
+  //Start Hr_agent
 
   'hr_agent' => [
     'upload_file_url' => env('HR_AGENT_UPLOAD_FILE_URL'),
@@ -71,15 +68,21 @@ return [
     'password' => env('HR_AGENT_CVINTAKE'),
   ],
 
+  //End Hr_agent
+
+  //Start OAuth Providers for Email Connections
   'google' => [
     'client_id' => env('GOOGLE_CLIENT_ID'),
     'client_secret' => env('GOOGLE_CLIENT_SECRET'),
     'redirect' => env('GOOGLE_REDIRECT_URI'),
   ],
+
   'microsoft' => [
     'client_id' => env('MICROSOFT_CLIENT_ID'),
     'client_secret' => env('MICROSOFT_CLIENT_SECRET'),
     'redirect' => env('MICROSOFT_REDIRECT_URI'),
     'tenant' => env('MICROSOFT_TENANT_ID', 'common'),
   ],
+  //End OAuth Providers for Email Connections
+
 ];
