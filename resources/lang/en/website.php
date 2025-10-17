@@ -832,4 +832,9 @@ return [
   'confirm_disconnect_provider' => 'Are you sure you want to disconnect :provider? This will remove access to your email account.',
   'connection_test_failed' => 'Connection test failed. Please try reconnecting your account.',
 
+  // Email Agent translations
+  'get_gmail' => 'Get Gmail Emails',
+  'get_outlook' => 'Get Outlook Emails',
+  'fetch_emails' => 'Fetch Emails',
+
 ];

@@ -769,4 +769,9 @@ return [
   'confirm_disconnect_provider' => 'هل أنت متأكد من قطع الاتصال عن :provider؟ سيؤدي هذا إلى إزالة الوصول لحساب بريدك الإلكتروني.',
   'connection_test_failed' => 'فشل اختبار الاتصال. يرجى محاولة إعادة الاتصال بحسابك.',
 
+  // Email Agent translations
+  'get_gmail' => 'جلب رسائل Gmail',
+  'get_outlook' => 'جلب رسائل Outlook',
+  'fetch_emails' => 'جلب الرسائل',
+
 ];

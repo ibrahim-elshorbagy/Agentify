@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import { useTrans } from '@/Hooks/useTrans';
+import { router } from '@inertiajs/react';
 import EmailTable from './Partials/Tables/EmailTable';
 import Tabs from '@/Components/Tabs';
 import SearchBar from '@/Components/SearchBar';
+import ActionButton from '@/Components/ActionButton';
 
 export default function Messages({ type, gmailEmails, outlookEmails, emailCounts, queryParams = null }) {
   queryParams = queryParams || {};
@@ -22,7 +24,7 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
   const gmailContent = (
     <div>
       <div className="text-neutral-900 dark:text-neutral-100">
-        <EmailTable emails={gmailEmails} queryParams={queryParams} type={type} />
+        <EmailTable emails={gmailEmails} queryParams={queryParams} type={type} source="gmail" />
       </div>
     </div>
   );
@@ -30,7 +32,7 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
   const outlookContent = (
     <div>
       <div className="text-neutral-900 dark:text-neutral-100">
-        <EmailTable emails={outlookEmails} queryParams={queryParams} type={type} />
+        <EmailTable emails={outlookEmails} queryParams={queryParams} type={type} source="outlook" />
       </div>
     </div>
   );

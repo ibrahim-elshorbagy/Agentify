@@ -250,4 +250,13 @@ return [
   'oauth_test_no_emails_message' => 'Connected successfully but unable to fetch emails. Check permissions.',
   'oauth_test_failed_title' => 'Connection Test Failed',
   'oauth_test_failed_message' => 'Connection test failed. Please check your connection and try again.',
+
+  // Email Agent responses
+  'no_gmail_connection' => 'No Gmail account connected. Please connect your Gmail account first.',
+  'no_outlook_connection' => 'No Outlook account connected. Please connect your Outlook account first.',
+  'gmail_token_invalid' => 'Gmail access token is invalid or expired. Please reconnect your Gmail account.',
+  'outlook_token_invalid' => 'Outlook access token is invalid or expired. Please reconnect your Outlook account.',
+  'something_went_wrong' => 'Something went wrong. Please try again.',
+  'success_title' => 'Success',
+  'error_title' => 'Error',
 ];

@@ -36,6 +36,11 @@ return [
 
   // Start Email Agent + QNA
 
+  // Email Agent
+  'email_agent' => [
+    'get_emails_webhook_url' => env('EMAIL_AGENT_GETEMAILS_WEBHOOK_URL'),
+    'api_key' => env('EMAIL_AGENT_GETEMAILS'),
+  ],
 
   // QNA
   'qna_agent_chat' => [

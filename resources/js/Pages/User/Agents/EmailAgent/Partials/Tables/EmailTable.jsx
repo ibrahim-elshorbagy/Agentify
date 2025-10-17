@@ -4,7 +4,7 @@ import SelectableTable from "@/Components/SelectableTable";
 import SearchBar from "@/Components/SearchBar";
 import ActionButton from "@/Components/ActionButton";
 
-export default function EmailTable({ emails, queryParams, type }) {
+export default function EmailTable({ emails, queryParams, type, source }) {
   const { t } = useTrans();
 
   // Toggle star function - use appropriate bulk action based on current star state
@@ -43,6 +43,23 @@ export default function EmailTable({ emails, queryParams, type }) {
   const moveToSpam = (emailId) => updateFolder(emailId, 'spam');
   const moveToBin = (emailId) => updateFolder(emailId, 'bin');
   const restore = (emailId) => updateFolder(emailId, 'inbox');
+
+
+  // Handle Gmail button click
+  const handleGetGmail = () => {
+    router.post(route('user.email-agent.get-gmail'), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  // Handle Outlook button click
+  const handleGetOutlook = () => {
+    router.post(route('user.email-agent.get-outlook'), {}, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
 
   // Delete permanently function - use bulk delete-permanently action with single ID
   const deletePermanently = (emailId) => {
@@ -418,9 +435,9 @@ export default function EmailTable({ emails, queryParams, type }) {
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold leading-tight text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
           <i className={`fa-solid ${type === 'inbox' ? 'fa-inbox text-blue-500' :
-              type === 'spam' ? 'fa-exclamation-circle text-orange-500' :
-                type === 'bin' ? 'fa-trash text-gray-500' :
-                  'fa-inbox text-blue-500'
+            type === 'spam' ? 'fa-exclamation-circle text-orange-500' :
+              type === 'bin' ? 'fa-trash text-gray-500' :
+                'fa-inbox text-blue-500'
             }`}></i>
           {type === 'inbox' ? t('inbox_emails') :
             type === 'spam' ? t('spam_emails') :
@@ -452,6 +469,31 @@ export default function EmailTable({ emails, queryParams, type }) {
         getRowClassName={getRowClassName}
         bulkActions={getBulkActions()}
         pageParam="page"
+        MoreButtons={<>
+          {/* Action buttons for getting emails */}
+          <div className="flex gap-3 justify-center">
+            {source === 'gmail' && (
+              <ActionButton
+                onClick={handleGetGmail}
+                icon="fa-envelope"
+                variant="delete"
+                size="sm"
+              >
+                {t('get_gmail')}
+              </ActionButton>
+            )}
+            {source === 'outlook' && (
+              <ActionButton
+                onClick={handleGetOutlook}
+                icon="fa-envelope-open"
+                variant="info"
+                size="sm"
+              >
+                {t('get_outlook')}
+              </ActionButton>
+            )}
+          </div>
+        </>}
       />
     </>
   );

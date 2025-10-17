@@ -194,4 +194,12 @@ return [
   'oauth_test_failed_title' => 'فشل اختبار الاتصال',
   'oauth_test_failed_message' => 'فشل اختبار الاتصال. يرجى التحقق من اتصالك والمحاولة مرة أخرى.',
 
+  // Email Agent responses
+  'no_gmail_connection' => 'لا يوجد حساب Gmail متصل. يرجى ربط حساب Gmail الخاص بك أولاً.',
+  'no_outlook_connection' => 'لا يوجد حساب Outlook متصل. يرجى ربط حساب Outlook الخاص بك أولاً.',
+  'gmail_token_invalid' => 'رمز الوصول لـ Gmail غير صالح أو منتهي الصلاحية. يرجى إعادة ربط حساب Gmail الخاص بك.',
+  'outlook_token_invalid' => 'رمز الوصول لـ Outlook غير صالح أو منتهي الصلاحية. يرجى إعادة ربط حساب Outlook الخاص بك.',
+  'something_went_wrong' => 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
+  'success_title' => 'نجح',
+
 ];

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\User\Agents\EmailAgent\MessageController;
 use App\Http\Controllers\User\Agents\EmailAgent\ResponseMessageController;
+use App\Http\Controllers\User\Agents\EmailAgent\EmailOperationsController;
 use App\Models\Agent\EmailAgent\Message;
 use App\Models\Agent\EmailAgent\MessageResponse;
 use Illuminate\Support\Facades\Route;
@@ -65,4 +66,10 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
 
   Route::delete('/email-agent/response/bulk/delete-sent', [ResponseMessageController::class, 'bulkDeleteSent'])
     ->name('user.email-agent.response.bulk.delete-sent');
+
+  // Email Operations - Get emails from Gmail and Outlook
+  Route::post('/email-agent/get-gmail', [EmailOperationsController::class, 'getGmail'])
+    ->name('user.email-agent.get-gmail');
+  Route::post('/email-agent/get-outlook', [EmailOperationsController::class, 'getOutlook'])
+    ->name('user.email-agent.get-outlook');
 });
