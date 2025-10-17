@@ -479,7 +479,7 @@ export default function EmailTable({ emails, queryParams, type, source }) {
                 variant="delete"
                 size="sm"
               >
-                {t('get_gmail')}
+                {t('fetch_emails')}
               </ActionButton>
             )}
             {source === 'outlook' && (
@@ -489,7 +489,7 @@ export default function EmailTable({ emails, queryParams, type, source }) {
                 variant="info"
                 size="sm"
               >
-                {t('get_outlook')}
+                {t('fetch_emails')}
               </ActionButton>
             )}
           </div>
