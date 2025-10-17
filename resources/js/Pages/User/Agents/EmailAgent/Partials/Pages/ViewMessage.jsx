@@ -63,10 +63,11 @@ export default function ViewMessage({ message, responses = [] }) {
     });
   };
 
-  // Delete draft function - keep as is (this is for response messages, not main messages)
+  // Delete draft function - use bulk delete action for response messages
   const deleteDraft = (emailId) => {
     if (confirm(t('confirm_delete_draft_permanently'))) {
-      router.delete(route('user.email-agent.response.delete-draft', emailId), {
+      router.delete(route('user.email-agent.response.bulk.delete-drafts'), {
+        data: { ids: [emailId] },
         preserveState: true,
         preserveScroll: true,
       });

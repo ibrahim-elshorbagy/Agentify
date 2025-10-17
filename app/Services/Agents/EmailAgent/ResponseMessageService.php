@@ -117,24 +117,13 @@ class ResponseMessageService
    */
   public function deleteDraft($id)
   {
-    try {
-      $response = MessageResponse::where('id', $id)
-        ->where('user_id', Auth::id())
-        ->where('status', 'draft')
-        ->firstOrFail();
+    $response = MessageResponse::where('id', $id)
+      ->where('user_id', Auth::id())
+      ->where('status', 'draft')
+      ->firstOrFail();
 
-      $response->delete();
-
-      return [
-        'success' => true,
-        'message' => __('website_response.draft_deleted_successfully')
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_deleting_draft')
-      ];
-    }
+    $response->delete();
+    return 1; // Return count of deleted items
   }
 
   /**
@@ -142,60 +131,31 @@ class ResponseMessageService
    */
   public function sendDraft($id)
   {
-    try {
-      $response = MessageResponse::where('id', $id)
-        ->where('user_id', Auth::id())
-        ->where('status', 'draft')
-        ->firstOrFail();
+    $response = MessageResponse::where('id', $id)
+      ->where('user_id', Auth::id())
+      ->where('status', 'draft')
+      ->firstOrFail();
 
-      $response->status = 'sent';
-      $response->sent_at = now();
-      $response->save();
+    $response->status = 'sent';
+    $response->sent_at = now();
+    $response->save();
 
-      return [
-        'success' => true,
-        'message' => __('website_response.draft_sent_successfully')
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_sending_draft')
-      ];
-    }
+    return 1; // Return count of updated items
   }
 
   /**
    * Update a draft message
    */
-  public function updateDraft(Request $request, $id)
+  public function updateDraft(array $validatedData, $id)
   {
-    $validatedData = $request->validate([
-      'body_text' => ['required', 'string', 'max:10000'],
-      'from_email' => ['required', 'email', 'max:255'],
-      'from_name' => ['required', 'string', 'max:255'],
-      'to_email' => ['required', 'email', 'max:255'],
-      'to_name' => ['required', 'string', 'max:255'],
-    ]);
+    $response = MessageResponse::where('id', $id)
+      ->where('user_id', Auth::id())
+      ->where('status', 'draft')
+      ->firstOrFail();
 
-    try {
-      $response = MessageResponse::where('id', $id)
-        ->where('user_id', Auth::id())
-        ->where('status', 'draft')
-        ->firstOrFail();
+    $response->update($validatedData);
 
-      $response->update($validatedData);
-
-      return [
-        'success' => true,
-        'message' => __('website_response.draft_updated_successfully'),
-        'response' => $response,
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_updating_draft')
-      ];
-    }
+    return $response; // Return the updated model
   }
 
   /**
@@ -203,22 +163,10 @@ class ResponseMessageService
    */
   public function bulkDeleteDrafts(array $ids)
   {
-    try {
-      $deleted = MessageResponse::whereIn('id', $ids)
-        ->where('user_id', Auth::id())
-        ->where('status', 'draft')
-        ->delete();
-
-      return [
-        'success' => true,
-        'message' => __('website_response.bulk_drafts_deleted', ['count' => $deleted])
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_bulk_action')
-      ];
-    }
+    return MessageResponse::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->where('status', 'draft')
+      ->delete();
   }
 
   /**
@@ -226,25 +174,13 @@ class ResponseMessageService
    */
   public function bulkSendDrafts(array $ids)
   {
-    try {
-      $updated = MessageResponse::whereIn('id', $ids)
-        ->where('user_id', Auth::id())
-        ->where('status', 'draft')
-        ->update([
-          'status' => 'sent',
-          'sent_at' => now()
-        ]);
-
-      return [
-        'success' => true,
-        'message' => __('website_response.bulk_drafts_sent', ['count' => $updated])
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_bulk_action')
-      ];
-    }
+    return MessageResponse::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->where('status', 'draft')
+      ->update([
+        'status' => 'sent',
+        'sent_at' => now()
+      ]);
   }
 
   /**
@@ -252,23 +188,10 @@ class ResponseMessageService
    */
   public function bulkDeleteSent(array $ids)
   {
-    try {
-      $deleted = MessageResponse::whereIn('id', $ids)
-        ->where('user_id', Auth::id())
-        ->where('status', 'sent')
-        ->delete();
-
-      return [
-        'success' => true,
-        'message' => __('website_response.bulk_sent_deleted', ['count' => $deleted])
-      ];
-    } catch (\Exception $e) {
-      return [
-        'success' => false,
-        'message' => __('website_response.error_bulk_action')
-      ];
-    }
+    return MessageResponse::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->where('status', 'sent')
+      ->delete();
   }
 
-  // Add actions as needed (edit, delete, send draft, etc.)
 }

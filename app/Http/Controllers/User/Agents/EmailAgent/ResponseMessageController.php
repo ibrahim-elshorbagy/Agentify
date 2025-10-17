@@ -69,19 +69,12 @@ class ResponseMessageController extends Controller
       'ids.*' => ['integer', 'exists:message_responses,id']
     ]);
 
-    $result = $this->responseService->bulkDeleteDrafts($request->input('ids'));
-
-    if ($result['success']) {
-      return back()
-        ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', $result['message'])
-        ->with('status', 'success');
-    }
+    $deleted = $this->responseService->bulkDeleteDrafts($request->input('ids'));
 
     return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
+      ->with('title', __('website_response.bulk_action_completed'))
+      ->with('message', __('website_response.bulk_drafts_deleted', ['count' => $deleted]))
+      ->with('status', 'success');
   }
 
   /**
@@ -89,25 +82,17 @@ class ResponseMessageController extends Controller
    */
   public function bulkSendDrafts(Request $request)
   {
-
     $request->validate([
       'ids' => ['required', 'array', 'min:1'],
       'ids.*' => ['integer', 'exists:message_responses,id']
     ]);
 
-    $result = $this->responseService->bulkSendDrafts($request->input('ids'));
-
-    if ($result['success']) {
-      return back()
-        ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', $result['message'])
-        ->with('status', 'success');
-    }
+    $updated = $this->responseService->bulkSendDrafts($request->input('ids'));
 
     return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
+      ->with('title', __('website_response.bulk_action_completed'))
+      ->with('message', __('website_response.bulk_drafts_sent', ['count' => $updated]))
+      ->with('status', 'success');
   }
 
   /**
@@ -120,19 +105,11 @@ class ResponseMessageController extends Controller
       'ids.*' => ['integer', 'exists:message_responses,id']
     ]);
 
-    $result = $this->responseService->bulkDeleteSent($request->input('ids'));
-
-    if ($result['success']) {
-      return back()
-        ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', $result['message'])
-        ->with('status', 'success');
-    }
+    $deleted = $this->responseService->bulkDeleteSent($request->input('ids'));
 
     return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
+      ->with('title', __('website_response.bulk_action_completed'))
+      ->with('message', __('website_response.bulk_sent_deleted', ['count' => $deleted]))
+      ->with('status', 'success');
   }
-  // Add actions for edit, delete, send draft, etc. as needed
 }

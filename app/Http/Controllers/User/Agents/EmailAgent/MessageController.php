@@ -42,9 +42,6 @@ class MessageController extends Controller
     ]);
   }
 
-  // All single actions now use bulk methods
-
-
   public function view(Message $message)
   {
     $message->load([

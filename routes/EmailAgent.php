@@ -20,9 +20,7 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
   Route::get('/email-agent/draft', [ResponseMessageController::class, 'draft'])
     ->name('user.email-agent.draft.emails');
 
-  // All email actions now use bulk routes only
 
-  // View and respond to messages - with model binding
   Route::get('/email-agent/view/{message}', [MessageController::class, 'view'])
     ->name('user.email-agent.view')
     ->where('message', '[0-9]+');
@@ -31,7 +29,6 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
     ->name('user.email-agent.store-response')
     ->where('message', '[0-9]+');
 
-  // Create and update messages - with validation
   Route::post('/email-agent/message', [MessageController::class, 'storeMessage'])
     ->name('user.email-agent.store-message');
 
