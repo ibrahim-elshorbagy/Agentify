@@ -27,14 +27,17 @@ class MessageController extends Controller
       abort(404);
     }
 
-    $data = $this->emailService->getEmails($request, $folder);
+    $gmailData = $this->emailService->getEmails($request, $folder, 'gmail', 'gmail_page');
+    $outlookData = $this->emailService->getEmails($request, $folder, 'outlook', 'outlook_page');
 
-    $emails = $this->addRowNumbers($data['emails']);
+    $gmailEmails = $this->addRowNumbers($gmailData['emails']);
+    $outlookEmails = $this->addRowNumbers($outlookData['emails']);
 
     return inertia('User/Agents/EmailAgent/Messages', [
-      'emails' => $emails,
+      'gmailEmails' => $gmailEmails,
+      'outlookEmails' => $outlookEmails,
       'type' => $folder,
-      'queryParams' => $data['queryParams'],
+      'queryParams' => $request->query() ?: null,
       'emailCounts' => $this->emailService->getEmailCounts(),
     ]);
   }

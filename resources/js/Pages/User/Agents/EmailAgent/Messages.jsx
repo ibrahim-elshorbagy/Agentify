@@ -2,10 +2,51 @@ import React, { useState } from 'react';
 import AppLayout from '@/Layouts/AppLayout';
 import { useTrans } from '@/Hooks/useTrans';
 import EmailTable from './Partials/Tables/EmailTable';
+import Tabs from '@/Components/Tabs';
+import SearchBar from '@/Components/SearchBar';
 
-export default function Messages({ type, queryParams = null, emails = [], emailCounts = {} }) {
+export default function Messages({ type, gmailEmails, outlookEmails, emailCounts, queryParams = null }) {
   queryParams = queryParams || {};
   const { t } = useTrans();
+
+  const combinedEmailCounts = {
+    inbox_total: (emailCounts.gmail?.inbox_total || 0) + (emailCounts.outlook?.inbox_total || 0),
+    inbox_unread: (emailCounts.gmail?.inbox_unread || 0) + (emailCounts.outlook?.inbox_unread || 0),
+    spam_total: (emailCounts.gmail?.spam_total || 0) + (emailCounts.outlook?.spam_total || 0),
+    spam_unread: (emailCounts.gmail?.spam_unread || 0) + (emailCounts.outlook?.spam_unread || 0),
+    bin_total: (emailCounts.gmail?.bin_total || 0) + (emailCounts.outlook?.bin_total || 0),
+    bin_unread: (emailCounts.gmail?.bin_unread || 0) + (emailCounts.outlook?.bin_unread || 0),
+    starred_total: (emailCounts.gmail?.starred_total || 0) + (emailCounts.outlook?.starred_total || 0),
+  };
+
+  const gmailContent = (
+    <div>
+      <div className="text-neutral-900 dark:text-neutral-100">
+        <EmailTable emails={gmailEmails} queryParams={queryParams} type={type} />
+      </div>
+    </div>
+  );
+
+  const outlookContent = (
+    <div>
+      <div className="text-neutral-900 dark:text-neutral-100">
+        <EmailTable emails={outlookEmails} queryParams={queryParams} type={type} />
+      </div>
+    </div>
+  );
+
+  const tabs = [
+    {
+      title: 'Gmail',
+      icon: 'fa-envelope',
+      content: gmailContent,
+    },
+    {
+      title: 'Outlook',
+      icon: 'fa-envelope',
+      content: outlookContent,
+    },
+  ];
 
   return (
     <AppLayout>
@@ -28,10 +69,10 @@ export default function Messages({ type, queryParams = null, emails = [], emailC
             <div className="flex items-end justify-between">
               <div>
                 <div className="text-3xl font-bold text-blue-900 dark:text-blue-100 mb-1">
-                  {emailCounts.inbox_total || 0}
+                  {combinedEmailCounts.inbox_total || 0}
                 </div>
                 <div className="text-sm text-blue-600 dark:text-blue-400">
-                  {emailCounts.inbox_unread || 0} {t('unread')}
+                  {combinedEmailCounts.inbox_unread || 0} {t('unread')}
                 </div>
               </div>
               <div className="w-2 h-16 bg-blue-500 rounded-full opacity-20"></div>
@@ -54,10 +95,10 @@ export default function Messages({ type, queryParams = null, emails = [], emailC
             <div className="flex items-end justify-between">
               <div>
                 <div className="text-3xl font-bold text-red-900 dark:text-red-100 mb-1">
-                  {emailCounts.spam_total || 0}
+                  {combinedEmailCounts.spam_total || 0}
                 </div>
                 <div className="text-sm text-red-600 dark:text-red-400">
-                  {emailCounts.spam_unread || 0} {t('unread')}
+                  {combinedEmailCounts.spam_unread || 0} {t('unread')}
                 </div>
               </div>
               <div className="w-2 h-16 bg-red-500 rounded-full opacity-20"></div>
@@ -80,10 +121,10 @@ export default function Messages({ type, queryParams = null, emails = [], emailC
             <div className="flex items-end justify-between">
               <div>
                 <div className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1">
-                  {emailCounts.bin_total || 0}
+                  {combinedEmailCounts.bin_total || 0}
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">
-                  {emailCounts.bin_unread || 0} {t('unread')}
+                  {combinedEmailCounts.bin_unread || 0} {t('unread')}
                 </div>
               </div>
               <div className="w-2 h-16 bg-gray-500 rounded-full opacity-20"></div>
@@ -91,10 +132,9 @@ export default function Messages({ type, queryParams = null, emails = [], emailC
           </div>
         </div>
 
+
         <div className="overflow-hidden rounded-2xl shadow-lg dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700">
-          <div className="p-4 text-neutral-900 dark:text-neutral-100">
-            <EmailTable emails={emails} queryParams={queryParams} type={type} />
-          </div>
+          <Tabs tabs={tabs} />
         </div>
       </div>
     </AppLayout>

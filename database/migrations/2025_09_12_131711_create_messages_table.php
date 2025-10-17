@@ -21,6 +21,7 @@ return new class extends Migration {
 
       $table->string('subject')->index();
       $table->longText('body_text')->nullable();
+      $table->string('source')->nullable()->index();
 
       $table->string('folder')->default('inbox')->index();
       $table->boolean('is_read')->default(false)->index();

@@ -14,7 +14,7 @@ class EmailFoldersService
   /**
    * Get emails for any folder with filters and pagination
    */
-  public function getEmails(Request $request, $folder)
+  public function getEmails(Request $request, $folder, $source = null, $pageParam = 'page')
   {
     // Validate folder parameter
     if (!in_array($folder, ['inbox', 'spam', 'bin'])) {
@@ -41,10 +41,14 @@ class EmailFoldersService
       ->where('folder', $folder)
       ->where('user_id', Auth::id());
 
+    if ($source) {
+      $emailsQuery->where('source', $source);
+    }
+
     $this->applyFilters($emailsQuery, $request);
 
     $emails = $emailsQuery->orderBy($sortField, $sortDirection)
-      ->paginate($perPage, ['*'], $folder . '_page')
+      ->paginate($perPage, ['*'], $pageParam)
       ->withQueryString();
 
     return [
@@ -97,13 +101,24 @@ class EmailFoldersService
   {
     $userId = Auth::id();
     return [
-      'inbox_total' => Message::where('folder', 'inbox')->where('user_id', $userId)->count(),
-      'inbox_unread' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('is_read', false)->count(),
-      'spam_total' => Message::where('folder', 'spam')->where('user_id', $userId)->count(),
-      'spam_unread' => Message::where('folder', 'spam')->where('user_id', $userId)->where('is_read', false)->count(),
-      'bin_total' => Message::where('folder', 'bin')->where('user_id', $userId)->count(),
-      'bin_unread' => Message::where('folder', 'bin')->where('user_id', $userId)->where('is_read', false)->count(),
-      'starred_total' => Message::where('is_starred', true)->where('user_id', $userId)->count(),
+        'gmail' => [
+            'inbox_total' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('source', 'gmail')->count(),
+            'inbox_unread' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
+            'spam_total' => Message::where('folder', 'spam')->where('user_id', $userId)->where('source', 'gmail')->count(),
+            'spam_unread' => Message::where('folder', 'spam')->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
+            'bin_total' => Message::where('folder', 'bin')->where('user_id', $userId)->where('source', 'gmail')->count(),
+            'bin_unread' => Message::where('folder', 'bin')->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
+            'starred_total' => Message::where('is_starred', true)->where('user_id', $userId)->where('source', 'gmail')->count(),
+        ],
+        'outlook' => [
+            'inbox_total' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('source', 'outlook')->count(),
+            'inbox_unread' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
+            'spam_total' => Message::where('folder', 'spam')->where('user_id', $userId)->where('source', 'outlook')->count(),
+            'spam_unread' => Message::where('folder', 'spam')->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
+            'bin_total' => Message::where('folder', 'bin')->where('user_id', $userId)->where('source', 'outlook')->count(),
+            'bin_unread' => Message::where('folder', 'bin')->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
+            'starred_total' => Message::where('is_starred', true)->where('user_id', $userId)->where('source', 'outlook')->count(),
+        ],
     ];
   }
 
