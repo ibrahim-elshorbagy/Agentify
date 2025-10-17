@@ -18,7 +18,7 @@ class MessageResponseFactory extends Factory
   {
     return [
       'message_id' => Message::factory(),
-      'user_id' => $this->faker->randomElement([1, 2]), // Create for both users
+      'user_id' => $this->faker->randomElement([2, 3]), // Create for both users
       'body_text' => $this->faker->paragraphs(2, true),
       'from_email' => $this->faker->safeEmail(),
       'from_name' => $this->faker->name(),
