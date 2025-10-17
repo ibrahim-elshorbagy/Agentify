@@ -33,11 +33,6 @@ export default function ViewMessage({ message, responses = [] }) {
   const updateFolderAndRedirect = (emailId, folder) => {
     router.patch(route('user.email-agent.bulk.update-folder', { folder }), {
       ids: [emailId]
-    }, {
-      onSuccess: () => {
-        // Redirect to the target folder after successful move
-        router.visit(route('user.email-agent.emails', { folder }));
-      }
     });
   };
 
@@ -62,10 +57,6 @@ export default function ViewMessage({ message, responses = [] }) {
     if (confirm(t('confirm_delete_permanently'))) {
       router.delete(route('user.email-agent.bulk.delete-permanently'), {
         data: { ids: [emailId] },
-        onSuccess: () => {
-          // Redirect to bin folder after successful deletion
-          router.visit(route('user.email-agent.emails', { folder: 'bin' }));
-        }
       });
     }
   };

@@ -263,14 +263,20 @@ class MessageController extends Controller
     ]);
 
     try {
+      // Get the folder of the first message to redirect appropriately
+      $firstMessage = Message::find($request->ids[0]);
+      $redirectFolder = $firstMessage ? $firstMessage->folder : 'inbox';
+      
       $deletedCount = $this->emailService->bulkDeletePermanently($request->ids);
 
-      return back()
+      // Redirect to the appropriate folder instead of going back to potentially deleted message
+      return redirect()->route('user.email-agent.emails', ['folder' => $redirectFolder])
         ->with('title', __('website_response.bulk_action_completed'))
         ->with('message', __('website_response.bulk_deleted_permanently', ['count' => $deletedCount]))
         ->with('status', 'success');
     } catch (\Exception $e) {
-      return back()
+      // In case of error, redirect to inbox as safe fallback
+      return redirect()->route('user.email-agent.emails', ['folder' => 'inbox'])
         ->with('title', 'Error')
         ->with('message', __('website_response.error_bulk_action'))
         ->with('status', 'error');
