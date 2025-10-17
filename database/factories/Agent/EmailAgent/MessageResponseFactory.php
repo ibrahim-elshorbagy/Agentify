@@ -18,12 +18,13 @@ class MessageResponseFactory extends Factory
   {
     return [
       'message_id' => Message::factory(),
-      'user_id' => 2,
+      'user_id' => $this->faker->randomElement([1, 2]), // Create for both users
       'body_text' => $this->faker->paragraphs(2, true),
       'from_email' => $this->faker->safeEmail(),
       'from_name' => $this->faker->name(),
       'to_email' => $this->faker->safeEmail(),
       'to_name' => $this->faker->name(),
+      'source' => $this->faker->randomElement(['gmail', 'outlook']),
       'status' => $this->faker->randomElement(['draft', 'sent']),
       'sent_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
     ];

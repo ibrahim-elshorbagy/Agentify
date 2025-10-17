@@ -12,10 +12,15 @@ use Illuminate\Http\Request;
 class ResponseMessageService
 {
   /**
-   * Get sent emails with filters and pagination
+   * Get response emails for any status with filters and pagination
    */
-  public function sentEmails(Request $request)
+  public function getResponseEmails(Request $request, $status, $source = null, $pageParam = 'page')
   {
+    // Validate status parameter
+    if (!in_array($status, ['sent', 'draft'])) {
+      throw new \InvalidArgumentException('Invalid status type');
+    }
+
     $request->validate([
       'search' => ['nullable', 'string', 'max:255'],
       'date_from' => ['nullable', 'date'],
@@ -29,51 +34,20 @@ class ResponseMessageService
     $sortDirection = $request->input('direction', 'desc');
     $perPage = $request->input('per_page', 15);
 
+    // Response emails query - filter by current user and status
     $emailsQuery = MessageResponse::query()
       ->with('message')
       ->where('user_id', Auth::id())
-      ->where('status', 'sent');
+      ->where('status', $status);
+
+    if ($source) {
+      $emailsQuery->where('source', $source);
+    }
 
     $this->applyFilters($emailsQuery, $request);
 
     $emails = $emailsQuery->orderBy($sortField, $sortDirection)
-      ->paginate($perPage, ['*'], 'sent_page')
-      ->withQueryString();
-
-    return [
-      'emails' => $emails,
-      'queryParams' => $request->query() ?: null,
-    ];
-  }
-
-  /**
-   * Get draft emails with filters and pagination
-   */
-  public function draftEmails(Request $request)
-  {
-    $request->validate([
-      'search' => ['nullable', 'string', 'max:255'],
-      'subject' => ['nullable', 'string', 'max:255'],
-      'date_from' => ['nullable', 'date'],
-      'date_to' => ['nullable', 'date', 'after_or_equal:date_from'],
-      'sort' => ['nullable', 'string', 'in:id,to_email,from_email,created_at'],
-      'direction' => ['nullable', 'string', 'in:asc,desc'],
-      'per_page' => ['nullable', 'integer', 'min:1', 'max:50'],
-    ]);
-
-    $sortField = $request->input('sort', 'created_at');
-    $sortDirection = $request->input('direction', 'desc');
-    $perPage = $request->input('per_page', 15);
-
-    $emailsQuery = MessageResponse::query()
-      ->with('message')
-      ->where('user_id', Auth::id())
-      ->where('status', 'draft');
-
-    $this->applyFilters($emailsQuery, $request);
-
-    $emails = $emailsQuery->orderBy($sortField, $sortDirection)
-      ->paginate($perPage, ['*'], 'draft_page')
+      ->paginate($perPage, ['*'], $pageParam)
       ->withQueryString();
 
     return [
@@ -110,14 +84,20 @@ class ResponseMessageService
   }
 
   /**
-   * Get counts for sent and draft
+   * Get counts for sent and draft by source
    */
   public function getEmailCounts()
   {
     $userId = Auth::id();
     return [
-      'sent' => MessageResponse::where('user_id', $userId)->where('status', 'sent')->count(),
-      'draft' => MessageResponse::where('user_id', $userId)->where('status', 'draft')->count(),
+      'gmail' => [
+        'sent_total' => MessageResponse::where('user_id', $userId)->where('status', 'sent')->where('source', 'gmail')->count(),
+        'draft_total' => MessageResponse::where('user_id', $userId)->where('status', 'draft')->where('source', 'gmail')->count(),
+      ],
+      'outlook' => [
+        'sent_total' => MessageResponse::where('user_id', $userId)->where('status', 'sent')->where('source', 'outlook')->count(),
+        'draft_total' => MessageResponse::where('user_id', $userId)->where('status', 'draft')->where('source', 'outlook')->count(),
+      ],
     ];
   }
 

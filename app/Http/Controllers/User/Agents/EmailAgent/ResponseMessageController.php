@@ -20,115 +20,43 @@ class ResponseMessageController extends Controller
   }
 
   /**
-   * Display sent emails
+   * Display sent emails with Gmail/Outlook tabs
    */
   public function sent(Request $request)
   {
-    $data = $this->responseService->sentEmails($request);
-    $emails = $this->addRowNumbers($data['emails']);
+    $gmailData = $this->responseService->getResponseEmails($request, 'sent', 'gmail', 'gmail_page');
+    $outlookData = $this->responseService->getResponseEmails($request, 'sent', 'outlook', 'outlook_page');
+
+    $gmailEmails = $this->addRowNumbers($gmailData['emails']);
+    $outlookEmails = $this->addRowNumbers($outlookData['emails']);
 
     return inertia('User/Agents/EmailAgent/MessagesResponse', [
+      'gmailEmails' => $gmailEmails,
+      'outlookEmails' => $outlookEmails,
       'type' => 'sent',
-      'emails' => $emails,
-      'queryParams' => $data['queryParams'],
+      'queryParams' => $request->query() ?: null,
       'emailCounts' => $this->responseService->getEmailCounts(),
     ]);
   }
 
   /**
-   * Display draft emails
+   * Display draft emails with Gmail/Outlook tabs
    */
   public function draft(Request $request)
   {
-    $data = $this->responseService->draftEmails($request);
-    $emails = $this->addRowNumbers($data['emails']);
+    $gmailData = $this->responseService->getResponseEmails($request, 'draft', 'gmail', 'gmail_page');
+    $outlookData = $this->responseService->getResponseEmails($request, 'draft', 'outlook', 'outlook_page');
+
+    $gmailEmails = $this->addRowNumbers($gmailData['emails']);
+    $outlookEmails = $this->addRowNumbers($outlookData['emails']);
 
     return inertia('User/Agents/EmailAgent/MessagesResponse', [
+      'gmailEmails' => $gmailEmails,
+      'outlookEmails' => $outlookEmails,
       'type' => 'draft',
-      'emails' => $emails,
-      'queryParams' => $data['queryParams'],
+      'queryParams' => $request->query() ?: null,
       'emailCounts' => $this->responseService->getEmailCounts(),
     ]);
-  }
-
-  /**
-   * View a sent/draft message and its original
-   */
-  public function view(MessageResponse $messageResponse)
-  {
-    $this->authorize('view', $messageResponse);
-
-    $response = $this->responseService->viewMessage($messageResponse->id);
-    return inertia('User/Agents/EmailAgent/ViewMessage', [
-      'message' => $response->message,
-      'responses' => [$response],
-    ]);
-  }
-
-  /**
-   * Delete a draft message
-   */
-  public function deleteDraft(MessageResponse $messageResponse)
-  {
-    $this->authorize('delete', $messageResponse);
-
-    $result = $this->responseService->deleteDraft($messageResponse->id);
-
-    if ($result['success']) {
-      return back()
-        ->with('title', __('website_response.draft_deleted_title'))
-        ->with('message', $result['message'])
-        ->with('status', 'success');
-    }
-
-    return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
-  }
-
-  /**
-   * Send a draft message
-   */
-  public function sendDraft(MessageResponse $messageResponse)
-  {
-    $this->authorize('update', $messageResponse);
-
-    $result = $this->responseService->sendDraft($messageResponse->id);
-
-    if ($result['success']) {
-      return back()
-        ->with('title', __('website_response.draft_sent_title'))
-        ->with('message', $result['message'])
-        ->with('status', 'success');
-    }
-
-    return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
-  }
-
-  /**
-   * Update a draft message
-   */
-  public function updateDraft(Request $request, MessageResponse $messageResponse)
-  {
-    $this->authorize('update', $messageResponse);
-
-    $result = $this->responseService->updateDraft($request, $messageResponse->id);
-
-    if ($result['success']) {
-      return back()
-        ->with('title', __('website_response.draft_updated_title'))
-        ->with('message', $result['message'])
-        ->with('status', 'success');
-    }
-
-    return back()
-      ->with('title', __('website_response.error_title'))
-      ->with('message', $result['message'])
-      ->with('status', 'error');
   }
 
   /**

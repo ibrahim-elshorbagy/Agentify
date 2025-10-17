@@ -21,6 +21,7 @@ return new class extends Migration {
       $table->string('from_name')->nullable()->index();
       $table->string('to_email')->nullable()->index();
       $table->string('to_name')->nullable()->index();
+      $table->string('source')->nullable()->index();
 
       $table->enum('status', ['draft', 'sent'])->default('draft');
 
