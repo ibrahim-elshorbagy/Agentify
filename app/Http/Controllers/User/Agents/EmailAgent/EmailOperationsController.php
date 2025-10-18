@@ -71,7 +71,7 @@ class EmailOperationsController extends Controller
       $lastRead = Message::where('user_id', Auth::id())
         ->where('source', 'gmail')
         ->orderBy('created_at', 'desc')
-        ->value('created_at');
+        ->value('created_at') ?? '2002-01-01 00:00:00';
 
       // Prepare data for N8N webhook
       $data = [
@@ -140,7 +140,7 @@ class EmailOperationsController extends Controller
       $lastRead = Message::where('user_id', Auth::id())
         ->where('source', 'outlook')
         ->orderBy('created_at', 'desc')
-        ->value('created_at');
+        ->value('created_at') ?? '2002-01-01 00:00:00';
 
       // Prepare data for N8N webhook
       $data = [
