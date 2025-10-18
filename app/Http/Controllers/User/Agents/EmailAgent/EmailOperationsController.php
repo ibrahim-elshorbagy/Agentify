@@ -83,7 +83,8 @@ class EmailOperationsController extends Controller
         'user_id' => Auth::id(),
         'access_token' => $validAccessToken,
         'provider' => 'gmail',
-        'last_read' => $lastRead
+        'last_read' => $lastRead,
+        'folder'=>'inbox',
       ];
 
       // Call Email Agent service
@@ -157,7 +158,9 @@ class EmailOperationsController extends Controller
         'user_id' => Auth::id(),
         'access_token' => $validAccessToken,
         'provider' => 'outlook',
-        'last_read' => $lastRead
+        'last_read' => $lastRead,
+        'folder'=>'inbox',
+
       ];
 
       // Call Email Agent service
