@@ -40,8 +40,8 @@ export default function FolderManager({ folders = [], currentFolder = null, sour
             <div
               key={folder.id}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all duration-200 ${currentFolder?.id === folder.id
-                ? 'border-green-500 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400'
-                : 'border-neutral-200 dark:border-neutral-700 hover:border-green-300 dark:hover:border-green-600 hover:bg-green-50 dark:hover:bg-green-900/10'
+                  ? 'border-green-500 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400'
+                  : 'border-neutral-200 dark:border-neutral-700 hover:border-green-300 dark:hover:border-green-600 hover:bg-green-50 dark:hover:bg-green-900/10'
                 }`}
             >
               <a
@@ -49,11 +49,11 @@ export default function FolderManager({ folders = [], currentFolder = null, sour
                   folder: folder.name,
                   source: source
                 })}
-                className="flex items-center gap-2 text-sm font-medium"
+                className="flex items-center gap-2 text-sm font-medium dark:text-white"
               >
                 <i className={`fa-solid ${folder.icon}`}></i>
                 <span>{folder.name}</span>
-                <span className="text-xs opacity-60">
+                <span className="text-xs opacity-60 dark:text-white">
                   ({folder.messages_count || 0})
                 </span>
               </a>
