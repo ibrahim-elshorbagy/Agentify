@@ -68,10 +68,15 @@ class EmailOperationsController extends Controller
       ]);
 
       // Get the last read timestamp for Gmail messages
-      $lastRead = Message::where('user_id', Auth::id())
+      $lastReadAt = Message::where('user_id', Auth::id())
         ->where('source', 'gmail')
-        ->orderBy('created_at', 'desc')
-        ->value('created_at') ?? '2002-01-01 00:00:00';
+        ->latest('created_at')
+        ->first()
+          ?->created_at;
+
+      $lastRead = ($lastReadAt instanceof \Illuminate\Support\Carbon)
+        ? $lastReadAt->toDateString()
+        : '2002-01-01';
 
       // Prepare data for N8N webhook
       $data = [
@@ -137,10 +142,15 @@ class EmailOperationsController extends Controller
       }
 
       // Get the last read timestamp for Outlook messages
-      $lastRead = Message::where('user_id', Auth::id())
+      $lastReadAt = Message::where('user_id', Auth::id())
         ->where('source', 'outlook')
-        ->orderBy('created_at', 'desc')
-        ->value('created_at') ?? '2002-01-01 00:00:00';
+        ->latest('created_at')
+        ->first()
+          ?->created_at;
+
+      $lastRead = ($lastReadAt instanceof \Illuminate\Support\Carbon)
+        ? $lastReadAt->toDateString()
+        : '2002-01-01';
 
       // Prepare data for N8N webhook
       $data = [
