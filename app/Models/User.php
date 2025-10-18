@@ -101,4 +101,20 @@ class User extends Authenticatable
     return $this->microsoftCredential()->exists();
   }
 
+  /**
+   * Get the user's email folders.
+   */
+  public function emailFolders()
+  {
+    return $this->hasMany(\App\Models\Agent\EmailAgent\Folder::class);
+  }
+
+  /**
+   * Get the user's email messages.
+   */
+  public function emailMessages()
+  {
+    return $this->hasMany(\App\Models\Agent\EmailAgent\Message::class);
+  }
+
 }

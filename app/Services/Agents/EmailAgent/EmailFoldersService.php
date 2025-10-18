@@ -4,6 +4,7 @@ namespace App\Services\Agents\EmailAgent;
 
 use App\Models\Agent\EmailAgent\Message;
 use App\Models\Agent\EmailAgent\MessageResponse;
+use App\Models\Agent\EmailAgent\Folder;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -14,11 +15,15 @@ class EmailFoldersService
   /**
    * Get emails for any folder with filters and pagination
    */
-  public function getEmails(Request $request, $folder, $source = null, $pageParam = 'page')
+  public function getEmails(Request $request, $folderName, $source = null, $pageParam = 'page')
   {
-    // Validate folder parameter
-    if (!in_array($folder, ['inbox', 'spam', 'bin'])) {
-      throw new \InvalidArgumentException('Invalid folder type');
+    // Get folder by name for current user
+    $folder = Folder::forUser(Auth::id())
+      ->where('name', $folderName)
+      ->first();
+
+    if (!$folder) {
+      throw new \InvalidArgumentException('Folder not found');
     }
 
     $request->validate([
@@ -38,7 +43,7 @@ class EmailFoldersService
 
     // Emails query - filter by current user and folder
     $emailsQuery = Message::query()
-      ->where('folder', $folder)
+      ->where('folder_id', $folder->id)
       ->where('user_id', Auth::id());
 
     if ($source) {
@@ -100,23 +105,34 @@ class EmailFoldersService
   public function getEmailCounts()
   {
     $userId = Auth::id();
+
+    // Get folder IDs for default folders
+    $folders = Folder::forUser($userId)
+      ->whereIn('name', ['inbox', 'spam', 'bin'])
+      ->get()
+      ->keyBy('name');
+
+    $inboxId = $folders->get('inbox')?->id;
+    $spamId = $folders->get('spam')?->id;
+    $binId = $folders->get('bin')?->id;
+
     return [
         'gmail' => [
-            'inbox_total' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('source', 'gmail')->count(),
-            'inbox_unread' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
-            'spam_total' => Message::where('folder', 'spam')->where('user_id', $userId)->where('source', 'gmail')->count(),
-            'spam_unread' => Message::where('folder', 'spam')->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
-            'bin_total' => Message::where('folder', 'bin')->where('user_id', $userId)->where('source', 'gmail')->count(),
-            'bin_unread' => Message::where('folder', 'bin')->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
+            'inbox_total' => $inboxId ? Message::where('folder_id', $inboxId)->where('user_id', $userId)->where('source', 'gmail')->count() : 0,
+            'inbox_unread' => $inboxId ? Message::where('folder_id', $inboxId)->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count() : 0,
+            'spam_total' => $spamId ? Message::where('folder_id', $spamId)->where('user_id', $userId)->where('source', 'gmail')->count() : 0,
+            'spam_unread' => $spamId ? Message::where('folder_id', $spamId)->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count() : 0,
+            'bin_total' => $binId ? Message::where('folder_id', $binId)->where('user_id', $userId)->where('source', 'gmail')->count() : 0,
+            'bin_unread' => $binId ? Message::where('folder_id', $binId)->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count() : 0,
             'starred_total' => Message::where('is_starred', true)->where('user_id', $userId)->where('source', 'gmail')->count(),
         ],
         'outlook' => [
-            'inbox_total' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('source', 'outlook')->count(),
-            'inbox_unread' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
-            'spam_total' => Message::where('folder', 'spam')->where('user_id', $userId)->where('source', 'outlook')->count(),
-            'spam_unread' => Message::where('folder', 'spam')->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
-            'bin_total' => Message::where('folder', 'bin')->where('user_id', $userId)->where('source', 'outlook')->count(),
-            'bin_unread' => Message::where('folder', 'bin')->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
+            'inbox_total' => $inboxId ? Message::where('folder_id', $inboxId)->where('user_id', $userId)->where('source', 'outlook')->count() : 0,
+            'inbox_unread' => $inboxId ? Message::where('folder_id', $inboxId)->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count() : 0,
+            'spam_total' => $spamId ? Message::where('folder_id', $spamId)->where('user_id', $userId)->where('source', 'outlook')->count() : 0,
+            'spam_unread' => $spamId ? Message::where('folder_id', $spamId)->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count() : 0,
+            'bin_total' => $binId ? Message::where('folder_id', $binId)->where('user_id', $userId)->where('source', 'outlook')->count() : 0,
+            'bin_unread' => $binId ? Message::where('folder_id', $binId)->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count() : 0,
             'starred_total' => Message::where('is_starred', true)->where('user_id', $userId)->where('source', 'outlook')->count(),
         ],
     ];
@@ -312,18 +328,22 @@ class EmailFoldersService
   }
 
   /**
-   * Bulk update messages folder (inbox, spam, bin)
+   * Bulk update messages folder
    */
-  public function bulkUpdateFolder(array $ids, string $folder)
+  public function bulkUpdateFolder(array $ids, string $folderName)
   {
-    // Validate folder parameter
-    if (!in_array($folder, ['inbox', 'spam', 'bin'])) {
-      throw new \InvalidArgumentException('Invalid folder type');
+    // Get folder by name for current user
+    $folder = Folder::forUser(Auth::id())
+      ->where('name', $folderName)
+      ->first();
+
+    if (!$folder) {
+      throw new \InvalidArgumentException('Folder not found');
     }
 
     return Message::whereIn('id', $ids)
       ->where('user_id', Auth::id())
-      ->update(['folder' => $folder]);
+      ->update(['folder_id' => $folder->id]);
   }
 
   /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Management;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Agent\EmailAgent\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -89,6 +90,9 @@ class UserManagementController extends Controller
     ]);
 
     $user->assignRole($data['role']);
+
+    // Create default folders for the new user (regardless of role for future use)
+    $this->createDefaultFolders($user);
 
     return back()
       ->with('title', __('website_response.user_created_title'))
@@ -230,5 +234,36 @@ class UserManagementController extends Controller
       ->with('title', __('website_response.users_deleted_title'))
       ->with('message', __('website_response.users_deleted_message', ['count' => $count]))
       ->with('status', 'warning');
+  }
+
+  /**
+   * Create default folders for a new user
+   */
+  private function createDefaultFolders(User $user): void
+  {
+    $defaultFolders = [
+      [
+        'name' => 'inbox',
+        'icon' => 'fa-inbox',
+        'is_default' => true,
+        'sort_order' => 1
+      ],
+      [
+        'name' => 'spam',
+        'icon' => 'fa-exclamation-circle',
+        'is_default' => true,
+        'sort_order' => 2
+      ],
+      [
+        'name' => 'bin',
+        'icon' => 'fa-trash',
+        'is_default' => true,
+        'sort_order' => 3
+      ]
+    ];
+
+    foreach ($defaultFolders as $folderData) {
+      Folder::create(array_merge($folderData, ['user_id' => $user->id]));
+    }
   }
 }

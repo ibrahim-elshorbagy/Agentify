@@ -8,12 +8,15 @@ import { useTrans } from '@/Hooks/useTrans';
 
 export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
   const { t } = useTrans();
-  const { auth } = usePage().props;
+  const { auth, folders } = usePage().props;
   const [searchQuery, setSearchQuery] = useState('');
   const searchRef = useRef();
 
   // Get user roles
   const userRoles = auth.roles || [];
+
+  // Get user folders for email agent (now from shared props)
+  const userFolders = folders || [];
 
   const navItems = [
     { name: t('dashboard'), icon: 'fa-chart-line', href: route('dashboard'), route: 'dashboard', role: '' },
@@ -45,9 +48,15 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
       route: 'user.email-agent.*',
       role: 'user',
       submenu: [
-        { name: t('inbox'), href: route('user.email-agent.emails', { folder: 'inbox' }), route: 'user.email-agent.emails', icon: 'fa-inbox', folder: 'inbox' },
-        { name: t('spam'), href: route('user.email-agent.emails', { folder: 'spam' }), route: 'user.email-agent.emails', icon: 'fa-exclamation-circle', folder: 'spam' },
-        { name: t('bin'), href: route('user.email-agent.emails', { folder: 'bin' }), route: 'user.email-agent.emails', icon: 'fa-trash', folder: 'bin' },
+        // Dynamic folders
+        ...userFolders.map(folder => ({
+          name: folder.name,
+          href: route('user.email-agent.emails', { folder: folder.name }),
+          route: 'user.email-agent.emails',
+          icon: folder.icon,
+          folder: folder.name
+        })),
+        // Static items
         { name: t('sent'), href: route('user.email-agent.sent.emails'), route: 'user.email-agent.sent.*', icon: 'fa-paper-plane' },
         { name: t('draft'), href: route('user.email-agent.draft.emails'), route: 'user.email-agent.draft.*', icon: 'fa-file' },
         { name: t('qna'), href: route('user.qna-agent.chat'), route: 'user.qna-agent.*', icon: 'fa-comments' },

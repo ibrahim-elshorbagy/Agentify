@@ -837,4 +837,38 @@ return [
   'get_outlook' => 'Get Outlook Emails',
   'fetch_emails' => 'Fetch Emails',
 
+  // Email Folder translations
+  'email_agent' => 'Email Agent',
+  'inbox' => 'Inbox',
+  'spam' => 'Spam',
+  'bin' => 'Bin',
+  'sent' => 'Sent',
+  'draft' => 'Draft',
+  'folder' => 'Folder',
+  'folders' => 'Folders',
+  'new_folder' => 'New Folder',
+  'edit_folder' => 'Edit Folder',
+  'delete_folder' => 'Delete Folder',
+  'folder_name' => 'Folder Name',
+  'folder_icon' => 'Folder Icon',
+  'create_folder' => 'Create Folder',
+  'save_folder' => 'Save Folder',
+  'cancel' => 'Cancel',
+
+  // Folder icon labels
+  'work' => 'Work',
+  'personal' => 'Personal',
+  'important' => 'Important',
+  'urgent' => 'Urgent',
+  'scheduled' => 'Scheduled',
+  'archive' => 'Archive',
+  'bookmarks' => 'Bookmarks',
+  'flagged' => 'Flagged',
+  'attachments' => 'Attachments',
+  'folder_name_placeholder' => 'Folder Name',
+  'confirm_delete_folder' => 'Are you sure you want to delete this folder? All messages in this folder will be moved to your inbox.',
+  'saving' => 'Saving...',
+  'creating' => 'Creating...',
+  'save_changes' => 'Save Changes',
+
 ];

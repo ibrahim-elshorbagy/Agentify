@@ -3,6 +3,7 @@
 use App\Http\Controllers\User\Agents\EmailAgent\MessageController;
 use App\Http\Controllers\User\Agents\EmailAgent\ResponseMessageController;
 use App\Http\Controllers\User\Agents\EmailAgent\EmailOperationsController;
+use App\Http\Controllers\User\Agents\EmailAgent\FolderController;
 use App\Models\Agent\EmailAgent\Message;
 use App\Models\Agent\EmailAgent\MessageResponse;
 use Illuminate\Support\Facades\Route;
@@ -10,16 +11,25 @@ use Inertia\Inertia;
 
 Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function () {
 
-  // Unified Email Folders - with folder parameter
-  Route::get('/email-agent/{folder}', [MessageController::class, 'emails'])
-    ->name('user.email-agent.emails')
-    ->where('folder', 'inbox|spam|bin');
+  // Folder Management Routes
+  Route::get('/email-agent/folders', [FolderController::class, 'index'])
+    ->name('user.email-agent.folders.index');
+  Route::post('/email-agent/folders', [FolderController::class, 'store'])
+    ->name('user.email-agent.folders.store');
+  Route::put('/email-agent/folders/{folder}', [FolderController::class, 'update'])
+    ->name('user.email-agent.folders.update');
+  Route::delete('/email-agent/folders/{folder}', [FolderController::class, 'destroy'])
+    ->name('user.email-agent.folders.destroy');
 
-  // Sent and Draft Emails - Response Messages
+  // Sent and Draft Emails - Response Messages (MUST come before dynamic folder route)
   Route::get('/email-agent/sent', [ResponseMessageController::class, 'sent'])
     ->name('user.email-agent.sent.emails');
   Route::get('/email-agent/draft', [ResponseMessageController::class, 'draft'])
     ->name('user.email-agent.draft.emails');
+
+  // Unified Email Folders - with folder parameter (now supports dynamic folders)
+  Route::get('/email-agent/my/{folder}', [MessageController::class, 'emails'])
+    ->name('user.email-agent.emails');
 
 
   Route::get('/email-agent/view/{message}', [MessageController::class, 'view'])
@@ -50,8 +60,7 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
     ->name('user.email-agent.bulk.unstar');
 
   Route::patch('/email-agent/bulk/update-folder/{folder}', [MessageController::class, 'bulkUpdateFolder'])
-    ->name('user.email-agent.bulk.update-folder')
-    ->where('folder', 'inbox|spam|bin');
+    ->name('user.email-agent.bulk.update-folder');
 
   Route::delete('/email-agent/bulk/delete-permanently', [MessageController::class, 'bulkDeletePermanently'])
     ->name('user.email-agent.bulk.delete-permanently');

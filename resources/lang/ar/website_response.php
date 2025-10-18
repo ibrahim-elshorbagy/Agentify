@@ -202,4 +202,16 @@ return [
   'something_went_wrong' => 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
   'success_title' => 'نجح',
 
+  // Folder Management responses
+  'folder_created_successfully' => 'تم إنشاء المجلد بنجاح.',
+  'folder_updated_successfully' => 'تم تحديث المجلد بنجاح.',
+  'folder_deleted_successfully' => 'تم حذف المجلد بنجاح.',
+  'folder_creation_failed' => 'فشل في إنشاء المجلد. يرجى المحاولة مرة أخرى.',
+  'folder_update_failed' => 'فشل في تحديث المجلد. يرجى المحاولة مرة أخرى.',
+  'folder_deletion_failed' => 'فشل في حذف المجلد. يرجى المحاولة مرة أخرى.',
+  'cannot_delete_default_folder' => 'لا يمكن حذف المجلد الافتراضي.',
+  'folder_not_found' => 'المجلد غير موجود.',
+  'folder_name_required' => 'اسم المجلد مطلوب.',
+  'folder_name_exists' => 'يوجد مجلد بهذا الاسم بالفعل.',
+
 ];

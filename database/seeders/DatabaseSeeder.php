@@ -54,6 +54,7 @@ class DatabaseSeeder extends Seeder
     $user->assignRole($userRole);
 
     $this->call(SubscriptionSystemSeeder::class);
+    $this->call(DefaultFoldersSeeder::class);
 
     // User::factory(100)->create();
     // Message::factory()

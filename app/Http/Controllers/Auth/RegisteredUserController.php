@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Agent\EmailAgent\Folder;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -61,10 +62,45 @@ class RegisteredUserController extends Controller
         ]);
 
         $user->assignRole('user');
+
+        // Create default folders for the new user
+        $this->createDefaultFolders($user);
+
         event(new Registered($user));
 
         Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
+    }
+
+    /**
+     * Create default folders for a new user
+     */
+    private function createDefaultFolders(User $user): void
+    {
+        $defaultFolders = [
+            [
+                'name' => 'inbox',
+                'icon' => 'fa-inbox',
+                'is_default' => true,
+                'sort_order' => 1
+            ],
+            [
+                'name' => 'spam',
+                'icon' => 'fa-exclamation-circle',
+                'is_default' => true,
+                'sort_order' => 2
+            ],
+            [
+                'name' => 'bin',
+                'icon' => 'fa-trash',
+                'is_default' => true,
+                'sort_order' => 3
+            ]
+        ];
+
+        foreach ($defaultFolders as $folderData) {
+            Folder::create(array_merge($folderData, ['user_id' => $user->id]));
+        }
     }
 }

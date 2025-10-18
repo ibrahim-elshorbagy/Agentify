@@ -1,10 +1,10 @@
-import { useTrans } from "@/hooks/useTrans";
+import { useTrans } from "@/Hooks/useTrans";
 import { router } from "@inertiajs/react";
 import SelectableTable from "@/Components/SelectableTable";
 import SearchBar from "@/Components/SearchBar";
 import ActionButton from "@/Components/ActionButton";
 
-export default function EmailTable({ emails, queryParams, type, source }) {
+export default function EmailTable({ emails, queryParams, type, source, folders = [] }) {
   const { t } = useTrans();
 
   // Toggle star function - use appropriate bulk action based on current star state
@@ -159,72 +159,34 @@ export default function EmailTable({ emails, queryParams, type, source }) {
       }
     ];
 
-    // Add folder-specific actions
-    if (type === 'inbox') {
-      baseActions.push(
-        {
-          label: t('move_to_spam'),
-          icon: 'fa-solid fa-exclamation-circle',
-          handler: handleBulkMoveToSpam,
-          variant: 'yellow',
-          requiresConfirmation: true,
-          confirmMessageKey: 'confirm_move_to_spam'
-        },
-        {
-          label: t('move_to_bin'),
-          icon: 'fa-solid fa-trash-can',
-          handler: handleBulkMoveToBin,
-          variant: 'delete',
-          requiresConfirmation: true,
-          confirmMessageKey: 'confirm_move_to_bin'
-        }
-      );
-    } else if (type === 'spam') {
-      baseActions.push(
-        {
-          label: t('restore_to_inbox'),
-          icon: 'fa-solid fa-undo',
-          handler: handleBulkRestore,
-          variant: 'blue',
-          requiresConfirmation: true,
-          confirmMessageKey: 'confirm_restore_emails'
-        },
-        {
-          label: t('move_to_bin'),
-          icon: 'fa-solid fa-trash-can',
-          handler: handleBulkMoveToBin,
-          variant: 'delete',
-          requiresConfirmation: true,
-          confirmMessageKey: 'confirm_move_to_bin'
-        }
-      );
-    } else if (type === 'bin') {
-      baseActions.push(
-        {
-          label: t('restore_to_inbox'),
-          icon: 'fa-solid fa-undo',
-          handler: handleBulkRestore,
-          variant: 'blue',
-          requiresConfirmation: true,
-          confirmMessageKey: 'confirm_restore_emails'
-        },
-        {
-          label: t('move_to_spam'),
-          icon: 'fa-solid fa-exclamation-circle',
-          handler: handleBulkMoveToSpam,
-          variant: 'yellow',
-          requiresConfirmation: true,
-          confirmMessageKey: 'confirm_move_to_spam'
-        },
-        {
-          label: t('delete_permanently'),
-          icon: 'fa-solid fa-trash-can',
-          handler: handleBulkDeletePermanently,
-          variant: 'delete',
-          requiresConfirmation: true,
-          confirmMessageKey: 'confirm_permanent_delete_bulk'
-        }
-      );
+    // Add dynamic folder actions - move to other folders
+    const otherFolders = folders.filter(folder => folder.name !== type);
+
+    // Add move to other folders actions
+    otherFolders.forEach(folder => {
+      const folderAction = {
+        label: t('move_to') + ' ' + folder.name,
+        icon: `fa-solid ${folder.icon}`,
+        handler: (ids) => handleBulkUpdateFolder(ids, folder.name),
+        variant: folder.name === 'spam' ? 'yellow' : folder.name === 'bin' ? 'delete' : 'info',
+        requiresConfirmation: ['spam', 'bin'].includes(folder.name),
+        confirmMessageKey: folder.name === 'spam' ? 'confirm_move_to_spam'
+                          : folder.name === 'bin' ? 'confirm_move_to_bin'
+                          : 'confirm_move_to_folder'
+      };
+      baseActions.push(folderAction);
+    });
+
+    // Add delete permanently action for bin folder
+    if (type === 'bin') {
+      baseActions.push({
+        label: t('delete_permanently'),
+        icon: 'fa-solid fa-trash-can',
+        handler: handleBulkDeletePermanently,
+        variant: 'delete',
+        requiresConfirmation: true,
+        confirmMessageKey: 'confirm_permanent_delete_bulk'
+      });
     }
 
     return baseActions;
@@ -382,7 +344,7 @@ export default function EmailTable({ emails, queryParams, type, source }) {
           </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-500 dark:text-neutral-400">
-          {new Date(email.received_at || email.created_at).toLocaleDateString()}
+          {email.received_at || new Date(email.created_at).toLocaleDateString()}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
           <div className="flex items-center justify-center gap-2">
@@ -434,11 +396,7 @@ export default function EmailTable({ emails, queryParams, type, source }) {
     <>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold leading-tight text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
-          <i className={`fa-solid ${type === 'inbox' ? 'fa-inbox text-blue-500' :
-            type === 'spam' ? 'fa-exclamation-circle text-orange-500' :
-              type === 'bin' ? 'fa-trash text-gray-500' :
-                'fa-inbox text-blue-500'
-            }`}></i>
+
           {type === 'inbox' ? t('inbox_emails') :
             type === 'spam' ? t('spam_emails') :
               type === 'bin' ? t('bin_emails') :

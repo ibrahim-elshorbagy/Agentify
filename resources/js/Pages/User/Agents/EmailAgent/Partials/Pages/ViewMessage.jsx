@@ -119,7 +119,7 @@ export default function ViewMessage({ message, responses = [] }) {
                         </div>
                         <div className="flex items-center gap-2">
                           <i className="fa-solid fa-calendar"></i>
-                          <span>{new Date(message.received_at || message.updated_at).toLocaleString()}</span>
+                          <span>{message.received_at || new Date(message.updated_at).toLocaleString()}</span>
                         </div>
                       </div>
                     </div>

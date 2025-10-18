@@ -7,7 +7,9 @@ import Tabs from '@/Components/Tabs';
 import SearchBar from '@/Components/SearchBar';
 import ActionButton from '@/Components/ActionButton';
 
-export default function Messages({ type, gmailEmails, outlookEmails, emailCounts, queryParams = null }) {
+import FolderManager from './Partials/Components/FolderManager';
+
+export default function Messages({ type, gmailEmails, outlookEmails, emailCounts, queryParams = null, folders = [], currentFolder = null }) {
   queryParams = queryParams || {};
   const { t } = useTrans();
 
@@ -23,16 +25,18 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
 
   const gmailContent = (
     <div>
+      <FolderManager folders={folders} currentFolder={currentFolder} source="gmail" />
       <div className="text-neutral-900 dark:text-neutral-100">
-        <EmailTable emails={gmailEmails} queryParams={queryParams} type={type} source="gmail" />
+        <EmailTable emails={gmailEmails} queryParams={queryParams} type={type} source="gmail" folders={folders} />
       </div>
     </div>
   );
 
   const outlookContent = (
     <div>
+      <FolderManager folders={folders} currentFolder={currentFolder} source="outlook" />
       <div className="text-neutral-900 dark:text-neutral-100">
-        <EmailTable emails={outlookEmails} queryParams={queryParams} type={type} source="outlook" />
+        <EmailTable emails={outlookEmails} queryParams={queryParams} type={type} source="outlook" folders={folders} />
       </div>
     </div>
   );

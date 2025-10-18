@@ -47,9 +47,20 @@ class HandleInertiaRequests extends Middleware
       ],
       'impersonate_admin_id' => session('impersonate_admin_id'),
 
-      // 'translations' => fn () => __('website'),
+      'translations' => fn () => [
+        'website' => __('website'),
+        'website_response' => __('website_response'),
+      ],
       'available_locales' => ['en', 'ar'],
       'locale' => fn () => app()->getLocale(),
+
+      // User folders for email agent (only for users, not admins)
+      'folders' => function () use ($request) {
+        if ($request->user() && $request->user()->hasRole('user')) {
+          return $request->user()->emailFolders()->ordered()->get();
+        }
+        return [];
+      },
 
     ];
   }

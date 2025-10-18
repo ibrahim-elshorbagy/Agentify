@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User\Agents\EmailAgent;
 use App\Http\Controllers\Controller;
 use App\Models\Site\UserCredential;
 use App\Models\Agent\EmailAgent\Message;
+use App\Models\Agent\EmailAgent\Folder;
 use App\Services\Agents\EmailAgent\EmailAgentService;
 use App\Services\OAuth\GoogleOAuthService;
 use App\Services\OAuth\MicrosoftOAuthService;
@@ -78,13 +79,25 @@ class EmailOperationsController extends Controller
         ? $lastReadAt->toDateString()
         : '2002-01-01';
 
+      // Get user's folders
+      $userFolders = Folder::forUser(Auth::id())
+        ->ordered()
+        ->get()
+        ->map(function ($folder) {
+          return [
+            'id' => (string) $folder->id,
+            'name' => $folder->name
+          ];
+        })
+        ->toArray();
+
       // Prepare data for N8N webhook
       $data = [
         'user_id' => Auth::id(),
         'access_token' => $validAccessToken,
         'provider' => 'gmail',
         'last_read' => $lastRead,
-        'folder'=>'inbox',
+        'folders' => $userFolders,
       ];
 
       // Call Email Agent service
@@ -153,14 +166,25 @@ class EmailOperationsController extends Controller
         ? $lastReadAt->toDateString()
         : '2002-01-01';
 
+      // Get user's folders
+      $userFolders = Folder::forUser(Auth::id())
+        ->ordered()
+        ->get()
+        ->map(function ($folder) {
+          return [
+            'id' => (string) $folder->id,
+            'name' => $folder->name
+          ];
+        })
+        ->toArray();
+
       // Prepare data for N8N webhook
       $data = [
         'user_id' => Auth::id(),
         'access_token' => $validAccessToken,
         'provider' => 'outlook',
         'last_read' => $lastRead,
-        'folder'=>'inbox',
-
+        'folders' => $userFolders,
       ];
 
       // Call Email Agent service

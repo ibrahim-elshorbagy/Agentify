@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Agents\EmailAgent\EmailFoldersService;
 use App\Models\Agent\EmailAgent\Message;
 use App\Models\Agent\EmailAgent\MessageResponse;
+use App\Models\Agent\EmailAgent\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -22,8 +23,12 @@ class MessageController extends Controller
 
   public function emails(Request $request, $folder)
   {
-    // Validate folder parameter from route
-    if (!in_array($folder, ['inbox', 'spam', 'bin'])) {
+    // Get user's folders
+    $userFolders = Folder::forUser(Auth::id())->ordered()->get();
+
+    // Check if folder exists for current user
+    $currentFolder = $userFolders->firstWhere('name', $folder);
+    if (!$currentFolder) {
       abort(404);
     }
 
@@ -37,6 +42,8 @@ class MessageController extends Controller
       'gmailEmails' => $gmailEmails,
       'outlookEmails' => $outlookEmails,
       'type' => $folder,
+      'folders' => $userFolders,
+      'currentFolder' => $currentFolder,
       'queryParams' => $request->query() ?: null,
       'emailCounts' => $this->emailService->getEmailCounts(),
     ]);
@@ -266,7 +273,7 @@ class MessageController extends Controller
       // Get the folder of the first message to redirect appropriately
       $firstMessage = Message::find($request->ids[0]);
       $redirectFolder = $firstMessage ? $firstMessage->folder : 'inbox';
-      
+
       $deletedCount = $this->emailService->bulkDeletePermanently($request->ids);
 
       // Redirect to the appropriate folder instead of going back to potentially deleted message

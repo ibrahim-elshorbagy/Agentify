@@ -774,4 +774,38 @@ return [
   'get_outlook' => 'جلب رسائل Outlook',
   'fetch_emails' => 'جلب الرسائل',
 
+  // Email Folder translations
+  'email_agent' => 'وكيل البريد الإلكتروني',
+  'inbox' => 'صندوق الوارد',
+  'spam' => 'الرسائل المزعجة',
+  'bin' => 'سلة المحذوفات',
+  'sent' => 'الرسائل المرسلة',
+  'draft' => 'المسودات',
+  'folder' => 'مجلد',
+  'folders' => 'المجلدات',
+  'new_folder' => 'مجلد جديد',
+  'edit_folder' => 'تحرير المجلد',
+  'delete_folder' => 'حذف المجلد',
+  'folder_name' => 'اسم المجلد',
+  'folder_icon' => 'أيقونة المجلد',
+  'create_folder' => 'إنشاء مجلد',
+  'save_folder' => 'حفظ المجلد',
+  'cancel' => 'إلغاء',
+
+  // Folder icon labels
+  'work' => 'العمل',
+  'personal' => 'شخصي',
+  'important' => 'مهم',
+  'urgent' => 'عاجل',
+  'scheduled' => 'مجدول',
+  'archive' => 'أرشيف',
+  'bookmarks' => 'إشارات مرجعية',
+  'flagged' => 'مميز',
+  'attachments' => 'مرفقات',
+  'folder_name_placeholder' => 'اسم المجلد',
+  'confirm_delete_folder' => 'هل أنت متأكد من حذف هذا المجلد؟ سيتم نقل جميع الرسائل في هذا المجلد إلى صندوق الوارد.',
+  'saving' => 'جاري الحفظ...',
+  'creating' => 'جاري الإنشاء...',
+  'save_changes' => 'حفظ التغييرات',
+
 ];

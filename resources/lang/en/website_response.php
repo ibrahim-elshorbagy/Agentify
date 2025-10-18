@@ -259,4 +259,16 @@ return [
   'something_went_wrong' => 'Something went wrong. Please try again.',
   'success_title' => 'Success',
   'error_title' => 'Error',
+
+  // Folder Management responses
+  'folder_created_successfully' => 'Folder created successfully.',
+  'folder_updated_successfully' => 'Folder updated successfully.',
+  'folder_deleted_successfully' => 'Folder deleted successfully.',
+  'folder_creation_failed' => 'Failed to create folder. Please try again.',
+  'folder_update_failed' => 'Failed to update folder. Please try again.',
+  'folder_deletion_failed' => 'Failed to delete folder. Please try again.',
+  'cannot_delete_default_folder' => 'Cannot delete default folder.',
+  'folder_not_found' => 'Folder not found.',
+  'folder_name_required' => 'Folder name is required.',
+  'folder_name_exists' => 'A folder with this name already exists.',
 ];

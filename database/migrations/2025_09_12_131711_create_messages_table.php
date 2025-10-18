@@ -24,22 +24,22 @@ return new class extends Migration {
       $table->longText('body_text')->nullable();
       $table->string('source')->nullable()->index();
 
-      $table->string('folder')->default('inbox')->index();
+      $table->foreignId('folder_id')->nullable()->constrained('folders')->nullOnDelete();
       $table->boolean('is_read')->default(false)->index();
       $table->boolean('is_starred')->default(false)->index();
 
-      $table->timestamp('received_at')->nullable()->index();
+      $table->string('received_at')->nullable()->index();
       $table->timestamps();
 
-      // composite indexes
-      $table->index(['folder', 'is_read']);
-      $table->index(['from_email', 'folder']);
-      $table->index(['to_email', 'folder']);
-      $table->index(['folder', 'is_starred']);
+      // composite indexes (updated to use folder_id)
+      $table->index(['folder_id', 'is_read']);
+      $table->index(['from_email', 'folder_id']);
+      $table->index(['to_email', 'folder_id']);
+      $table->index(['folder_id', 'is_starred']);
       $table->index(['from_email', 'is_read']);
       $table->index(['to_email', 'is_read']);
       $table->index(['from_email', 'to_email']);
-      $table->index(['folder', 'created_at']);
+      $table->index(['folder_id', 'created_at']);
     });
 
   }
