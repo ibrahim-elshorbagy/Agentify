@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User\Agents\EmailAgent;
 
 use App\Http\Controllers\Controller;
 use App\Models\Site\UserCredential;
+use App\Models\Agent\EmailAgent\Message;
 use App\Services\Agents\EmailAgent\EmailAgentService;
 use App\Services\OAuth\GoogleOAuthService;
 use App\Services\OAuth\MicrosoftOAuthService;
@@ -66,11 +67,18 @@ class EmailOperationsController extends Controller
         'is_same_as_database' => $validAccessToken === $gmailCredential->provider_token
       ]);
 
+      // Get the last read timestamp for Gmail messages
+      $lastRead = Message::where('user_id', Auth::id())
+        ->where('source', 'gmail')
+        ->orderBy('created_at', 'desc')
+        ->value('created_at');
+
       // Prepare data for N8N webhook
       $data = [
         'user_id' => Auth::id(),
         'access_token' => $validAccessToken,
-        'provider' => 'gmail'
+        'provider' => 'gmail',
+        'last_read' => $lastRead
       ];
 
       // Call Email Agent service
@@ -128,11 +136,18 @@ class EmailOperationsController extends Controller
           ->with('status', 'error');
       }
 
+      // Get the last read timestamp for Outlook messages
+      $lastRead = Message::where('user_id', Auth::id())
+        ->where('source', 'outlook')
+        ->orderBy('created_at', 'desc')
+        ->value('created_at');
+
       // Prepare data for N8N webhook
       $data = [
         'user_id' => Auth::id(),
         'access_token' => $validAccessToken,
-        'provider' => 'outlook'
+        'provider' => 'outlook',
+        'last_read' => $lastRead
       ];
 
       // Call Email Agent service
