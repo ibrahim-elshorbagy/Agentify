@@ -50,7 +50,7 @@ export default function AppLayout({ children, title }) {
           <Sidebar sidebarIsOpen={sidebarIsOpen} setSidebarIsOpen={setSidebarIsOpen} />
 
           {/* Main Content */}
-          <main className="h-full w-full overflow-y-auto">
+          <main className="flex-1 min-h-screen w-full overflow-y-auto">
             {children}
           </main>
         </div>

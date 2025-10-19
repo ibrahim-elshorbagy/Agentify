@@ -51,7 +51,7 @@ export default function Files({ files = [] }) {
     <AppLayout>
       <Head title={t('manage_files')} />
 
-      <div className="py-4 sm:py-6 lg:py-8 bg-gradient-to-br from-green-50 via-neutral-50 to-green-100 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 min-h-screen">
+      <div className="py-4 sm:py-6 lg:py-8 bg-gradient-to-br from-green-50 via-neutral-50 to-green-100 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 h-full">
         <div className='mx-2 sm:mx-4'>
           <div className="mx-auto max-w-7xl px-3 sm:px-4 md:px-6 lg:px-8 bg-white dark:bg-neutral-800 rounded-xl sm:rounded-2xl shadow-lg border border-neutral-200 dark:border-neutral-700 p-4 sm:p-6 lg:p-8">
 

@@ -48,7 +48,7 @@ export default function ReportAgent({
     <AppLayout>
       <Head title={t('report_agent')} />
 
-      <div className="h-screen flex bg-gradient-to-br from-green-50 via-neutral-50 to-green-100 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 overflow-hidden relative">
+      <div className="h-full flex bg-gradient-to-br from-green-50 via-neutral-50 to-green-100 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 overflow-hidden relative">
 
         {/* Chat Sidebar */}
         <ChatSidebar

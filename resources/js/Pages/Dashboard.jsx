@@ -11,8 +11,8 @@ export default function Dashboard() {
     <AppLayout>
       <Head title={t('dashboard')} />
 
-      <div className="py-8 bg-gradient-to-br from-green-50 via-neutral-50 to-green-100 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 min-h-screen">
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div className="h-full bg-gradient-to-br from-green-50 via-neutral-50 to-green-100 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 py-8">
+        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 min-h-full">
           {/* Welcome Section */}
           <div className="mb-8">
             <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg border border-neutral-200 dark:border-neutral-700 p-8">
