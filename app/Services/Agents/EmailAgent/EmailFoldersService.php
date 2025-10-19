@@ -47,8 +47,8 @@ class EmailFoldersService
       $emailsQuery->where('is_archived', true);
     } elseif ($folder === 'inbox') {
       // For inbox view, show all emails from all folders except spam and bin (and exclude archived)
-      $emailsQuery->whereNotIn('folder', ['spam', 'bin']);
-      // $emailsQuery->where('is_archived', false)->whereNotIn('folder', ['spam', 'bin']);
+      // $emailsQuery->whereNotIn('folder', ['spam', 'bin']);
+      $emailsQuery->where('is_archived', false)->whereNotIn('folder', ['spam', 'bin']);
     } else {
       $emailsQuery->where('folder', $folder)->where('is_archived', false);
     }

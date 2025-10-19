@@ -208,6 +208,10 @@ return [
   'mark_as_unread' => 'Mark as Unread',
   'move_to_spam' => 'Move to Spam',
   'move_to_bin' => 'Move to Bin',
+  'move_to_folder' => 'Move to Folder',
+  'move'=>"Move",
+  'move_emails_to_folder' => 'Move Emails to Folder',
+  'select_destination_folder' => 'Select destination folder',
   'delete_permanently' => 'Delete Permanently',
   'confirm_delete_permanently' => 'Are you sure you want to delete this email permanently? This action cannot be undone.',
   'confirm_delete_draft_permanently' => 'Are you sure you want to delete this draft permanently? This action cannot be undone.',
@@ -847,5 +851,6 @@ return [
   'get_gmail' => 'Get Gmail Emails',
   'get_outlook' => 'Get Outlook Emails',
   'fetch_emails' => 'Fetch Emails',
+  'select'=>"Select"
 
 ];

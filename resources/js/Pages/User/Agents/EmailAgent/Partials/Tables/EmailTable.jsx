@@ -1,8 +1,10 @@
 import { useTrans } from "@/hooks/useTrans";
 import { router } from "@inertiajs/react";
+import { useState } from "react";
 import SelectableTable from "@/Components/SelectableTable";
 import SearchBar from "@/Components/SearchBar";
 import ActionButton from "@/Components/ActionButton";
+import MoveEmailsModal from "../Modals/MoveEmailsModal";
 import { getFolderColorClasses, getFolderIconClass, getFolderTitle } from "./Partials/EmailTablePartials";
 import {
   toggleStar,
@@ -20,6 +22,16 @@ import {
 
 export default function EmailTable({ emails, queryParams, type, source }) {
   const { t } = useTrans();
+
+  // Modal state
+  const [isMoveModalOpen, setIsMoveModalOpen] = useState(false);
+  const [selectedEmailsForMove, setSelectedEmailsForMove] = useState([]);
+
+  // Handle move emails modal
+  const handleMoveEmails = (selectedEmails) => {
+    setSelectedEmailsForMove(selectedEmails);
+    setIsMoveModalOpen(true);
+  };
 
   // Table configuration
   const columns = [
@@ -136,6 +148,20 @@ export default function EmailTable({ emails, queryParams, type, source }) {
             as="button"
           >
             {t('delete_permanently')}
+          </ActionButton>
+        );
+      } else {
+        // For all other folders (promotions, social, personal, clients, team, finance, hr, starred, archive)
+        buttons.push(
+          <ActionButton
+            key="bin"
+            onClick={() => moveToBin(email.id)}
+            variant="delete"
+            icon="fa-trash-can"
+            size="xs"
+            as="button"
+          >
+            {t('bin')}
           </ActionButton>
         );
       }
@@ -269,7 +295,7 @@ export default function EmailTable({ emails, queryParams, type, source }) {
         defaultSortField="created_at"
         defaultSortDirection="desc"
         getRowClassName={getRowClassName}
-        bulkActions={getBulkActions(type, t)}
+        bulkActions={getBulkActions(type, t, handleMoveEmails)}
         pageParam="page"
         MoreButtons={<>
           {/* Action buttons for getting emails */}
@@ -296,6 +322,13 @@ export default function EmailTable({ emails, queryParams, type, source }) {
             )}
           </div>
         </>}
+      />
+
+      <MoveEmailsModal
+        isOpen={isMoveModalOpen}
+        onClose={() => setIsMoveModalOpen(false)}
+        selectedEmails={selectedEmailsForMove}
+        currentFolder={type}
       />
     </>
   );

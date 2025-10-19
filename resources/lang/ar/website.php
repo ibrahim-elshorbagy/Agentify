@@ -187,6 +187,10 @@ return [
   'mark_as_unread' => 'تحديد كغير مقروء',
   'move_to_spam' => 'نقل إلى المزعج',
   'move_to_bin' => 'نقل إلى سلة المحذوفات',
+  'move_to_folder' => 'نقل إلى مجلد',
+  'move'=>"نقل",
+  'move_emails_to_folder' => 'نقل البريد الإلكتروني إلى مجلد',
+  'select_destination_folder' => 'اختر المجلد المقصود',
   'delete_permanently' => 'حذف نهائي',
   'confirm_delete_permanently' => 'هل أنت متأكد من حذف هذا البريد الإلكتروني نهائياً؟ لا يمكن التراجع عن هذا الإجراء.',
   'confirm_delete_draft_permanently' => 'هل أنت متأكد من حذف هذه المسودة نهائياً؟ لا يمكن التراجع عن هذا الإجراء.',
@@ -785,4 +789,5 @@ return [
   'get_gmail' => 'جلب رسائل Gmail',
   'get_outlook' => 'جلب رسائل Outlook',
   'fetch_emails' => 'جلب الرسائل',
+  'select'=>"اختر"
 ];

@@ -121,6 +121,8 @@ return [
   'email_unstarred_successfully' => 'Email unstarred successfully.',
   'email_moved_to_spam' => 'Email moved to spam successfully.',
   'email_moved_to_bin' => 'Email moved to bin successfully.',
+  'emails_moved_title' => 'Emails Moved',
+  'emails_moved_message' => 'Selected emails have been moved successfully.',
   'email_restored_to_inbox' => 'Email restored to inbox successfully.',
   'email_deleted_permanently' => 'Email deleted permanently.',
   'error_updating_email_status' => 'Error updating email status.',

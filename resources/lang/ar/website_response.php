@@ -118,6 +118,8 @@ return [
   'email_unstarred_successfully' => 'تم إزالة النجمة من البريد الإلكتروني بنجاح.',
   'email_moved_to_spam' => 'تم نقل البريد الإلكتروني إلى المزعج بنجاح.',
   'email_moved_to_bin' => 'تم نقل البريد الإلكتروني إلى سلة المحذوفات بنجاح.',
+  'emails_moved_title' => 'تم نقل البريد الإلكتروني',
+  'emails_moved_message' => 'تم نقل البريد الإلكتروني المحدد بنجاح.',
   'email_restored_to_inbox' => 'تم استعادة البريد الإلكتروني إلى صندوق الوارد بنجاح.',
   'email_deleted_permanently' => 'تم حذف البريد الإلكتروني نهائياً.',
   'error_updating_email_status' => 'خطأ في تحديث حالة البريد الإلكتروني.',

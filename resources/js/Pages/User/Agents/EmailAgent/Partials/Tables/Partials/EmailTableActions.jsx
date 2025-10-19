@@ -152,7 +152,7 @@ export const handleBulkDeletePermanently = async (ids) => {
 };
 
 // Define bulk actions based on folder type
-export const getBulkActions = (type, t) => {
+export const getBulkActions = (type, t, onMoveEmails) => {
   const baseActions = [
     {
       label: t('mark_as_read'),
@@ -177,6 +177,12 @@ export const getBulkActions = (type, t) => {
       icon: 'fa-star fa-regular',
       handler: handleBulkUnStar,
       variant: 'green'
+    },
+    {
+      label: t('move_to_folder'),
+      icon: 'fa-solid fa-folder',
+      handler: onMoveEmails,
+      variant: 'blue'
     }
   ];
 

@@ -269,6 +269,7 @@ class MessageController extends Controller
    */
   public function bulkUpdateFolder(Request $request, $folder)
   {
+
     $request->validate([
       'ids' => ['required', 'array', 'min:1'],
       'ids.*' => ['integer', 'exists:messages,id'],
@@ -282,15 +283,9 @@ class MessageController extends Controller
     try {
       $updated = $this->emailService->bulkUpdateFolder($request->ids, $folder);
 
-      $messages = [
-        'inbox' => __('website_response.bulk_restored_to_inbox', ['count' => $updated]),
-        'spam' => __('website_response.bulk_moved_to_spam', ['count' => $updated]),
-        'bin' => __('website_response.bulk_moved_to_bin', ['count' => $updated]),
-      ];
-
       return back()
-        ->with('title', __('website_response.bulk_action_completed'))
-        ->with('message', $messages[$folder])
+        ->with('title', __('website_response.emails_moved_title'))
+        ->with('message', __('website_response.emails_moved_message'))
         ->with('status', 'success');
     } catch (\Exception $e) {
       return back()
