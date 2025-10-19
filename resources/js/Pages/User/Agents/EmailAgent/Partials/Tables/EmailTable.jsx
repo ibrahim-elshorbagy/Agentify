@@ -3,41 +3,10 @@ import { router } from "@inertiajs/react";
 import SelectableTable from "@/Components/SelectableTable";
 import SearchBar from "@/Components/SearchBar";
 import ActionButton from "@/Components/ActionButton";
+import { getFolderColorClasses, getFolderIconClass, getFolderTitle } from "./Partials/EmailTablePartials";
 
 export default function EmailTable({ emails, queryParams, type, source }) {
   const { t } = useTrans();
-
-  // Function to get folder color classes
-  const getFolderColorClasses = (folder) => {
-    switch (folder) {
-      case 'inbox':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
-      case 'spam':
-        return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
-      case 'bin':
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
-      case 'starred':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-      case 'archive':
-        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
-      case 'promotions':
-        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
-      case 'social':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-      case 'personal':
-        return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200';
-      case 'clients':
-        return 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200';
-      case 'team':
-        return 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200';
-      case 'finance':
-        return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200';
-      case 'hr':
-        return 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200';
-      default:
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
-    }
-  };
 
   // Toggle star function - use appropriate bulk action based on current star state
   const toggleStar = (emailId, isStarred) => {
@@ -557,33 +526,8 @@ export default function EmailTable({ emails, queryParams, type, source }) {
     <>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold leading-tight text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
-          <i className={`fa-solid ${type === 'inbox' ? 'fa-inbox text-blue-500' :
-            type === 'spam' ? 'fa-exclamation-circle text-orange-500' :
-              type === 'bin' ? 'fa-trash text-gray-500' :
-                type === 'starred' ? 'fa-star text-yellow-500' :
-                  type === 'archive' ? 'fa-archive text-purple-500' :
-                    type === 'promotions' ? 'fa-bullhorn text-purple-500' :
-                      type === 'social' ? 'fa-users text-green-500' :
-                        type === 'personal' ? 'fa-user text-indigo-500' :
-                          type === 'clients' ? 'fa-handshake text-teal-500' :
-                            type === 'team' ? 'fa-users-cog text-cyan-500' :
-                              type === 'finance' ? 'fa-dollar-sign text-emerald-500' :
-                                type === 'hr' ? 'fa-user-tie text-pink-500' :
-                                  'fa-inbox text-blue-500'
-            }`}></i>
-          {type === 'inbox' ? t('inbox_emails') :
-            type === 'spam' ? t('spam_emails') :
-              type === 'bin' ? t('bin_emails') :
-                type === 'starred' ? t('starred') :
-                  type === 'archive' ? t('archive') :
-                    type === 'promotions' ? t('promotions') :
-                      type === 'social' ? t('social') :
-                        type === 'personal' ? t('personal') :
-                          type === 'clients' ? t('clients') :
-                            type === 'team' ? t('team') :
-                              type === 'finance' ? t('finance') :
-                                type === 'hr' ? t('hr') :
-                                  t('emails')}
+          <i className={`fa-solid ${getFolderIconClass(type)}`}></i>
+          {getFolderTitle(type, t)}
         </h2>
       </div>
       <div className="mb-4">
