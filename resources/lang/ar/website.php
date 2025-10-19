@@ -148,6 +148,10 @@ return [
   'finance' => 'المالية',
   'hr' => 'الموارد البشرية',
   'labels' => 'التسميات',
+  'starred' => 'مميز بنجمة',
+  'archive' => 'الأرشيف',
+  'unarchive' => 'إلغاء الأرشفة',
+  "more"=>"المزيد",
   'from' => 'من',
   'to' => "الي",
   'subject' => 'الموضوع',
@@ -781,5 +785,4 @@ return [
   'get_gmail' => 'جلب رسائل Gmail',
   'get_outlook' => 'جلب رسائل Outlook',
   'fetch_emails' => 'جلب الرسائل',
-
 ];

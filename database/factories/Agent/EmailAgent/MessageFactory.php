@@ -17,12 +17,13 @@ class MessageFactory extends Factory
       'from_name' => $this->faker->name(),
       'to_email' => $this->faker->safeEmail(),
       'to_name' => $this->faker->name(),
-      'subject' => $this->faker->sentence(6),
+      'subject' => $this->faker->sentence(nbWords: 6),
       'body_text' => $this->faker->paragraphs(3, true),
       'source' => $this->faker->randomElement(['gmail', 'outlook']),
-      'folder' => $this->faker->randomElement(['inbox', 'spam', 'bin']),
+      'folder' => $this->faker->randomElement(['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr']),
       'is_read' => $this->faker->boolean(50),
       'is_starred' => $this->faker->boolean(20),
+      'is_archived' => $this->faker->boolean(20),
       'received_at' => $this->faker->dateTimeBetween('-30 days', 'now'),
     ];
   }

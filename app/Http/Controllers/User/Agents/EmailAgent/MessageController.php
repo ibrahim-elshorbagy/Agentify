@@ -23,7 +23,7 @@ class MessageController extends Controller
   public function emails(Request $request, $folder)
   {
     // Validate folder parameter from route
-    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr'])) {
+    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'starred', 'archive'])) {
       abort(404);
     }
 
@@ -215,6 +215,56 @@ class MessageController extends Controller
   }
 
   /**
+   * Bulk archive messages
+   */
+  public function bulkArchive(Request $request)
+  {
+    $request->validate([
+      'ids' => ['required', 'array', 'min:1'],
+      'ids.*' => ['integer', 'exists:messages,id'],
+    ]);
+
+    try {
+      $updated = $this->emailService->bulkArchive($request->ids);
+
+      return back()
+        ->with('title', __('website_response.bulk_action_completed'))
+        ->with('message', __('website_response.bulk_archived', ['count' => $updated]))
+        ->with('status', 'success');
+    } catch (\Exception $e) {
+      return back()
+        ->with('title', 'Error')
+        ->with('message', __('website_response.error_bulk_action'))
+        ->with('status', 'error');
+    }
+  }
+
+  /**
+   * Bulk unarchive messages
+   */
+  public function bulkUnarchive(Request $request)
+  {
+    $request->validate([
+      'ids' => ['required', 'array', 'min:1'],
+      'ids.*' => ['integer', 'exists:messages,id'],
+    ]);
+
+    try {
+      $updated = $this->emailService->bulkUnarchive($request->ids);
+
+      return back()
+        ->with('title', __('website_response.bulk_action_completed'))
+        ->with('message', __('website_response.bulk_unarchived', ['count' => $updated]))
+        ->with('status', 'success');
+    } catch (\Exception $e) {
+      return back()
+        ->with('title', 'Error')
+        ->with('message', __('website_response.error_bulk_action'))
+        ->with('status', 'error');
+    }
+  }
+
+  /**
    * Bulk update messages folder
    */
   public function bulkUpdateFolder(Request $request, $folder)
@@ -225,7 +275,7 @@ class MessageController extends Controller
     ]);
 
     // Validate folder parameter from route
-    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr'])) {
+    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'starred', 'archive'])) {
       abort(404);
     }
 

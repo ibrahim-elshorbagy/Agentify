@@ -18,6 +18,17 @@ export default function EmailTable({ emails, queryParams, type, source }) {
     });
   };
 
+  // Toggle archive function - use appropriate bulk action based on current archive state
+  const toggleArchive = (emailId, isArchived) => {
+    const route_name = isArchived ? 'user.email-agent.bulk.unarchive' : 'user.email-agent.bulk.archive';
+    router.patch(route(route_name), {
+      ids: [emailId]
+    }, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
   // Toggle read function - use appropriate bulk action based on current read state
   const toggleRead = (emailId, isRead) => {
     const route_name = isRead ? 'user.email-agent.bulk.mark-unread' : 'user.email-agent.bulk.mark-read';
@@ -107,6 +118,24 @@ export default function EmailTable({ emails, queryParams, type, source }) {
     });
   };
 
+  const handleBulkArchive = async (ids) => {
+    router.patch(route('user.email-agent.bulk.archive'), {
+      ids
+    }, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
+  const handleBulkUnarchive = async (ids) => {
+    router.patch(route('user.email-agent.bulk.unarchive'), {
+      ids
+    }, {
+      preserveState: true,
+      preserveScroll: true,
+    });
+  };
+
   // Unified bulk update folder function
   const handleBulkUpdateFolder = async (ids, folder) => {
     router.patch(route('user.email-agent.bulk.update-folder', { folder }), {
@@ -158,6 +187,30 @@ export default function EmailTable({ emails, queryParams, type, source }) {
         variant: 'green'
       }
     ];
+
+    // Add archive actions for folders that can be archived (not archive/starred/spam/bin)
+    if (!['archive', 'starred', 'spam', 'bin'].includes(type)) {
+      baseActions.push(
+        {
+          label: t('archive'),
+          icon: 'fa-solid fa-archive',
+          handler: handleBulkArchive,
+          variant: 'blue'
+        }
+      );
+    }
+
+    // Add unarchive action for archive folder
+    if (type === 'archive') {
+      baseActions.push(
+        {
+          label: t('unarchive'),
+          icon: 'fa-solid fa-undo',
+          handler: handleBulkUnarchive,
+          variant: 'blue'
+        }
+      );
+    }
 
     // Add folder-specific actions
     if (type === 'inbox') {
@@ -431,6 +484,21 @@ export default function EmailTable({ emails, queryParams, type, source }) {
               )}
             </button>
 
+            {/* Archive toggle - only show for folders that can be archived */}
+            {(!['archive', 'starred', 'spam', 'bin'].includes(type) || type === 'archive') && (
+              <button
+                onClick={() => toggleArchive(email.id, email.is_archived)}
+                className="hover:scale-110 transition-transform duration-200"
+                title={email.is_archived ? t('unarchive') : t('archive')}
+              >
+                {email.is_archived ? (
+                  <i className="fa-solid fa-undo text-purple-500 text-lg hover:text-purple-600"></i>
+                ) : (
+                  <i className="fa-solid fa-archive text-purple-500 text-lg hover:text-purple-600"></i>
+                )}
+              </button>
+            )}
+
             {/* Dynamic Action Buttons */}
             {getActionButtons()}
           </div>
@@ -457,26 +525,30 @@ export default function EmailTable({ emails, queryParams, type, source }) {
           <i className={`fa-solid ${type === 'inbox' ? 'fa-inbox text-blue-500' :
             type === 'spam' ? 'fa-exclamation-circle text-orange-500' :
               type === 'bin' ? 'fa-trash text-gray-500' :
-                type === 'promotions' ? 'fa-bullhorn text-purple-500' :
-                  type === 'social' ? 'fa-users text-green-500' :
-                    type === 'personal' ? 'fa-user text-indigo-500' :
-                      type === 'clients' ? 'fa-handshake text-teal-500' :
-                        type === 'team' ? 'fa-users-cog text-cyan-500' :
-                          type === 'finance' ? 'fa-dollar-sign text-emerald-500' :
-                            type === 'hr' ? 'fa-user-tie text-pink-500' :
-                              'fa-inbox text-blue-500'
+                type === 'starred' ? 'fa-star text-yellow-500' :
+                  type === 'archive' ? 'fa-archive text-purple-500' :
+                    type === 'promotions' ? 'fa-bullhorn text-purple-500' :
+                      type === 'social' ? 'fa-users text-green-500' :
+                        type === 'personal' ? 'fa-user text-indigo-500' :
+                          type === 'clients' ? 'fa-handshake text-teal-500' :
+                            type === 'team' ? 'fa-users-cog text-cyan-500' :
+                              type === 'finance' ? 'fa-dollar-sign text-emerald-500' :
+                                type === 'hr' ? 'fa-user-tie text-pink-500' :
+                                  'fa-inbox text-blue-500'
             }`}></i>
           {type === 'inbox' ? t('inbox_emails') :
             type === 'spam' ? t('spam_emails') :
               type === 'bin' ? t('bin_emails') :
-                type === 'promotions' ? t('promotions') :
-                  type === 'social' ? t('social') :
-                    type === 'personal' ? t('personal') :
-                      type === 'clients' ? t('clients') :
-                        type === 'team' ? t('team') :
-                          type === 'finance' ? t('finance') :
-                            type === 'hr' ? t('hr') :
-                              t('emails')}
+                type === 'starred' ? t('starred') :
+                  type === 'archive' ? t('archive') :
+                    type === 'promotions' ? t('promotions') :
+                      type === 'social' ? t('social') :
+                        type === 'personal' ? t('personal') :
+                          type === 'clients' ? t('clients') :
+                            type === 'team' ? t('team') :
+                              type === 'finance' ? t('finance') :
+                                type === 'hr' ? t('hr') :
+                                  t('emails')}
         </h2>
       </div>
       <div className="mb-4">

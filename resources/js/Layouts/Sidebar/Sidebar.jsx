@@ -51,6 +51,15 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
         { name: t('sent'), href: route('user.email-agent.sent.emails'), route: 'user.email-agent.sent.*', icon: 'fa-paper-plane' },
         { name: t('draft'), href: route('user.email-agent.draft.emails'), route: 'user.email-agent.draft.*', icon: 'fa-file' },
         {
+          name: t('more'),
+          icon: 'fa-ellipsis-h',
+          route: 'user.email-agent.more.*',
+          submenu: [
+            { name: t('starred'), href: route('user.email-agent.emails', { folder: 'starred' }), route: 'user.email-agent.emails', icon: 'fa-star', folder: 'starred' },
+            { name: t('archive'), href: route('user.email-agent.emails', { folder: 'archive' }), route: 'user.email-agent.emails', icon: 'fa-archive', folder: 'archive' },
+          ]
+        },
+        {
           name: t('labels'),
           icon: 'fa-tags',
           route: 'user.email-agent.labels.*',
@@ -64,6 +73,7 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
             { name: t('hr'), href: route('user.email-agent.emails', { folder: 'hr' }), route: 'user.email-agent.emails', icon: 'fa-user-tie', folder: 'hr' },
           ]
         },
+
         { name: t('qna'), href: route('user.qna-agent.chat'), route: 'user.qna-agent.*', icon: 'fa-comments' },
       ],
     },

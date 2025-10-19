@@ -19,6 +19,7 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
     bin_total: (emailCounts.gmail?.bin_total || 0) + (emailCounts.outlook?.bin_total || 0),
     bin_unread: (emailCounts.gmail?.bin_unread || 0) + (emailCounts.outlook?.bin_unread || 0),
     starred_total: (emailCounts.gmail?.starred_total || 0) + (emailCounts.outlook?.starred_total || 0),
+    archive_total: (emailCounts.gmail?.archive_total || 0) + (emailCounts.outlook?.archive_total || 0),
   };
 
   const gmailContent = (

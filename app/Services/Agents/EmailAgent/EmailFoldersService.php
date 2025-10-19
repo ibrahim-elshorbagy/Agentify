@@ -17,7 +17,7 @@ class EmailFoldersService
   public function getEmails(Request $request, $folder, $source = null, $pageParam = 'page')
   {
     // Validate folder parameter
-    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr'])) {
+    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'starred', 'archive'])) {
       throw new \InvalidArgumentException('Invalid folder type');
     }
 
@@ -38,8 +38,16 @@ class EmailFoldersService
 
     // Emails query - filter by current user and folder
     $emailsQuery = Message::query()
-      ->where('folder', $folder)
       ->where('user_id', Auth::id());
+
+    // Handle special filter folders
+    if ($folder === 'starred') {
+      $emailsQuery->where('is_starred', true);
+    } elseif ($folder === 'archive') {
+      $emailsQuery->where('is_archived', true);
+    } else {
+      $emailsQuery->where('folder', $folder)->where('is_archived', false);
+    }
 
     if ($source) {
       $emailsQuery->where('source', $source);
@@ -109,6 +117,7 @@ class EmailFoldersService
             'bin_total' => Message::where('folder', 'bin')->where('user_id', $userId)->where('source', 'gmail')->count(),
             'bin_unread' => Message::where('folder', 'bin')->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
             'starred_total' => Message::where('is_starred', true)->where('user_id', $userId)->where('source', 'gmail')->count(),
+            'archive_total' => Message::where('is_archived', true)->where('user_id', $userId)->where('source', 'gmail')->count(),
         ],
         'outlook' => [
             'inbox_total' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('source', 'outlook')->count(),
@@ -118,6 +127,7 @@ class EmailFoldersService
             'bin_total' => Message::where('folder', 'bin')->where('user_id', $userId)->where('source', 'outlook')->count(),
             'bin_unread' => Message::where('folder', 'bin')->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
             'starred_total' => Message::where('is_starred', true)->where('user_id', $userId)->where('source', 'outlook')->count(),
+            'archive_total' => Message::where('is_archived', true)->where('user_id', $userId)->where('source', 'outlook')->count(),
         ],
     ];
   }
@@ -312,12 +322,32 @@ class EmailFoldersService
   }
 
   /**
+   * Bulk archive messages
+   */
+  public function bulkArchive(array $ids)
+  {
+    return Message::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->update(['is_archived' => true]);
+  }
+
+  /**
+   * Bulk unarchive messages
+   */
+  public function bulkUnarchive(array $ids)
+  {
+    return Message::whereIn('id', $ids)
+      ->where('user_id', Auth::id())
+      ->update(['is_archived' => false]);
+  }
+
+  /**
    * Bulk update messages folder (inbox, spam, bin)
    */
   public function bulkUpdateFolder(array $ids, string $folder)
   {
     // Validate folder parameter
-    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr'])) {
+    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'starred', 'archive'])) {
       throw new \InvalidArgumentException('Invalid folder type');
     }
 
