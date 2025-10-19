@@ -34,11 +34,11 @@ export default function Tabs({ tabs }) {
           {tabs.map((tab, index) => (
             <SwiperSlide key={index} className="!w-auto">
               <button
-                className={`inline-flex items-center px-4 py-2 text-sm font-medium rounded-t-lg ${
-                  activeTab === index
-                    ? "text-green-500 border-b-2 border-green-500 active dark:text-green-400 dark:border-green-400"
-                    : "border-transparent hover:text-neutral-600 hover:border-neutral-300 dark:hover:text-neutral-300"
-                }`}
+                className={`inline-flex items-center px-4 py-2 text-sm font-medium rounded-t-lg transition-colors duration-200
+                ${activeTab === index
+                    ? "text-green-500 border-b-2 border-green-500 dark:text-green-400 dark:border-green-400"
+                    : "text-neutral-800 border-transparent hover:text-neutral-600 hover:border-neutral-300 dark:text-neutral-200 dark:hover:text-neutral-300"
+                  }`}
                 onClick={() => handleTabClick(index)}
               >
                 {tab.icon && <i className={`fa-solid ${tab.icon} mx-2`}></i>}

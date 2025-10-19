@@ -17,7 +17,7 @@ class EmailFoldersService
   public function getEmails(Request $request, $folder, $source = null, $pageParam = 'page')
   {
     // Validate folder parameter
-    if (!in_array($folder, ['inbox', 'spam', 'bin'])) {
+    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr'])) {
       throw new \InvalidArgumentException('Invalid folder type');
     }
 
@@ -317,7 +317,7 @@ class EmailFoldersService
   public function bulkUpdateFolder(array $ids, string $folder)
   {
     // Validate folder parameter
-    if (!in_array($folder, ['inbox', 'spam', 'bin'])) {
+    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr'])) {
       throw new \InvalidArgumentException('Invalid folder type');
     }
 

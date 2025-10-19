@@ -2,15 +2,26 @@ import React, { useState, useEffect } from 'react';
 import SidebarSubmenuItem from './SidebarSubmenuItem';
 
 export default function SidebarSubmenu({ item }) {
+  // Helper function to check if any item in the submenu tree is active
+  const isSubmenuActive = (submenu) => {
+    return submenu.some(sub => {
+      if (sub.folder) {
+        if (route().current(sub.route) && route().params.folder === sub.folder) {
+          return true;
+        }
+      } else if (route().current(sub.route) || route().current(sub.route + '.*')) {
+        return true;
+      }
+      // Check nested submenu
+      if (sub.submenu) {
+        return isSubmenuActive(sub.submenu);
+      }
+      return false;
+    });
+  };
+
   // Check if any submenu item is active by checking route patterns and folder parameters
-  const isAnySubmenuActive = item.submenu.some(sub => {
-    // For folder-based routes, check both route and folder parameter
-    if (sub.folder) {
-      return route().current(sub.route) && route().params.folder === sub.folder;
-    }
-    // For other routes, check both exact route and wildcard pattern
-    return route().current(sub.route) || route().current(sub.route + '.*');
-  });
+  const isAnySubmenuActive = isSubmenuActive(item.submenu);
 
   // Also check if the parent route pattern is active (for child routes)
   const isParentRouteActive = route().current(item.route);
@@ -44,16 +55,26 @@ export default function SidebarSubmenu({ item }) {
               ? route().current(sub.route) && route().params.folder === sub.folder
               : route().current(sub.route) || route().current(sub.route + '.*');
 
-            return (
-              <SidebarSubmenuItem
-                key={`${sub.route}-${sub.name}-${sub.folder || 'no-folder'}-${index}`}
-                href={sub.href}
-                active={isActive}
-                icon={sub.icon}
-              >
-                {sub.name}
-              </SidebarSubmenuItem>
-            );
+            if (sub.submenu) {
+              // Render nested submenu
+              return (
+                <li key={`${sub.route}-${sub.name}-${index}`}>
+                  <SidebarSubmenu item={sub} />
+                </li>
+              );
+            } else {
+              // Render regular item
+              return (
+                <SidebarSubmenuItem
+                  key={`${sub.route}-${sub.name}-${sub.folder || 'no-folder'}-${index}`}
+                  href={sub.href}
+                  active={isActive}
+                  icon={sub.icon}
+                >
+                  {sub.name}
+                </SidebarSubmenuItem>
+              );
+            }
           })}
         </ul>
       )}

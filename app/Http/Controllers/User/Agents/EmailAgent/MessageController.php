@@ -23,7 +23,7 @@ class MessageController extends Controller
   public function emails(Request $request, $folder)
   {
     // Validate folder parameter from route
-    if (!in_array($folder, ['inbox', 'spam', 'bin'])) {
+    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr'])) {
       abort(404);
     }
 
@@ -225,7 +225,7 @@ class MessageController extends Controller
     ]);
 
     // Validate folder parameter from route
-    if (!in_array($folder, ['inbox', 'spam', 'bin'])) {
+    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr'])) {
       abort(404);
     }
 
@@ -266,7 +266,7 @@ class MessageController extends Controller
       // Get the folder of the first message to redirect appropriately
       $firstMessage = Message::find($request->ids[0]);
       $redirectFolder = $firstMessage ? $firstMessage->folder : 'inbox';
-      
+
       $deletedCount = $this->emailService->bulkDeletePermanently($request->ids);
 
       // Redirect to the appropriate folder instead of going back to potentially deleted message

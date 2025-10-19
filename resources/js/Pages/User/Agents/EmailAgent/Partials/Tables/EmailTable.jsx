@@ -225,6 +225,26 @@ export default function EmailTable({ emails, queryParams, type, source }) {
           confirmMessageKey: 'confirm_permanent_delete_bulk'
         }
       );
+    } else if (['promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr'].includes(type)) {
+      // Label folders have similar actions to inbox
+      baseActions.push(
+        {
+          label: t('move_to_spam'),
+          icon: 'fa-solid fa-exclamation-circle',
+          handler: handleBulkMoveToSpam,
+          variant: 'yellow',
+          requiresConfirmation: true,
+          confirmMessageKey: 'confirm_move_to_spam'
+        },
+        {
+          label: t('move_to_bin'),
+          icon: 'fa-solid fa-trash-can',
+          handler: handleBulkMoveToBin,
+          variant: 'delete',
+          requiresConfirmation: true,
+          confirmMessageKey: 'confirm_move_to_bin'
+        }
+      );
     }
 
     return baseActions;
@@ -437,12 +457,26 @@ export default function EmailTable({ emails, queryParams, type, source }) {
           <i className={`fa-solid ${type === 'inbox' ? 'fa-inbox text-blue-500' :
             type === 'spam' ? 'fa-exclamation-circle text-orange-500' :
               type === 'bin' ? 'fa-trash text-gray-500' :
-                'fa-inbox text-blue-500'
+                type === 'promotions' ? 'fa-bullhorn text-purple-500' :
+                  type === 'social' ? 'fa-users text-green-500' :
+                    type === 'personal' ? 'fa-user text-indigo-500' :
+                      type === 'clients' ? 'fa-handshake text-teal-500' :
+                        type === 'team' ? 'fa-users-cog text-cyan-500' :
+                          type === 'finance' ? 'fa-dollar-sign text-emerald-500' :
+                            type === 'hr' ? 'fa-user-tie text-pink-500' :
+                              'fa-inbox text-blue-500'
             }`}></i>
           {type === 'inbox' ? t('inbox_emails') :
             type === 'spam' ? t('spam_emails') :
               type === 'bin' ? t('bin_emails') :
-                t('emails')}
+                type === 'promotions' ? t('promotions') :
+                  type === 'social' ? t('social') :
+                    type === 'personal' ? t('personal') :
+                      type === 'clients' ? t('clients') :
+                        type === 'team' ? t('team') :
+                          type === 'finance' ? t('finance') :
+                            type === 'hr' ? t('hr') :
+                              t('emails')}
         </h2>
       </div>
       <div className="mb-4">

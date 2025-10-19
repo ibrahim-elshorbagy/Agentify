@@ -50,6 +50,20 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
         { name: t('bin'), href: route('user.email-agent.emails', { folder: 'bin' }), route: 'user.email-agent.emails', icon: 'fa-trash', folder: 'bin' },
         { name: t('sent'), href: route('user.email-agent.sent.emails'), route: 'user.email-agent.sent.*', icon: 'fa-paper-plane' },
         { name: t('draft'), href: route('user.email-agent.draft.emails'), route: 'user.email-agent.draft.*', icon: 'fa-file' },
+        {
+          name: t('labels'),
+          icon: 'fa-tags',
+          route: 'user.email-agent.labels.*',
+          submenu: [
+            { name: t('promotions'), href: route('user.email-agent.emails', { folder: 'promotions' }), route: 'user.email-agent.emails', icon: 'fa-bullhorn', folder: 'promotions' },
+            { name: t('social'), href: route('user.email-agent.emails', { folder: 'social' }), route: 'user.email-agent.emails', icon: 'fa-users', folder: 'social' },
+            { name: t('personal'), href: route('user.email-agent.emails', { folder: 'personal' }), route: 'user.email-agent.emails', icon: 'fa-user', folder: 'personal' },
+            { name: t('clients'), href: route('user.email-agent.emails', { folder: 'clients' }), route: 'user.email-agent.emails', icon: 'fa-handshake', folder: 'clients' },
+            { name: t('team'), href: route('user.email-agent.emails', { folder: 'team' }), route: 'user.email-agent.emails', icon: 'fa-users-cog', folder: 'team' },
+            { name: t('finance'), href: route('user.email-agent.emails', { folder: 'finance' }), route: 'user.email-agent.emails', icon: 'fa-dollar-sign', folder: 'finance' },
+            { name: t('hr'), href: route('user.email-agent.emails', { folder: 'hr' }), route: 'user.email-agent.emails', icon: 'fa-user-tie', folder: 'hr' },
+          ]
+        },
         { name: t('qna'), href: route('user.qna-agent.chat'), route: 'user.qna-agent.*', icon: 'fa-comments' },
       ],
     },

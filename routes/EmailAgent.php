@@ -13,7 +13,7 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
   // Unified Email Folders - with folder parameter
   Route::get('/email-agent/{folder}', [MessageController::class, 'emails'])
     ->name('user.email-agent.emails')
-    ->where('folder', 'inbox|spam|bin');
+    ->where('folder', 'inbox|spam|bin|promotions|social|personal|clients|team|finance|hr');
 
   // Sent and Draft Emails - Response Messages
   Route::get('/email-agent/sent', [ResponseMessageController::class, 'sent'])
@@ -51,7 +51,7 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
 
   Route::patch('/email-agent/bulk/update-folder/{folder}', [MessageController::class, 'bulkUpdateFolder'])
     ->name('user.email-agent.bulk.update-folder')
-    ->where('folder', 'inbox|spam|bin');
+    ->where('folder', 'inbox|spam|bin|promotions|social|personal|clients|team|finance|hr');
 
   Route::delete('/email-agent/bulk/delete-permanently', [MessageController::class, 'bulkDeletePermanently'])
     ->name('user.email-agent.bulk.delete-permanently');

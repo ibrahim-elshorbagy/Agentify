@@ -28,7 +28,7 @@ return new class extends Migration {
       $table->boolean('is_read')->default(false)->index();
       $table->boolean('is_starred')->default(false)->index();
 
-      $table->timestamp('received_at')->nullable()->index();
+      $table->string('received_at')->nullable()->index();
       $table->timestamps();
 
       // composite indexes
