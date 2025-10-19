@@ -7,6 +7,38 @@ import ActionButton from "@/Components/ActionButton";
 export default function EmailTable({ emails, queryParams, type, source }) {
   const { t } = useTrans();
 
+  // Function to get folder color classes
+  const getFolderColorClasses = (folder) => {
+    switch (folder) {
+      case 'inbox':
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+      case 'spam':
+        return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
+      case 'bin':
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+      case 'starred':
+        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+      case 'archive':
+        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
+      case 'promotions':
+        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
+      case 'social':
+        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+      case 'personal':
+        return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200';
+      case 'clients':
+        return 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200';
+      case 'team':
+        return 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-200';
+      case 'finance':
+        return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200';
+      case 'hr':
+        return 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200';
+      default:
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+    }
+  };
+
   // Toggle star function - use appropriate bulk action based on current star state
   const toggleStar = (emailId, isStarred) => {
     const route_name = isStarred ? 'user.email-agent.bulk.unstar' : 'user.email-agent.bulk.star';
@@ -447,8 +479,11 @@ export default function EmailTable({ emails, queryParams, type, source }) {
         </td>
         <td className="px-3 py-4 whitespace-nowrap">
           <div className="flex items-center gap-2">
-            {email.is_starred && <i className="fa-solid fa-star text-yellow-500"></i>}
-            <i className="fa-solid fa-envelope text-green-500"></i>
+            {type === 'inbox' && email.folder !== 'inbox' && (
+              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getFolderColorClasses(email.folder)}`}>
+                {t(email.folder)}
+              </span>
+            )}
             <span className={`text-sm text-neutral-900 dark:text-neutral-100 truncate max-w-xs ${!email.is_read ? 'font-bold' : 'font-normal'}`}>
               {email.subject}
             </span>
