@@ -276,7 +276,7 @@ class MessageController extends Controller
     ]);
 
     // Validate folder parameter from route
-    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'starred', 'archive'])) {
+    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'starred', 'archive','other'])) {
       abort(404);
     }
 

@@ -84,8 +84,21 @@ class EmailOperationsController extends Controller
         'access_token' => $validAccessToken,
         'provider' => 'gmail',
         'last_read' => $lastRead,
-        'folder'=>'inbox',
+        'folder_inbox' => 'inbox',
+        'folder_spam' => 'spam',
+        'folder_bin' => 'bin',
+        'folder_promotions' => 'promotions',
+        'folder_social' => 'social',
+        'folder_personal' => 'personal',
+        'folder_clients' => 'clients',
+        'folder_team' => 'team',
+        'folder_finance' => 'finance',
+        'folder_hr' => 'hr',
+        'folder_starred' => 'starred',
+        'folder_archive' => 'archive',
+        'folder_other' => 'other',
       ];
+
 
       // Call Email Agent service
       $result = $this->emailAgentService->getGmail($data);
@@ -159,7 +172,19 @@ class EmailOperationsController extends Controller
         'access_token' => $validAccessToken,
         'provider' => 'outlook',
         'last_read' => $lastRead,
-        'folder'=>'inbox',
+        'folder_inbox' => 'inbox',
+        'folder_spam' => 'spam',
+        'folder_bin' => 'bin',
+        'folder_promotions' => 'promotions',
+        'folder_social' => 'social',
+        'folder_personal' => 'personal',
+        'folder_clients' => 'clients',
+        'folder_team' => 'team',
+        'folder_finance' => 'finance',
+        'folder_hr' => 'hr',
+        'folder_starred' => 'starred',
+        'folder_archive' => 'archive',
+        'folder_other' => 'other',
 
       ];
 
