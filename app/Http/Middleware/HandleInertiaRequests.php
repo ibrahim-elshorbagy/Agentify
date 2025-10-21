@@ -46,7 +46,7 @@ class HandleInertiaRequests extends Middleware
         'showEmailModal' => session('showEmailModal'), // Flag to show modal
       ],
       'impersonate_admin_id' => session('impersonate_admin_id'),
-
+      'csrf_token' => csrf_token(),
       // 'translations' => fn () => __('website'),
       'available_locales' => ['en', 'ar'],
       'locale' => fn () => app()->getLocale(),

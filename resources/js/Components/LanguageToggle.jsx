@@ -14,6 +14,8 @@ export default function LanguageToggle({ className = '' }) {
     return locale === 'en' ? 'fa-language' : 'fa-language';
   };
 
+  const page = usePage()
+
   return (
     <form
       action={route('locale.change')}
@@ -23,7 +25,7 @@ export default function LanguageToggle({ className = '' }) {
       <input
         type="hidden"
         name="_token"
-        value={document.querySelector('meta[name="csrf-token"]').getAttribute('content')}
+        value={page.props.csrf_token}
       />
       <input
         type="hidden"

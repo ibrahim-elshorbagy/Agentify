@@ -19,7 +19,7 @@ export default function UpdateLanguagePreferences() {
     const csrfInput = document.createElement('input');
     csrfInput.type = 'hidden';
     csrfInput.name = '_token';
-    csrfInput.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    csrfInput.value = page.props.csrf_token;
     form.appendChild(csrfInput);
 
     // Add locale input
@@ -34,10 +34,7 @@ export default function UpdateLanguagePreferences() {
     form.submit();
   };
 
-  // Debugging logs
-  useEffect(() => {
-    console.log("Server locale updated to:", locale);
-  }, [locale]);
+
 
   return (
     <section className="space-y-6">
