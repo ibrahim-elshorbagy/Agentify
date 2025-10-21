@@ -765,7 +765,6 @@ return [
   'creating' => 'Creating...',
   'updating' => 'Updating...',
   'update_setting' => 'Update Setting',
-  'serial' => '#',
   'edit' => 'Edit',
   'delete' => 'Delete',
   'actions' => 'Actions',
