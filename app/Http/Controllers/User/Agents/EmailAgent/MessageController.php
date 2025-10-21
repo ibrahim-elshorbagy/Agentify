@@ -23,7 +23,7 @@ class MessageController extends Controller
   public function emails(Request $request, $folder)
   {
     // Validate folder parameter from route
-    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'starred', 'archive'])) {
+    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'starred', 'archive', 'other'])) {
       abort(404);
     }
 

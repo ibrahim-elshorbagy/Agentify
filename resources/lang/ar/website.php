@@ -147,6 +147,7 @@ return [
   'team' => 'الفريق',
   'finance' => 'المالية',
   'hr' => 'الموارد البشرية',
+  'other' => 'أخرى',
   'labels' => 'التصنيفات',
   'starred' => 'مميز بنجمة',
   'archive' => 'الأرشيف',
@@ -712,8 +713,8 @@ return [
 
   // Report Agent translations
   'report_agent' => 'وكيل التقارير',
-  'qna_agent' => 'وكيل الأسئلة والأجوبة',
-  'qna' => 'الأسئلة والأجوبة',
+  'qna_agent' => 'المساعد',
+  'qna' => 'المساعد',
   'chat' => 'محادثة',
   'files' => 'الملفات',
   'manage_files' => 'إدارة الملفات',

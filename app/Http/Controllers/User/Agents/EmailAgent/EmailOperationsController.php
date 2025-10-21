@@ -94,8 +94,6 @@ class EmailOperationsController extends Controller
         'folder_team' => 'team',
         'folder_finance' => 'finance',
         'folder_hr' => 'hr',
-        'folder_starred' => 'starred',
-        'folder_archive' => 'archive',
         'folder_other' => 'other',
       ];
 
@@ -182,8 +180,6 @@ class EmailOperationsController extends Controller
         'folder_team' => 'team',
         'folder_finance' => 'finance',
         'folder_hr' => 'hr',
-        'folder_starred' => 'starred',
-        'folder_archive' => 'archive',
         'folder_other' => 'other',
       ];
 

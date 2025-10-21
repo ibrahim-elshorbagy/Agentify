@@ -27,6 +27,8 @@ export const getFolderColorClasses = (folder) => {
       return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200';
     case 'hr':
       return 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200';
+    case 'other':
+      return 'bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-200';
     default:
       return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
   }
@@ -59,6 +61,8 @@ export const getFolderIconClass = (type) => {
       return 'fa-dollar-sign text-emerald-500';
     case 'hr':
       return 'fa-user-tie text-pink-500';
+    case 'other':
+      return 'fa-folder text-slate-500';
     default:
       return 'fa-inbox text-blue-500';
   }
@@ -91,6 +95,8 @@ export const getFolderTitle = (type, t) => {
       return t('finance');
     case 'hr':
       return t('hr');
+    case 'other':
+      return t('other');
     default:
       return t('emails');
   }

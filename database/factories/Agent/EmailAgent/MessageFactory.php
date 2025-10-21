@@ -20,7 +20,7 @@ class MessageFactory extends Factory
       'subject' => $this->faker->sentence(nbWords: 6),
       'body_text' => $this->faker->paragraphs(3, true),
       'source' => $this->faker->randomElement(['gmail', 'outlook']),
-      'folder' => $this->faker->randomElement(['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr']),
+      'folder' => $this->faker->randomElement(['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'other']),
       'is_read' => $this->faker->boolean(50),
       'is_starred' => $this->faker->boolean(20),
       'is_archived' => $this->faker->boolean(20),
