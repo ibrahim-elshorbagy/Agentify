@@ -185,7 +185,6 @@ class EmailOperationsController extends Controller
         'folder_starred' => 'starred',
         'folder_archive' => 'archive',
         'folder_other' => 'other',
-
       ];
 
       // Call Email Agent service
