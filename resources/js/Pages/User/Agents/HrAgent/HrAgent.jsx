@@ -8,11 +8,14 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import { Link, router } from '@inertiajs/react';
 import UploadFileModal from './Partials/UploadFileModal';
 
-export default function Index({ hrAgents, queryParams }) {
+export default function Index({ hrAgents, allIds = [], queryParams }) {
   const { t } = useTrans();
 
   // Modal states
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  
+  // Selection state
+  const [selectedItems, setSelectedItems] = useState([]);
 
   // Toggle modals
   const toggleUploadModal = () => setIsUploadModalOpen(!isUploadModalOpen);
@@ -148,6 +151,19 @@ export default function Index({ hrAgents, queryParams }) {
     return index % 2 === 0 ? 'bg-green-50/80 dark:bg-green-900/20' : 'bg-green-100/60 dark:bg-green-800/30';
   };
 
+  // Select All Config
+  const selectAllConfig = allIds.length > 0 ? {
+    checked: selectedItems.length === allIds.length && allIds.every(id => selectedItems.includes(id)),
+    onChange: (e) => {
+      if (e.target.checked) {
+        setSelectedItems(allIds);
+      } else {
+        setSelectedItems([]);
+      }
+    },
+    label: `${t('select_all')} (${allIds.length}) ${t('candidates')}`
+  } : null;
+
   return (
     <AppLayout>
       <div className="h-full flex bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100 dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950 overflow-hidden relative"
@@ -198,6 +214,9 @@ export default function Index({ hrAgents, queryParams }) {
                 defaultSortField="analyzed_at"
                 defaultSortDirection="desc"
                 getRowClassName={getRowClassName}
+                selectedItems={selectedItems}
+                onSelectionChange={setSelectedItems}
+                selectAllConfig={selectAllConfig}
                 MoreButtons={
                   <>
                     {/* Action buttons */}

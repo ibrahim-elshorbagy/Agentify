@@ -174,6 +174,7 @@ return [
   'unarchive' => 'Unarchive',
   "more"=>"More",
   'select_all' => 'Select All',
+  'candidates' => 'candidates',
   'from' => 'From',
   'to' => "To",
   'subject' => 'Subject',

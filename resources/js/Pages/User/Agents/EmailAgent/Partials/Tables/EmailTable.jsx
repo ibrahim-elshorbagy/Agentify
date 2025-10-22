@@ -185,14 +185,14 @@ export default function EmailTable({ emails, queryParams, type, source, selected
             )}
           </div>
         </td>
-        <td className="px-3 py-4 whitespace-nowrap">
+        <td className="px-3 py-4 whitespace-nowrap w-32 max-w-xs">
           <div className="flex items-center gap-2">
             {type === 'inbox' && email.folder !== 'inbox' && (
-              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getFolderColorClasses(email.folder)}`}>
+              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium shrink-0 ${getFolderColorClasses(email.folder)}`}>
                 {t(email.folder)}
               </span>
             )}
-            <span className={`text-sm text-neutral-900 dark:text-neutral-100 truncate max-w-xs ${!email.is_read ? 'font-bold' : 'font-normal'}`}>
+            <span className={`text-sm text-neutral-900 dark:text-neutral-100 truncate ${!email.is_read ? 'font-bold' : 'font-normal'}`} title={email.subject}>
               {email.subject}
             </span>
           </div>

@@ -40,13 +40,13 @@ class HrAgentController extends Controller
   {
     $query = HrAgent::where('user_id', Auth::id());
 
-    // Search functionality
+        // Search functionality
     if ($request->has('search') && !empty($request->search)) {
       $search = $request->search;
       $query->where(function ($q) use ($search) {
-        $q->where('candidate_name', 'like', "%{$search}%")
-          ->orWhere('email_address', 'like', "%{$search}%")
-          ->orWhere('contact_number', 'like', "%{$search}%");
+        $q->where('candidate_name', 'like', '%' . $search . '%')
+          ->orWhere('email_address', 'like', '%' . $search . '%')
+          ->orWhere('contact_number', 'like', '%' . $search . '%');
       });
     }
 
@@ -64,10 +64,47 @@ class HrAgentController extends Controller
     $hrAgents = $query->paginate($perPage);
     $hrAgents = $this->addRowNumbers($hrAgents);
 
+    // Get all HR agent IDs matching the current filters
+    $allIds = $this->getAllHrAgentIds($request);
+
     return inertia('User/Agents/HrAgent/HrAgent', [
       'hrAgents' => $hrAgents,
+      'allIds' => $allIds,
       'queryParams' => $request->query(),
     ]);
+  }
+
+  /**
+   * Get all HR agent IDs matching the current filters
+   */
+  private function getAllHrAgentIds(Request $request)
+  {
+    $query = HrAgent::where('user_id', Auth::id());
+
+    // Apply same search functionality as index method
+    if ($request->has('search') && !empty($request->search)) {
+      $search = $request->search;
+      $query->where(function ($q) use ($search) {
+        $q->where('candidate_name', 'like', '%' . $search . '%')
+          ->orWhere('email_address', 'like', '%' . $search . '%')
+          ->orWhere('contact_number', 'like', '%' . $search . '%');
+      });
+    }
+
+    return $query->pluck('id')->toArray();
+  }
+
+  /**
+   * Add row numbers to paginated results
+   */
+  protected function addRowNumbers($paginatedData)
+  {
+    $paginatedData->getCollection()->transform(function ($item, $index) use ($paginatedData) {
+      $item->row_number = ($paginatedData->currentPage() - 1) * $paginatedData->perPage() + $index + 1;
+      return $item;
+    });
+
+    return $paginatedData;
   }
 
   /**
