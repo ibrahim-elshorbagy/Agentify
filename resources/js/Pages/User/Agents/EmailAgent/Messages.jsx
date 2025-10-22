@@ -69,7 +69,7 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
 
   return (
     <AppLayout>
-      <div className=""
+      <div className="min-h-screen"
            style={{
              backgroundImage: `
                radial-gradient(circle at 25% 25%, rgba(34, 197, 94, 0.18) 2px, transparent 2px),
