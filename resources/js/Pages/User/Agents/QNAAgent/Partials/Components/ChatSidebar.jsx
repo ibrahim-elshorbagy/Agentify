@@ -36,7 +36,7 @@ export default function ChatSidebar({
         fixed xl:relative
         top-0 left-0
         w-80 xl:w-80
-        min-h-full
+        min-h-screen
         bg-gradient-to-b from-white/95 via-green-50/90 to-emerald-50/95 dark:from-neutral-950/95 dark:via-neutral-900/90 dark:to-neutral-950/95
         backdrop-blur-xl
         border-r-2 border-green-200/60 dark:border-neutral-700/80
@@ -131,14 +131,14 @@ export default function ChatSidebar({
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-1 ml-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="flex items-center gap-1 ml-3">
                       <button
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
                           onEditConversation(conversation);
                         }}
-                        className="p-1.5 text-neutral-400 hover:text-green-500 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-lg transition-all duration-200"
+                        className="p-1 text-neutral-400 hover:text-green-500 transition-colors"
                         title={t('edit_conversation')}
                       >
                         <i className="fa-solid fa-edit text-xs"></i>
@@ -146,7 +146,7 @@ export default function ChatSidebar({
 
                       <button
                         onClick={(e) => deleteConversation(conversation, e)}
-                        className="p-1.5 text-neutral-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-all duration-200"
+                        className="p-1 text-neutral-400 hover:text-red-500 transition-colors"
                         title={t('delete_conversation')}
                       >
                         <i className="fa-solid fa-trash text-xs"></i>
