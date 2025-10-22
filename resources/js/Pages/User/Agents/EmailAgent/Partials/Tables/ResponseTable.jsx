@@ -214,9 +214,9 @@ export default function ResponseTable({ emails, queryParams, type }) {
     if (isSelected) return ''; // Let SelectableTable handle selected state
 
     if (type === 'draft') {
-      return 'bg-emerald-50/70 dark:bg-emerald-900/30 hover:bg-emerald-100/60 dark:hover:bg-emerald-800/20';
+      return index % 2 === 0 ? 'bg-emerald-50/70 dark:bg-emerald-900/30' : 'bg-emerald-100/60 dark:bg-emerald-800/20';
     } else {
-      return 'bg-green-100/60 dark:bg-green-800/30 hover:bg-green-200/50 dark:hover:bg-green-700/20';
+      return index % 2 === 0 ? 'bg-green-100/60 dark:bg-green-800/30' : 'bg-green-50/80 dark:bg-green-900/20';
     }
   };
 

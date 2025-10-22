@@ -144,8 +144,8 @@ export default function Index({ hrAgents, queryParams }) {
   const getRowClassName = (hrAgent, index, isSelected) => {
     if (isSelected) return ''; // Let SelectableTable handle selected state
 
-    // Use green styling to match the content box background
-    return 'bg-green-100/60 dark:bg-green-800/30 hover:bg-green-200/50 dark:hover:bg-green-700/20';
+    // Use alternating green colors for HR candidates
+    return index % 2 === 0 ? 'bg-green-50/80 dark:bg-green-900/20' : 'bg-green-100/60 dark:bg-green-800/30';
   };
 
   return (

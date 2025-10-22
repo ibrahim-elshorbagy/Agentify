@@ -185,12 +185,12 @@ export default function SelectableTable({
               data.map((item, index) => {
                 const isSelected = selectedItems.includes(item[idField]);
                 const customRowClass = getRowClassName ? getRowClassName(item, index, isSelected) : '';
-                const defaultRowClass = index % 2 === 0 ? 'bg-green-50/60 dark:bg-green-900/30' : 'bg-green-100/40 dark:bg-green-800/20';
+                const defaultRowClass = index % 2 === 0 ? 'bg-green-50/80 dark:bg-green-900/20' : 'bg-green-100/60 dark:bg-green-800/30';
 
                 return (
                   <tr
                     key={item[idField]}
-                    className={`transition-colors ${customRowClass || defaultRowClass} border-b border-green-200/50 dark:border-green-700/50 ${isSelected ? 'bg-green-200/60 dark:bg-green-700/40' : ''} ${onRowClick ? 'cursor-pointer' : ''}`}
+                    className={`transition-colors ${customRowClass || defaultRowClass} border-b border-green-200/50 dark:border-green-700/50 ${isSelected ? 'bg-green-100/90 dark:bg-green-800/30' : ''} ${onRowClick ? 'cursor-pointer' : ''}`}
                     onClick={onRowClick ? () => onRowClick(item) : undefined}
                   >
                     {showSelection && (
