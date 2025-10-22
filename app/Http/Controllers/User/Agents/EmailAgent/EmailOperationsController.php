@@ -68,25 +68,24 @@ class EmailOperationsController extends Controller
         'is_same_as_database' => $validAccessToken === $gmailCredential->provider_token
       ]);
 
+
       // Get the last read timestamp for Gmail messages
       $lastReadAt = Message::where('user_id', Auth::id())
         ->where('source', 'gmail')
         ->latest('created_at')
         ->value('created_at');
 
-      // Default fallback date/time
-      if ($lastReadAt) {
-        $lastRead = Carbon::parse($lastReadAt, 'UTC');
-      } else {
-        $lastRead = Carbon::parse('2002-01-01 13:45:27', 'UTC');
-      }
+      // Convert to Unix epoch (integer)
+      $afterEpoch = $lastReadAt
+        ? Carbon::parse($lastReadAt, 'UTC')->timestamp
+        : Carbon::parse('2002-01-01 13:45:27', 'UTC')->timestamp;
 
       // Prepare data for N8N webhook
       $data = [
         'user_id' => Auth::id(),
         'access_token' => $validAccessToken,
         'provider' => 'gmail',
-        'last_read' => $lastRead,
+        'last_read' => $afterEpoch,
         'folder_inbox' => 'inbox',
         'folder_spam' => 'spam',
         'folder_bin' => 'bin',
@@ -156,25 +155,23 @@ class EmailOperationsController extends Controller
           ->with('status', 'error');
       }
 
-      // Get the last read timestamp for Outlook messages
+      // Get the last read timestamp for Gmail messages
       $lastReadAt = Message::where('user_id', Auth::id())
-        ->where('source', 'outlook')
+        ->where('source', 'gmail')
         ->latest('created_at')
         ->value('created_at');
 
-      // Default fallback date/time
-      if ($lastReadAt) {
-        $lastRead = Carbon::parse($lastReadAt, 'UTC');
-      } else {
-        $lastRead = Carbon::parse('2002-01-01 13:45:27', 'UTC');
-      }
+      // Convert to Unix epoch (integer)
+      $afterEpoch = $lastReadAt
+        ? Carbon::parse($lastReadAt, 'UTC')->timestamp
+        : Carbon::parse('2002-01-01 13:45:27', 'UTC')->timestamp;
 
       // Prepare data for N8N webhook
       $data = [
         'user_id' => Auth::id(),
         'access_token' => $validAccessToken,
         'provider' => 'outlook',
-        'last_read' => $lastRead,
+        'last_read' => $afterEpoch,
         'folder_inbox' => 'inbox',
         'folder_spam' => 'spam',
         'folder_bin' => 'bin',
