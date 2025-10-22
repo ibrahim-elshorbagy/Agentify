@@ -42,7 +42,7 @@ export default function QNAAgent({
     <AppLayout>
       <Head title={t('qna_agent')} />
 
-      <div className="h-full flex bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100 dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950 overflow-hidden relative"
+      <div className="min-h-screen flex bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100 dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950 overflow-hidden relative"
            style={{
              backgroundImage: `
                radial-gradient(circle at 25% 25%, rgba(34, 197, 94, 0.18) 2px, transparent 2px),
@@ -68,9 +68,9 @@ export default function QNAAgent({
         />
 
         {/* Main Chat Area */}
-        <div className={`flex-1 flex flex-col h-full overflow-hidden ${isSidebarOpen ? 'xl:ml-0' : ''}`}>
+        <div className={`flex-1 flex flex-col min-h-screen overflow-hidden ${isSidebarOpen ? 'xl:ml-0' : ''}`}>
           {!currentConversation ? (
-            <div className="flex items-center justify-center h-full">
+            <div className="flex items-center justify-center min-h-screen">
               <div className="text-center">
                 <div className="backdrop-blur-lg bg-gradient-to-br from-white/90 via-green-50/80 to-emerald-50/90 dark:from-neutral-900/90 dark:via-neutral-800/80 dark:to-neutral-900/90 rounded-3xl p-10 mx-4 shadow-2xl border-2 border-green-200/60 dark:border-neutral-700/60 shadow-green-500/20 dark:shadow-neutral-800/30">
                   <div className="w-24 h-24 mx-auto mb-8 rounded-3xl bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 dark:from-green-500 dark:via-emerald-600 dark:to-teal-600 flex items-center justify-center shadow-2xl shadow-green-500/30 animate-pulse">

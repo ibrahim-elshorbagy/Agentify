@@ -25,7 +25,7 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
 
   const [selectedItems, setSelectedItems] = useState([]);
   const allIds = [...gmailAllIds, ...outlookAllIds];
-  
+
   // Modal state for moving emails
   const [isMoveModalOpen, setIsMoveModalOpen] = useState(false);
   const [selectedEmailsForMove, setSelectedEmailsForMove] = useState([]);
@@ -69,7 +69,7 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
 
   return (
     <AppLayout>
-      <div className="h-full flex bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100 dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950 overflow-hidden relative"
+      <div className=""
            style={{
              backgroundImage: `
                radial-gradient(circle at 25% 25%, rgba(34, 197, 94, 0.18) 2px, transparent 2px),
@@ -84,7 +84,7 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
            }}>
         <div className="flex-1 p-3 xl:p-5">
           {/* Email counts sidebar */}
-          <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="mb-6 grid grid-cols-1 md:grid-cols-2  xl:grid-cols-3 gap-4">
             {/* Inbox Count */}
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 dark:hover:shadow-blue-400/10 backdrop-blur-lg">
               <div className="flex items-center justify-between mb-3">

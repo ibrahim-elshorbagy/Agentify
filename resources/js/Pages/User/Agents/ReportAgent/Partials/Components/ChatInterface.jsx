@@ -56,7 +56,7 @@ export default function ChatInterface({
 
   if (!currentConversation) {
     return (
-      <div className="flex-1 flex flex-col h-full overflow-hidden">
+      <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
         {/* Header with Toggle Button */}
         <div className="flex-shrink-0 p-4 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
           <div className="flex items-center justify-between">
@@ -98,7 +98,7 @@ export default function ChatInterface({
   }
 
   return (
-    <div className="flex-1 flex flex-col h-full overflow-hidden">
+    <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
 
       {/* Chat Header */}
       <div className="flex-shrink-0 p-4 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">

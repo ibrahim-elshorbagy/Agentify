@@ -77,7 +77,7 @@ export default function MessagesResponse({ type, gmailEmails, outlookEmails, ema
 
   return (
     <AppLayout>
-      <div className="h-full flex bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100 dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950 overflow-hidden relative"
+      <div className=""
            style={{
              backgroundImage: `
                radial-gradient(circle at 25% 25%, rgba(34, 197, 94, 0.18) 2px, transparent 2px),

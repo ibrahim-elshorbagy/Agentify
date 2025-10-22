@@ -38,7 +38,7 @@ export default function ChatSidebar({
         fixed xl:relative
         top-0 left-0
         w-80 xl:w-80
-        h-full
+        min-h-screen
         bg-white dark:bg-neutral-900
         border-r border-neutral-200 dark:border-neutral-700
         flex flex-col

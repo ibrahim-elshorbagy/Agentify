@@ -54,7 +54,7 @@ export default function ChatInterface({
 
   if (!currentConversation) {
     return (
-      <div className="flex-1 flex flex-col h-full overflow-hidden">
+      <div className="flex-1 flex flex-col min-h-full overflow-hidden">
         {/* Header with Toggle Button */}
         <div className="flex-shrink-0 p-6 bg-gradient-to-r from-green-50/95 via-emerald-50/95 to-teal-50/95 dark:from-green-900/95 dark:via-emerald-900/95 dark:to-teal-900/95 backdrop-blur-xl border-b border-green-200/60 dark:border-green-700/60 shadow-lg shadow-green-500/10">
           <div className="flex items-center justify-between">
