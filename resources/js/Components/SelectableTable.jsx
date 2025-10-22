@@ -24,23 +24,30 @@ export default function SelectableTable({
   showSelection = true,
   pageParam = 'page',
   MoreButtons = null,
+  selectedItems: propSelectedItems,
+  onSelectionChange,
+  selectAllConfig = null,
 
 }) {
   // Initialize translation
   const { t } = useTrans();
 
   // State
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [internalSelectedItems, setInternalSelectedItems] = useState([]);
+  const selectedItems = propSelectedItems !== undefined ? propSelectedItems : internalSelectedItems;
+  const setSelectedItems = onSelectionChange || setInternalSelectedItems;
   const [selectAll, setSelectAll] = useState(false);
   const [sortField, setSortField] = useState(defaultSortField || '');
   const [sortDirection, setSortDirection] = useState(defaultSortDirection);
   const [perPage, setPerPage] = useState(queryParams.per_page || 15);
 
-  // Reset selections when data changes
+  // Reset selections when data changes (only for internal state)
   useEffect(() => {
-    setSelectedItems([]);
-    setSelectAll(false);
-  }, [data]);
+    if (propSelectedItems === undefined) {
+      setSelectedItems([]);
+      setSelectAll(false);
+    }
+  }, [data, propSelectedItems]);
 
   // Handle row selection
   const handleSelect = (item) => {
@@ -133,6 +140,7 @@ export default function SelectableTable({
         routeName={routeName}
         pageParam={pageParam}
         MoreButtons={MoreButtons}
+        selectAllConfig={selectAllConfig}
 
       />
 

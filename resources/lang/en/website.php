@@ -173,6 +173,7 @@ return [
   'archive' => 'Archive',
   'unarchive' => 'Unarchive',
   "more"=>"More",
+  'select_all' => 'Select All',
   'from' => 'From',
   'to' => "To",
   'subject' => 'Subject',

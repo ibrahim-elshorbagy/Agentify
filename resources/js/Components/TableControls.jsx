@@ -20,6 +20,7 @@ export default function TableControls({
   showSelection = true,
   pageParam = 'page',
   MoreButtons = null,
+  selectAllConfig = null,
 
 }) {
   const { t } = useTrans();
@@ -149,6 +150,22 @@ export default function TableControls({
                     </div>
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* Select All Checkbox */}
+            {selectAllConfig && (
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="selectAll"
+                  checked={selectAllConfig.checked}
+                  onChange={selectAllConfig.onChange}
+                  className="w-4 h-4 text-green-600 bg-neutral-100 border-neutral-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-neutral-800 focus:ring-2 dark:bg-neutral-700 dark:border-neutral-600"
+                />
+                <label htmlFor="selectAll" className="text-sm font-medium text-neutral-900 dark:text-neutral-100 cursor-pointer">
+                  {selectAllConfig.label}
+                </label>
               </div>
             )}
 

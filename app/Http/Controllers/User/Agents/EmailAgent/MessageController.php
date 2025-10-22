@@ -33,9 +33,14 @@ class MessageController extends Controller
     $gmailEmails = $this->addRowNumbers($gmailData['emails']);
     $outlookEmails = $this->addRowNumbers($outlookData['emails']);
 
+    $gmailAllIds = $this->emailService->getAllEmailIds($request, $folder, 'gmail');
+    $outlookAllIds = $this->emailService->getAllEmailIds($request, $folder, 'outlook');
+
     return inertia('User/Agents/EmailAgent/Messages', [
       'gmailEmails' => $gmailEmails,
       'outlookEmails' => $outlookEmails,
+      'gmailAllIds' => $gmailAllIds,
+      'outlookAllIds' => $outlookAllIds,
       'type' => $folder,
       'queryParams' => $request->query() ?: null,
       'emailCounts' => $this->emailService->getEmailCounts(),

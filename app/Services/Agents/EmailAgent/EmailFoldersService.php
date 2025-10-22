@@ -70,6 +70,41 @@ class EmailFoldersService
   }
 
   /**
+   * Get all email IDs matching the current filters for a folder
+   */
+  public function getAllEmailIds(Request $request, $folder, $source = null)
+  {
+    // Validate folder parameter
+    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'starred', 'archive', 'other'])) {
+      throw new \InvalidArgumentException('Invalid folder type');
+    }
+
+    // Emails query - filter by current user and folder
+    $emailsQuery = Message::query()
+      ->where('user_id', Auth::id());
+
+    // Handle special filter folders
+    if ($folder === 'starred') {
+      $emailsQuery->where('is_starred', true);
+    } elseif ($folder === 'archive') {
+      $emailsQuery->where('is_archived', true);
+    } elseif ($folder === 'inbox') {
+      // For inbox view, show all emails from all folders except spam and bin (and exclude archived)
+      $emailsQuery->where('is_archived', false)->whereNotIn('folder', ['spam', 'bin']);
+    } else {
+      $emailsQuery->where('folder', $folder)->where('is_archived', false);
+    }
+
+    if ($source) {
+      $emailsQuery->where('source', $source);
+    }
+
+    $this->applyFilters($emailsQuery, $request);
+
+    return $emailsQuery->pluck('id')->toArray();
+  }
+
+  /**
    * Apply shared filters to email queries
    */
   private function applyFilters($query, Request $request)

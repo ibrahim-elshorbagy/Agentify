@@ -6,8 +6,9 @@ import EmailTable from './Partials/Tables/EmailTable';
 import Tabs from '@/Components/Tabs';
 import SearchBar from '@/Components/SearchBar';
 import ActionButton from '@/Components/ActionButton';
+import MoveEmailsModal from './Partials/Modals/MoveEmailsModal';
 
-export default function Messages({ type, gmailEmails, outlookEmails, emailCounts, queryParams = null }) {
+export default function Messages({ type, gmailEmails, outlookEmails, emailCounts, gmailAllIds = [], outlookAllIds = [], queryParams = null }) {
   queryParams = queryParams || {};
   const { t } = useTrans();
 
@@ -22,10 +23,25 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
     archive_total: (emailCounts.gmail?.archive_total || 0) + (emailCounts.outlook?.archive_total || 0),
   };
 
+  const [selectedItems, setSelectedItems] = useState([]);
+  const allIds = [...gmailAllIds, ...outlookAllIds];
+  
+  // Modal state for moving emails
+  const [isMoveModalOpen, setIsMoveModalOpen] = useState(false);
+  const [selectedEmailsForMove, setSelectedEmailsForMove] = useState([]);
+  const [currentFolder, setCurrentFolder] = useState(type);
+
+  // Handle move emails modal
+  const handleMoveEmails = (selectedEmails) => {
+    setSelectedEmailsForMove(selectedEmails);
+    setCurrentFolder(type);
+    setIsMoveModalOpen(true);
+  };
+
   const gmailContent = (
     <div>
       <div className="text-neutral-900 dark:text-neutral-100">
-        <EmailTable emails={gmailEmails} queryParams={queryParams} type={type} source="gmail" />
+        <EmailTable emails={gmailEmails} queryParams={queryParams} type={type} source="gmail" selectedItems={selectedItems} onSelectionChange={setSelectedItems} allIds={gmailAllIds} onMoveEmails={handleMoveEmails} />
       </div>
     </div>
   );
@@ -33,7 +49,7 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
   const outlookContent = (
     <div>
       <div className="text-neutral-900 dark:text-neutral-100">
-        <EmailTable emails={outlookEmails} queryParams={queryParams} type={type} source="outlook" />
+        <EmailTable emails={outlookEmails} queryParams={queryParams} type={type} source="outlook" selectedItems={selectedItems} onSelectionChange={setSelectedItems} allIds={outlookAllIds} onMoveEmails={handleMoveEmails} />
       </div>
     </div>
   );
@@ -154,6 +170,14 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
           </div>
         </div>
       </div>
+
+      {/* Move Emails Modal - Rendered at root level */}
+      <MoveEmailsModal
+        isOpen={isMoveModalOpen}
+        onClose={() => setIsMoveModalOpen(false)}
+        selectedEmails={selectedEmailsForMove}
+        currentFolder={currentFolder}
+      />
     </AppLayout>
   );
 }

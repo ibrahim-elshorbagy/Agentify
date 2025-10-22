@@ -4,7 +4,6 @@ import { useState } from "react";
 import SelectableTable from "@/Components/SelectableTable";
 import SearchBar from "@/Components/SearchBar";
 import ActionButton from "@/Components/ActionButton";
-import MoveEmailsModal from "../Modals/MoveEmailsModal";
 import { getFolderColorClasses, getFolderIconClass, getFolderTitle } from "./Partials/EmailTablePartials";
 import {
   toggleStar,
@@ -20,17 +19,14 @@ import {
   getBulkActions
 } from "./Partials/EmailTableActions";
 
-export default function EmailTable({ emails, queryParams, type, source }) {
+export default function EmailTable({ emails, queryParams, type, source, selectedItems = [], onSelectionChange = null, allIds = [], onMoveEmails = null }) {
   const { t } = useTrans();
 
-  // Modal state
-  const [isMoveModalOpen, setIsMoveModalOpen] = useState(false);
-  const [selectedEmailsForMove, setSelectedEmailsForMove] = useState([]);
-
-  // Handle move emails modal
+  // Handle move emails modal - use parent handler if provided
   const handleMoveEmails = (selectedEmails) => {
-    setSelectedEmailsForMove(selectedEmails);
-    setIsMoveModalOpen(true);
+    if (onMoveEmails) {
+      onMoveEmails(selectedEmails);
+    }
   };
 
   // Table configuration
@@ -265,7 +261,22 @@ export default function EmailTable({ emails, queryParams, type, source }) {
       // Read emails have a different background
       return 'bg-green-100/60 dark:bg-green-800/30';
     }
-  }; return (
+  };
+
+  // Select All Config
+  const selectAllConfig = allIds.length > 0 ? {
+    checked: selectedItems.length === allIds.length && allIds.every(id => selectedItems.includes(id)),
+    onChange: (e) => {
+      if (e.target.checked) {
+        onSelectionChange(allIds);
+      } else {
+        onSelectionChange([]);
+      }
+    },
+    label: `${t('select_all')} (${allIds.length})`
+  } : null;
+
+  return (
     <>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold leading-tight text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
@@ -284,6 +295,7 @@ export default function EmailTable({ emails, queryParams, type, source }) {
           pageParam="page"
         />
       </div>
+
       <SelectableTable
         columns={columns}
         data={emails.data}
@@ -296,6 +308,9 @@ export default function EmailTable({ emails, queryParams, type, source }) {
         defaultSortDirection="desc"
         getRowClassName={getRowClassName}
         bulkActions={getBulkActions(type, t, handleMoveEmails)}
+        selectedItems={selectedItems}
+        onSelectionChange={onSelectionChange}
+        selectAllConfig={selectAllConfig}
         pageParam="page"
         MoreButtons={<>
           {/* Action buttons for getting emails */}
@@ -322,13 +337,6 @@ export default function EmailTable({ emails, queryParams, type, source }) {
             )}
           </div>
         </>}
-      />
-
-      <MoveEmailsModal
-        isOpen={isMoveModalOpen}
-        onClose={() => setIsMoveModalOpen(false)}
-        selectedEmails={selectedEmailsForMove}
-        currentFolder={type}
       />
     </>
   );
