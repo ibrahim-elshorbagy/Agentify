@@ -143,7 +143,7 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
       {/* Logo */}
       <div className="flex items-center justify-center mb-4">
         <Link
-          href={route('dashboard')}
+          href={route('home')}
           className="ml-2 w-48 text-2xl font-bold text-black dark:text-neutral-100"
         >
           <ApplicationLogo />
