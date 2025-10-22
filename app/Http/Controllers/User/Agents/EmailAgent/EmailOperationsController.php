@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Carbon\Carbon;
 
 class EmailOperationsController extends Controller
 {
@@ -71,12 +72,14 @@ class EmailOperationsController extends Controller
       $lastReadAt = Message::where('user_id', Auth::id())
         ->where('source', 'gmail')
         ->latest('created_at')
-        ->first()
-          ?->created_at;
+        ->value('created_at');
 
-      $lastRead = ($lastReadAt instanceof \Illuminate\Support\Carbon)
-        ? $lastReadAt->toDateString()
-        : '2002-01-01';
+      // Default fallback date/time
+      if ($lastReadAt) {
+        $lastRead = Carbon::parse($lastReadAt, 'UTC');
+      } else {
+        $lastRead = Carbon::parse('2002-01-01 13:45:27', 'UTC');
+      }
 
       // Prepare data for N8N webhook
       $data = [
@@ -157,12 +160,14 @@ class EmailOperationsController extends Controller
       $lastReadAt = Message::where('user_id', Auth::id())
         ->where('source', 'outlook')
         ->latest('created_at')
-        ->first()
-          ?->created_at;
+        ->value('created_at');
 
-      $lastRead = ($lastReadAt instanceof \Illuminate\Support\Carbon)
-        ? $lastReadAt->toDateString()
-        : '2002-01-01';
+      // Default fallback date/time
+      if ($lastReadAt) {
+        $lastRead = Carbon::parse($lastReadAt, 'UTC');
+      } else {
+        $lastRead = Carbon::parse('2002-01-01 13:45:27', 'UTC');
+      }
 
       // Prepare data for N8N webhook
       $data = [

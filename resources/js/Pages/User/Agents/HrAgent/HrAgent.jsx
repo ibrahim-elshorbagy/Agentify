@@ -180,7 +180,7 @@ export default function Index({ hrAgents, allIds = [], queryParams }) {
              animation: 'floatDots 20s ease-in-out infinite'
            }}>
         <div className="flex-1 p-3 xl:p-5">
-          <div className="overflow-hidden rounded-2xl shadow-lg bg-green-50/80 dark:bg-green-900/20 border border-green-200 dark:border-green-700 backdrop-blur-lg">
+          <div className=" rounded-2xl shadow-lg bg-green-50/80 dark:bg-green-900/20 border border-green-200 dark:border-green-700 backdrop-blur-lg">
             <div className="p-4">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold leading-tight text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
