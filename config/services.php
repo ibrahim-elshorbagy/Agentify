@@ -44,8 +44,8 @@ return [
 
   // QNA
   'qna_agent_chat' => [
-    'webhook_url' => env('QNA_AGENT_CHAT_WEBHOOK_URL'),
-    'jwt_secret' => env('QNA_AGENT_CHAT_JWT_SECRET'),
+    'webhook_url' => env('EMAIL_AGENT_CHAT_URL'),
+    'jwt_secret' => env('EMAIL_AGENT_CHAT'),
   ],
   // End Email Agent + QNA
 
