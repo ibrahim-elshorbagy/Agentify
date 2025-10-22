@@ -144,79 +144,93 @@ export default function Index({ hrAgents, queryParams }) {
   const getRowClassName = (hrAgent, index, isSelected) => {
     if (isSelected) return ''; // Let SelectableTable handle selected state
 
-    // Use the same styling as read emails in inbox
-    return 'bg-neutral-50 dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-700';
+    // Use green styling to match the content box background
+    return 'bg-green-100/60 dark:bg-green-800/30 hover:bg-green-200/50 dark:hover:bg-green-700/20';
   };
 
   return (
     <AppLayout>
-      <div className="m-3 xl:m-5">
-        <div className="overflow-hidden rounded-2xl shadow-lg dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700">
-          <div className="p-4">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold leading-tight text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
-                <i className="fa-solid fa-users text-blue-500"></i> {t('hr_agent')}
-              </h2>
+      <div className="h-full flex bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100 dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950 overflow-hidden relative"
+           style={{
+             backgroundImage: `
+               radial-gradient(circle at 25% 25%, rgba(34, 197, 94, 0.18) 2px, transparent 2px),
+               radial-gradient(circle at 75% 75%, rgba(34, 197, 94, 0.14) 1px, transparent 1px),
+               radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.10) 1.5px, transparent 1.5px),
+               radial-gradient(circle at 10% 90%, rgba(20, 184, 166, 0.08) 1px, transparent 1px),
+               radial-gradient(circle at 90% 10%, rgba(16, 185, 129, 0.06) 0.8px, transparent 0.8px)
+             `,
+             backgroundSize: '60px 60px, 40px 40px, 80px 80px, 100px 100px, 120px 120px',
+             backgroundPosition: '0 0, 20px 20px, 40px 40px, 10px 10px, 60px 60px',
+             animation: 'floatDots 20s ease-in-out infinite'
+           }}>
+        <div className="flex-1 p-3 xl:p-5">
+          <div className="overflow-hidden rounded-2xl shadow-lg bg-green-50/80 dark:bg-green-900/20 border border-green-200 dark:border-green-700 backdrop-blur-lg">
+            <div className="p-4">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold leading-tight text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+                  <i className="fa-solid fa-users text-blue-500"></i> {t('hr_agent')}
+                </h2>
 
 
-            </div>
-            <div className="mb-4">
-              <SearchBar
-                placeholder={t('search_candidates')}
-                defaultValue={queryParams.search || ''}
-                queryKey="search"
+              </div>
+              <div className="mb-4">
+                <SearchBar
+                  placeholder={t('search_candidates')}
+                  defaultValue={queryParams.search || ''}
+                  queryKey="search"
+                  routeName="user.hr-agent.index"
+                  icon="fa-search"
+                  routeParams={{}}
+                />
+              </div>
+
+
+              <SelectableTable
+                columns={columns}
+                data={hrAgents.data}
+                onRowClick={(hrAgent) => router.visit(route('user.hr-agent.view', hrAgent.id))}
                 routeName="user.hr-agent.index"
-                icon="fa-search"
-                routeParams={{}}
+                queryParams={queryParams}
+                renderRow={renderRow}
+                pagination={hrAgents}
+                bulkActions={bulkActions}
+                sortOptions={sortOptions}
+                defaultSortField="analyzed_at"
+                defaultSortDirection="desc"
+                getRowClassName={getRowClassName}
+                MoreButtons={
+                  <>
+                    {/* Action buttons */}
+                    <ActionButton
+                      onClick={toggleUploadModal}
+                      icon="fa-upload"
+                      variant="purple"
+                      size="sm"
+                    >
+                      {t('upload_cv_files')}
+                    </ActionButton>
+
+                    <ActionButton
+                      onClick={handleGetGmail}
+                      icon="fa-envelope"
+                      variant="delete"
+                      size="sm"
+                    >
+                      {t('get_gmail')}
+                    </ActionButton>
+
+                    <ActionButton
+                      onClick={handleGetOutlook}
+                      icon="fa-envelope-open"
+                      variant="info"
+                      size="sm"
+                    >
+                      {t('get_outlook')}
+                    </ActionButton>
+                  </>
+                }
               />
             </div>
-
-
-            <SelectableTable
-              columns={columns}
-              data={hrAgents.data}
-              onRowClick={(hrAgent) => router.visit(route('user.hr-agent.view', hrAgent.id))}
-              routeName="user.hr-agent.index"
-              queryParams={queryParams}
-              renderRow={renderRow}
-              pagination={hrAgents}
-              bulkActions={bulkActions}
-              sortOptions={sortOptions}
-              defaultSortField="analyzed_at"
-              defaultSortDirection="desc"
-              getRowClassName={getRowClassName}
-              MoreButtons={
-                <>
-                  {/* Action buttons */}
-                  <ActionButton
-                    onClick={toggleUploadModal}
-                    icon="fa-upload"
-                    variant="purple"
-                    size="sm"
-                  >
-                    {t('upload_cv_files')}
-                  </ActionButton>
-
-                  <ActionButton
-                    onClick={handleGetGmail}
-                    icon="fa-envelope"
-                    variant="delete"
-                    size="sm"
-                  >
-                    {t('get_gmail')}
-                  </ActionButton>
-
-                  <ActionButton
-                    onClick={handleGetOutlook}
-                    icon="fa-envelope-open"
-                    variant="info"
-                    size="sm"
-                  >
-                    {t('get_outlook')}
-                  </ActionButton>
-                </>
-              }
-            />
           </div>
         </div>
       </div>

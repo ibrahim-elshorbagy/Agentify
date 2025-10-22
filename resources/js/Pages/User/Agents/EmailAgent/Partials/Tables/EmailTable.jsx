@@ -259,11 +259,11 @@ export default function EmailTable({ emails, queryParams, type, source }) {
     if (isSelected) return ''; // Let SelectableTable handle selected state
 
     if (!email.is_read) {
-      // Unread emails have a white/light background (Gmail style)
-      return 'bg-white dark:bg-neutral-800 hover:bg-blue-100/10 dark:hover:bg-blue-100/10';
+      // Unread emails have a slightly lighter green background (Gmail style)
+      return 'bg-green-50/80 dark:bg-green-900/40 hover:bg-green-100/60 dark:hover:bg-green-800/30';
     } else {
-      // Read emails have a slightly gray background
-      return 'bg-neutral-50 dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-700';
+      // Read emails have a slightly darker green background
+      return 'bg-green-100/60 dark:bg-green-800/30 hover:bg-green-200/50 dark:hover:bg-green-700/20';
     }
   }; return (
     <>

@@ -14,3 +14,19 @@ html {
     }
 }
 
+/* Float dots animation for green backgrounds */
+@keyframes floatDots {
+    0%, 100% {
+        background-position: 0 0, 20px 20px, 40px 40px, 10px 10px, 60px 60px;
+    }
+    25% {
+        background-position: 10px 10px, 30px 30px, 50px 50px, 20px 20px, 70px 70px;
+    }
+    50% {
+        background-position: 20px 20px, 40px 40px, 60px 60px, 30px 30px, 80px 80px;
+    }
+    75% {
+        background-position: 10px 10px, 30px 30px, 50px 50px, 20px 20px, 70px 70px;
+    }
+}
+

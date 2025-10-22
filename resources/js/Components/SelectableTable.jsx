@@ -138,14 +138,14 @@ export default function SelectableTable({
 
       <div className="overflow-auto">
         <table className="w-full text-sm rtl:text-right ltr:text-left text-neutral-800 dark:text-neutral-200">
-          <thead className="text-neutral-700 uppercase border-b-2 border-neutral-500 bg-neutral-100 dark:bg-neutral-800 dark:text-neutral-300">
+          <thead className="text-neutral-700 uppercase border-b-2 border-green-300 dark:border-green-600 bg-green-100/80 dark:bg-green-900/50 dark:text-neutral-300">
             <tr>
               {showSelection && (
                 <th className="py-2 px-3 w-10">
                   <div className="flex items-center">
                     <input
                       type="checkbox"
-                      className="w-4 h-4 text-green-600 bg-neutral-100 border-neutral-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-neutral-800 dark:focus:ring-offset-neutral-800 focus:ring-2 dark:bg-neutral-700 dark:border-neutral-600"
+                      className="w-4 h-4 text-green-600 bg-green-50 border-green-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-neutral-800 dark:focus:ring-offset-neutral-800 focus:ring-2 dark:bg-green-900/50 dark:border-green-600"
                       checked={data.length > 0 && selectedItems.length === data.length}
                       onChange={handleSelectAll}
                     />
@@ -185,12 +185,12 @@ export default function SelectableTable({
               data.map((item, index) => {
                 const isSelected = selectedItems.includes(item[idField]);
                 const customRowClass = getRowClassName ? getRowClassName(item, index, isSelected) : '';
-                const defaultRowClass = index % 2 === 0 ? 'bg-neutral-100 dark:bg-neutral-800' : 'bg-neutral-50 dark:bg-neutral-900';
+                const defaultRowClass = index % 2 === 0 ? 'bg-green-50/60 dark:bg-green-900/30' : 'bg-green-100/40 dark:bg-green-800/20';
 
                 return (
                   <tr
                     key={item[idField]}
-                    className={`transition-colors ${customRowClass || defaultRowClass} border-b border-neutral-300 dark:border-neutral-800 ${isSelected ? 'bg-green-50 dark:bg-green-950' : ''} ${onRowClick ? 'cursor-pointer' : ''}`}
+                    className={`transition-colors ${customRowClass || defaultRowClass} border-b border-green-200/50 dark:border-green-700/50 ${isSelected ? 'bg-green-200/60 dark:bg-green-700/40' : ''} ${onRowClick ? 'cursor-pointer' : ''}`}
                     onClick={onRowClick ? () => onRowClick(item) : undefined}
                   >
                     {showSelection && (
@@ -204,7 +204,7 @@ export default function SelectableTable({
                         <div className="flex items-center">
                           <input
                             type="checkbox"
-                            className="w-4 h-4 text-green-600 bg-neutral-100 border-neutral-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-neutral-800 dark:focus:ring-offset-neutral-800 focus:ring-2 dark:bg-neutral-700 dark:border-neutral-600"
+                            className="w-4 h-4 text-green-600 bg-green-50 border-green-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-neutral-800 dark:focus:ring-offset-neutral-800 focus:ring-2 dark:bg-green-900/50 dark:border-green-600"
                             checked={isSelected}
                             onChange={() => { }}
                           />
