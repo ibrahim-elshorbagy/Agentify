@@ -10,6 +10,11 @@ class Message extends Model
   use HasFactory;
 
   protected $guarded = ['id'];
+
+  protected $casts = [
+    'received_at' => 'datetime',
+  ];
+
   public function responses()
   {
     return $this->hasMany(MessageResponse::class);
