@@ -198,7 +198,7 @@ export default function EmailTable({ emails, queryParams, type, source, selected
           </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-500 dark:text-neutral-400">
-          {email.received_at || email.created_at}
+          {(email.received_at || email.created_at) ? new Date(email.received_at || email.created_at).toLocaleString() : ''}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
           <div className="flex items-center justify-center gap-2">
