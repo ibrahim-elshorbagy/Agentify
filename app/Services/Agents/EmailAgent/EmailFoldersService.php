@@ -42,15 +42,17 @@ class EmailFoldersService
 
     // Handle special filter folders
     if ($folder === 'starred') {
-      $emailsQuery->where('is_starred', true);
+      $emailsQuery->where('is_starred', true)->where('is_bin', false);
     } elseif ($folder === 'archive') {
-      $emailsQuery->where('is_archived', true);
+      $emailsQuery->where('is_archived', true)->where('is_bin', false);
+    } elseif ($folder === 'bin') {
+      $emailsQuery->where('is_bin', true);
     } elseif ($folder === 'inbox') {
       // For inbox view, show all emails from all folders except spam and bin (and exclude archived)
       // $emailsQuery->whereNotIn('folder', ['spam', 'bin']);
-      $emailsQuery->where('is_archived', false)->whereNotIn('folder', ['spam', 'bin']);
+      $emailsQuery->where('is_archived', false)->whereNotIn('folder', ['spam'])->where('is_bin', false);
     } else {
-      $emailsQuery->where('folder', $folder)->where('is_archived', false);
+      $emailsQuery->where('folder', $folder)->where('is_archived', false)->where('is_bin', false);
     }
 
     if ($source) {
@@ -85,14 +87,16 @@ class EmailFoldersService
 
     // Handle special filter folders
     if ($folder === 'starred') {
-      $emailsQuery->where('is_starred', true);
+      $emailsQuery->where('is_starred', true)->where('is_bin', false);
     } elseif ($folder === 'archive') {
-      $emailsQuery->where('is_archived', true);
+      $emailsQuery->where('is_archived', true)->where('is_bin', false);
+    } elseif ($folder === 'bin') {
+      $emailsQuery->where('is_bin', true);
     } elseif ($folder === 'inbox') {
       // For inbox view, show all emails from all folders except spam and bin (and exclude archived)
-      $emailsQuery->where('is_archived', false)->whereNotIn('folder', ['spam', 'bin']);
+      $emailsQuery->where('is_archived', false)->whereNotIn('folder', ['spam'])->where('is_bin', false);
     } else {
-      $emailsQuery->where('folder', $folder)->where('is_archived', false);
+      $emailsQuery->where('folder', $folder)->where('is_archived', false)->where('is_bin', false);
     }
 
     if ($source) {
@@ -149,24 +153,24 @@ class EmailFoldersService
     $userId = Auth::id();
     return [
         'gmail' => [
-            'inbox_total' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('source', 'gmail')->count(),
-            'inbox_unread' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
-            'spam_total' => Message::where('folder', 'spam')->where('user_id', $userId)->where('source', 'gmail')->count(),
-            'spam_unread' => Message::where('folder', 'spam')->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
-            'bin_total' => Message::where('folder', 'bin')->where('user_id', $userId)->where('source', 'gmail')->count(),
-            'bin_unread' => Message::where('folder', 'bin')->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
-            'starred_total' => Message::where('is_starred', true)->where('user_id', $userId)->where('source', 'gmail')->count(),
-            'archive_total' => Message::where('is_archived', true)->where('user_id', $userId)->where('source', 'gmail')->count(),
+            'inbox_total' => Message::whereNotIn('folder', ['spam'])->where('is_bin', false)->where('is_archived', false)->where('user_id', $userId)->where('source', 'gmail')->count(),
+            'inbox_unread' => Message::whereNotIn('folder', ['spam'])->where('is_bin', false)->where('is_archived', false)->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
+            'spam_total' => Message::where('folder', 'spam')->where('is_bin', false)->where('user_id', $userId)->where('source', 'gmail')->count(),
+            'spam_unread' => Message::where('folder', 'spam')->where('is_bin', false)->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
+            'bin_total' => Message::where('is_bin', true)->where('user_id', $userId)->where('source', 'gmail')->count(),
+            'bin_unread' => Message::where('is_bin', true)->where('user_id', $userId)->where('is_read', false)->where('source', 'gmail')->count(),
+            'starred_total' => Message::where('is_starred', true)->where('is_bin', false)->where('user_id', $userId)->where('source', 'gmail')->count(),
+            'archive_total' => Message::where('is_archived', true)->where('is_bin', false)->where('user_id', $userId)->where('source', 'gmail')->count(),
         ],
         'outlook' => [
-            'inbox_total' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('source', 'outlook')->count(),
-            'inbox_unread' => Message::where('folder', 'inbox')->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
-            'spam_total' => Message::where('folder', 'spam')->where('user_id', $userId)->where('source', 'outlook')->count(),
-            'spam_unread' => Message::where('folder', 'spam')->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
-            'bin_total' => Message::where('folder', 'bin')->where('user_id', $userId)->where('source', 'outlook')->count(),
-            'bin_unread' => Message::where('folder', 'bin')->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
-            'starred_total' => Message::where('is_starred', true)->where('user_id', $userId)->where('source', 'outlook')->count(),
-            'archive_total' => Message::where('is_archived', true)->where('user_id', $userId)->where('source', 'outlook')->count(),
+            'inbox_total' => Message::whereNotIn('folder', ['spam'])->where('is_bin', false)->where('is_archived', false)->where('user_id', $userId)->where('source', 'outlook')->count(),
+            'inbox_unread' => Message::whereNotIn('folder', ['spam'])->where('is_bin', false)->where('is_archived', false)->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
+            'spam_total' => Message::where('folder', 'spam')->where('is_bin', false)->where('user_id', $userId)->where('source', 'outlook')->count(),
+            'spam_unread' => Message::where('folder', 'spam')->where('is_bin', false)->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
+            'bin_total' => Message::where('is_bin', true)->where('user_id', $userId)->where('source', 'outlook')->count(),
+            'bin_unread' => Message::where('is_bin', true)->where('user_id', $userId)->where('is_read', false)->where('source', 'outlook')->count(),
+            'starred_total' => Message::where('is_starred', true)->where('is_bin', false)->where('user_id', $userId)->where('source', 'outlook')->count(),
+            'archive_total' => Message::where('is_archived', true)->where('is_bin', false)->where('user_id', $userId)->where('source', 'outlook')->count(),
         ],
     ];
   }
@@ -390,9 +394,16 @@ class EmailFoldersService
       throw new \InvalidArgumentException('Invalid folder type');
     }
 
-    return Message::whereIn('id', $ids)
-      ->where('user_id', Auth::id())
-      ->update(['folder' => $folder]);
+    if ($folder === 'bin') {
+      return Message::whereIn('id', $ids)
+        ->where('user_id', Auth::id())
+        ->where('folder', '!=', 'spam')
+        ->update(['is_bin' => true]);
+    } else {
+      return Message::whereIn('id', $ids)
+        ->where('user_id', Auth::id())
+        ->update(['folder' => $folder, 'is_bin' => false]);
+    }
   }
 
   /**

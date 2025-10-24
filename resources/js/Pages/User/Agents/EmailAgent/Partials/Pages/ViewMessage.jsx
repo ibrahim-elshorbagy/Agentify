@@ -119,7 +119,7 @@ export default function ViewMessage({ message, responses = [] }) {
                         </div>
                         <div className="flex items-center gap-2">
                           <i className="fa-solid fa-calendar"></i>
-                          <span>{(email.received_at || email.created_at) ? new Date(email.received_at || email.created_at).toLocaleString() : ''}</span>
+                          <span>{(message.received_at || message.created_at) ? new Date(message.received_at || message.created_at).toLocaleString() : ''}</span>
                         </div>
                       </div>
                     </div>
@@ -130,7 +130,7 @@ export default function ViewMessage({ message, responses = [] }) {
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-neutral-700 dark:text-neutral-300">{t('from')}:</span>
                       <span className="text-neutral-600 dark:text-neutral-400">
-                        {message.from_name} - {message.from_email}
+                        {/* {message.from_name} - {message.from_message} */}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">

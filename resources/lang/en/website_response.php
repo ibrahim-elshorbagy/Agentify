@@ -261,4 +261,6 @@ return [
   'something_went_wrong' => 'Something went wrong. Please try again.',
   'success_title' => 'Success',
   'error_title' => 'Error',
+  'settings_updated_title' => 'Settings Updated',
+  'settings_updated_message' => 'Settings saved successfully.',
 ];

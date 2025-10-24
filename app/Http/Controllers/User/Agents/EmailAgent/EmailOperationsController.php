@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User\Agents\EmailAgent;
 use App\Http\Controllers\Controller;
 use App\Models\Site\UserCredential;
 use App\Models\Agent\EmailAgent\Message;
+use App\Models\User\UserSettings;
 use App\Services\Agents\EmailAgent\EmailAgentService;
 use App\Services\OAuth\GoogleOAuthService;
 use App\Services\OAuth\MicrosoftOAuthService;
@@ -30,6 +31,41 @@ class EmailOperationsController extends Controller
     $this->emailAgentService = $emailAgentService;
     $this->googleOAuthService = $googleOAuthService;
     $this->microsoftOAuthService = $microsoftOAuthService;
+  }
+
+  /**
+   * Get user's folder settings with boolean values
+   * Returns all folder settings as boolean (true/false)
+   * If setting doesn't exist, returns false as default
+   */
+  protected function getUserFolderSettings($userId)
+  {
+    // Define all possible folders and actions
+    $folders = ['inbox', 'spam', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'other'];
+    $actions = ['is_read', 'is_starred', 'is_bin', 'is_archived'];
+
+    // Get all user settings for 'auto' name with keys starting with 'folder_'
+    $settings = UserSettings::where('user_id', $userId)
+      ->where('name', 'auto')
+      ->where('key', 'like', 'folder_%')
+      ->pluck('value', 'key');
+
+    // Build the settings array with all possible combinations
+    $folderSettings = [];
+    foreach ($folders as $folder) {
+      foreach ($actions as $action) {
+        $key = "folder_{$folder}_{$action}";
+
+        // Convert string 'true'/'false' to boolean, default to false if not exists
+        if (isset($settings[$key])) {
+          $folderSettings[$key] = filter_var($settings[$key], FILTER_VALIDATE_BOOLEAN);
+        } else {
+          $folderSettings[$key] = false;
+        }
+      }
+    }
+
+    return $folderSettings;
   }
 
   /**
@@ -68,7 +104,6 @@ class EmailOperationsController extends Controller
         'is_same_as_database' => $validAccessToken === $gmailCredential->provider_token
       ]);
 
-
       // Get the last read timestamp for Gmail messages
       $lastReadAt = Message::where('user_id', Auth::id())
         ->where('source', 'gmail')
@@ -80,8 +115,11 @@ class EmailOperationsController extends Controller
         ? Carbon::parse($lastReadAt, 'UTC')->timestamp
         : Carbon::parse('2002-01-01 13:45:27', 'UTC')->timestamp;
 
-      // Prepare data for N8N webhook
-      $data = [
+      // Get user's folder settings
+      $folderSettings = $this->getUserFolderSettings(Auth::id());
+
+      // Prepare base data for N8N webhook
+      $baseData = [
         'user_id' => Auth::id(),
         'access_token' => $validAccessToken,
         'provider' => 'gmail',
@@ -99,6 +137,8 @@ class EmailOperationsController extends Controller
         'folder_other' => 'other',
       ];
 
+      // Merge base data with folder settings
+      $data = array_merge($baseData, $folderSettings);
 
       // Call Email Agent service
       $result = $this->emailAgentService->getGmail($data);
@@ -155,9 +195,9 @@ class EmailOperationsController extends Controller
           ->with('status', 'error');
       }
 
-      // Get the last read timestamp for Gmail messages
+      // Get the last read timestamp for Outlook messages
       $lastReadAt = Message::where('user_id', Auth::id())
-        ->where('source', 'gmail')
+        ->where('source', 'outlook')
         ->latest('created_at')
         ->value('created_at');
 
@@ -166,15 +206,17 @@ class EmailOperationsController extends Controller
         ? Carbon::parse($lastReadAt, 'UTC')->timestamp
         : Carbon::parse('2002-01-01 13:45:27', 'UTC')->timestamp;
 
-      // Prepare data for N8N webhook
-      $data = [
+      // Get user's folder settings
+      $folderSettings = $this->getUserFolderSettings(Auth::id());
+
+      // Prepare base data for N8N webhook
+      $baseData = [
         'user_id' => Auth::id(),
         'access_token' => $validAccessToken,
         'provider' => 'outlook',
         'last_read' => $afterEpoch,
         'folder_inbox' => 'inbox',
         'folder_spam' => 'spam',
-        'folder_bin' => 'bin',
         'folder_promotions' => 'promotions',
         'folder_social' => 'social',
         'folder_personal' => 'personal',
@@ -184,6 +226,9 @@ class EmailOperationsController extends Controller
         'folder_hr' => 'hr',
         'folder_other' => 'other',
       ];
+
+      // Merge base data with folder settings
+      $data = array_merge($baseData, $folderSettings);
 
       // Call Email Agent service
       $result = $this->emailAgentService->getOutlook($data);

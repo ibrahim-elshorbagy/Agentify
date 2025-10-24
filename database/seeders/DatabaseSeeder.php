@@ -56,13 +56,13 @@ class DatabaseSeeder extends Seeder
     $this->call(SubscriptionSystemSeeder::class);
 
     // User::factory(100)->create();
-    // Message::factory()
-    //   ->count(100)
-    //   ->has(
-    //     MessageResponse::factory()->count(2),
-    //     'responses' // 👈 relationship in Message model
-    //   )
-    //   ->create();
+    Message::factory()
+      ->count(100)
+      ->has(
+        MessageResponse::factory()->count(2),
+        'responses' // 👈 relationship in Message model
+      )
+      ->create();
 
 
 

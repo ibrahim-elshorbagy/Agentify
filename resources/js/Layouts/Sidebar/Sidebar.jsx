@@ -69,6 +69,8 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
             { name: t('other'), href: route('user.email-agent.emails', { folder: 'other' }), route: 'user.email-agent.emails', icon: 'fa-folder', folder: 'other' },
           ]
         },
+        { name: t('auto_settings'), href: route('settings.index'), route: 'settings.*', icon: 'fa-gear' },
+
       ],
     },
     {

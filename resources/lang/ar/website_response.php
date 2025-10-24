@@ -204,4 +204,8 @@ return [
   'something_went_wrong' => 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
   'success_title' => 'نجح',
 
+
+  'settings_updated_title' => 'تم تحديث الإعدادات',
+  'settings_updated_message' => 'تم حفظ الإعدادات بنجاح.',
+
 ];

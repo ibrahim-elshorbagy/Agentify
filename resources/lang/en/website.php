@@ -88,6 +88,31 @@ return [
   'danger_zone' => 'Danger Zone',
   "email_verified" => "Email Verified",
 
+  // Auto settings UI
+  'auto_settings' => 'Auto Settings',
+  'auto_settings_subtitle' => 'Configure automatic handling for incoming emails per folder.',
+  'auto_settings_note' => 'These toggles control automatic actions applied to new messages in each folder.',
+  'auto' => 'Auto',
+
+  'is_read' => 'Mark as read',
+  'is_starred' => 'Mark as starred',
+  'is_bin' => 'Move to bin',
+  'is_archived' => 'Archive',
+
+  'folder_inbox' => 'Inbox',
+  'folder_spam' => 'Spam',
+  'folder_promotions' => 'Promotions',
+  'folder_social' => 'Social',
+  'folder_personal' => 'Personal',
+  'folder_clients' => 'Clients',
+  'folder_team' => 'Team',
+  'folder_finance' => 'Finance',
+  'folder_hr' => 'HR',
+  'folder_other' => 'Other',
+  'save_settings' => 'Save Settings',
+  'reset' => 'Reset',
+  'saving' => 'Saving...',
+
 
   /* Profile Information Form */
   'update_profile_info' => 'Update your account\'s profile information and email address',

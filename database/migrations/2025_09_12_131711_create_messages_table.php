@@ -27,6 +27,8 @@ return new class extends Migration {
       $table->string('folder')->default('inbox')->index();
       $table->boolean('is_read')->default(false)->index();
       $table->boolean('is_starred')->default(false)->index();
+      $table->boolean('is_bin')->default(false)->index();
+      $table->boolean('is_archived')->default(false)->index();
 
       $table->timestamp('received_at')->nullable()->index();
       $table->timestamps();

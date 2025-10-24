@@ -45,11 +45,9 @@ Route::middleware('auth')->group(function () {
   // User Settings routes
   Route::prefix('settings')->name('settings.')->group(function () {
     Route::get('/', [UserSettingsController::class, 'index'])->name('index');
-    Route::post('/', [UserSettingsController::class, 'store'])->name('store');
-    Route::put('/{setting}', [UserSettingsController::class, 'update'])->name('update');
-    Route::delete('/{setting}', [UserSettingsController::class, 'destroy'])->name('destroy');
-    Route::delete('/bulk/delete', [UserSettingsController::class, 'bulkDelete'])->name('bulk.delete');
+    Route::put('/', [UserSettingsController::class, 'update'])->name('update');
   });
+
 
 });
 // User preferences routes

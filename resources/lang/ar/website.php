@@ -88,6 +88,31 @@ return [
   'danger_zone' => 'منطقة الخطر',
   "email_verified" => "تم التحقق من البريد الإلكتروني",
 
+  // Auto settings UI
+  'auto_settings' => 'إعدادات تلقائية',
+  'auto_settings_subtitle' => 'تكوين المعالجة التلقائية للبريد الوارد لكل مجلد.',
+  'auto_settings_note' => 'تتحكم هذه المفاتيح في الإجراءات التلقائية المطبقة على الرسائل الجديدة في كل مجلد.',
+  'auto' => 'تلقائي',
+
+  'is_read' => 'تعليم كمقروء',
+  'is_starred' => 'وضع نجمة',
+  'is_bin' => 'نقل إلى المحذوفات',
+  'is_archived' => 'أرشفة',
+
+  'folder_inbox' => 'الوارد',
+  'folder_spam' => 'بريد مزعج',
+  'folder_promotions' => 'عروض',
+  'folder_social' => 'اجتماعي',
+  'folder_personal' => 'شخصي',
+  'folder_clients' => 'عملاء',
+  'folder_team' => 'الفريق',
+  'folder_finance' => 'المالية',
+  'folder_hr' => 'الموارد البشرية',
+  'folder_other' => 'أخرى',
+  'save_settings' => 'حفظ الإعدادات',
+  'reset' => 'إعادة تعيين',
+  'saving' => 'جاري الحفظ...',
+  
   /* Profile Information Form */
   'update_profile_info' => 'تحديث معلومات الملف الشخصي وعنوان البريد الإلكتروني للحساب',
   'full_name' => 'الاسم الكامل',
@@ -792,4 +817,6 @@ return [
   'get_outlook' => 'جلب رسائل Outlook',
   'fetch_emails' => 'جلب الرسائل',
   'select'=>"اختر"
+
+
 ];
