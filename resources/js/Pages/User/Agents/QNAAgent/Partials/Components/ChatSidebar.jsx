@@ -36,7 +36,7 @@ export default function ChatSidebar({
         fixed xl:relative
         top-0 left-0
         w-80 xl:w-80
-        min-h-screen
+        min-h-full
         bg-gradient-to-b from-white/95 via-green-50/90 to-emerald-50/95 dark:from-neutral-950/95 dark:via-neutral-900/90 dark:to-neutral-950/95
         backdrop-blur-xl
         border-r-2 border-green-200/60 dark:border-neutral-700/80

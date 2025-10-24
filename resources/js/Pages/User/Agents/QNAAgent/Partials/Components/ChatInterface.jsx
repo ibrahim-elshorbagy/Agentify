@@ -118,8 +118,8 @@ export default function ChatInterface({
 
 
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 dark:from-green-500 dark:to-emerald-600 flex items-center justify-center shadow-lg shadow-green-500/20">
-                <i className="fa-solid fa-comments text-white text-lg"></i>
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-green-500 via-emerald-500 to-green-600 dark:from-green-600 dark:via-emerald-600 dark:to-green-700 flex items-center justify-center shadow-xl shadow-green-500/30">
+                <i className="fa-solid fa-comments text-white text-lg drop-shadow-sm"></i>
               </div>
               <div>
                 <h1 className="text-xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent tracking-tight">
@@ -159,41 +159,43 @@ export default function ChatInterface({
           messages.map((message) => (
             <div
               key={message.id}
-              className={`flex ${message.sender_type === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}
+              className={`flex ${message.sender_type === 'user' ? 'justify-end' : 'justify-start'
+                } animate-fadeIn`}
             >
               <div
-                className={`max-w-sm lg:max-w-2xl px-6 py-5 rounded-3xl min-w-0 shadow-xl transition-all duration-300 hover:shadow-2xl transform hover:scale-[1.02] ${
-                  message.sender_type === 'user'
-                    ? 'bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 text-white shadow-green-500/30 border border-green-400/20'
-                    : 'bg-gradient-to-br from-white/95 via-green-50/80 to-emerald-50/80 dark:from-neutral-800/95 dark:via-neutral-750/80 dark:to-neutral-800/95 text-neutral-900 dark:text-neutral-100 border-2 border-green-200/40 dark:border-neutral-600/40 backdrop-blur-lg shadow-green-500/10 dark:shadow-neutral-800/20'
-                }`}
+                className={`max-w-sm lg:max-w-2xl px-6 py-5 rounded-3xl min-w-0 shadow-md transition-all duration-300 hover:shadow-lg transform hover:scale-[1.01] ${message.sender_type === 'user'
+                  ?
+                  'bg-gradient-to-r from-emerald-50 via-green-50 to-emerald-100 text-neutral-800 border border-green-100 shadow-green-200/30 dark:from-green-500 dark:via-emerald-500 dark:to-green-600 dark:text-white dark:border-green-400/20 dark:shadow-green-500/30'
+                  :
+                  'bg-gradient-to-br from-white via-emerald-50/60 to-green-50/50 dark:from-neutral-800 dark:via-neutral-750 dark:to-neutral-800 text-neutral-900 dark:text-neutral-100 border border-green-100/50 dark:border-neutral-600/40 backdrop-blur-md shadow-green-200/10 dark:shadow-neutral-800/20'
+                  }`}
               >
                 <div className="flex items-start gap-4 min-w-0">
                   {message.sender_type === 'ai' && (
-                    <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 dark:from-green-500 dark:via-emerald-600 dark:to-teal-600 flex items-center justify-center shadow-lg shadow-green-500/30">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-400 via-green-500 to-teal-500 dark:from-green-500 dark:via-emerald-600 dark:to-teal-600 flex items-center justify-center shadow-md">
                       <i className="fa-solid fa-robot text-sm text-white drop-shadow-sm"></i>
                     </div>
                   )}
                   {message.sender_type === 'user' && (
-                    <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-gradient-to-br from-white/20 to-white/10 flex items-center justify-center shadow-lg">
-                      <i className="fa-solid fa-user text-sm text-white drop-shadow-sm"></i>
+                    <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-gradient-to-br from-green-100 to-emerald-200 dark:from-green-600 dark:to-emerald-700 flex items-center justify-center shadow-sm">
+                      <i className="fa-solid fa-user text-sm text-emerald-700 dark:text-white drop-shadow-sm"></i>
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
                     <p
-                      className={`whitespace-pre-line break-words leading-relaxed text-sm font-medium ${
-                        message.sender_type === 'user' ? 'text-white' : 'text-green-900 dark:text-green-100'
-                      }`}
+                      className={`whitespace-pre-line break-words leading-relaxed text-sm font-medium ${message.sender_type === 'user'
+                        ? 'text-green-800 dark:text-white'
+                        : 'text-neutral-800 dark:text-green-100'
+                        }`}
                       dir="auto"
                     >
                       {message.message}
                     </p>
 
                     <p
-                      className={`text-xs mt-4 font-semibold ${
-                        message.sender_type === 'user'
-                          ? 'text-green-100'
-                          : 'text-green-600 dark:text-green-400'
+                      className={`text-xs mt-3 font-semibold ${message.sender_type === 'user'
+                        ? 'text-green-600 dark:text-green-300'
+                        : 'text-green-700 dark:text-green-400'
                         }`}
                     >
                       {new Date(message.created_at).toLocaleTimeString()}
@@ -202,6 +204,7 @@ export default function ChatInterface({
                 </div>
               </div>
             </div>
+
           ))
 
         )}
