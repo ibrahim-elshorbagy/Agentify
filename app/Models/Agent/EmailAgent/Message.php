@@ -17,7 +17,7 @@ class Message extends Model
 
   public function responses()
   {
-    return $this->hasMany(MessageResponse::class);
+    return $this->hasMany(MessageResponse::class, 'message_id', 'message_id');
   }
 
 

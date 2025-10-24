@@ -68,7 +68,7 @@ class MessageController extends Controller
 
   public function storeResponse(Request $request, Message $message)
   {
-    $result = $this->emailService->storeResponse($request, $message->id);
+    $result = $this->emailService->storeResponse($request, $message->message_id);
 
     if ($result['success']) {
       return back()->with('success', $result['message']);

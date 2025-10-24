@@ -13,6 +13,7 @@ class MessageFactory extends Factory
   {
     return [
       'user_id' => 2,
+      'message_id' => $this->faker->unique()->numberBetween(1000000000, 9999999999), // Simulate provider message ID
       'from_email' => $this->faker->safeEmail(),
       'from_name' => $this->faker->name(),
       'to_email' => $this->faker->safeEmail(),

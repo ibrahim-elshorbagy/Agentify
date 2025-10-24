@@ -17,7 +17,9 @@ class MessageResponseFactory extends Factory
   public function definition()
   {
     return [
-      'message_id' => Message::factory(),
+      'message_id' => function () {
+        return Message::factory()->create()->message_id;
+      },
       'user_id' => $this->faker->randomElement([2, 3]), // Create for both users
       'body_text' => $this->faker->paragraphs(2, true),
       'from_email' => $this->faker->safeEmail(),

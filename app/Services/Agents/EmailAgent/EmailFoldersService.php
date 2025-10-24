@@ -179,7 +179,7 @@ class EmailFoldersService
   /**
    * Store a new message response (draft or sent)
    */
-  public function storeResponse(Request $request, $messageId)
+  public function storeResponse(Request $request, $providerMessageId)
   {
     // Validate input data
     $validatedData = $request->validate([
@@ -193,12 +193,12 @@ class EmailFoldersService
 
     try {
       // Verify the message belongs to the current user
-      $message = Message::where('id', $messageId)
+      $message = Message::where('message_id', $providerMessageId)
         ->where('user_id', Auth::id())
         ->firstOrFail();
 
       $response = MessageResponse::create([
-        'message_id' => $message->id,
+        'message_id' => $providerMessageId,
         'user_id' => Auth::id(),
         'body_text' => $validatedData['body_text'],
         'from_email' => $validatedData['from_email'],
@@ -249,7 +249,7 @@ class EmailFoldersService
         ->firstOrFail();
 
       $messageResponse = MessageResponse::create([
-        'message_id' => $validatedData['message_id'],
+        'message_id' => $message->message_id,
         'user_id' => Auth::id(),
         'body_text' => $validatedData['body_text'],
         'from_email' => $validatedData['from_email'],

@@ -135,6 +135,10 @@ class EmailOperationsController extends Controller
         'folder_finance' => 'finance',
         'folder_hr' => 'hr',
         'folder_other' => 'other',
+        
+        "sent_status"=>"sent",
+        "draft_status"=>"draft",
+
       ];
 
       // Merge base data with folder settings
@@ -225,6 +229,9 @@ class EmailOperationsController extends Controller
         'folder_finance' => 'finance',
         'folder_hr' => 'hr',
         'folder_other' => 'other',
+
+        "sent_status"=>"sent",
+        "draft_status"=>"draft",
       ];
 
       // Merge base data with folder settings

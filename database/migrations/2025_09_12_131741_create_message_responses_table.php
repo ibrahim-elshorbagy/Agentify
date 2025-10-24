@@ -12,7 +12,8 @@ return new class extends Migration {
   {
     Schema::create('message_responses', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('message_id')->constrained()->cascadeOnDelete();
+      $table->unsignedBigInteger('message_id')->nullable();
+      $table->foreign('message_id')->references('message_id')->on('messages')->onDelete('cascade');
       $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
       $table->longText('body_text')->nullable();
