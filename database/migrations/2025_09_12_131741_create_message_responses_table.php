@@ -14,6 +14,7 @@ return new class extends Migration {
       $table->id();
       $table->unsignedBigInteger('message_id')->nullable();
       $table->foreign('message_id')->references('message_id')->on('messages')->onDelete('cascade');
+      $table->unsignedBigInteger('response_message_id')->nullable();
       $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
       $table->longText('body_text')->nullable();
