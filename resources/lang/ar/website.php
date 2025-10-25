@@ -98,6 +98,8 @@ return [
   'is_starred' => 'وضع نجمة',
   'is_bin' => 'نقل إلى المحذوفات',
   'is_archived' => 'أرشفة',
+  'write_a_draft' => 'كتابة مسودة',
+  'auto_sent' => 'إرسال تلقائي',
 
   'folder_inbox' => 'الوارد',
   'folder_spam' => 'بريد مزعج',

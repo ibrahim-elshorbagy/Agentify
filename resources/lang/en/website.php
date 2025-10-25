@@ -98,6 +98,8 @@ return [
   'is_starred' => 'Mark as starred',
   'is_bin' => 'Move to bin',
   'is_archived' => 'Archive',
+  'write_a_draft' => 'Write a draft',
+  'auto_sent' => 'Auto sent',
 
   'folder_inbox' => 'Inbox',
   'folder_spam' => 'Spam',
