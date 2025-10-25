@@ -12,7 +12,6 @@ return new class extends Migration {
   {
     Schema::create('message_responses', function (Blueprint $table) {
       $table->id();
-      $table->unsignedBigInteger('message_id')->nullable();
       $table->unsignedBigInteger('message_id')->nullable()->index();
       $table->foreign('message_id')
         ->references('message_id')
