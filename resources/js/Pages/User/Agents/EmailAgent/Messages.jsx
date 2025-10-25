@@ -165,7 +165,7 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
           </div>
 
 
-          <div className="overflow-hidden rounded-2xl shadow-lg bg-green-50/80 dark:bg-green-900/20 border border-green-200 dark:border-green-700 backdrop-blur-lg">
+          <div className=" rounded-2xl shadow-lg bg-green-50/80 dark:bg-green-900/20 border border-green-200 dark:border-green-700 backdrop-blur-lg">
             <Tabs tabs={tabs} />
           </div>
         </div>
