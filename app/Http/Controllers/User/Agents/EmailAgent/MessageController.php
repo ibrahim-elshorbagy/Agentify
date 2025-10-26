@@ -281,7 +281,7 @@ class MessageController extends Controller
     ]);
 
     // Validate folder parameter from route
-    if (!in_array($folder, ['inbox', 'spam', 'bin', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'starred', 'archive','other'])) {
+    if (!in_array($folder, ['inbox', 'spam', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'starred', 'archive','other'])) {
       abort(404);
     }
 
@@ -327,6 +327,56 @@ class MessageController extends Controller
     } catch (\Exception $e) {
       // In case of error, redirect to inbox as safe fallback
       return redirect()->route('user.email-agent.emails', ['folder' => 'inbox'])
+        ->with('title', 'Error')
+        ->with('message', __('website_response.error_bulk_action'))
+        ->with('status', 'error');
+    }
+  }
+
+  /**
+   * Bulk move messages to bin
+   */
+  public function bulkMoveToBin(Request $request)
+  {
+    $request->validate([
+      'ids' => ['required', 'array', 'min:1'],
+      'ids.*' => ['integer', 'exists:messages,id'],
+    ]);
+
+    try {
+      $updated = Message::whereIn('id', $request->ids)->where('user_id', Auth::id())->update(['is_bin' => true]);
+
+      return back()
+        ->with('title', __('website_response.bulk_action_completed'))
+        ->with('message', __('website_response.bulk_moved_to_bin', ['count' => $updated]))
+        ->with('status', 'success');
+    } catch (\Exception $e) {
+      return back()
+        ->with('title', 'Error')
+        ->with('message', __('website_response.error_bulk_action'))
+        ->with('status', 'error');
+    }
+  }
+
+  /**
+   * Bulk restore messages from bin
+   */
+  public function bulkRestoreFromBin(Request $request)
+  {
+    $request->validate([
+      'ids' => ['required', 'array', 'min:1'],
+      'ids.*' => ['integer', 'exists:messages,id'],
+    ]);
+
+    try {
+      $updated = Message::whereIn('id', $request->ids)->where('user_id', Auth::id())->update(['is_bin' => false]);
+
+      return back()
+        ->with('title', __('website_response.bulk_action_completed'))
+        ->with('message', __('website_response.bulk_restored_from_bin', ['count' => $updated]))
+        ->with('status', 'success');
+    } catch (\Exception $e) {
+      return back()
         ->with('title', 'Error')
         ->with('message', __('website_response.error_bulk_action'))
         ->with('status', 'error');

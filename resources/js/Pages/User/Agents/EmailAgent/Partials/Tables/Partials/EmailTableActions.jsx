@@ -45,8 +45,22 @@ export const updateFolder = (emailId, folder) => {
 
 // Individual action functions using the unified updateFolder
 export const moveToSpam = (emailId) => updateFolder(emailId, 'spam');
-export const moveToBin = (emailId) => updateFolder(emailId, 'bin');
-export const restore = (emailId) => updateFolder(emailId, 'inbox');
+export const moveToBin = (emailId) => {
+  router.patch(route('user.email-agent.bulk.move-to-bin'), {
+    ids: [emailId]
+  }, {
+    preserveState: true,
+    preserveScroll: true,
+  });
+};
+export const restore = (emailId) => {
+  router.patch(route('user.email-agent.bulk.restore-from-bin'), {
+    ids: [emailId]
+  }, {
+    preserveState: true,
+    preserveScroll: true,
+  });
+};
 
 // Handle Gmail button click
 export const handleGetGmail = () => {
@@ -140,8 +154,24 @@ export const handleBulkUpdateFolder = async (ids, folder) => {
 
 // Bulk action handlers using the unified function
 export const handleBulkMoveToSpam = async (ids) => handleBulkUpdateFolder(ids, 'spam');
-export const handleBulkMoveToBin = async (ids) => handleBulkUpdateFolder(ids, 'bin');
+export const handleBulkMoveToBin = async (ids) => {
+  router.patch(route('user.email-agent.bulk.move-to-bin'), {
+    ids
+  }, {
+    preserveState: true,
+    preserveScroll: true,
+  });
+};
 export const handleBulkRestore = async (ids) => handleBulkUpdateFolder(ids, 'inbox');
+
+export const handleBulkRestoreFromBin = async (ids) => {
+  router.patch(route('user.email-agent.bulk.restore-from-bin'), {
+    ids
+  }, {
+    preserveState: true,
+    preserveScroll: true,
+  });
+};
 
 export const handleBulkDeletePermanently = async (ids) => {
   router.delete(route('user.email-agent.bulk.delete-permanently'), {
@@ -254,7 +284,7 @@ export const getBulkActions = (type, t, onMoveEmails) => {
       {
         label: t('restore_to_inbox'),
         icon: 'fa-solid fa-undo',
-        handler: handleBulkRestore,
+        handler: handleBulkRestoreFromBin,
         variant: 'blue',
         requiresConfirmation: true,
         confirmMessageKey: 'confirm_restore_emails'

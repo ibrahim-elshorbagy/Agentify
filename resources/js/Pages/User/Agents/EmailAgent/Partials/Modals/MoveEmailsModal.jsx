@@ -42,7 +42,6 @@ export default function MoveEmailsModal({ isOpen, onClose, selectedEmails, curre
     { value: 'hr', label: t('hr') },
     { value: 'other', label: t('other') },
     { value: 'spam', label: t('spam_emails') },
-    { value: 'bin', label: t('bin_emails') },
   ].filter(option => option.value !== currentFolder);
 
   return (

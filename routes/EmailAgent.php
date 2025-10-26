@@ -57,7 +57,13 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
 
   Route::patch('/email-agent/bulk/update-folder/{folder}', [MessageController::class, 'bulkUpdateFolder'])
     ->name('user.email-agent.bulk.update-folder')
-    ->where('folder', 'inbox|spam|bin|promotions|social|personal|clients|team|finance|hr|starred|archive|other');
+    ->where('folder', 'inbox|spam|promotions|social|personal|clients|team|finance|hr|starred|archive|other');
+
+  Route::patch('/email-agent/bulk/move-to-bin', [MessageController::class, 'bulkMoveToBin'])
+    ->name('user.email-agent.bulk.move-to-bin');
+
+  Route::patch('/email-agent/bulk/restore-from-bin', [MessageController::class, 'bulkRestoreFromBin'])
+    ->name('user.email-agent.bulk.restore-from-bin');
 
   Route::delete('/email-agent/bulk/delete-permanently', [MessageController::class, 'bulkDeletePermanently'])
     ->name('user.email-agent.bulk.delete-permanently');
