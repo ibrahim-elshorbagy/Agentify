@@ -195,6 +195,7 @@ return [
   'oauth_test_no_emails_message' => 'تم الاتصال بنجاح ولكن تعذر جلب رسائل البريد الإلكتروني. تحقق من الأذونات.',
   'oauth_test_failed_title' => 'فشل اختبار الاتصال',
   'oauth_test_failed_message' => 'فشل اختبار الاتصال. يرجى التحقق من اتصالك والمحاولة مرة أخرى.',
+  "bulk_restored_from_bin"=>"تم استعادة :count بريد من سلة المهملات بنجاح.",
 
   // Email Agent responses
   'no_gmail_connection' => 'لا يوجد حساب Gmail متصل. يرجى ربط حساب Gmail الخاص بك أولاً.',

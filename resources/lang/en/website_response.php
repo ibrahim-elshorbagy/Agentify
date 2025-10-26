@@ -252,7 +252,7 @@ return [
   'oauth_test_no_emails_message' => 'Connected successfully but unable to fetch emails. Check permissions.',
   'oauth_test_failed_title' => 'Connection Test Failed',
   'oauth_test_failed_message' => 'Connection test failed. Please check your connection and try again.',
-
+  "bulk_restored_from_bin"=>" :count emails have been restored from bin successfully.",
   // Email Agent responses
   'no_gmail_connection' => 'No Gmail account connected. Please connect your Gmail account first.',
   'no_outlook_connection' => 'No Outlook account connected. Please connect your Outlook account first.',
