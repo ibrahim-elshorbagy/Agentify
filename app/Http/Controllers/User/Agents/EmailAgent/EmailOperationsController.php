@@ -41,7 +41,7 @@ class EmailOperationsController extends Controller
   protected function getUserFolderSettings($userId)
   {
     // Define all possible folders and actions
-    $folders = ['inbox', 'spam', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'other'];
+    $folders = ['spam', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'other'];
     $actions = ['is_read', 'is_starred', 'is_bin', 'is_archived', 'write_a_draft', 'auto_sent'];
 
     // Get all user settings for 'auto' name with keys starting with 'folder_'
@@ -135,7 +135,7 @@ class EmailOperationsController extends Controller
         'folder_finance' => 'finance',
         'folder_hr' => 'hr',
         'folder_other' => 'other',
-        
+
         "sent_status"=>"sent",
         "draft_status"=>"draft",
 

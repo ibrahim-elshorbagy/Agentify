@@ -28,7 +28,7 @@ class UserSettingsController extends Controller
     $user = $request->user();
 
     // Define expected folders and actions
-    $folders = ['inbox', 'spam', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'other'];
+    $folders = ['spam', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'other'];
     $actions = ['is_read', 'is_starred', 'is_bin', 'is_archived', 'write_a_draft', 'auto_sent'];
 
     // Build validation rules dynamically

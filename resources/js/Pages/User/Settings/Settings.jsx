@@ -9,7 +9,6 @@ export default function Settings({ auth, settings }) {
 
   // Define folders
   const folders = useMemo(() => [
-    { key: 'inbox', label: t('folder_inbox') },
     { key: 'spam', label: t('folder_spam') },
     { key: 'promotions', label: t('folder_promotions') },
     { key: 'social', label: t('folder_social') },
