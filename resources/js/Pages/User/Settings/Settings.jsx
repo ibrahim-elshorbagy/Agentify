@@ -26,8 +26,8 @@ export default function Settings({ auth, settings }) {
     { key: 'is_starred', label: t('is_starred'), icon: 'fa-star' },
     { key: 'is_bin', label: t('is_bin'), icon: 'fa-trash' },
     { key: 'is_archived', label: t('is_archived'), icon: 'fa-box-archive' },
-    { key: 'write_a_draft', label: t('write_a_draft'), icon: 'fa-pen-to-square' },
-    { key: 'auto_sent', label: t('auto_sent'), icon: 'fa-paper-plane' },
+    // { key: 'write_a_draft', label: t('write_a_draft'), icon: 'fa-pen-to-square' },
+    // { key: 'auto_sent', label: t('auto_sent'), icon: 'fa-paper-plane' },
   ], [t]);
 
   // Build settings map

@@ -154,14 +154,14 @@ export default function ViewMessage({ message, responses = [] }) {
                 {/* Action Buttons */}
                 <div className="border-t border-neutral-200 dark:border-neutral-700 p-4">
                   <div className="flex items-center gap-3 flex-wrap">
-                    <PrimaryButton
+                    {/* <PrimaryButton
                       onClick={() => setShowCreateModal(true)}
                       icon="fa-reply"
                       rounded="rounded-lg"
                       withShadow={false}
                     >
                       {t('reply')}
-                    </PrimaryButton>
+                    </PrimaryButton> */}
                     {/* Show restore to inbox for spam and bin folders */}
                     {(message.folder === 'spam' || message.folder === 'bin') && (
                       <PrimaryButton
@@ -215,7 +215,7 @@ export default function ViewMessage({ message, responses = [] }) {
               </div>
 
               {/* Responses Thread - same as before */}
-              {responses.length > 0 && (
+              {false && responses.length > 0 && (
                 <div className="space-y-4 mb-6">
                   <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
                     <i className="fa-solid fa-comments"></i>

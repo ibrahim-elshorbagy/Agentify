@@ -50,8 +50,8 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
         { name: t('inbox'), href: route('user.email-agent.emails', { folder: 'inbox' }), route: 'user.email-agent.emails', icon: 'fa-inbox', folder: 'inbox' },
         { name: t('spam'), href: route('user.email-agent.emails', { folder: 'spam' }), route: 'user.email-agent.emails', icon: 'fa-exclamation-circle', folder: 'spam' },
         { name: t('bin'), href: route('user.email-agent.emails', { folder: 'bin' }), route: 'user.email-agent.emails', icon: 'fa-trash', folder: 'bin' },
-        { name: t('sent'), href: route('user.email-agent.sent.emails'), route: 'user.email-agent.sent.*', icon: 'fa-paper-plane' },
-        { name: t('draft'), href: route('user.email-agent.draft.emails'), route: 'user.email-agent.draft.*', icon: 'fa-file' },
+        // { name: t('sent'), href: route('user.email-agent.sent.emails'), route: 'user.email-agent.sent.*', icon: 'fa-paper-plane' },
+        // { name: t('draft'), href: route('user.email-agent.draft.emails'), route: 'user.email-agent.draft.*', icon: 'fa-file' },
         { name: t('starred'), href: route('user.email-agent.emails', { folder: 'starred' }), route: 'user.email-agent.emails', icon: 'fa-star', folder: 'starred' },
         { name: t('archive'), href: route('user.email-agent.emails', { folder: 'archive' }), route: 'user.email-agent.emails', icon: 'fa-archive', folder: 'archive' },
         {
