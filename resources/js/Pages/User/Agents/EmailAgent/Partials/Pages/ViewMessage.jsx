@@ -145,9 +145,14 @@ export default function ViewMessage({ message, responses = [] }) {
                 {/* Message Body */}
                 <div className="p-6">
                   <div className="prose dark:prose-invert max-w-none">
-                    <div className="whitespace-pre-wrap text-neutral-900 dark:text-neutral-100">
-                      {message.body_text || t('no_message_content')}
-                    </div>
+                    {message.body_text && (
+                      <iframe
+                        srcDoc={message.body_text}
+                        className="w-full min-h-[400px] border border-neutral-200 dark:border-neutral-700 rounded-lg"
+                        title="Email Content"
+                        sandbox="allow-same-origin"
+                      />
+                    )}
                   </div>
                 </div>
 
