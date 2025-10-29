@@ -29,7 +29,8 @@ class UserSettingsController extends Controller
 
     // Define expected folders and actions
     $folders = ['spam', 'promotions', 'social', 'personal', 'clients', 'team', 'finance', 'hr', 'other'];
-    $actions = ['is_read', 'is_starred', 'is_bin', 'is_archived', 'write_a_draft', 'auto_sent'];
+    // $actions = ['is_read', 'is_starred', 'is_bin', 'is_archived', 'write_a_draft', 'auto_sent'];
+    $actions = ['is_read', 'is_starred', 'is_bin', 'is_archived'];
 
     // Build validation rules dynamically
     $rules = [];
