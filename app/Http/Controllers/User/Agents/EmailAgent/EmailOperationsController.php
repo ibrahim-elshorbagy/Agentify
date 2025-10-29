@@ -108,8 +108,8 @@ class EmailOperationsController extends Controller
       // Get the last read timestamp for Gmail messages
       $lastReadAt = Message::where('user_id', Auth::id())
         ->where('source', 'gmail')
-        ->latest('created_at')
-        ->value('created_at');
+        ->latest('received_at')
+        ->value('received_at');
 
       // Convert to Unix epoch (integer)
       $afterEpoch = $lastReadAt
@@ -203,8 +203,8 @@ class EmailOperationsController extends Controller
       // Get the last read timestamp for Outlook messages
       $lastReadAt = Message::where('user_id', Auth::id())
         ->where('source', 'outlook')
-        ->latest('created_at')
-        ->value('created_at');
+        ->latest('received_at')
+        ->value('received_at');
 
       // Convert to Unix epoch (integer)
       $afterEpoch = $lastReadAt
