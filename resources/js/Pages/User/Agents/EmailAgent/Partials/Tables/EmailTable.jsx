@@ -43,7 +43,7 @@ export default function EmailTable({ emails, queryParams, type, source, selected
     { field: 'from_email', label: t('from') },
     { field: 'subject', label: t('subject') },
     { field: 'received_at', label: t('received_at') },
-    { field: 'created_at', label: t('created_at') },
+    // { field: 'created_at', label: t('created_at') },
     { field: 'is_starred', label: t('starred') },
     { field: 'is_read', label: t('read') }
   ];
