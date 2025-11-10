@@ -4,29 +4,71 @@
 
 /* Smooth scrolling for the entire page */
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
-/* Additional smooth scrolling behavior for better performance */
 @media (prefers-reduced-motion: no-preference) {
-    html {
-        scroll-behavior: smooth;
-    }
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Float dots animation for green backgrounds */
 @keyframes floatDots {
-    0%, 100% {
-        background-position: 0 0, 20px 20px, 40px 40px, 10px 10px, 60px 60px;
-    }
-    25% {
-        background-position: 10px 10px, 30px 30px, 50px 50px, 20px 20px, 70px 70px;
-    }
-    50% {
-        background-position: 20px 20px, 40px 40px, 60px 60px, 30px 30px, 80px 80px;
-    }
-    75% {
-        background-position: 10px 10px, 30px 30px, 50px 50px, 20px 20px, 70px 70px;
-    }
+  0%, 100% {
+    background-position: 0 0, 20px 20px, 40px 40px, 10px 10px, 60px 60px;
+  }
+  25% {
+    background-position: 10px 10px, 30px 30px, 50px 50px, 20px 20px, 70px 70px;
+  }
+  50% {
+    background-position: 20px 20px, 40px 40px, 60px 60px, 30px 30px, 80px 80px;
+  }
+  75% {
+    background-position: 10px 10px, 30px 30px, 50px 50px, 20px 20px, 70px 70px;
+  }
 }
 
+/* ===== Custom Scrollbar Styling ===== */
+
+/* Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #22c55e; /* green-500 */
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #16a34a; /* green-600 */
+}
+
+*::-webkit-scrollbar-track {
+  background: #f0fdf4; /* green-50 background for light mode */
+}
+
+/* ===== Dark Mode Scrollbar ===== */
+.dark *::-webkit-scrollbar-thumb {
+  background-color: #4ade80; /* lighter green-400 for dark mode */
+}
+
+.dark *::-webkit-scrollbar-thumb:hover {
+  background-color: #22c55e; /* green-500 */
+}
+
+.dark *::-webkit-scrollbar-track {
+  background: #052e16; /* very dark green background */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #22c55e #f0fdf4;
+}
+
+.dark * {
+  scrollbar-color: #4ade80 #052e16;
+}

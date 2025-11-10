@@ -105,6 +105,26 @@ return [
   'hr_outlook_no_credential_title' => 'Outlook غير متصل',
   'hr_outlook_no_credential_message' => 'يرجى ربط حساب Outlook أولاً.',
 
+  /* Report Agent Controller Responses */
+  'files_uploaded_title' => 'تم رفع الملفات',
+  'files_uploaded_message' => 'تم رفع :count ملف بنجاح.',
+  'file_updated_title' => 'تم تحديث الملف',
+  'file_updated_message' => 'تم تحديث الملف بنجاح.',
+  'file_deleted_title' => 'تم حذف الملف',
+  'file_deleted_message' => 'تم حذف الملف بنجاح.',
+  'conversation_created_title' => 'تم إنشاء المحادثة',
+  'conversation_created_message' => 'تم إنشاء محادثة جديدة بنجاح.',
+  'conversation_updated_title' => 'تم تحديث المحادثة',
+  'conversation_updated_message' => 'تم تحديث المحادثة بنجاح.',
+  'conversation_deleted_title' => 'تم حذف المحادثة',
+  'conversation_deleted_message' => 'تم حذف المحادثة بنجاح.',
+  'message_sent_title' => 'تم إرسال الرسالة',
+  'message_sent_message' => 'تم إرسال رسالتك ومعالجتها بنجاح.',
+  'message_error_title' => 'خطأ في الرسالة',
+  'message_error_message' => 'فشل في معالجة الرسالة. يرجى المحاولة مرة أخرى.',
+  'access_denied_title' => 'تم رفض الوصول',
+  'access_denied_message' => 'ليس لديك صلاحية للوصول إلى هذا المورد.',
+
   // Message Response Management
   "message_response_created_title" => "تم إنشاء الرد ",
   "message_response_created_message" => "تم إنشاء الرد بنجاح.",

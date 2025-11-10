@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useForm } from '@inertiajs/react';
+import { router, useForm } from '@inertiajs/react';
 import { useTrans } from '@/Hooks/useTrans';
 import AutoResizeTextarea from '@/Components/AutoResizeTextarea';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 import ActionButton from '@/Components/ActionButton';
+import PredefinedQuestions from './PredefinedQuestions';
 
 export default function ChatInterface({
   currentConversation,
@@ -50,6 +51,22 @@ export default function ChatInterface({
       e.preventDefault();
       handleSubmit(e);
     }
+  };
+
+  const handlePredefinedQuestionClick = (question) => {
+    if (!currentConversation) return;
+
+    // Use router.post directly with explicit data instead of form state
+    router.post(route('user.qna-agent.messages.send'), {
+      conversation_id: currentConversation.id,
+      message: question,
+    }, {
+      preserveScroll: true,
+      onSuccess: () => {
+        textareaRef.current?.focus();
+      },
+      onError: (errors) => { console.log(errors); }
+    });
   };
 
   if (!currentConversation) {
@@ -100,7 +117,7 @@ export default function ChatInterface({
   }
 
   return (
-    <div className="flex-1 flex flex-col h-full overflow-hidden">
+    <div className="flex-1 flex flex-col min-h-screen h-full overflow-hidden">
 
       {/* Chat Header */}
       <div className="flex-shrink-0 p-6 bg-gradient-to-r from-green-50/95 via-emerald-50/95 to-teal-50/95 dark:from-neutral-950/95 dark:via-neutral-900/95 dark:to-neutral-950/95 backdrop-blur-xl border-b border-green-200/60 dark:border-neutral-700/60 shadow-lg shadow-green-500/10 dark:shadow-neutral-800/20">
@@ -213,6 +230,14 @@ export default function ChatInterface({
 
       {/* Message Input */}
       <div className="flex-shrink-0 p-6 bg-gradient-to-r from-green-50/95 via-emerald-50/95 to-teal-50/95 dark:from-neutral-950/95 dark:via-neutral-900/95 dark:to-neutral-950/95 backdrop-blur-xl border-t-2 border-green-200/60 dark:border-neutral-700/60 shadow-2xl shadow-green-500/20 dark:shadow-neutral-800/30">
+        {/* Predefined Questions */}
+        {messages.length === 0 && (
+          <PredefinedQuestions
+            onQuestionClick={handlePredefinedQuestionClick}
+            currentConversation={currentConversation}
+          />
+        )}
+
         <form onSubmit={handleSubmit} className="flex gap-4">
           <div className="flex-1">
             <AutoResizeTextarea

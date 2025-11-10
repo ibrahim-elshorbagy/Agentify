@@ -61,6 +61,16 @@ export default function ViewMessage({ message, responses = [] }) {
     }
   };
 
+  const iframeContent = `
+  ${message.body_text}
+  <script>
+    document.querySelectorAll('a').forEach(a => {
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener noreferrer');
+    });
+  </script>
+`;
+
   return (
     <AppLayout>
       <Head title={`${t('view_message')} - ${message.subject}`} />
@@ -144,15 +154,18 @@ export default function ViewMessage({ message, responses = [] }) {
 
                 {/* Message Body */}
                 <div className="p-6">
-                  <div className="prose dark:prose-invert max-w-none">
-                    {message.body_text && (
-                      <iframe
-                        srcDoc={message.body_text}
-                        className="w-full min-h-[400px] border border-neutral-200 dark:border-neutral-700 rounded-lg"
-                        title="Email Content"
-                        sandbox="allow-same-origin"
-                      />
-                    )}
+                  <div className="prose max-w-none">
+                    <div className="bg-white min-h-[800px]">
+                      {message.body_text && (
+                        <iframe
+                          srcDoc={iframeContent}
+                          className="min-h-[800px] w-full border border-neutral-200 dark:border-neutral-700 rounded-lg transition-all"
+                          title="Email Content"
+                          sandbox="allow-same-origin allow-popups allow-forms allow-scripts"
+                          dir="ltr"
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
 

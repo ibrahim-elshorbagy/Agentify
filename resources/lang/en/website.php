@@ -260,6 +260,19 @@ return [
 
   /* End Email Agent Response Messages */
 
+  /* QNA Agent Predefined Questions */
+  'qna_agent' => 'Q&A Agent',
+  'predefined_question_1' => 'Give me a summary of the emails received in the last 24 hours.',
+  'predefined_question_2' => 'Show me the latest conversation with (name).',
+  'predefined_question_3' => 'Give me a suggested reply to the email.',
+  'predefined_question_4' => 'Translate the email I received from.',
+  'start_conversation' => 'Start Your Conversation',
+  'qna_start_conversation_description' => 'Ask me anything about your emails, tasks, or need assistance with your work.',
+  'type_message_placeholder' => 'Type your message...',
+  'send' => 'Send',
+  'sending' => 'Sending...',
+  'edit' => 'Edit',
+
   /* Task Management */
   'tasks' => 'Tasks',
   'task' => 'Task',

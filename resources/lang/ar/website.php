@@ -114,7 +114,7 @@ return [
   'save_settings' => 'حفظ الإعدادات',
   'reset' => 'إعادة تعيين',
   'saving' => 'جاري الحفظ...',
-  
+
   /* Profile Information Form */
   'update_profile_info' => 'تحديث معلومات الملف الشخصي وعنوان البريد الإلكتروني للحساب',
   'full_name' => 'الاسم الكامل',
@@ -237,6 +237,18 @@ return [
 
   /* End Email Agent Response Messages */
 
+  /* QNA Agent Predefined Questions */
+  'qna_agent' => 'وكيل الأسئلة والأجوبة',
+  'predefined_question_1' => 'أعطني ملخّص الإيميلات الواردة خلال آخر 24 ساعة.',
+  'predefined_question_2' => 'أعطني آخر محادثة تمت مع (الاسم).',
+  'predefined_question_3' => 'اعطني رد مقترح على الإيميل.',
+  'predefined_question_4' => 'ترجم الإيميل اللي وصلني من.',
+  'start_conversation' => 'ابدأ محادثتك',
+  'qna_start_conversation_description' => 'اسألني أي شيء عن إيميلاتك أو مهامك أو إذا كنت تحتاج مساعدة في عملك.',
+  'type_message_placeholder' => 'اكتب رسالتك...',
+  'send' => 'إرسال',
+  'sending' => 'جاري الإرسال...',
+  'edit' => 'تعديل',
 
   /* Task Management */
   'tasks' => 'المهام',
