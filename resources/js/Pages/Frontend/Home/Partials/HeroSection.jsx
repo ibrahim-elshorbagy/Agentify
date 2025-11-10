@@ -76,7 +76,7 @@ export default function HeroSection() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-green-50 dark:bg-green-900/30 p-4 rounded-xl border border-green-200 dark:border-green-700">
                     <div className="text-sm text-green-600 dark:text-green-400">{t('total_balance')}</div>
-                    <div className="text-2xl font-bold text-green-700 dark:text-green-300">4 {t('agents')}</div>
+                    <div className="text-2xl font-bold text-green-700 dark:text-green-300">3 {t('agents')}</div>
                   </div>
                   <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-xl border border-blue-200 dark:border-blue-700">
                     <div className="text-sm text-blue-600 dark:text-blue-400">{t('monthly_income')}</div>

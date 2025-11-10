@@ -53,6 +53,12 @@ return [
   'profile_image_updated_title' => 'Profile Image Updated',
   'profile_image_updated_message' => 'Your profile image has been updated successfully.',
 
+  /* Contact Form Controller Responses */
+  'contact_message_sent_title' => 'Message Sent Successfully',
+  'contact_message_sent_message' => 'Your message has been sent successfully! We will get back to you soon.',
+  'contact_message_error_title' => 'Message Send Error',
+  'contact_message_error_message' => 'Sorry, there was an error sending your message. Please try again later.',
+
 
   /* User Management Responses */
   'user_created_title' => 'User Created',

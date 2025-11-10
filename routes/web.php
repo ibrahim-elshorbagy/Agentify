@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Agents\AgentSettingsController;
 use App\Http\Controllers\Api\Agents\ReportAgentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PreferencesController;
 use App\Http\Controllers\ProfileController;
@@ -24,6 +25,9 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
+
+// Contact form route
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/dashboard', function () {
   return Inertia::render('Dashboard');

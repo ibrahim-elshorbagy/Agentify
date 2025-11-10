@@ -53,6 +53,12 @@ return [
   'profile_image_updated_title' => 'تم تحديث الصورة ',
   'profile_image_updated_message' => 'تم تحديث صورة الملف الشخصي بنجاح.',
 
+  /* Contact Form Controller Responses */
+  'contact_message_sent_title' => 'تم إرسال الرسالة بنجاح',
+  'contact_message_sent_message' => 'تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.',
+  'contact_message_error_title' => 'خطأ في إرسال الرسالة',
+  'contact_message_error_message' => 'عذراً، حدث خطأ أثناء إرسال رسالتك. يرجى المحاولة مرة أخرى لاحقاً.',
+
   /* User Management Responses */
   'user_created_title' => 'تم إنشاء المستخدم',
   'user_created_message' => 'تم إنشاء المستخدم بنجاح.',
