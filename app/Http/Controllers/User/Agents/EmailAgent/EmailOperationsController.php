@@ -275,16 +275,12 @@ class EmailOperationsController extends Controller
 
       $validated = $request->validate([
         'email_agent_google_fetch_time' => ['nullable', 'array'],
-        'email_agent_google_fetch_time.*.hour' => ['required_with:email_agent_google_fetch_time', 'string', 'in:1,2,3,4,5,6,7,8,9,10,11,12'],
-        'email_agent_google_fetch_time.*.minute' => ['required_with:email_agent_google_fetch_time', 'string', 'in:0,15,30,45'],
-        'email_agent_google_fetch_time.*.period' => ['required_with:email_agent_google_fetch_time', 'string', 'in:am,pm'],
+        'email_agent_google_fetch_time.*' => ['required', 'date_format:H:i'],
         'email_agent_outlook_fetch_time' => ['nullable', 'array'],
-        'email_agent_outlook_fetch_time.*.hour' => ['required_with:email_agent_outlook_fetch_time', 'string', 'in:1,2,3,4,5,6,7,8,9,10,11,12'],
-        'email_agent_outlook_fetch_time.*.minute' => ['required_with:email_agent_outlook_fetch_time', 'string', 'in:0,15,30,45'],
-        'email_agent_outlook_fetch_time.*.period' => ['required_with:email_agent_outlook_fetch_time', 'string', 'in:am,pm'],
+        'email_agent_outlook_fetch_time.*' => ['required', 'date_format:H:i'],
       ]);
 
-      // Convert and save Google fetch times if provided
+      // Save Google fetch times if provided
       if (!empty($validated['email_agent_google_fetch_time'])) {
         UserSettings::updateOrCreate(
           [
@@ -298,7 +294,7 @@ class EmailOperationsController extends Controller
         );
       }
 
-      // Convert and save Outlook fetch times if provided
+      // Save Outlook fetch times if provided
       if (!empty($validated['email_agent_outlook_fetch_time'])) {
         UserSettings::updateOrCreate(
           [
@@ -314,14 +310,21 @@ class EmailOperationsController extends Controller
 
       Log::info('Email schedule updated successfully', [
         'user_id' => $user->id,
-        'google_times' => $validated['email_agent_google_fetch_time'] ?? 'not updated',
-        'outlook_times' => $validated['email_agent_outlook_fetch_time'] ?? 'not updated',
+        'google_times' => $validated['email_agent_google_fetch_time'] ?? [],
+        'outlook_times' => $validated['email_agent_outlook_fetch_time'] ?? [],
       ]);
 
       return back()
         ->with('title', __('website_response.schedule_updated_title'))
         ->with('message', __('website_response.schedule_updated_message'))
         ->with('status', 'success');
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+      Log::error('EmailOperationsController updateSchedule validation error', [
+        'errors' => $e->errors(),
+        'user_id' => Auth::id()
+      ]);
+      throw $e;
 
     } catch (\Exception $e) {
       Log::error('EmailOperationsController updateSchedule error', [
@@ -335,4 +338,5 @@ class EmailOperationsController extends Controller
         ->with('status', 'error');
     }
   }
+
 }
