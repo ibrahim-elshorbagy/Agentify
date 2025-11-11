@@ -89,3 +89,7 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
   Route::post('/email-agent/schedule/update', [EmailOperationsController::class, 'updateSchedule'])
     ->name('user.email-agent.schedule.update');
 });
+
+
+Route::get('/email-agent/server-time', [EmailOperationsController::class, 'getServerTimeInfo'])
+    ->name('user.email-agent.server-time');

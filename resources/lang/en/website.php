@@ -924,5 +924,9 @@ return [
   'am' => 'AM',
   'pm' => 'PM',
   'schedule_description' => 'Configure automatic email fetch times for your email accounts',
+  'server_time_info' => 'Website Time Information',
+  'current_server_time' => 'Current Website Time',
+  'server_timezone' => 'Website Timezone',
+  'schedule_times_based_on_server' => 'All scheduled times are based on Website timezone. Please set your times according to this timezone.',
 
 ];

@@ -13,11 +13,26 @@ export default function EmailScheduleModal({ isOpen, onClose, initialSettings = 
   const { t } = useTrans();
   const [googleTimes, setGoogleTimes] = useState(['09:00']);
   const [outlookTimes, setOutlookTimes] = useState(['09:00']);
+  const [serverTime, setServerTime] = useState(null);
 
   const { data, setData, post, errors, processing } = useForm({
     email_agent_google_fetch_time: [],
     email_agent_outlook_fetch_time: [],
   });
+
+  // Fetch server time info
+  useEffect(() => {
+    if (isOpen) {
+      fetch(route('user.email-agent.server-time'))
+        .then(response => response.json())
+        .then(data => {
+          setServerTime(data);
+        })
+        .catch(error => {
+          console.error('Failed to fetch server time:', error);
+        });
+    }
+  }, [isOpen]);
 
   // Helper to convert old format to HH:mm string
   const convertToTimeString = (timeData) => {
@@ -135,6 +150,30 @@ export default function EmailScheduleModal({ isOpen, onClose, initialSettings = 
           {t('schedule_description')}
         </p>
       </div>
+
+      {/* Server Time Info */}
+      {serverTime && (
+        <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+          <div className="flex items-center gap-2 mb-2">
+            <i className="fa-solid fa-server text-blue-600 dark:text-blue-400"></i>
+            <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-100">
+              {t('server_time_info')}
+            </h4>
+          </div>
+          <div className="space-y-1 text-sm">
+            <p className="text-blue-800 dark:text-blue-200">
+              <span className="font-medium">{t('current_server_time')}:</span> {serverTime.server_time}
+            </p>
+            <p className="text-blue-800 dark:text-blue-200">
+              <span className="font-medium">{t('server_timezone')}:</span> {serverTime.server_timezone_name}
+            </p>
+            <p className="text-xs text-blue-600 dark:text-blue-400 mt-2">
+              <i className="fa-solid fa-info-circle mr-1"></i>
+              {t('schedule_times_based_on_server')}
+            </p>
+          </div>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit}>
         {source === 'gmail' && (

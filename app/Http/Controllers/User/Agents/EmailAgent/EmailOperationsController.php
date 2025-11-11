@@ -339,4 +339,19 @@ class EmailOperationsController extends Controller
     }
   }
 
+  /**
+   * Get server timezone information
+   */
+  public function getServerTimeInfo()
+  {
+      $now = Carbon::now();
+
+      return response()->json([
+          'server_time' => $now->format('h:i A'), // 12-hour format with AM/PM
+          'server_timezone' => config('app.timezone'),
+          'server_timezone_name' => $now->timezoneName,
+          'server_date' => $now->format('Y-m-d H:i:s'),
+      ]);
+  }
+
 }
