@@ -40,7 +40,7 @@ export default function PlansTable({ plans }) {
             <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center gap-2">
                     <span className="text-sm text-neutral-900 dark:text-neutral-100">
-                        ${plan.price}
+                        SAR {plan.price}
                     </span>
                 </div>
             </td>

@@ -275,7 +275,7 @@ export default function PricingSection({ plans = [] }) {
                   {/* Price */}
                   <div className="flex items-end gap-1 sm:gap-2 mb-2">
                     <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 dark:text-neutral-100">
-                      ${plan.price}
+                      SAR {plan.price}
                     </span>
                     <span className="text-neutral-600 dark:text-neutral-300 mb-1 text-sm sm:text-base">
                       /{isYearly ? t('year') : t('month')}
@@ -285,7 +285,7 @@ export default function PricingSection({ plans = [] }) {
                   {/* Savings Display */}
                   {isYearly && savings > 0 && (
                     <p className="text-xs sm:text-sm text-green-600 dark:text-green-400">
-                      {t('save')} ${Math.round(savings)} {t('per_year')}
+                      {t('save')} SAR {Math.round(savings)} {t('per_year')}
                     </p>
                   )}
                 </div>
