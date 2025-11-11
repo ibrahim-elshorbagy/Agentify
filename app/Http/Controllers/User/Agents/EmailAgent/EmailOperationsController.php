@@ -264,4 +264,75 @@ class EmailOperationsController extends Controller
         ->with('status', 'error');
     }
   }
+
+  /**
+   * Update email fetch schedule settings
+   */
+  public function updateSchedule(Request $request)
+  {
+    try {
+      $user = Auth::user();
+
+      $validated = $request->validate([
+        'email_agent_google_fetch_time' => ['nullable', 'array'],
+        'email_agent_google_fetch_time.*.hour' => ['required_with:email_agent_google_fetch_time', 'string', 'in:1,2,3,4,5,6,7,8,9,10,11,12'],
+        'email_agent_google_fetch_time.*.minute' => ['required_with:email_agent_google_fetch_time', 'string', 'in:0,15,30,45'],
+        'email_agent_google_fetch_time.*.period' => ['required_with:email_agent_google_fetch_time', 'string', 'in:am,pm'],
+        'email_agent_outlook_fetch_time' => ['nullable', 'array'],
+        'email_agent_outlook_fetch_time.*.hour' => ['required_with:email_agent_outlook_fetch_time', 'string', 'in:1,2,3,4,5,6,7,8,9,10,11,12'],
+        'email_agent_outlook_fetch_time.*.minute' => ['required_with:email_agent_outlook_fetch_time', 'string', 'in:0,15,30,45'],
+        'email_agent_outlook_fetch_time.*.period' => ['required_with:email_agent_outlook_fetch_time', 'string', 'in:am,pm'],
+      ]);
+
+      // Convert and save Google fetch times if provided
+      if (!empty($validated['email_agent_google_fetch_time'])) {
+        UserSettings::updateOrCreate(
+          [
+            'user_id' => $user->id,
+            'key' => 'email_agent_google_fetch_time',
+          ],
+          [
+            'name' => 'schedule',
+            'value' => json_encode($validated['email_agent_google_fetch_time']),
+          ]
+        );
+      }
+
+      // Convert and save Outlook fetch times if provided
+      if (!empty($validated['email_agent_outlook_fetch_time'])) {
+        UserSettings::updateOrCreate(
+          [
+            'user_id' => $user->id,
+            'key' => 'email_agent_outlook_fetch_time',
+          ],
+          [
+            'name' => 'schedule',
+            'value' => json_encode($validated['email_agent_outlook_fetch_time']),
+          ]
+        );
+      }
+
+      Log::info('Email schedule updated successfully', [
+        'user_id' => $user->id,
+        'google_times' => $validated['email_agent_google_fetch_time'] ?? 'not updated',
+        'outlook_times' => $validated['email_agent_outlook_fetch_time'] ?? 'not updated',
+      ]);
+
+      return back()
+        ->with('title', __('website_response.schedule_updated_title'))
+        ->with('message', __('website_response.schedule_updated_message'))
+        ->with('status', 'success');
+
+    } catch (\Exception $e) {
+      Log::error('EmailOperationsController updateSchedule error', [
+        'error' => $e->getMessage(),
+        'user_id' => Auth::id()
+      ]);
+
+      return back()
+        ->with('title', __('website_response.schedule_error_title'))
+        ->with('message', __('website_response.schedule_error_message'))
+        ->with('status', 'error');
+    }
+  }
 }

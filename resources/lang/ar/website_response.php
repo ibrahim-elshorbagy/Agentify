@@ -233,8 +233,13 @@ return [
   'something_went_wrong' => 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
   'success_title' => 'نجح',
 
-
   'settings_updated_title' => 'تم تحديث الإعدادات',
   'settings_updated_message' => 'تم حفظ الإعدادات بنجاح.',
+
+  // Email fetch schedule responses
+  'schedule_updated_title' => 'تم تحديث الجدول',
+  'schedule_updated_message' => 'تم تحديث جدول استلام الإيميلات بنجاح.',
+  'schedule_error_title' => 'خطأ في الجدول',
+  'schedule_error_message' => 'حدث خطأ أثناء تحديث الجدول.',
 
 ];

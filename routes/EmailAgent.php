@@ -84,4 +84,8 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->group(function ()
     ->name('user.email-agent.get-gmail');
   Route::post('/email-agent/get-outlook', [EmailOperationsController::class, 'getOutlook'])
     ->name('user.email-agent.get-outlook');
+
+  // Email Schedule Settings
+  Route::post('/email-agent/schedule/update', [EmailOperationsController::class, 'updateSchedule'])
+    ->name('user.email-agent.schedule.update');
 });

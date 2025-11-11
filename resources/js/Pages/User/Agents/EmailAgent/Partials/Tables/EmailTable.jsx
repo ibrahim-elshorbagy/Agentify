@@ -19,8 +19,9 @@ import {
   getBulkActions
 } from "./Partials/EmailTableActions";
 
-export default function EmailTable({ emails, queryParams, type, source, selectedItems = [], onSelectionChange = null, allIds = [], onMoveEmails = null }) {
+export default function EmailTable({ emails, queryParams, type, source, selectedItems = [], onSelectionChange = null, allIds = [], onMoveEmails = null, setIsScheduleModalOpen, setCurrentSource, scheduleSettings = {} }) {
   const { t } = useTrans();
+
 
   // Handle move emails modal - use parent handler if provided
   const handleMoveEmails = (selectedEmails) => {
@@ -315,7 +316,7 @@ export default function EmailTable({ emails, queryParams, type, source, selected
         MoreButtons={<>
           {/* Action buttons for getting emails */}
           <div className="flex gap-3 justify-center">
-            {source === 'gmail' && (
+            {/* {source === 'gmail' && (
               <ActionButton
                 onClick={handleGetGmail}
                 icon="fa-envelope"
@@ -334,10 +335,24 @@ export default function EmailTable({ emails, queryParams, type, source, selected
               >
                 {t('fetch_emails')}
               </ActionButton>
-            )}
+            )} */}
+
+            <ActionButton
+              onClick={() => {
+                setCurrentSource(source);
+                setIsScheduleModalOpen(true);
+              }}
+              icon="fa-clock"
+              variant="purple"
+              size="sm"
+            >
+              {t('schedule_settings')}
+            </ActionButton>
           </div>
         </>}
       />
+
+
     </>
   );
 }

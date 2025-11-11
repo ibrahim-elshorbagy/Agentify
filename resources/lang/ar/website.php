@@ -847,7 +847,20 @@ return [
   'get_gmail' => 'جلب رسائل Gmail',
   'get_outlook' => 'جلب رسائل Outlook',
   'fetch_emails' => 'جلب الرسائل',
-  'select'=>"اختر"
+  'select'=>"اختر",
+
+  // Email fetch time settings
+  'schedule_settings' => 'إعدادات الجدولة',
+  'email_fetch_schedule' => 'جدول استلام الإيميلات',
+  'google_fetch_times' => 'أوقات استلام Gmail',
+  'outlook_fetch_times' => 'أوقات استلام Outlook',
+  'add_time' => 'إضافة وقت',
+  'remove_time' => 'حذف الوقت',
+  'hour' => 'ساعة',
+  'minute' => 'دقيقة',
+  'am' => 'ص',
+  'pm' => 'م',
+  'schedule_description' => 'قم بتكوين أوقات استلام الإيميلات التلقائية لحساباتك',
 
 
 ];

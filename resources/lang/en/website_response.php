@@ -272,4 +272,10 @@ return [
   'error_title' => 'Error',
   'settings_updated_title' => 'Settings Updated',
   'settings_updated_message' => 'Settings saved successfully.',
+
+  // Email fetch schedule responses
+  'schedule_updated_title' => 'Schedule Updated',
+  'schedule_updated_message' => 'Email fetch schedule has been updated successfully.',
+  'schedule_error_title' => 'Schedule Error',
+  'schedule_error_message' => 'An error occurred while updating the schedule.',
 ];

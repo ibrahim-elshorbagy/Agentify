@@ -7,8 +7,9 @@ import Tabs from '@/Components/Tabs';
 import SearchBar from '@/Components/SearchBar';
 import ActionButton from '@/Components/ActionButton';
 import MoveEmailsModal from './Partials/Modals/MoveEmailsModal';
+import EmailScheduleModal from './Partials/Modals/EmailScheduleModal';
 
-export default function Messages({ type, gmailEmails, outlookEmails, emailCounts, gmailAllIds = [], outlookAllIds = [], queryParams = null }) {
+export default function Messages({ type, gmailEmails, outlookEmails, emailCounts, gmailAllIds = [], outlookAllIds = [], queryParams = null , scheduleSettings = {} }) {
   queryParams = queryParams || {};
   const { t } = useTrans();
 
@@ -38,10 +39,14 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
     setIsMoveModalOpen(true);
   };
 
+  // Schedule modal state
+  const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
+  const [currentSource, setCurrentSource] = useState('gmail'); // Track current active tab
+
   const gmailContent = (
     <div>
       <div className="text-neutral-900 dark:text-neutral-100">
-        <EmailTable emails={gmailEmails} queryParams={queryParams} type={type} source="gmail" selectedItems={selectedItems} onSelectionChange={setSelectedItems} allIds={gmailAllIds} onMoveEmails={handleMoveEmails} />
+        <EmailTable emails={gmailEmails} queryParams={queryParams} type={type} source="gmail" selectedItems={selectedItems} onSelectionChange={setSelectedItems} allIds={gmailAllIds} onMoveEmails={handleMoveEmails} setIsScheduleModalOpen={setIsScheduleModalOpen} setCurrentSource={setCurrentSource} scheduleSettings={scheduleSettings} />
       </div>
     </div>
   );
@@ -49,7 +54,7 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
   const outlookContent = (
     <div>
       <div className="text-neutral-900 dark:text-neutral-100">
-        <EmailTable emails={outlookEmails} queryParams={queryParams} type={type} source="outlook" selectedItems={selectedItems} onSelectionChange={setSelectedItems} allIds={outlookAllIds} onMoveEmails={handleMoveEmails} />
+        <EmailTable emails={outlookEmails} queryParams={queryParams} type={type} source="outlook" selectedItems={selectedItems} onSelectionChange={setSelectedItems} allIds={outlookAllIds} onMoveEmails={handleMoveEmails} setIsScheduleModalOpen={setIsScheduleModalOpen} setCurrentSource={setCurrentSource} scheduleSettings={scheduleSettings} />
       </div>
     </div>
   );
@@ -70,18 +75,18 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
   return (
     <AppLayout>
       <div className="min-h-screen"
-           style={{
-             backgroundImage: `
+        style={{
+          backgroundImage: `
                radial-gradient(circle at 25% 25%, rgba(34, 197, 94, 0.18) 2px, transparent 2px),
                radial-gradient(circle at 75% 75%, rgba(34, 197, 94, 0.14) 1px, transparent 1px),
                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.10) 1.5px, transparent 1.5px),
                radial-gradient(circle at 10% 90%, rgba(20, 184, 166, 0.08) 1px, transparent 1px),
                radial-gradient(circle at 90% 10%, rgba(16, 185, 129, 0.06) 0.8px, transparent 0.8px)
              `,
-             backgroundSize: '60px 60px, 40px 40px, 80px 80px, 100px 100px, 120px 120px',
-             backgroundPosition: '0 0, 20px 20px, 40px 40px, 10px 10px, 60px 60px',
-             animation: 'floatDots 20s ease-in-out infinite'
-           }}>
+          backgroundSize: '60px 60px, 40px 40px, 80px 80px, 100px 100px, 120px 120px',
+          backgroundPosition: '0 0, 20px 20px, 40px 40px, 10px 10px, 60px 60px',
+          animation: 'floatDots 20s ease-in-out infinite'
+        }}>
         <div className="flex-1 p-3 xl:p-5">
           {/* Email counts sidebar */}
           <div className="mb-6 grid grid-cols-1 md:grid-cols-2  xl:grid-cols-3 gap-4">
@@ -177,6 +182,14 @@ export default function Messages({ type, gmailEmails, outlookEmails, emailCounts
         onClose={() => setIsMoveModalOpen(false)}
         selectedEmails={selectedEmailsForMove}
         currentFolder={currentFolder}
+      />
+
+      {/* Email Schedule Modal */}
+      <EmailScheduleModal
+        isOpen={isScheduleModalOpen}
+        onClose={() => setIsScheduleModalOpen(false)}
+        initialSettings={scheduleSettings}
+        source={currentSource}
       />
     </AppLayout>
   );

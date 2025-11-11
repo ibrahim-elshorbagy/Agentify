@@ -910,6 +910,19 @@ return [
   'get_gmail' => 'Get Gmail Emails',
   'get_outlook' => 'Get Outlook Emails',
   'fetch_emails' => 'Fetch Emails',
-  'select'=>"Select"
+  'select'=>"Select",
+
+  // Email fetch time settings
+  'schedule_settings' => 'Schedule Settings',
+  'email_fetch_schedule' => 'Email Fetch Schedule',
+  'google_fetch_times' => 'Google Fetch Times',
+  'outlook_fetch_times' => 'Outlook Fetch Times',
+  'add_time' => 'Add Time',
+  'remove_time' => 'Remove Time',
+  'hour' => 'Hour',
+  'minute' => 'Minute',
+  'am' => 'AM',
+  'pm' => 'PM',
+  'schedule_description' => 'Configure automatic email fetch times for your email accounts',
 
 ];

@@ -49,7 +49,7 @@ export default function AppModal({
         </div>
 
         {/* Modal Content */}
-        <div className="p-6">
+        <div className="p-6 max-h-[600px] overflow-y-auto ">
           {children}
         </div>
       </div>

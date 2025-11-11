@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Agents\EmailAgent\EmailFoldersService;
 use App\Models\Agent\EmailAgent\Message;
 use App\Models\Agent\EmailAgent\MessageResponse;
+use App\Models\User\UserSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -36,6 +37,16 @@ class MessageController extends Controller
     $gmailAllIds = $this->emailService->getAllEmailIds($request, $folder, 'gmail');
     $outlookAllIds = $this->emailService->getAllEmailIds($request, $folder, 'outlook');
 
+    // Get email schedule settings
+    $scheduleSettings = UserSettings::where('user_id', Auth::id())
+      ->where('name', 'schedule')
+      ->whereIn('key', ['email_agent_google_fetch_time', 'email_agent_outlook_fetch_time'])
+      ->get()
+      ->keyBy('key')
+      ->mapWithKeys(function ($setting) {
+        return [$setting->key => $setting->value];
+      });
+
     return inertia('User/Agents/EmailAgent/Messages', [
       'gmailEmails' => $gmailEmails,
       'outlookEmails' => $outlookEmails,
@@ -44,6 +55,7 @@ class MessageController extends Controller
       'type' => $folder,
       'queryParams' => $request->query() ?: null,
       'emailCounts' => $this->emailService->getEmailCounts(),
+      'scheduleSettings' => $scheduleSettings,
     ]);
   }
 
