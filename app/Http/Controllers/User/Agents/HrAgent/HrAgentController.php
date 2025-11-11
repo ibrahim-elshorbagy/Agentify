@@ -166,7 +166,7 @@ class HrAgentController extends Controller
   public function uploadFiles(Request $request)
   {
     $request->validate([
-      'files' => ['required', 'array', 'min:1'],
+      'files' => ['required', 'array', 'min:1','max:10'],
       'files.*' => ['file', 'mimes:pdf,docx', 'max:5120'], // 5MB max per file
     ]);
 

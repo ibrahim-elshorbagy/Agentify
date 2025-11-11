@@ -129,6 +129,21 @@ return [
   /* Profile Image Form */
   'profile_image' => 'صورة الملف الشخصي',
   "choose_file" => "اختر ملف",
+  // Drag & file input translations
+  'drag_drop_files_or' => 'اسحب الملفات وأفلتها هنا أو',
+  'drag_drop_file_or' => 'اسحب الملف وأفلته هنا أو',
+  'choose_files' => 'اختر ملفات',
+  'you_can_upload_up_to' => 'يمكنك رفع حتى',
+  'files' => 'ملفات',
+  'supported_formats' => 'الصيغ المدعومة',
+  'selected' => 'المحدد',
+  'selected_files' => 'الملفات المحددة',
+  'click_to_change_file' => 'انقر لتغيير الملف أو اسحب ملفًا جديدًا وأفلته',
+  'file_uploaded_success' => 'تم رفع الملف بنجاح',
+  'files_uploaded_success' => 'تم رفع الملفات بنجاح',
+  'files_are_supported' => 'مدعومة',
+  'upload_files' => 'رفع الملفات',
+  'this_take_15_30' => 'قد يستغرق هذا 15-30 ثانية',
   'update_profile_image' => 'تحديث صورة الملف الشخصي',
   'current_image' => 'الصورة الحالية',
   'new_image' => 'الصورة الجديدة',
@@ -239,10 +254,10 @@ return [
 
   /* QNA Agent Predefined Questions */
   'qna_agent' => 'وكيل الأسئلة والأجوبة',
-  'predefined_question_1' => 'أعطني ملخّص الإيميلات الواردة خلال آخر 24 ساعة.',
-  'predefined_question_2' => 'أعطني آخر محادثة تمت مع (الاسم).',
-  'predefined_question_3' => 'اعطني رد مقترح على الإيميل.',
-  'predefined_question_4' => 'ترجم الإيميل اللي وصلني من.',
+  'predefined_question_1' => 'أعطني ملخّص الإيميلات الواردة خلال آخر 24 ساعة',
+  'predefined_question_2' => 'أعطني آخر محادثة تمت مع (الاسم)',
+  'predefined_question_3' => 'اعطني رد مقترح على الإيميل',
+  'predefined_question_4' => 'ترجم الإيميل اللي وصلني من',
   'start_conversation' => 'ابدأ محادثتك',
   'qna_start_conversation_description' => 'اسألني أي شيء عن إيميلاتك أو مهامك أو إذا كنت تحتاج مساعدة في عملك.',
   'type_message_placeholder' => 'اكتب رسالتك...',
@@ -809,6 +824,8 @@ return [
   'save_changes' => 'حفظ التغييرات',
   'contact_number' => 'رقم الاتصال',
   'score' => 'النتيجة',
+  'this_take_15_30'=>"قد تاخذ العمليه وقت مقدر من 15 - 30 دقيقه",
+  "files_are_supported"=>"الملفات المسوح بها",
 
   // اتصالات البريد الإلكتروني
   'email_connections' => 'اتصالات البريد الإلكتروني',

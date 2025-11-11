@@ -101,7 +101,7 @@ class ReportAgentController extends Controller
   public function uploadFiles(Request $request)
   {
     $request->validate([
-      'files' => 'required|array|max:10',
+      'files' => 'required|array|min:1|max:3',
       'files.*' => 'required|file|mimes:pdf,txt,xlsx,csv',
     ]);
 

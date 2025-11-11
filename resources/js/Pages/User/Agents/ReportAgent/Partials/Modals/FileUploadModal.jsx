@@ -61,8 +61,13 @@ export default function FileUploadModal({ isOpen, onClose }) {
           value={selectedFiles}
           disabled={processing}
           error={errors.files || errors['files.0']}
-          helperText="PDF, TXT, XLSX, CSV files are supported"
+          helperText={"PDF, TXT, XLSX, CSV "+t('files_are_supported')}
         />
+        {/*  */}
+        <div className="flex items-center text-yellow-700 bg-yellow-100 px-2 py-1 rounded text-sm my-2">
+          <i className="fas fa-info-circle mx-1"></i>
+          {t('this_take_15_30')}
+        </div>
 
         {/* Buttons */}
         <div className="flex justify-end gap-2">

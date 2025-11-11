@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTrans } from '@/Hooks/useTrans';
 
 export default function DragFileInput({
   id,
@@ -17,6 +18,7 @@ export default function DragFileInput({
   maxFiles = 5,
   ...rest
 }) {
+  const { t } = useTrans();
   const fileInputRef = useRef(null);
   const [selectedFileValue, setSelectedFileValue] = useState(keyValue?.name ?? null);
   const [selectedFiles, setSelectedFiles] = useState(multiple ? (value || []) : null);
@@ -182,36 +184,36 @@ export default function DragFileInput({
             {multiple ? (
               <div className="space-y-2">
                 <p className="text-sm text-neutral-900 dark:text-neutral-100">
-                  Drag and Drop files here or{' '}
-                  <span className="underline text-green-600">Choose files</span>
+                  {t('drag_drop_files_or')}{' '}
+                  <span className="underline text-green-600">{t('choose_files')}</span>
                 </p>
                 <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                  You can upload up to {maxFiles} files
+                  {t('you_can_upload_up_to')} {maxFiles} {t('files')}
                 </p>
                 {accept && (
                   <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                    Supported formats: {accept}
+                    {t('supported_formats')}: {accept}
                   </p>
                 )}
               </div>
             ) : selectedFileValue ? (
               <div className="space-y-2">
                 <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-                  Selected: {selectedFileValue}
+                  {t('selected')}: {selectedFileValue}
                 </p>
                 <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                  Click to change file or drag and drop a new one
+                  {t('click_to_change_file')}
                 </p>
               </div>
             ) : (
               <div className="space-y-2">
                 <p className="text-sm text-neutral-900 dark:text-neutral-100">
-                  Drag and Drop file here or{' '}
-                  <span className="underline text-green-600">Choose file</span>
+                  {t('drag_drop_file_or')}{' '}
+                  <span className="underline text-green-600">{t('choose_file')}</span>
                 </p>
                 {accept && (
                   <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                    Supported formats: {accept}
+                    {t('supported_formats')}: {accept}
                   </p>
                 )}
               </div>
@@ -231,7 +233,7 @@ export default function DragFileInput({
       {multiple && selectedFiles?.length > 0 && (
         <div className="mt-3 space-y-2">
           <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
-            Selected files ({selectedFiles.length}/{maxFiles}):
+            {t('selected_files')} ({selectedFiles.length}/{maxFiles}):
           </p>
           <div className="space-y-1 max-h-40 overflow-y-auto">
             {selectedFiles.map((file, index) => (
@@ -284,8 +286,8 @@ export default function DragFileInput({
       {isValid && !hasError && (
         <div className="mt-1 text-sm text-green-600 dark:text-green-400">
           {multiple
-            ? `${selectedFiles?.length || 0} file(s) uploaded successfully`
-            : 'File uploaded successfully'
+            ? `${selectedFiles?.length || 0} ${t('files_uploaded_success')}`
+            : t('file_uploaded_success')
           }
         </div>
       )}

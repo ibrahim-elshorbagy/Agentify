@@ -80,7 +80,7 @@ export default function UpdateConnectionsForm({ className = '' }) {
       <div className="mt-6 space-y-6">
         {/* Gmail Connection */}
         <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 gap-2">
             <div className="flex-shrink-0">
               <i className="fab fa-google text-2xl text-red-500"></i>
             </div>
@@ -96,7 +96,7 @@ export default function UpdateConnectionsForm({ className = '' }) {
           <div className="flex items-center space-x-2">
             {connections.google ? (
               <>
-                <SecondaryButton
+                {/* <SecondaryButton
                   type="button"
                   onClick={() => handleTest('google')}
                   disabled={processing}
@@ -105,7 +105,7 @@ export default function UpdateConnectionsForm({ className = '' }) {
 
                 >
                   {t('fetch_latest_email')}
-                </SecondaryButton>
+                </SecondaryButton> */}
                 <DangerButton
                   type="button"
                   onClick={() => handleDisconnect('google')}
@@ -133,7 +133,7 @@ export default function UpdateConnectionsForm({ className = '' }) {
 
         {/* Microsoft Connection */}
         <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 gap-2">
             <div className="flex-shrink-0">
               <i className="fab fa-microsoft text-2xl text-blue-500"></i>
             </div>
@@ -149,7 +149,7 @@ export default function UpdateConnectionsForm({ className = '' }) {
           <div className="flex items-center space-x-2">
             {connections.microsoft ? (
               <>
-                <SecondaryButton
+                {/* <SecondaryButton
                   type="button"
                   onClick={() => handleTest('microsoft')}
                   disabled={processing}
@@ -158,7 +158,7 @@ export default function UpdateConnectionsForm({ className = '' }) {
 
                 >
                   {t('fetch_latest_email')}
-                </SecondaryButton>
+                </SecondaryButton> */}
                 <DangerButton
                   type="button"
                   onClick={() => handleDisconnect('microsoft')}
@@ -187,7 +187,7 @@ export default function UpdateConnectionsForm({ className = '' }) {
       </div>
 
       <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-        <div className="flex">
+        <div className="flex gap-2">
           <div className="flex-shrink-0">
             <i className="fas fa-info-circle text-blue-400"></i>
           </div>

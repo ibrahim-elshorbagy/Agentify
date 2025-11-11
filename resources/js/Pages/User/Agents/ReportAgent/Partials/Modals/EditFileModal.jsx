@@ -109,7 +109,7 @@ export default function EditFileModal({ isOpen, onClose, file }) {
           value={selectedFile}
           disabled={processing}
           error={errors.file}
-          helperText="PDF, DOC, DOCX, TXT, XLS, XLSX, CSV files are supported"
+          helperText={"PDF, DOC, DOCX, TXT, XLS, XLSX, CSV"+" "+t('files_are_supported')}
         />
 
         {/* Buttons */}
