@@ -32,7 +32,7 @@ class EmailFoldersService
       'per_page' => ['nullable', 'integer', 'min:1', 'max:50'],
     ]);
 
-    $sortField = $request->input('sort', 'created_at');
+    $sortField = $request->input('sort', 'received_at');
     $sortDirection = $request->input('direction', 'desc');
     $perPage = $request->input('per_page', 15);
 

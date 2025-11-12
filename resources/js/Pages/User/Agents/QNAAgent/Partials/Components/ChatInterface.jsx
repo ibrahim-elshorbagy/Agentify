@@ -56,17 +56,18 @@ export default function ChatInterface({
   const handlePredefinedQuestionClick = (question) => {
     if (!currentConversation) return;
 
+    setData('message', question);
     // Use router.post directly with explicit data instead of form state
-    router.post(route('user.qna-agent.messages.send'), {
-      conversation_id: currentConversation.id,
-      message: question,
-    }, {
-      preserveScroll: true,
-      onSuccess: () => {
-        textareaRef.current?.focus();
-      },
-      onError: (errors) => { console.log(errors); }
-    });
+    // router.post(route('user.qna-agent.messages.send'), {
+    //   conversation_id: currentConversation.id,
+    //   message: question,
+    // }, {
+    //   preserveScroll: true,
+    //   onSuccess: () => {
+    //     textareaRef.current?.focus();
+    //   },
+    //   onError: (errors) => { console.log(errors); }
+    // });
   };
 
   if (!currentConversation) {

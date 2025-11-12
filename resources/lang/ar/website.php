@@ -255,9 +255,10 @@ return [
   /* QNA Agent Predefined Questions */
   'qna_agent' => 'وكيل الأسئلة والأجوبة',
   'predefined_question_1' => 'أعطني ملخّص الإيميلات الواردة خلال آخر 24 ساعة',
-  'predefined_question_2' => 'أعطني آخر محادثة تمت مع (الاسم)',
-  'predefined_question_3' => 'اعطني رد مقترح على الإيميل',
-  'predefined_question_4' => 'ترجم الإيميل اللي وصلني من',
+  'predefined_question_2' => 'أعطني آخر محادثة مع (الاسم)',
+  'predefined_question_3' => 'اعطني رد على الإيميل',
+  'predefined_question_4' => 'ترجم الإيميل اللي وصلني من (الاسم)',
+
   'start_conversation' => 'ابدأ محادثتك',
   'qna_start_conversation_description' => 'اسألني أي شيء عن إيميلاتك أو مهامك أو إذا كنت تحتاج مساعدة في عملك.',
   'type_message_placeholder' => 'اكتب رسالتك...',

@@ -280,7 +280,7 @@ return [
   'predefined_question_1' => 'Give me a summary of the emails received in the last 24 hours',
   'predefined_question_2' => 'Show me the latest conversation with (name)',
   'predefined_question_3' => 'Give me a suggested reply to the email',
-  'predefined_question_4' => 'Translate the email I received from',
+  'predefined_question_4' => 'Translate the email I received from (name)',
   'start_conversation' => 'Start Your Conversation',
   'qna_start_conversation_description' => 'Ask me anything about your emails, tasks, or need assistance with your work.',
   'type_message_placeholder' => 'Type your message...',

@@ -305,7 +305,7 @@ export default function EmailTable({ emails, queryParams, type, source, selected
         routeName="user.email-agent.emails"
         queryParams={{ ...queryParams, folder: type }}
         sortOptions={sortOptions}
-        defaultSortField="created_at"
+        defaultSortField="received_at"
         defaultSortDirection="desc"
         getRowClassName={getRowClassName}
         bulkActions={getBulkActions(type, t, handleMoveEmails)}
@@ -316,7 +316,7 @@ export default function EmailTable({ emails, queryParams, type, source, selected
         MoreButtons={<>
           {/* Action buttons for getting emails */}
           <div className="flex gap-3 justify-center">
-            {/* {source === 'gmail' && (
+            {source === 'gmail' && (
               <ActionButton
                 onClick={handleGetGmail}
                 icon="fa-envelope"
@@ -335,7 +335,7 @@ export default function EmailTable({ emails, queryParams, type, source, selected
               >
                 {t('fetch_emails')}
               </ActionButton>
-            )} */}
+            )}
 
             <ActionButton
               onClick={() => {
