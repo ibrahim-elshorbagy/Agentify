@@ -157,7 +157,7 @@ export default function Subscription() {
                           {subscription.type === 'monthly' ? t('monthly') : t('yearly')}
                         </div>
                         <div className="text-5xl font-bold text-white">
-                          SAR{plan?.price}
+                          SAR {plan?.price}
                           <span className="text-xl font-normal text-white/80">
                             /{subscription.type === 'monthly' ? t('month') : t('year')}
                           </span>
