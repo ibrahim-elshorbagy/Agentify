@@ -17,6 +17,7 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
 
   const navItems = [
     { name: t('dashboard'), icon: 'fa-chart-line', href: route('dashboard'), route: 'dashboard', role: '' },
+    { name: t('subscription'), icon: 'fa-credit-card', href: route('user.subscription'), route: 'user.subscription', role: 'user' },
 
     // Admin
     {

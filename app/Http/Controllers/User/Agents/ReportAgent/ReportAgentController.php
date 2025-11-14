@@ -241,10 +241,12 @@ class ReportAgentController extends Controller
       'name' => $request->name,
     ]);
 
-    return redirect()->route('user.report-agent.conversation.show', $conversation)
-      ->with('title', __('website_response.conversation_created_title'))
-      ->with('message', __('website_response.conversation_created_message'))
-      ->with('status', 'success');
+    return redirect()->route('user.report-agent.conversation.show', $conversation);
+
+    // return redirect()->route('user.report-agent.conversation.show', $conversation)
+    //   ->with('title', __('website_response.conversation_created_title'))
+    //   ->with('message', __('website_response.conversation_created_message'))
+    //   ->with('status', 'success');
   }
 
   /**

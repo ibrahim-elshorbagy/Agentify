@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\FeatureEnum;
+use App\Services\SubscriptionSystem\SubscriptionService;
+use Illuminate\Support\Facades\Auth;
+
 abstract class Controller
 {
   protected function addRowNumbers($paginatedCollection)
@@ -12,5 +16,14 @@ abstract class Controller
     });
 
     return $paginatedCollection;
+  }
+
+  protected function checkFeatureAccess(FeatureEnum|int $feature, int $amount = 1) {
+    $user = Auth::user();
+    $featureId = is_int($feature) ? $feature : $feature->value;
+    if ($error = SubscriptionService::canUse($user, $featureId, $amount)) {
+        return back()->with($error);
+    }
+    return null;
   }
 }

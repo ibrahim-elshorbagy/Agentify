@@ -242,4 +242,10 @@ return [
   'schedule_error_title' => 'خطأ في الجدول',
   'schedule_error_message' => 'حدث خطأ أثناء تحديث الجدول.',
 
+  'feature_limit_exceeded_title' => 'تم تجاوز الحد المسموح',
+  'feature_limit_exceeded_message' => 'لقد تجاوزت الحد المسموح لهذه الميزة. يرجى ترقية خطتك.',
+  'subscription_not_found_title' => 'الاشتراك غير موجود',
+  'subscription_not_found_message' => 'لم يتم العثور على اشتراك نشط لحسابك.',
+  'feature_not_found_title' => 'الميزة غير موجودة',
+  'feature_not_found_message' => 'الميزة المطلوبة غير متوفرة في خطتك.',
 ];

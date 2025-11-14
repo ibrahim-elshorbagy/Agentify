@@ -101,4 +101,12 @@ class User extends Authenticatable
     return $this->microsoftCredential()->exists();
   }
 
+  /**
+   * Get user's subscription.
+   */
+  public function subscription()
+  {
+    return $this->hasOne(\App\Models\SubscriptionSystem\Subscription::class);
+  }
+
 }

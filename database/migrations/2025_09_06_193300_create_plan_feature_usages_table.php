@@ -17,7 +17,7 @@ return new class extends Migration
           $table->foreignId('feature_id')->constrained()->cascadeOnDelete();
           $table->unsignedBigInteger('used_value')->default(0);
           $table->unsignedBigInteger('limit_value')->nullable();//Max Limit from the plan -> when he subscribed
-          $table->enum('type', ['counter', 'quota']); //Counter: count up usage // Quota: size amount increase and decrease
+          $table->string('type')->default('counter');//Counter: count up usage
           $table->timestamp('reset_date')->nullable();
           $table->timestamps();
         });

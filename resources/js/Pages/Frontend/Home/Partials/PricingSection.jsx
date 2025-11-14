@@ -233,7 +233,7 @@ export default function PricingSection({ plans = [] }) {
         </div>
 
         {/* Plans Grid */}
-        <div className={`grid grid-cols-1 sm:grid-cols-2 gap-12 md:gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto ${displayPlans.length === 4 ? 'lg:grid-cols-4' :
+        <div className={`grid grid-cols-1 sm:grid-cols-2 gap-12 md:gap-4  max-w-7xl mx-auto ${displayPlans.length === 4 ? 'lg:grid-cols-4' :
             displayPlans.length === 3 ? 'lg:grid-cols-3' :
               'lg:grid-cols-3'
           }`}>
@@ -249,7 +249,7 @@ export default function PricingSection({ plans = [] }) {
               <div
                 key={plan.id}
                 className={`relative bg-white dark:bg-neutral-900 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 ${isPopular
-                    ? `${colorClasses.popular} scale-105 order-first sm:order-none`
+                    ? `${colorClasses.popular}  order-first sm:order-none`
                     : `${colorClasses.border} hover:border-green-300 dark:hover:border-green-600`
                   }`}
               >

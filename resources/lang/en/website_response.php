@@ -278,4 +278,11 @@ return [
   'schedule_updated_message' => 'Email fetch schedule has been updated successfully.',
   'schedule_error_title' => 'Schedule Error',
   'schedule_error_message' => 'An error occurred while updating the schedule.',
+
+  'feature_limit_exceeded_title' => 'Feature Limit Exceeded',
+  'feature_limit_exceeded_message' => 'You have exceeded the limit for this feature. Please upgrade your plan.',
+  'subscription_not_found_title' => 'Subscription Not Found',
+  'subscription_not_found_message' => 'No active subscription found for your account.',
+  'feature_not_found_title' => 'Feature Not Found',
+  'feature_not_found_message' => 'The requested feature is not available in your plan.',
 ];

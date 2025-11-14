@@ -6,6 +6,8 @@ use App\Models\SubscriptionSystem\Subscription;
 use App\Models\SubscriptionSystem\Plan;
 use App\Models\SubscriptionSystem\PlanFeature;
 use App\Models\SubscriptionSystem\PlanFeatureUsage;
+use App\Models\User;
+use App\Enums\FeatureEnum;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +29,7 @@ class SubscriptionService
     return DB::transaction(function () use ($userId, $planId) {
       $plan = Plan::findOrFail($planId);
       $type = $plan->type;
-      
+
       $subscription = Subscription::create([
         'user_id' => $userId,
         'plan_id' => $planId,
@@ -45,7 +47,7 @@ class SubscriptionService
           'used_value' => 0,
           'limit_value' => $feature->pivot->limit_value,
           'type' => $feature->type,
-          'reset_date' => $this->calculateResetDate($subscription),
+          'reset_date' => $subscription->type === 'yearly' ? now()->addMonth() : null, //Important for yearly subscriptions
         ]);
       }
 
@@ -54,15 +56,46 @@ class SubscriptionService
   }
 
   /**
-   * Calculate next reset date for yearly subscriptions
+   * Check if a user can use a feature
    *
-   * @param Subscription $subscription
-   * @return \Carbon\Carbon
+   * @param User $user
+   * @param int $featureId
+   * @param int $amount
+   * @return array|null
    */
-  private function calculateResetDate(Subscription $subscription): Carbon
+  public static function canUse(User $user, int $featureId, int $amount = 1): ?array
   {
-    return $subscription->type === 'yearly' ? now()->addMonth() : null;
+    $subscription = $user->subscription;
+
+    if (!$subscription) {
+      return [
+        'title' => __('website_response.subscription_not_found_title'),
+        'message' => __('website_response.subscription_not_found_message'),
+        'status' => 'error',
+      ];
+    }
+
+    $usage = $subscription->usages()->where('feature_id', $featureId)->first();
+
+    if (!$usage) {
+      return [
+        'title' => __('website_response.feature_not_found_title'),
+        'message' => __('website_response.feature_not_found_message'),
+        'status' => 'error',
+      ];
+    }
+
+    if (!$usage->limit_value || $usage->used_value + $amount <= $usage->limit_value) {
+      return null; // can use
+    } else {
+      return [
+        'title' => __('website_response.feature_limit_exceeded_title'),
+        'message' => __('website_response.feature_limit_exceeded_message'),
+        'status' => 'error',
+      ];
+    }
   }
+
 
   /**
    * Increment usage for a feature
@@ -78,106 +111,9 @@ class SubscriptionService
 
     $usage->used_value += $amount;
 
-    if ($usage->limit_value && $usage->used_value > $usage->limit_value) {
-      $usage->used_value = $usage->limit_value;
-    }
-
     $usage->save();
 
     return $usage;
   }
-
-  /**
-   * Adjust quota usage (can increase or decrease)
-   *
-   * @param Subscription $subscription
-   * @param int $featureId
-   * @param int $amount Positive to add, negative to subtract
-   * @return PlanFeatureUsage
-   */
-  public function adjustQuota(Subscription $subscription, int $featureId, int $amount): PlanFeatureUsage
-  {
-    $usage = $subscription->usages()->where('feature_id', $featureId)->where('type', 'quota')->firstOrFail();
-
-    $usage->used_value += $amount;
-
-    // Ensure used_value doesn't exceed limit or go below 0
-    if ($usage->limit_value && $usage->used_value > $usage->limit_value) {
-      $usage->used_value = $usage->limit_value;
-    }
-
-    if ($usage->used_value < 0) {
-      $usage->used_value = 0;
-    }
-
-    $usage->save();
-
-    return $usage;
-  }
-
-  /**
-   * Check if a feature can be consumed
-   *
-   * @param Subscription $subscription
-   * @param int $featureId
-   * @param int $amount
-   * @return bool
-   */
-  public function canConsume(Subscription $subscription, int $featureId, int $amount = 1): bool
-  {
-    $usage = $subscription->usages()->where('feature_id', $featureId)->first();
-
-    if (!$usage) {
-      return false;
-    }
-
-    return !$usage->limit_value || ($usage->used_value + $amount <= $usage->limit_value);
-  }
-
-
-  /**
-   * Check remaining usage for a feature
-   *
-   * @param Subscription $subscription
-   * @param int $featureId
-   * @return int|null
-   */
-  public function remainingUsage(Subscription $subscription, int $featureId): ?int
-  {
-    $usage = $subscription->usages()->where('feature_id', $featureId)->first();
-
-    if (!$usage)
-      return null;
-
-    return $usage->limit_value ? $usage->limit_value - $usage->used_value : null;
-  }
-
-
-  /**
-   * Cron job to reset usages if reset_date has passed
-   *
-   * @return void
-   */
-  public function resetUsagesIfNeeded(): void
-  {
-    $today = now();
-
-    // Only counter type usages have reset
-    $usages = PlanFeatureUsage::where('type', 'counter')
-      ->whereNotNull('reset_date')
-      ->where('reset_date', '<=', $today)
-      ->get();
-
-    foreach ($usages as $usage) {
-      $usage->update([
-        'used_value' => 0,
-        'reset_date' => $this->calculateResetDate($usage->subscription),
-      ]);
-    }
-
-    // Quota type is live; do not reset anything
-  }
-
-
 
 }

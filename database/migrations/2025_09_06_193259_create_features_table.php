@@ -15,7 +15,7 @@ return new class extends Migration {
       $table->string('key')->nullable();
       $table->json('name');
       $table->json('description')->nullable();
-      $table->enum('type', ['counter', 'quota', 'boolean']);
+      $table->string('type')->default('counter');
       $table->timestamps();
     });
   }

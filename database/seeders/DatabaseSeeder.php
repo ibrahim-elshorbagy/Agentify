@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use App\Services\SubscriptionSystem\SubscriptionService;
 
 class DatabaseSeeder extends Seeder
 {
@@ -54,6 +55,20 @@ class DatabaseSeeder extends Seeder
     $user->assignRole($userRole);
 
     $this->call(SubscriptionSystemSeeder::class);
+
+    // Create test user s2 and subscribe to plan
+    $testUser = User::create([
+      'name' => 'saad',
+      'username' => 's2',
+      'email' => 'saad@example.com',
+      'password' => Hash::make('s'),
+    ]);
+
+    $testUser->assignRole($userRole);
+
+    // Subscribe the test user to Basic Monthly plan (ID: 1)
+    $subscriptionService = new SubscriptionService();
+    $subscriptionService->subscribe($testUser->id, 1);
 
     // User::factory(100)->create();
     // Message::factory()
