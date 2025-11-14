@@ -31,4 +31,13 @@ class UserDashboard extends Controller
       'usages' => $usages,
     ]);
   }
+
+  public function dashboard() {
+    $user = Auth::user();
+    if ($user->hasRole('admin')) {
+      return redirect()->route('admin.users.index');
+    } else {
+      return redirect()->route('user.subscription');
+    }
+  }
 }
