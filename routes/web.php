@@ -8,6 +8,8 @@ use App\Http\Controllers\PreferencesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Site\OAuth\ProviderCallbackController;
 use App\Http\Controllers\Site\OAuth\ProviderRedirectController;
+use App\Http\Controllers\User\ConnectionsController;
+use App\Http\Controllers\User\Settings\UserSettingsController;
 use App\Http\Controllers\User\UserDashboard;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
