@@ -695,6 +695,7 @@ return [
   "show_all_features" => "عرض جميع الميزات",
   "per_year" => "سنوياً",
   "more_features" => "المزيد من الميزات",
+  'show_less_features' => 'عرض ميزات أقل',
 
   "agent_reports" => "تقارير و تحليلات",
   "email_smart_answer" => "مساعد البريد الإلكتروني الذكي",

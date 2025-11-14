@@ -5,7 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 export default function PricingSection({ plans = [] }) {
   const { t } = useTrans();
   const [isYearly, setIsYearly] = useState(false);
-  const [showAllFeatures, setShowAllFeatures] = useState(false);
+  const [showAllFeatures, setShowAllFeatures] = useState(true);
 
   // Simply filter by type - keep ALL plans including Trial
   const monthlyPlans = plans.filter(plan => plan.type === 'monthly');
@@ -14,16 +14,16 @@ export default function PricingSection({ plans = [] }) {
 
   // Helper function to get plan color based on ID
   const getPlanColor = (plan) => {
-    if (plan.id === 1) return 'gray';   // Trial
-    if (plan.id === 2 || plan.id === 5) return 'blue';   // Starter
-    if (plan.id === 3 || plan.id === 6) return 'green';  // Pro
-    if (plan.id === 4 || plan.id === 7) return 'purple'; // Business
+    if (plan.id === 1 || plan.id === 5) return 'gray';   // Basic
+    if (plan.id === 2 || plan.id === 6) return 'blue';   // Starter
+    if (plan.id === 3 || plan.id === 7) return 'green';  // Pro
+    if (plan.id === 4 || plan.id === 8) return 'purple'; // Business
     return 'blue';
   };
 
   // Helper function to check if plan is popular (Pro plans)
   const isPlanPopular = (plan) => {
-    return plan.id === 3 || plan.id === 6; // Pro monthly and yearly
+    return plan.id === 3 || plan.id === 7; // Pro monthly and yearly
   };
 
   // Helper function to find matching yearly/monthly plan for savings calculation
@@ -274,7 +274,7 @@ export default function PricingSection({ plans = [] }) {
 
                   {/* Price */}
                   <div className="flex items-end gap-1 sm:gap-2 mb-2">
-                    <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 dark:text-neutral-100">
+                    <span className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100">
                       SAR {plan.price}
                     </span>
                     <span className="text-neutral-600 dark:text-neutral-300 mb-1 text-sm sm:text-base">
@@ -379,7 +379,7 @@ export default function PricingSection({ plans = [] }) {
               className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
             >
               <i className={`fa-solid ${showAllFeatures ? 'fa-eye-slash' : 'fa-eye'}`}></i>
-              {showAllFeatures ? t('hide_all_features') : t('show_all_features')}
+              {showAllFeatures ? t('show_less_features') : t('show_all_features')}
             </button>
           </div>
         )}

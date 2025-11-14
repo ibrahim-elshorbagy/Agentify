@@ -755,6 +755,7 @@ return [
   "show_all_features" => "Show all features",
   "more_features" => "More Features",
   "per_year" => "Per Year",
+  'show_less_features' => 'Show Less Features',
 
   "agent_reports" => "Reports & Analytics",
   "email_smart_answer" => "Smart Email Assistant",
