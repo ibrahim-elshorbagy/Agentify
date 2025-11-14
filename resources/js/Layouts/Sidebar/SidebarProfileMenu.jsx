@@ -70,8 +70,7 @@ export default function SidebarProfileMenu() {
       {/* Menu */}
       {menuIsOpen && (
         <div
-          className="absolute w-full md:w-48  md:bottom-0 ltr:md:right-[-195px] rtl:md:left-[-195px] z-[500]   border divide-y divide-neutral-300 border-neutral-300 bg-neutral-100 dark:divide-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 rounded-xl
-          animate-fade-in"
+          className="absolute w-full md:w-48  md:bottom-0 ltr:md:right-[-195px] rtl:md:left-[-195px] z-[500]   border divide-y divide-neutral-300 border-neutral-300 bg-neutral-100 dark:divide-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 rounded-xl"
           role="menu"
 
         >
