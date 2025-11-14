@@ -26,4 +26,11 @@ abstract class Controller
     }
     return null;
   }
+
+  protected function incrementFeatureUsage(FeatureEnum|int $feature, int $amount = 1) {
+    $user = Auth::user();
+    $featureId = is_int($feature) ? $feature : $feature->value;
+    return SubscriptionService::incrementUsage($user, $featureId, $amount);
+  }
+  
 }

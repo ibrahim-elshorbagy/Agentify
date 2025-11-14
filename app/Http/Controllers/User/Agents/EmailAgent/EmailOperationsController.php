@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User\Agents\EmailAgent;
 
+use App\Enums\FeatureEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Site\UserCredential;
 use App\Models\Agent\EmailAgent\Message;
@@ -74,6 +75,9 @@ class EmailOperationsController extends Controller
    */
   public function getGmail(Request $request)
   {
+    //Start Check feature access
+    if ($this->checkFeatureAccess(FeatureEnum::EMAIL_AGENT_FETCHES)) return;
+    //End Check feature access
     try {
       // Get user's Gmail credentials
       $gmailCredential = UserCredential::forUser(Auth::id())
@@ -137,8 +141,8 @@ class EmailOperationsController extends Controller
         'folder_hr' => 'hr',
         'folder_other' => 'other',
 
-        "sent_status"=>"sent",
-        "draft_status"=>"draft",
+        "sent_status" => "sent",
+        "draft_status" => "draft",
 
       ];
 
@@ -149,6 +153,9 @@ class EmailOperationsController extends Controller
       $result = $this->emailAgentService->getGmail($data);
 
       if ($result['success']) {
+        //Start increment Feature Usage
+        $this->incrementFeatureUsage(FeatureEnum::EMAIL_AGENT_FETCHES);
+        //End increment Feature Usage
         return back()
           ->with('title', __('website_response.success_title'))
           ->with('message', $result['message'])
@@ -177,6 +184,9 @@ class EmailOperationsController extends Controller
    */
   public function getOutlook()
   {
+    //Start Check feature access
+    if ($this->checkFeatureAccess(FeatureEnum::EMAIL_AGENT_FETCHES)) return;
+    //End Check feature access
     try {
       // Get user's Microsoft credentials
       $outlookCredential = UserCredential::forUser(Auth::id())
@@ -231,8 +241,8 @@ class EmailOperationsController extends Controller
         'folder_hr' => 'hr',
         'folder_other' => 'other',
 
-        "sent_status"=>"sent",
-        "draft_status"=>"draft",
+        "sent_status" => "sent",
+        "draft_status" => "draft",
       ];
 
       // Merge base data with folder settings
@@ -242,6 +252,9 @@ class EmailOperationsController extends Controller
       $result = $this->emailAgentService->getOutlook($data);
 
       if ($result['success']) {
+        //Start increment Feature Usage
+        $this->incrementFeatureUsage(FeatureEnum::EMAIL_AGENT_FETCHES);
+        //End increment Feature Usage
         return back()
           ->with('title', __('website_response.success_title'))
           ->with('message', $result['message'])
@@ -318,14 +331,12 @@ class EmailOperationsController extends Controller
         ->with('title', __('website_response.schedule_updated_title'))
         ->with('message', __('website_response.schedule_updated_message'))
         ->with('status', 'success');
-
     } catch (\Illuminate\Validation\ValidationException $e) {
       Log::error('EmailOperationsController updateSchedule validation error', [
         'errors' => $e->errors(),
         'user_id' => Auth::id()
       ]);
       throw $e;
-
     } catch (\Exception $e) {
       Log::error('EmailOperationsController updateSchedule error', [
         'error' => $e->getMessage(),
@@ -344,14 +355,13 @@ class EmailOperationsController extends Controller
    */
   public function getServerTimeInfo()
   {
-      $now = Carbon::now();
+    $now = Carbon::now();
 
-      return response()->json([
-          'server_time' => $now->format('h:i A'), // 12-hour format with AM/PM
-          'server_timezone' => config('app.timezone'),
-          'server_timezone_name' => $now->timezoneName,
-          'server_date' => $now->format('Y-m-d H:i:s'),
-      ]);
+    return response()->json([
+      'server_time' => $now->format('h:i A'), // 12-hour format with AM/PM
+      'server_timezone' => config('app.timezone'),
+      'server_timezone_name' => $now->timezoneName,
+      'server_date' => $now->format('Y-m-d H:i:s'),
+    ]);
   }
-
 }

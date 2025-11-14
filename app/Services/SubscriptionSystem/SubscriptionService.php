@@ -98,16 +98,26 @@ class SubscriptionService
 
 
   /**
-   * Increment usage for a feature
+   * Increment usage for a feature (static method for easy controller usage)
    *
-   * @param Subscription $subscription
+   * @param User $user
    * @param int $featureId
    * @param int $amount
    * @return PlanFeatureUsage
    */
-  public function incrementCounter(Subscription $subscription, int $featureId, int $amount = 1): PlanFeatureUsage
+  public static function incrementUsage(User $user, int $featureId, int $amount = 1): PlanFeatureUsage
   {
-    $usage = $subscription->usages()->where('feature_id', $featureId)->where('type', 'counter')->firstOrFail();
+    $subscription = $user->subscription;
+
+    if (!$subscription) {
+      throw new \Exception('User has no active subscription');
+    }
+
+    $usage = $subscription->usages()->where('feature_id', $featureId)->where('type', 'counter')->first();
+
+    if (!$usage) {
+      throw new \Exception('Feature usage not found for this subscription');
+    }
 
     $usage->used_value += $amount;
 

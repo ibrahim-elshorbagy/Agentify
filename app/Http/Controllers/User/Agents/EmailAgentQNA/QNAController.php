@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User\Agents\EmailAgentQNA;
 
+use App\Enums\FeatureEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Agent\QNAAgent\QNAConversation;
 use App\Models\Agent\QNAAgent\QNAMessage;
@@ -138,6 +139,10 @@ class QNAController extends Controller
    */
   public function sendMessage(Request $request)
   {
+    //Start Check feature access
+    if ($this->checkFeatureAccess(FeatureEnum::EMAIL_AGENT_CHAT)) return;
+    //End Check feature access
+
     $request->validate([
       'conversation_id' => 'required|exists:q_n_a_conversations,id',
       'message' => 'required|string|max:500|min:1',
@@ -199,6 +204,10 @@ class QNAController extends Controller
         'sender_type' => 'ai',
       ]);
 
+      //Start increment Feature Usage
+      $this->incrementFeatureUsage(FeatureEnum::EMAIL_AGENT_CHAT);
+      //End increment Feature Usage
+
       return back();
       // ->with('title', __('website_response.message_sent_title'))
       // ->with('message', __('website_response.message_sent_message'))
@@ -223,5 +232,4 @@ class QNAController extends Controller
         ->with('status', 'error');
     }
   }
-
 }

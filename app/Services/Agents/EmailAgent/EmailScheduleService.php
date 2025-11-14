@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\User\UserSettings;
 use App\Services\OAuth\GoogleOAuthService;
 use App\Services\OAuth\MicrosoftOAuthService;
+use App\Services\SubscriptionSystem\SubscriptionService;
+use App\Enums\FeatureEnum;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
@@ -151,6 +153,23 @@ class EmailScheduleService
     protected function executeGmailFetch($userId)
     {
         try {
+            // Get user
+            $user = User::find($userId);
+            if (!$user) {
+                Log::error('EmailScheduleService: User not found', ['user_id' => $userId]);
+                return;
+            }
+
+            // Check feature access
+            $canUse = SubscriptionService::canUse($user, FeatureEnum::EMAIL_AGENT_FETCHES->value);
+            if ($canUse) {
+                Log::info('EmailScheduleService: User cannot use email fetch feature', [
+                    'user_id' => $userId,
+                    'error' => $canUse['message']
+                ]);
+                return;
+            }
+
             // Get user's Gmail credentials
             $gmailCredential = UserCredential::forUser($userId)
                 ->forProvider('google')
@@ -225,6 +244,9 @@ class EmailScheduleService
             $result = $this->emailAgentService->getGmail($data);
 
             if ($result['success']) {
+                // Increment feature usage
+                SubscriptionService::incrementUsage($user, FeatureEnum::EMAIL_AGENT_FETCHES->value);
+
                 Log::info('EmailScheduleService: Gmail fetch successful', [
                     'user_id' => $userId,
                     'message' => $result['message'],
@@ -251,6 +273,23 @@ class EmailScheduleService
     protected function executeOutlookFetch($userId)
     {
         try {
+            // Get user
+            $user = User::find($userId);
+            if (!$user) {
+                Log::error('EmailScheduleService: User not found', ['user_id' => $userId]);
+                return;
+            }
+
+            // Check feature access
+            $canUse = SubscriptionService::canUse($user, FeatureEnum::EMAIL_AGENT_FETCHES->value);
+            if ($canUse) {
+                Log::info('EmailScheduleService: User cannot use email fetch feature', [
+                    'user_id' => $userId,
+                    'error' => $canUse['message']
+                ]);
+                return;
+            }
+
             // Get user's Microsoft credentials
             $outlookCredential = UserCredential::forUser($userId)
                 ->forProvider('microsoft')
@@ -316,6 +355,9 @@ class EmailScheduleService
             $result = $this->emailAgentService->getOutlook($data);
 
             if ($result['success']) {
+                // Increment feature usage
+                SubscriptionService::incrementUsage($user, FeatureEnum::EMAIL_AGENT_FETCHES->value);
+
                 Log::info('EmailScheduleService: Outlook fetch successful', [
                     'user_id' => $userId,
                     'message' => $result['message'],

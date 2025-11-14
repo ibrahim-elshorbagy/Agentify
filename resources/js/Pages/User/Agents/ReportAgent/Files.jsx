@@ -7,7 +7,7 @@ import SecondaryButton from '@/Components/SecondaryButton';
 import FileUploadModal from './Partials/Modals/FileUploadModal';
 import EditFileModal from './Partials/Modals/EditFileModal';
 
-export default function Files({ files = [] }) {
+export default function Files({ files = [], maxFileSize = null }) {
   const { t } = useTrans();
 
   // Modal states
@@ -160,6 +160,7 @@ export default function Files({ files = [] }) {
       <FileUploadModal
         isOpen={isUploadModalOpen}
         onClose={toggleUploadModal}
+        maxFileSize={maxFileSize}
       />
 
       <EditFileModal

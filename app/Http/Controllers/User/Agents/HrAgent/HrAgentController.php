@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User\Agents\HrAgent;
 
+use App\Enums\FeatureEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Agent\HrAgent\HrAgent;
 use App\Models\Site\UserCredential;
@@ -40,7 +41,7 @@ class HrAgentController extends Controller
   {
     $query = HrAgent::where('user_id', Auth::id());
 
-        // Search functionality
+    // Search functionality
     if ($request->has('search') && !empty($request->search)) {
       $search = $request->search;
       $query->where(function ($q) use ($search) {
@@ -165,8 +166,12 @@ class HrAgentController extends Controller
    */
   public function uploadFiles(Request $request)
   {
+    //Start Check feature access
+    if ($this->checkFeatureAccess(FeatureEnum::HR_UPLOAD_CV)) return;
+    //End Check feature access
+
     $request->validate([
-      'files' => ['required', 'array', 'min:1','max:10'],
+      'files' => ['required', 'array', 'min:1', 'max:10'],
       'files.*' => ['file', 'mimes:pdf,docx', 'max:5120'], // 5MB max per file
     ]);
 
@@ -178,7 +183,7 @@ class HrAgentController extends Controller
         $extension = $file->getClientOriginalExtension();
 
         // Store file
-        $path = $file->store('user_'.Auth::id().'/Agents/HrAgent/uploads', 'public');
+        $path = $file->store('user_' . Auth::id() . '/Agents/HrAgent/uploads', 'public');
 
         $uploadedFiles[] = [
           'file_name' => $originalName,
@@ -198,6 +203,10 @@ class HrAgentController extends Controller
 
       // Call HR Agent service
       $result = $this->hrAgentService->uploadFile($data);
+
+      //Start increment Feature Usage
+      $this->incrementFeatureUsage(FeatureEnum::HR_UPLOAD_CV, count($uploadedFiles));
+      //End increment Feature Usage
 
       if ($result['success']) {
         return back()
@@ -223,6 +232,10 @@ class HrAgentController extends Controller
    */
   public function getGmail(Request $request)
   {
+    //Start Check feature access
+    if ($this->checkFeatureAccess(FeatureEnum::HR_FETCH_CVS_FROM_EMAIL)) return;
+    //End Check feature access
+
     try {
       // If test parameter is provided, run the token test instead
       if ($request->has('test')) {
@@ -269,6 +282,9 @@ class HrAgentController extends Controller
       $result = $this->hrAgentService->getGmail($data);
 
       if ($result['success']) {
+        //Start increment Feature Usage
+        $this->incrementFeatureUsage(FeatureEnum::HR_FETCH_CVS_FROM_EMAIL);
+        //End increment Feature Usage
         return back()
           ->with('title', __('website_response.hr_gmail_processing_title'))
           ->with('message', __('website_response.hr_gmail_processing_message'))
@@ -292,6 +308,10 @@ class HrAgentController extends Controller
    */
   public function getOutlook()
   {
+    //Start Check feature access
+    if ($this->checkFeatureAccess(FeatureEnum::HR_FETCH_CVS_FROM_EMAIL)) return;
+    //End Check feature access
+
     try {
       // Get user's Microsoft credentials
       $outlookCredential = UserCredential::forUser(Auth::id())
@@ -326,6 +346,9 @@ class HrAgentController extends Controller
       $result = $this->hrAgentService->getOutlook($data);
 
       if ($result['success']) {
+        //Start increment Feature Usage
+        $this->incrementFeatureUsage(FeatureEnum::HR_FETCH_CVS_FROM_EMAIL);
+        //End increment Feature Usage
         return back()
           ->with('title', __('website_response.hr_outlook_processing_title'))
           ->with('message', __('website_response.hr_outlook_processing_message'))

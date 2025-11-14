@@ -165,6 +165,7 @@ return [
   'files_are_supported' => 'are supported',
   'upload_files' => 'Upload files',
   'this_take_15_30' => 'This may take 15-30 seconds',
+  'max_file_size_note' => 'Maximum file size: :size MB per file based on your subscription plan.',
   'current_image' => 'Current',
   'new_image' => 'New',
   'no_image' => 'No image',

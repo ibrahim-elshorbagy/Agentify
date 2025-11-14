@@ -14,7 +14,8 @@ export default function ReportAgent({
   files = [],
   currentConversation = null,
   messages = [],
-  hasFiles = false
+  hasFiles = false,
+  maxFileSize = null
 }) {
   const { t } = useTrans();
 
@@ -85,6 +86,7 @@ export default function ReportAgent({
       <FileUploadModal
         isOpen={isFileUploadModalOpen}
         onClose={toggleFileUploadModal}
+        maxFileSize={maxFileSize}
       />
 
       <NewConversationModal

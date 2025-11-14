@@ -39,6 +39,9 @@ return [
   'email_invalid' => 'Please enter a valid email address.',
   'email_unique' => 'This email is already registered.',
   'password_confirmation' => 'The password confirmation does not match.',
+  'file_size_exceeds_limit' => 'The file must not exceed :size MB based on your subscription plan.',
+  'files_size_exceeds_limit' => 'Each file must not exceed :size MB based on your subscription plan.',
+  'max_file_size_note' => 'Maximum file size: :size MB per file based on your subscription plan.',
   /* End Auth Validation Messages */
 
   /* End Auth Controller Responses */

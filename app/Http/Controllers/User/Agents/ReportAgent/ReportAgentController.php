@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\User\Agents\ReportAgent;
 
+use App\Enums\FeatureEnum;
 use App\Http\Controllers\Controller;
 use App\Models\User\Agents\ReportAgent\Conversation;
 use App\Models\User\Agents\ReportAgent\ConversationMessage;
 use App\Models\User\Agents\ReportAgent\ReportFile;
+use App\Rules\MaxFileSizeRule;
 use App\Services\Agents\ReportAgentService;
 use App\Services\Agents\ReportAgentChatService;
 use Illuminate\Http\Request;
@@ -38,6 +40,7 @@ class ReportAgentController extends Controller
       'conversations' => $conversations,
       'files' => $files,
       'hasFiles' => $files->count() > 0,
+      'maxFileSize' => $this->getUserMaxFileSize(),
     ]);
   }
 
@@ -76,6 +79,7 @@ class ReportAgentController extends Controller
       'currentConversation' => $conversation,
       'messages' => $messages,
       'hasFiles' => $files->count() > 0,
+      'maxFileSize' => $this->getUserMaxFileSize(),
     ]);
   }
 
@@ -92,6 +96,7 @@ class ReportAgentController extends Controller
 
     return inertia('User/Agents/ReportAgent/Files', [
       'files' => $files,
+      'maxFileSize' => $this->getUserMaxFileSize(),
     ]);
   }
 
@@ -100,12 +105,21 @@ class ReportAgentController extends Controller
    */
   public function uploadFiles(Request $request)
   {
+    $user = Auth::user();
+
+    // Check feature access for file count
+    if ($this->checkFeatureAccess(FeatureEnum::REPORTS_FILES_COUNT, count($request->file('files', [])))) return;
+
     $request->validate([
       'files' => 'required|array|min:1|max:3',
-      'files.*' => 'required|file|mimes:pdf,txt,xlsx,csv',
+      'files.*' => [
+        'required',
+        'file',
+        'mimes:pdf,txt,xlsx,csv',
+        new MaxFileSizeRule($user, FeatureEnum::REPORTS_MAX_FILE_SIZE)
+      ],
     ]);
 
-    $user = Auth::user();
     $uploadedFiles = [];
 
     foreach ($request->file('files') as $file) {
@@ -145,6 +159,9 @@ class ReportAgentController extends Controller
 
       $webhookService->triggerWebhook($webhookData);
     }
+
+    // Increment feature usage for file count
+    $this->incrementFeatureUsage(FeatureEnum::REPORTS_FILES_COUNT, count($uploadedFiles));
 
     return back()
       ->with('title', __('website_response.files_uploaded_title'))
@@ -302,6 +319,10 @@ class ReportAgentController extends Controller
    */
   public function sendMessage(Request $request)
   {
+    //Start Check feature access
+    if ($this->checkFeatureAccess(FeatureEnum::REPORTS_CHAT_WITH_FILES)) return;
+    //End Check feature access
+
     $request->validate([
       'conversation_id' => 'required|exists:conversations,id',
       'message' => 'required|string|max:10000',
@@ -367,6 +388,10 @@ class ReportAgentController extends Controller
         'sender_type' => 'ai',
       ]);
 
+      //Start increment Feature Usage
+      $this->incrementFeatureUsage(FeatureEnum::REPORTS_CHAT_WITH_FILES);
+      //End increment Feature Usage
+
       return back();
         // ->with('title', __('website_response.message_sent_title'))
         // ->with('message', __('website_response.message_sent_message'))
@@ -390,5 +415,21 @@ class ReportAgentController extends Controller
         ->with('message', __('website_response.message_error_message'))
         ->with('status', 'error');
     }
+  }
+
+  /**
+   * Get user's maximum file size limit in MB
+   */
+  private function getUserMaxFileSize()
+  {
+    $user = Auth::user();
+    $subscription = $user->subscription;
+
+    if ($subscription) {
+      $usage = $subscription->usages()->where('feature_id', FeatureEnum::REPORTS_MAX_FILE_SIZE->value)->first();
+      return $usage ? $usage->limit_value : null;
+    }
+
+    return null;
   }
 }

@@ -39,6 +39,9 @@ return [
   'email_invalid' => 'يرجى إدخال عنوان بريد إلكتروني صحيح.',
   'email_unique' => 'هذا البريد الإلكتروني مُسجل بالفعل.',
   'password_confirmation' => 'تأكيد كلمة المرور غير متطابق.',
+  'file_size_exceeds_limit' => 'يجب ألا يتجاوز حجم الملف :size ميغابايت بناءً على خطة اشتراكك.',
+  'files_size_exceeds_limit' => 'يجب ألا يتجاوز حجم كل ملف :size ميغابايت بناءً على خطة اشتراكك.',
+  'max_file_size_note' => 'الحد الأقصى لحجم الملف: :size ميغابايت لكل ملف بناءً على خطة اشتراكك.',
   /* End Auth Validation Messages */
 
   /* End Auth Controller Responses */

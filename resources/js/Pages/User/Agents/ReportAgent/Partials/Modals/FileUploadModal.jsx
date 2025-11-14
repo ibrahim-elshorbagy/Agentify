@@ -7,7 +7,7 @@ import SecondaryButton from '@/Components/SecondaryButton';
 import InputError from '@/Components/InputError';
 import DragFileInput from '@/Components/DragFileInput';
 
-export default function FileUploadModal({ isOpen, onClose }) {
+export default function FileUploadModal({ isOpen, onClose, maxFileSize = null }) {
   const { t } = useTrans();
   const [selectedFiles, setSelectedFiles] = useState([]);
 
@@ -64,10 +64,18 @@ export default function FileUploadModal({ isOpen, onClose }) {
           helperText={"PDF, TXT, XLSX, CSV "+t('files_are_supported')}
         />
         {/*  */}
-        <div className="flex items-center text-yellow-700 bg-yellow-100 px-2 py-1 rounded text-sm my-2">
+        <div className="flex items-center text-yellow-700 bg-yellow-100 p-2 rounded-md text-sm my-4">
           <i className="fas fa-info-circle mx-1"></i>
           {t('this_take_15_30')}
         </div>
+
+        {/* Max File Size Note */}
+        {maxFileSize && (
+          <div className="flex items-center text-blue-700 bg-blue-100 p-2 rounded-md text-sm my-4">
+            <i className="fas fa-info-circle mx-1"></i>
+            {t('max_file_size_note', { size: maxFileSize })}
+          </div>
+        )}
 
         {/* Buttons */}
         <div className="flex justify-end gap-2">
