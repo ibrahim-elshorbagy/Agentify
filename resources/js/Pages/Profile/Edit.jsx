@@ -176,7 +176,7 @@ export default function Edit({ mustVerifyEmail, status }) {
 
             {/* Appearance Section */}
             {activeSection === 'appearance' && (
-              <div className="bg-neutral-100 dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden animate-fadeIn">
+              <div className="bg-neutral-100 dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800  animate-fadeIn">
                 <div className="p-4 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950/30 flex items-center justify-between">
                   <h2 className="font-semibold text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
                     <i className="fa-solid fa-palette text-green-500"></i>

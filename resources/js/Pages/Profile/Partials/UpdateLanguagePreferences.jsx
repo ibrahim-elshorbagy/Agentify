@@ -4,7 +4,7 @@ import { useTrans } from "@/Hooks/useTrans";
 import SelectInput from "@/Components/SelectInput";
 
 export default function UpdateLanguagePreferences() {
-  const { locale } = usePage().props;
+  const { locale, csrf_token } = usePage().props;
   const { t } = useTrans();
 
   const handleLanguageChange = (e) => {
@@ -19,7 +19,7 @@ export default function UpdateLanguagePreferences() {
     const csrfInput = document.createElement('input');
     csrfInput.type = 'hidden';
     csrfInput.name = '_token';
-    csrfInput.value = page.props.csrf_token;
+    csrfInput.value = csrf_token;
     form.appendChild(csrfInput);
 
     // Add locale input
