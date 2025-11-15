@@ -44,8 +44,8 @@ export default function HeroSection() {
                 <div className="text-sm text-neutral-600 dark:text-neutral-400">{t('active_users')}</div>
               </div> */}
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-green-600 dark:text-green-400">1M+</div>
-                <div className="text-sm text-neutral-600 dark:text-neutral-400">AI Tasks</div>
+                <div className="text-2xl md:text-3xl font-bold text-green-600 dark:text-green-400">1K+</div>
+                <div className="text-sm text-neutral-600 dark:text-neutral-400">{t('ai_tasks')}</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl md:text-3xl font-bold text-green-600 dark:text-green-400">24/7</div>

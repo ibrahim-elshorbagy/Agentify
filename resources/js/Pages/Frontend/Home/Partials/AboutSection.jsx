@@ -14,8 +14,8 @@ export default function AboutSection() {
       capabilities: [
         t('secure_gmail_outlook_connection'),
         t('intelligent_email_sorting'),
-        t('auto_reply_generation'),
-        t('smart_cleanup_organization')
+        t('smart_email_assistant'),
+        t('email_action_automation'),
       ]
     },
     {
@@ -24,10 +24,9 @@ export default function AboutSection() {
       description: t('transform_your_data_into_actionable_insights_with_ai_powered_analysis'),
       color: 'green',
       capabilities: [
-        t('google_sheets_integration'),
         t('file_upload_analysis'),
+        t('data_chat_interface'),
         t('ai_report_generation'),
-        t('data_chat_interface')
       ]
     },
     {
@@ -37,9 +36,9 @@ export default function AboutSection() {
       color: 'purple',
       capabilities: [
         t('cv_auto_collection'),
+        t('cv_auto_collection_email'),
         t('smart_cv_parsing'),
         t('candidate_ranking'),
-        t('recruitment_automation')
       ]
     }
   ];
@@ -74,21 +73,21 @@ export default function AboutSection() {
   const stats = [
     {
       icon: 'fa-envelope',
-      number: '∞',
+      number: 'Based on Plan',
       label: t('emails_processed'),
       description: t('unlimited_email_automation'),
       color: 'blue'
     },
     {
       icon: 'fa-file-alt',
-      number: '∞',
+      number: 'Based on Plan',
       label: t('reports_generated'),
       description: t('ai_powered_insights'),
       color: 'green'
     },
     {
       icon: 'fa-user-tie',
-      number: '∞',
+      number: 'Based on Plan',
       label: t('cvs_analyzed'),
       description: t('smart_recruitment_tools'),
       color: 'purple'
@@ -237,9 +236,9 @@ export default function AboutSection() {
                           <div className={`w-10 h-10 ${colorClasses.iconBg} rounded-lg flex items-center justify-center mx-auto mb-3`}>
                             <i className={`fa-solid ${stat.icon} text-white text-sm`}></i>
                           </div>
-                          <div className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-1">
+                          {/* <div className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-1">
                             {stat.number}
-                          </div>
+                          </div> */}
                           <div className="text-xs text-neutral-600 dark:text-neutral-300 font-medium">
                             {stat.label}
                           </div>

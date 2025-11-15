@@ -215,7 +215,7 @@ return [
   'starred' => 'Starred',
   'archive' => 'Archive',
   'unarchive' => 'Unarchive',
-  "more"=>"More",
+  "more" => "More",
   'select_all' => 'Select All',
   'candidates' => 'candidates',
   'from' => 'From',
@@ -255,7 +255,7 @@ return [
   'move_to_spam' => 'Move to Spam',
   'move_to_bin' => 'Move to Bin',
   'move_to_folder' => 'Move to Folder',
-  'move'=>"Move",
+  'move' => "Move",
   'move_emails_to_folder' => 'Move Emails to Folder',
   'select_destination_folder' => 'Select destination folder',
   'delete_permanently' => 'Delete Permanently',
@@ -540,6 +540,7 @@ return [
   "emails" => "Emails",
   "report" => "Report",
   "cvs" => "CVs",
+  "ai_tasks" => "AI Tasks",
 
 
   // Features Section
@@ -554,7 +555,7 @@ return [
   'secure_platform' => 'Secure Platform',
   'bank_level_security_with_encryption_and_secure_data_storage' => 'Bank-level security with encryption and secure data storage.',
   'smart_integration' => 'Smart Integration',
-  'access_your_finances_anywhere_with_responsive_mobile_design' => 'Seamlessly connect Gmail, Outlook, Google Sheets and more.',
+  'access_your_finances_anywhere_with_responsive_mobile_design' => 'Seamlessly connect Gmail, Outlook, and more.',
   'ai_powered' => 'AI-Powered Intelligence',
   'generate_comprehensive_reports_and_analytics_for_better_insights' => 'Advanced AI algorithms that learn and adapt to your business needs.',
   'learn_more' => 'Learn More',
@@ -653,7 +654,7 @@ return [
   // Platform Overview
   'what_makes_agentify_different' => 'What makes Agentify different',
   'agentify_specializes_in_three_core_areas_email_automation_data_intelligence_and_hr_optimization_each_ai_agent_is_designed_to_understand_context_learn_from_your_patterns_and_deliver_results_that_match_your_specific_needs' => 'Agentify specializes in three core areas: email automation, data intelligence, and HR optimization. Each AI agent is designed to understand context, learn from your patterns, and deliver results tailored to your specific needs.',
-  'our_platform_integrates_with_gmail_outlook_google_sheets_and_supports_file_uploads_making_it_easy_to_connect_your_existing_workflow_without_disruption_security_is_built_in_with_bank_level_encryption_protecting_your_sensitive_information' => 'Our platform integrates with Gmail, Outlook, and Google Sheets, and supports file uploads, making it easy to connect your existing workflow without disruption. Security is built-in with bank-level encryption to protect your sensitive information.',
+  'our_platform_integrates_with_gmail_outlook_google_sheets_and_supports_file_uploads_making_it_easy_to_connect_your_existing_workflow_without_disruption_security_is_built_in_with_bank_level_encryption_protecting_your_sensitive_information' => 'Our platform integrates with Gmail, Outlook, and supports file uploads, making it easy to connect your existing workflow without disruption. Security is built-in with bank-level encryption to protect your sensitive information.',
   'focus_on_what_matters_while_ai_handles_the_rest' => 'Focus on what matters while AI handles the rest',
   'let_intelligent_automation_free_up_your_time_for_strategic_work' => 'Let intelligent automation free up your time for strategic work',
   'explore_features' => 'Explore features',
@@ -709,7 +710,7 @@ return [
   'time_saving_efficiency' => 'Time-saving efficiency',
   'reduce_manual_work_and_focus_on_what_matters_most_to_your_business' => 'Reduce manual work and focus on what matters most to your business',
   'seamless_integration' => 'Seamless integration',
-  'works_with_your_existing_tools_like_gmail_outlook_and_google_sheets' => 'Works with your existing tools like Gmail, Outlook, and Google Sheets',
+  'works_with_your_existing_tools_like_gmail_outlook_and_google_sheets' => 'Works with your existing tools like Gmail, Outlook',
 
   // Features Deep Dive Section
   'ai_agents_in_detail' => 'AI agents in detail',
@@ -731,14 +732,16 @@ return [
   'intelligent_email_sorting' => 'Intelligent email sorting',
   'auto_reply_generation' => 'Auto-reply generation',
   'smart_cleanup_organization' => 'Smart cleanup & organization',
-  'google_sheets_integration' => 'Google Sheets integration',
   'file_upload_analysis' => 'File upload analysis',
   'ai_report_generation' => 'AI report generation',
-  'data_chat_interface' => 'Data chat interface',
-  'cv_auto_collection' => 'Automatic CV collection',
+  'data_chat_interface' => 'Smart file assistant',
+  'cv_auto_collection' => 'Collect CVs by uploading files',
+  'cv_auto_collection_email' => 'Collect CVs via email inbox',
   'smart_cv_parsing' => 'Smart CV parsing',
-  'candidate_ranking' => 'Candidate ranking',
+  'candidate_ranking' => 'Candidate ranking & evaluation',
   'recruitment_automation' => 'Recruitment automation',
+  "email_action_automation" => "Email action automation",
+  "smart_email_assistant" => "Smart Email Assistant",
 
   // Action Buttons
   'start_using_this_agent' => 'Start using this agent',
@@ -889,8 +892,8 @@ return [
   'save_changes' => 'Save Changes',
   'contact_number' => 'Contact Number',
   'score' => 'Score',
-  'this_take_15_30'=>"This May Take Around 15 - 30 Minutes",
-  "files_are_supported"=>"files are supported",
+  'this_take_15_30' => "This May Take Around 15 - 30 Minutes",
+  "files_are_supported" => "files are supported",
 
   // Email Connections
   'email_connections' => 'Email Connections',
@@ -912,7 +915,7 @@ return [
   'get_gmail' => 'Get Gmail Emails',
   'get_outlook' => 'Get Outlook Emails',
   'fetch_emails' => 'Fetch Emails',
-  'select'=>"Select",
+  'select' => "Select",
 
   // Email fetch time settings
   'schedule_settings' => 'Schedule Settings',

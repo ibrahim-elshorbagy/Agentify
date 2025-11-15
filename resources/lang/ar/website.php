@@ -480,7 +480,7 @@ return [
   "emails" => "البريد الإلكتروني",
   "report" => "تقرير",
   "cvs" => "السير الذاتية",
-
+  "ai_tasks"=>"مهام تمت بالذكاء الاصطناعي",
 
 
   // Features Section
@@ -495,7 +495,7 @@ return [
   'secure_platform' => 'منصة آمنة',
   'bank_level_security_with_encryption_and_secure_data_storage' => 'أمان على مستوى البنوك مع التشفير وتخزين البيانات الآمن.',
   'smart_integration' => 'تكامل ذكي',
-  'access_your_finances_anywhere_with_responsive_mobile_design' => 'ربط سلس مع Gmail و Outlook و Google Sheets والمزيد.',
+  'access_your_finances_anywhere_with_responsive_mobile_design' => 'ربط سلس مع Gmail و Outlook  والمزيد.',
   'ai_powered' => 'ذكاء اصطناعي متطور',
   'generate_comprehensive_reports_and_analytics_for_better_insights' => 'خوارزميات ذكية متقدمة تتعلم وتتكيف مع احتياجات أعمالك.',
   'learn_more' => 'اعرف المزيد',
@@ -591,7 +591,7 @@ return [
   // Platform Overview
   'what_makes_agentify_different' => 'ما يجعل Agentify مختلفًا',
   'agentify_specializes_in_three_core_areas_email_automation_data_intelligence_and_hr_optimization_each_ai_agent_is_designed_to_understand_context_learn_from_your_patterns_and_deliver_results_that_match_your_specific_needs' => 'يختص Agentify في ثلاثة مجالات أساسية: أتمتة البريد الإلكتروني، ذكاء البيانات، وتحسين الموارد البشرية. كل وكيل ذكي مصمم لفهم السياق والتعلم من أنماطك وتقديم نتائج تتناسب مع احتياجاتك المحددة.',
-  'our_platform_integrates_with_gmail_outlook_google_sheets_and_supports_file_uploads_making_it_easy_to_connect_your_existing_workflow_without_disruption_security_is_built_in_with_bank_level_encryption_protecting_your_sensitive_information' => 'تتكامل منصتنا مع Gmail وOutlook وGoogle Sheets وتدعم رفع الملفات، مما يجعل من السهل ربط سير عملك الحالي دون إزعاج. الأمان مدمج مع التشفير على مستوى البنوك لحماية معلوماتك الحساسة.',
+  'our_platform_integrates_with_gmail_outlook_google_sheets_and_supports_file_uploads_making_it_easy_to_connect_your_existing_workflow_without_disruption_security_is_built_in_with_bank_level_encryption_protecting_your_sensitive_information' => 'تتكامل منصتنا مع Gmail وOutlook وتدعم رفع الملفات، مما يجعل من السهل ربط سير عملك الحالي دون إزعاج. الأمان مدمج مع التشفير على مستوى البنوك لحماية معلوماتك الحساسة.',
   'focus_on_what_matters_while_ai_handles_the_rest' => 'ركز على ما يهم بينما يتولى الذكاء الاصطناعي الباقي',
   'let_intelligent_automation_free_up_your_time_for_strategic_work' => 'دع الأتمتة الذكية تحرر وقتك للعمل الاستراتيجي',
   'explore_features' => 'استكشف المميزات',
@@ -646,7 +646,7 @@ return [
   'time_saving_efficiency' => 'كفاءة توفر الوقت',
   'reduce_manual_work_and_focus_on_what_matters_most_to_your_business' => 'قلل العمل اليدوي وركز على ما يهم عملك أكثر',
   'seamless_integration' => 'تكامل سلس',
-  'works_with_your_existing_tools_like_gmail_outlook_and_google_sheets' => 'يعمل مع أدواتك الحالية مثل Gmail وOutlook وGoogle Sheets',
+  'works_with_your_existing_tools_like_gmail_outlook_and_google_sheets' => 'يعمل مع أدواتك الحالية مثل Gmail وOutlook ',
 
   // Features Deep Dive Section
   'ai_agents_in_detail' => 'الوكلاء الذكيون بالتفصيل',
@@ -668,14 +668,16 @@ return [
   'intelligent_email_sorting' => 'تصنيف ذكي للبريد الإلكتروني',
   'auto_reply_generation' => 'إنتاج الردود التلقائية',
   'smart_cleanup_organization' => 'تنظيف وتنظيم ذكي',
-  'google_sheets_integration' => 'تكامل مع Google Sheets',
   'file_upload_analysis' => 'تحليل الملفات المرفوعة',
   'ai_report_generation' => 'إنتاج التقارير بالذكاء الاصطناعي',
-  'data_chat_interface' => 'واجهة الدردشة مع البيانات',
-  'cv_auto_collection' => 'جمع السير الذاتية تلقائيًا',
+  'data_chat_interface' => 'مساعد الملفات الذكي',
+  'cv_auto_collection' => 'جمع السير الذاتية عن طريق رفع الملفات',
+  'cv_auto_collection_email' => 'جمع السير الذاتية عن طريق البريد الإلكتروني',
   'smart_cv_parsing' => 'تحليل ذكي للسير الذاتية',
-  'candidate_ranking' => 'ترتيب المرشحين',
+  'candidate_ranking' => 'ترتيب المرشحين و تقييمهم',
   'recruitment_automation' => 'أتمتة التوظيف',
+  "email_action_automation"=>"أتمتة إجراءات البريد الإلكتروني",
+  "smart_email_assistant"=>"مساعد البريد الإلكتروني الذكي",
 
   // Action Buttons
   'start_using_this_agent' => 'ابدأ استخدام هذا الوكيل',
