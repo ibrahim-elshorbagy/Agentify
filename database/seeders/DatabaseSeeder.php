@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
 
     // Subscribe the test user to Basic Monthly plan (ID: 1)
     $subscriptionService = new SubscriptionService();
-    $subscriptionService->subscribe($testUser->id, 1);
+    $subscriptionService->subscribe($testUser->id, 8);
 
     // User::factory(100)->create();
     // Message::factory()
