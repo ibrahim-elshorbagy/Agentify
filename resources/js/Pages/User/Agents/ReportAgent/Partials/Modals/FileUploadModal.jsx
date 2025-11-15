@@ -54,14 +54,14 @@ export default function FileUploadModal({ isOpen, onClose, maxFileSize = null })
         {/* File Input */}
         <DragFileInput
           id="file-upload"
-          multiple={true}
-          maxFiles={10}
           accept=".pdf,.txt,.xlsx,.csv"
           onChange={handleFilesChange}
           value={selectedFiles}
           disabled={processing}
           error={errors.files || errors['files.0']}
           helperText={"PDF, TXT, XLSX, CSV "+t('files_are_supported')}
+          multiple={true}
+          maxFiles={1}
         />
         {/*  */}
         <div className="flex items-center text-yellow-700 bg-yellow-100 p-2 rounded-md text-sm my-4">

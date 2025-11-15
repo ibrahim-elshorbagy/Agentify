@@ -111,7 +111,7 @@ class ReportAgentController extends Controller
     if ($this->checkFeatureAccess(FeatureEnum::REPORTS_FILES_COUNT, count($request->file('files', [])))) return;
 
     $request->validate([
-      'files' => 'required|array|min:1|max:3',
+      'files' => 'required|array|min:1|max:1',
       'files.*' => [
         'required',
         'file',
