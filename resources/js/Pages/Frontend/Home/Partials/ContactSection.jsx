@@ -38,14 +38,14 @@ export default function ContactSection() {
       action: 'mailto:support@agentify.com',
       color: 'blue'
     },
-    {
-      icon: 'fa-phone',
-      title: t('call_us'),
-      description: t('speak_directly_with_our_support_team'),
-      value: '+966 59 966 9870',
-      action: 'tel:+966599669870',
-      color: 'green'
-    },
+    // {
+    //   icon: 'fa-phone',
+    //   title: t('call_us'),
+    //   description: t('speak_directly_with_our_support_team'),
+    //   value: '+966 59 966 9870',
+    //   action: 'tel:+966599669870',
+    //   color: 'green'
+    // },
     // {
     //   icon: 'fa-comments',
     //   title: t('live_chat'),
