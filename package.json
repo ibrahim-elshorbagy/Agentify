@@ -23,6 +23,7 @@
         "vite": "^7.0.4"
     },
     "dependencies": {
+        "react-markdown": "^10.1.0",
         "react-toastify": "^11.0.5",
         "swiper": "^11.2.10"
     }

@@ -5,6 +5,7 @@ import AutoResizeTextarea from '@/Components/AutoResizeTextarea';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 import ActionButton from '@/Components/ActionButton';
+import ReactMarkdown from 'react-markdown';
 
 export default function ChatInterface({
   currentConversation,
@@ -168,12 +169,17 @@ export default function ChatInterface({
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <p
-                      className="whitespace-pre-line break-words leading-relaxed"
+                    <div
+                      className={`prose prose-sm max-w-none break-words leading-relaxed ${message.sender_type === 'user'
+                        ? 'text-white prose-headings:text-white prose-p:text-white prose-strong:text-white prose-code:text-green-100 prose-a:text-green-200 prose-ul:text-white prose-ol:text-white prose-li:text-white'
+                        : 'text-neutral-900 dark:text-neutral-100 prose-headings:text-neutral-900 dark:prose-headings:text-neutral-100 prose-p:text-neutral-900 dark:prose-p:text-neutral-100 prose-strong:text-neutral-900 dark:prose-strong:text-neutral-100 prose-code:text-neutral-700 dark:prose-code:text-neutral-300 prose-a:text-green-600 dark:prose-a:text-green-400 prose-ul:text-neutral-900 dark:prose-ul:text-neutral-100 prose-ol:text-neutral-900 dark:prose-ol:text-neutral-100 prose-li:text-neutral-900 dark:prose-li:text-neutral-100'
+                        }`}
                       dir="auto"
                     >
-                      {message.message}
-                    </p>
+                      <div className='no-tailwindcss-support-display px-4'>
+                        <ReactMarkdown>{message.message.replace(/\\n/g, '\n')}</ReactMarkdown>
+                      </div>
+                    </div>
 
                     <p
                       className={`text-xs mt-1 ${message.sender_type === 'user'
