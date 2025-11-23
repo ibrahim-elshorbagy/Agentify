@@ -482,26 +482,6 @@ return [
   "ai_tasks"=>"مهام تمت بالذكاء الاصطناعي",
 
 
-  // Features Section
-  'powerful_features' => 'ميزات ذكية قوية',
-  'discover_comprehensive_financial_management_tools_designed_to_help_you_take_control_of_your_money' => 'اكتشف أدوات الأتمتة الذكية الشاملة المصممة لمساعدتك في تبسيط عمليات أعمالك.',
-  'email_management' => 'وكيل البريد الذكي',
-  'create_and_manage_multiple_wallets_with_different_currencies' => 'قراءة وتصنيف والرد على الرسائل تلقائياً بأمان مصرفي.',
-  'ai_reports' => 'مولد التقارير الذكي',
-  'track_your_daily_expenses_and_monitor_spending_patterns' => 'ربط مصادر البيانات وإنشاء تقارير مهنية بالذكاء الاصطناعي.',
-  'hr_automation' => 'وكيل الموارد البشرية الذكي',
-  'get_notified_about_important_financial_activities_and_budgets' => 'أتمتة التوظيف وتحليل السير الذاتية وترتيب المرشحين بذكاء.',
-  'secure_platform' => 'منصة آمنة',
-  'bank_level_security_with_encryption_and_secure_data_storage' => 'أمان على مستوى البنوك مع التشفير وتخزين البيانات الآمن.',
-  'smart_integration' => 'تكامل ذكي',
-  'access_your_finances_anywhere_with_responsive_mobile_design' => 'ربط سلس مع Gmail و Outlook  والمزيد.',
-  'ai_powered' => 'ذكاء اصطناعي متطور',
-  'generate_comprehensive_reports_and_analytics_for_better_insights' => 'خوارزميات ذكية متقدمة تتعلم وتتكيف مع احتياجات أعمالك.',
-  'learn_more' => 'اعرف المزيد',
-  'ready_to_get_started' => 'مستعد لأتمتة أعمالك؟',
-  'join_thousands_of_users_managing_their_finances' => 'انضم إلى آلاف الشركات التي تستخدم الأتمتة الذكية.',
-  'start_free_trial' => 'البدء بالتجربة المجانية',
-
   // Pricing Section
   'simple_transparent_pricing' => 'تسعير بسيط وشفاف',
   'choose_the_plan_that_fits_your_needs_no_hidden_fees_cancel_anytime' => 'اختر الخطة التي تناسب احتياجاتك. لا توجد رسوم خفية، يمكن الإلغاء في أي وقت.',

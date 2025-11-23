@@ -541,27 +541,6 @@ return [
   "cvs" => "CVs",
   "ai_tasks" => "AI Tasks",
 
-
-  // Features Section
-  'powerful_features' => 'Powerful AI Features',
-  'discover_comprehensive_financial_management_tools_designed_to_help_you_take_control_of_your_money' => 'Discover comprehensive AI automation tools designed to help you streamline your business operations.',
-  'email_management' => 'Email AI Agent',
-  'create_and_manage_multiple_wallets_with_different_currencies' => 'Automatically read, sort, and reply to emails with bank-level security.',
-  'ai_reports' => 'AI Report Generator',
-  'track_your_daily_expenses_and_monitor_spending_patterns' => 'Connect your data sources and generate professional reports with AI.',
-  'hr_automation' => 'HR AI Agent',
-  'get_notified_about_important_financial_activities_and_budgets' => 'Automate recruitment, parse CVs, and rank candidates intelligently.',
-  'secure_platform' => 'Secure Platform',
-  'bank_level_security_with_encryption_and_secure_data_storage' => 'Bank-level security with encryption and secure data storage.',
-  'smart_integration' => 'Smart Integration',
-  'access_your_finances_anywhere_with_responsive_mobile_design' => 'Seamlessly connect Gmail, Outlook, and more.',
-  'ai_powered' => 'AI-Powered Intelligence',
-  'generate_comprehensive_reports_and_analytics_for_better_insights' => 'Advanced AI algorithms that learn and adapt to your business needs.',
-  'learn_more' => 'Learn More',
-  'ready_to_get_started' => 'Ready to automate your business?',
-  'join_thousands_of_users_managing_their_finances' => 'Join thousands of businesses automating with AI.',
-  'start_free_trial' => 'Start Free Trial',
-
   // Pricing Section
   'simple_transparent_pricing' => 'Simple, Transparent Pricing',
   'choose_the_plan_that_fits_your_needs_no_hidden_fees_cancel_anytime' => 'Choose the plan that fits your needs. No hidden fees, cancel anytime.',
