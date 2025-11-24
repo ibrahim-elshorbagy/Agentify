@@ -64,6 +64,11 @@ return [
   // end Auth Pages
 
   'welcome' => "Welcome 👋",
+  'email_agent' => 'Email Agent',
+  'file_agent' => 'File Agent',
+  'chatbot_agent' => 'ChatBot Agent',
+  'hiring_agent' => 'Hiring Agent',
+  'ai_powered_platform' => 'AI-Powered Platform',
 
 
   'language' => 'Language',
@@ -521,10 +526,10 @@ return [
   'get_started' => 'Get Started',
 
   // Home Page Translations
-  'manage_your' => 'Supercharge Your',
-  'finances_smartly' => 'Business with AI',
-  'track_expenses_manage_wallets_and_grow_your_wealth_with_our_comprehensive_finance_management_platform' => 'Automate emails, generate reports, and streamline HR with our comprehensive AI-powered business automation platform.',
+  'boost_business_efficiency_ai' => 'Boost Your Business Efficiency with AI',
+  'take_control_email_files_hiring' => 'Take control of your email, files, and hiring processes in seconds one intelligent platform that brings together all the AI agents you need to work faster and smarter.',
   'get_started_free' => 'Start Free Trial',
+  'get_started_now' => 'Get Started Now',
   'active_users' => 'Active Users',
   'uptime' => 'Uptime',
   'support' => 'Support',
