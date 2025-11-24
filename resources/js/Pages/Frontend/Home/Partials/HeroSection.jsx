@@ -2,12 +2,26 @@ import React from 'react';
 import { Link } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useTrans } from '@/Hooks/useTrans';
+import Squares from '@/Components/Squares';
 
 export default function HeroSection() {
   const { t } = useTrans();
 
   return (
     <div id="home" className="relative bg-gradient-to-br from-green-50 via-neutral-50 to-green-100 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 overflow-hidden pt-20">
+      {/* Animated Grid Background */}
+      <div className="absolute inset-0 w-full h-full">
+        <Squares
+          direction="diagonal"
+          speed={0.5}
+          borderColor="#22c55e30"  // Green border with 30% opacity
+          squareSize={40}
+          hoverFillColor="#22c55e15"  // Very light green fill on hover
+          gradientCenterColor="#00000000"  // Transparent center
+          gradientEdgeColor="#10b98130"  // Green-500 with 30% opacity at edges
+        />
+      </div>
+
 
       <div className="relative container mx-auto px-6 py-20 lg:py-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -110,11 +124,10 @@ export default function HeroSection() {
                         </div>
                         <span className="text-sm text-neutral-700 dark:text-neutral-300">{action.name}</span>
                       </div>
-                      <span className={`text-sm font-medium ${
-                        action.color === 'green' ? 'text-green-600 dark:text-green-400' :
+                      <span className={`text-sm font-medium ${action.color === 'green' ? 'text-green-600 dark:text-green-400' :
                         action.color === 'blue' ? 'text-blue-600 dark:text-blue-400' :
-                        'text-purple-600 dark:text-purple-400'
-                      }`}>
+                          'text-purple-600 dark:text-purple-400'
+                        }`}>
                         {action.amount}
                       </span>
                     </div>
