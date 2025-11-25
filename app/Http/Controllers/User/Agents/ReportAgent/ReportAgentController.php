@@ -325,7 +325,7 @@ class ReportAgentController extends Controller
 
     $request->validate([
       'conversation_id' => 'required|exists:conversations,id',
-      'message' => 'required|string|max:10000',
+      'message' => 'required|string|max:1000',
     ]);
 
     $user = Auth::user();

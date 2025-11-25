@@ -145,7 +145,7 @@ class QNAController extends Controller
 
     $request->validate([
       'conversation_id' => 'required|exists:q_n_a_conversations,id',
-      'message' => 'required|string|max:500|min:1',
+      'message' => 'required|string|max:1000|min:1',
     ]);
 
     $user = Auth::user();
