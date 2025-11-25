@@ -8,19 +8,7 @@ export default function HeroSection() {
   const { t } = useTrans();
 
   return (
-    <div id="home" className="relative bg-gradient-to-br from-green-200 via-green-100 to-green-200 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 overflow-hidden pt-20">
-      {/* Animated Grid Background */}
-      <div className="absolute inset-0 w-full h-full">
-        <Squares
-          direction="diagonal"
-          speed={0.5}
-          borderColor="#22c55e30"
-          squareSize={40}
-          hoverFillColor="#22c55e15"
-          gradientCenterColor="#00000000"
-          gradientEdgeColor="#10b98130"
-        />
-      </div>
+    <div id="home" className="relative overflow-hidden pt-20">
 
       {/* Floating Grid Decorations - Modern AI Icons */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

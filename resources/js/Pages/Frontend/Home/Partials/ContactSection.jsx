@@ -99,7 +99,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-white dark:bg-neutral-900">
+    <section id="contact" className="py-20">
       <div className="container mx-auto px-3 md:px-6">
         {/* Section Header */}
         <div className="text-center mb-16">

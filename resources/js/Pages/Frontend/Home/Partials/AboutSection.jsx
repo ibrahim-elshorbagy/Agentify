@@ -145,7 +145,7 @@ export default function AboutSection() {
   return (
     <>
       {/* About Us Main Section */}
-      <section id="about" className="py-20 bg-gradient-to-br from-green-50 via-neutral-50 to-green-100 dark:from-green-900 dark:via-neutral-900 dark:to-green-800 overflow-hidden">
+      <section id="about" className="py-20 overflow-hidden">
 
 
         <div className="relative container mx-auto px-3 md:px-6">
@@ -320,7 +320,7 @@ export default function AboutSection() {
       </section>
 
       {/* Features Deep Dive Section */}
-      <section id="features-detailed" className="py-20 bg-white dark:bg-neutral-900">
+      <section id="features-detailed" className="py-20">
         <div className="container mx-auto px-3 md:px-6">
           {/* Section Header */}
           <div className="text-center mb-16">

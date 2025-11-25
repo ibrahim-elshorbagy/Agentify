@@ -179,7 +179,7 @@ export default function PricingSection({ plans = [] }) {
   // If no plans to display, show a message
   if (!displayPlans || displayPlans.length === 0) {
     return (
-      <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-neutral-50 dark:bg-neutral-800">
+      <section id="pricing" className="py-12 sm:py-16 pb-10">
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
             {t('simple_transparent_pricing')}
@@ -193,7 +193,7 @@ export default function PricingSection({ plans = [] }) {
   }
 
   return (
-    <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-neutral-50 dark:bg-neutral-800">
+    <section id="pricing" className="py-12 sm:py-16 pb-10">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16">
@@ -205,7 +205,7 @@ export default function PricingSection({ plans = [] }) {
           </p>
 
           {/* Billing Toggle */}
-          <div className="inline-flex items-center bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 rounded-2xl p-2 shadow-lg">
+          <div className="inline-flex items-center bg-white/10 dark:bg-neutral-700/10 backdrop-blur-md border border-neutral-200 dark:border-neutral-600 rounded-2xl p-2 shadow-lg">
             <button
               onClick={() => setIsYearly(false)}
               className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium transition-all duration-300 text-sm sm:text-base ${!isYearly
