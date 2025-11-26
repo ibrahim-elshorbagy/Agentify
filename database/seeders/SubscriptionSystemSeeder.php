@@ -88,7 +88,7 @@ class SubscriptionSystemSeeder extends Seeder
     }
 
     // -------------------------
-    // 2️⃣ Create Plans (8 Plans Total - 4 Monthly + 4 Yearly)
+    // 2️⃣ Create Plans (6 Plans Total - 3 Monthly + 3 Yearly)
     // -------------------------
     $plans = [
       // ============ MONTHLY PLANS ============
@@ -113,13 +113,6 @@ class SubscriptionSystemSeeder extends Seeder
         'price' => 80,
         'type' => 'monthly',
       ],
-      [
-        'id' => 4,
-        'name' => ['en' => 'Business', 'ar' => 'الأعمال'],
-        'description' => ['en' => 'Enterprise-grade solution', 'ar' => 'حل على مستوى المؤسسات'],
-        'price' => 150,
-        'type' => 'monthly',
-      ],
 
       // ============ YEARLY PLANS ============
       [
@@ -141,13 +134,6 @@ class SubscriptionSystemSeeder extends Seeder
         'name' => ['en' => 'Pro', 'ar' => 'المحترف'],
         'description' => ['en' => 'For growing businesses - Save 17%', 'ar' => 'للشركات المتنامية - وفر 17%'],
         'price' => 800,
-        'type' => 'yearly',
-      ],
-      [
-        'id' => 8,
-        'name' => ['en' => 'Business', 'ar' => 'الأعمال'],
-        'description' => ['en' => 'Enterprise-grade solution - Save 17%', 'ar' => 'حل على مستوى المؤسسات - وفر 17%'],
-        'price' => 1500,
         'type' => 'yearly',
       ],
     ];
@@ -192,17 +178,6 @@ class SubscriptionSystemSeeder extends Seeder
         6 => 150,    // Reports messages per month
         7 => 30,     // Max file size (MB)
       ],
-
-      // Business Plan
-      'Business' => [
-        1 => 200,    // Email fetches per month
-        2 => 500,    // Email messages per month (Agent + QNA)
-        3 => 100,    // Fetch CVs from email box per month
-        4 => 200,    // Upload CV per month
-        5 => 100,    // Files per month
-        6 => 500,    // Reports messages per month
-        7 => 50,     // Max file size (MB)
-      ],
     ];
 
     // Map plan IDs to plan tiers
@@ -210,11 +185,9 @@ class SubscriptionSystemSeeder extends Seeder
       1 => 'Basic',     // Monthly
       2 => 'Starter',   // Monthly
       3 => 'Pro',       // Monthly
-      4 => 'Business',  // Monthly
       5 => 'Basic',     // Yearly
       6 => 'Starter',   // Yearly
       7 => 'Pro',       // Yearly
-      8 => 'Business',  // Yearly
     ];
 
     // -------------------------

@@ -17,7 +17,6 @@ export default function PricingSection({ plans = [] }) {
     if (plan.id === 1 || plan.id === 5) return 'gray';   // Basic
     if (plan.id === 2 || plan.id === 6) return 'blue';   // Starter
     if (plan.id === 3 || plan.id === 7) return 'green';  // Pro
-    if (plan.id === 4 || plan.id === 8) return 'purple'; // Business
     return 'blue';
   };
 
@@ -233,10 +232,7 @@ export default function PricingSection({ plans = [] }) {
         </div>
 
         {/* Plans Grid */}
-        <div className={`grid grid-cols-1 sm:grid-cols-2 gap-12 md:gap-4  max-w-7xl mx-auto ${displayPlans.length === 4 ? 'lg:grid-cols-4' :
-            displayPlans.length === 3 ? 'lg:grid-cols-3' :
-              'lg:grid-cols-3'
-          }`}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 md:gap-4 lg:grid-cols-3 max-w-7xl mx-auto">
           {displayPlans.map((plan, index) => {
             const color = getPlanColor(plan);
             const isPopular = isPlanPopular(plan);
