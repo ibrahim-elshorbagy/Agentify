@@ -16,7 +16,8 @@ export default function SiteLayout({ children, title }) {
   const footerRef = useRef();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-200 via-green-200 to-green-200 dark:from-green-900 dark:via-neutral-900 dark:to-green-800" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-gradient-to-r from-green-400 via-green-200 to-green-400 dark:from-[#000201] dark:via-neutral-800 dark:to-[#000201]" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+
       {/* Animated Grid Background  */}
       <div className="fixed inset-0 w-full h-full pointer-events-none z-0">
         <Squares
