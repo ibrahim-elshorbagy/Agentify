@@ -52,13 +52,13 @@ export default function HeroSection() {
 
           {/* Main Heading */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-neutral-900 dark:text-neutral-50 mb-6 leading-[1.1] tracking-tight drop-shadow-sm">
-            <span className="bg-gradient-to-r from-green-600 via-emerald-500 to-teal-600 dark:from-green-400 dark:via-emerald-400 dark:to-teal-400 bg-clip-text text-transparent animate-gradient">
+            <span className="bg-gradient-to-r from-white via-emerald-300 to-white dark:from-green-400 dark:via-emerald-400 dark:to-teal-400 bg-clip-text text-transparent animate-gradient">
               {t('boost_business_efficiency_ai')}
             </span>
           </h1>
 
           {/* Description */}
-          <p className="text-lg md:text-xl lg:text-2xl text-black dark:text-white mb-12 max-w-4xl mx-auto leading-relaxed font-light">
+          <p className="text-lg md:text-xl lg:text-2xl text-gray-100 dark:text-white mb-12 max-w-4xl mx-auto leading-relaxed font-light">
             {t('take_control_email_files_hiring')}
           </p>
 

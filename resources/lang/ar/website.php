@@ -428,7 +428,7 @@ return [
   'search_name_username_email' => 'البحث بالاسم أو اسم المستخدم أو البريد الإلكتروني...',
 
   /* Plans Management */
-  'plans' => 'الخطط',
+  'plans' => 'الباقات',
   'plan' => 'خطة',
   'monthly_plans' => 'الخطط الشهرية',
   'yearly_plans' => 'الخطط السنوية',
@@ -489,7 +489,7 @@ return [
 
   // Pricing Section
   'simple_transparent_pricing' => 'تسعير بسيط وشفاف',
-  'choose_the_plan_that_fits_your_needs_no_hidden_fees_cancel_anytime' => 'اختر الخطة التي تناسب احتياجاتك. لا توجد رسوم خفية، يمكن الإلغاء في أي وقت.',
+  'choose_the_plan_that_fits_your_needs_no_hidden_fees_cancel_anytime' => 'اختر الباقة التي تناسب احتياجاتك. جميع الباقات بلا عقود مُلزِمة.  ',
   'save_20%' => 'وفر 20%',
   'starter' => 'المبتدئ',
   'professional' => 'المحترف',

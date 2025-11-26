@@ -548,7 +548,7 @@ return [
 
   // Pricing Section
   'simple_transparent_pricing' => 'Simple, Transparent Pricing',
-  'choose_the_plan_that_fits_your_needs_no_hidden_fees_cancel_anytime' => 'Choose the plan that fits your needs. No hidden fees, cancel anytime.',
+  'choose_the_plan_that_fits_your_needs_no_hidden_fees_cancel_anytime' => 'Choose the plan that fits your needs. All plans come with no contracts.',
   'monthly' => 'Monthly',
   'yearly' => 'Yearly',
   'save_20%' => 'Save 17%',
