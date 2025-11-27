@@ -592,6 +592,25 @@ return [
   'secure_connections' => 'اتصالات آمنة',
   'bank_level_protection' => 'حماية على مستوى البنوك',
 
+  // Contact Section
+  'contact_us' => 'تواصل معنا',
+  'lets_start_conversation' => 'دعنا نبدأ المحادثة',
+  'contact_description' => 'لأي اقتراحات أو استفسارات، ويسعدنا خدمتك والرد عليك في أسرع وقت',
+  'email' => 'البريد الإلكتروني',
+  'response_within_24h' => 'نرد خلال 24 ساعة',
+  'quick_response_time' => 'تواصل معنا',
+  'quick_response_description' => 'تواصل معنا لأي اقتراحات أو استفسارات، ويسعدنا خدمتك والرد عليك في أسرع وقت.',
+  'message_sent_success' => 'تم إرسال رسالتك!',
+  'will_contact_soon' => 'سنتواصل معك قريباً',
+  'send_us_message' => 'أرسل لنا رسالة',
+  'fill_form_response' => 'املأ النموذج وسنرد عليك في أقرب وقت',
+  'enter_name' => 'أدخل اسمك',
+  'subject' => 'الموضوع',
+  'what_subject' => 'ما هو الموضوع؟',
+  'tell_us_help' => 'أخبرنا كيف يمكننا مساعدتك...',
+  'send_message' => 'إرسال الرسالة',
+  'privacy_notice' => 'معلوماتك آمنة ولن يتم مشاركتها مع أي طرف ثالث',
+
   // Active AI Agents
   'active_ai_agents' => 'الوكلاء الذكيون النشطون',
   'email_agent' => 'وكيل البريد الإلكتروني',

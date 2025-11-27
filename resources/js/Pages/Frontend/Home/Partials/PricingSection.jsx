@@ -352,7 +352,7 @@ function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, g
 
       {/* Popular Badge */}
       {isPopular && (
-        <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-20">
+        <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20">
           <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg whitespace-nowrap animate-[pulse_2s_ease-in-out_infinite]">
             <i className="fa-solid fa-star mr-2"></i>
             {t('most_popular')}
