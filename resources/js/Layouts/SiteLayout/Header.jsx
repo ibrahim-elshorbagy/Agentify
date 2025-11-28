@@ -1,4 +1,3 @@
-import Dock from "@/Components/Dock";
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import PrimaryButton from '@/Components/PrimaryButton';
 import NavigationToggles from '@/Components/NavigationToggles';
@@ -57,7 +56,7 @@ export default function Header() {
         </div>
       </div>
 
-      
+
     </header>
   );
 }

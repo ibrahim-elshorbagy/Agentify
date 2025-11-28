@@ -364,7 +364,7 @@ function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, g
       {isPopular && (
         <div className="absolute -top-4 -left-4  z-20">
           <div className="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg whitespace-nowrap animate-[pulse_2s_ease-in-out_infinite]">
-            <i className="fa-solid fa-star ltr:mr-1 rtl:ml-1"></i>
+            <i className="fa-solid fa-star ltr:mr-1 rtl:ml-1 text-yellow-400"></i>
             {t('most_popular')}
           </div>
         </div>
