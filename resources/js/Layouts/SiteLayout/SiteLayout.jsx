@@ -5,7 +5,8 @@ import Header from './Header';
 import Footer from './Footer';
 import { useTrans } from '@/Hooks/useTrans';
 import Menu from './Menu';
-import Squares from '@/Components/Squares';
+// import Squares from '@/Components/Squares';
+import Plasma from '@/Components/Plasma';
 
 export default function SiteLayout({ children, title }) {
   const { locale } = usePage().props;
@@ -20,14 +21,13 @@ export default function SiteLayout({ children, title }) {
 
       {/* Animated Grid Background  */}
       <div className="fixed inset-0 w-full h-full pointer-events-none z-0">
-        <Squares
-          direction="diagonal"
+      <Plasma
+          color="#5dea82"
           speed={0.5}
-          borderColor="#22c55e30"
-          squareSize={40}
-          hoverFillColor="#22c55e15"
-          gradientCenterColor="#00000000"
-          gradientEdgeColor="#10b98130"
+          direction="forward"
+          scale={1.7}
+          opacity={1}
+          mouseInteractive={false}
         />
       </div>
 
