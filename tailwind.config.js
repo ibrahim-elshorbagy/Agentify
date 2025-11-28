@@ -9,46 +9,110 @@ export default {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.jsx',
     ],
-    darkMode: 'class',
+    darkMode: ['class'],
 
     theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
-            keyframes: {
-                fadeIn: {
-                    '0%': { opacity: '0', transform: 'translateY(10px)' },
-                    '100%': { opacity: '1', transform: 'translateY(0)' },
-                },
-            },
-            animation: {
-                fadeIn: 'fadeIn 0.3s ease-out',
-            },
-            screens: {
-              xs: '480px',
-              'max-xs': {'max': '479px'},
-              'max-sm': {'max': '639px'},
-              'max-md': {'max': '767px'},
-              'max-lg': {'max': '1023px'},
-              'max-xl': {'max': '1279px'},
-            },
-            colors: {
-              green: {
-                50:  '#EEF0E5',  // lightest
-                100: '#DEE2D8',
-                200: '#B6C4B6',  // your third color
-                300: '#A0B397',
-                400: '#7C9676',
-                500: '#304D30',  // your second color (mid)
-                600: '#2B432A',
-                700: '#224122',
-                800: '#163020',  // your darkest
-                900: '#0F1F15',
-              },
-            },
-        },
+    	extend: {
+    		fontFamily: {
+    			sans: [
+    				'Figtree',
+                    ...defaultTheme.fontFamily.sans
+                ]
+    		},
+    		keyframes: {
+    			fadeIn: {
+    				'0%': {
+    					opacity: '0',
+    					transform: 'translateY(10px)'
+    				},
+    				'100%': {
+    					opacity: '1',
+    					transform: 'translateY(0)'
+    				}
+    			}
+    		},
+    		animation: {
+    			fadeIn: 'fadeIn 0.3s ease-out'
+    		},
+    		screens: {
+    			xs: '480px',
+    			'max-xs': {
+    				max: '479px'
+    			},
+    			'max-sm': {
+    				max: '639px'
+    			},
+    			'max-md': {
+    				max: '767px'
+    			},
+    			'max-lg': {
+    				max: '1023px'
+    			},
+    			'max-xl': {
+    				max: '1279px'
+    			}
+    		},
+    		colors: {
+    			green: {
+    				'50': '#EEF0E5',
+    				'100': '#DEE2D8',
+    				'200': '#B6C4B6',
+    				'300': '#A0B397',
+    				'400': '#7C9676',
+    				'500': '#304D30',
+    				'600': '#2B432A',
+    				'700': '#224122',
+    				'800': '#163020',
+    				'900': '#0F1F15'
+    			},
+    			background: 'hsl(var(--background))',
+    			foreground: 'hsl(var(--foreground))',
+    			card: {
+    				DEFAULT: 'hsl(var(--card))',
+    				foreground: 'hsl(var(--card-foreground))'
+    			},
+    			popover: {
+    				DEFAULT: 'hsl(var(--popover))',
+    				foreground: 'hsl(var(--popover-foreground))'
+    			},
+    			primary: {
+    				DEFAULT: 'hsl(var(--primary))',
+    				foreground: 'hsl(var(--primary-foreground))'
+    			},
+    			secondary: {
+    				DEFAULT: 'hsl(var(--secondary))',
+    				foreground: 'hsl(var(--secondary-foreground))'
+    			},
+    			muted: {
+    				DEFAULT: 'hsl(var(--muted))',
+    				foreground: 'hsl(var(--muted-foreground))'
+    			},
+    			accent: {
+    				DEFAULT: 'hsl(var(--accent))',
+    				foreground: 'hsl(var(--accent-foreground))'
+    			},
+    			destructive: {
+    				DEFAULT: 'hsl(var(--destructive))',
+    				foreground: 'hsl(var(--destructive-foreground))'
+    			},
+    			border: 'hsl(var(--border))',
+    			input: 'hsl(var(--input))',
+    			ring: 'hsl(var(--ring))',
+    			chart: {
+    				'1': 'hsl(var(--chart-1))',
+    				'2': 'hsl(var(--chart-2))',
+    				'3': 'hsl(var(--chart-3))',
+    				'4': 'hsl(var(--chart-4))',
+    				'5': 'hsl(var(--chart-5))'
+    			}
+    		},
+    		borderRadius: {
+    			lg: 'var(--radius)',
+    			md: 'calc(var(--radius) - 2px)',
+    			sm: 'calc(var(--radius) - 4px)'
+    		}
+    	}
     },
 
-    plugins: [forms],
+    plugins: [forms, require("tailwindcss-animate")],
 };

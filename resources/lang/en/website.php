@@ -64,6 +64,11 @@ return [
   // end Auth Pages
 
   'welcome' => "Welcome 👋",
+  'email_agent' => 'Email Agent',
+  'file_agent' => 'Report Agent',
+  'chatbot_agent' => 'ChatBot Agent',
+  'hiring_agent' => 'HR Agent',
+  'ai_powered_platform' => 'AI-Powered Platform',
 
 
   'language' => 'Language',
@@ -72,6 +77,14 @@ return [
   'change_language' => 'Change Language',
   'language_changed' => 'Language Changed',
   'current_language' => 'Current Language',
+
+  // Footer translations
+  'footer_brand_name' => 'Agentify',
+  'footer_description' => 'A Saudi platform offering AI agents designed to simplify routine tasks, giving you more time for real work.',
+  'footer_rights_reserved' => 'All rights reserved',
+  'home' => 'Home',
+  'about' => 'About',
+  'contact' => 'Contact',
 
   /* Profile Page */
   'profile_settings' => 'Profile Settings',
@@ -521,10 +534,10 @@ return [
   'get_started' => 'Get Started',
 
   // Home Page Translations
-  'manage_your' => 'Supercharge Your',
-  'finances_smartly' => 'Business with AI',
-  'track_expenses_manage_wallets_and_grow_your_wealth_with_our_comprehensive_finance_management_platform' => 'Automate emails, generate reports, and streamline HR with our comprehensive AI-powered business automation platform.',
+  'boost_business_efficiency_ai' => 'Boost Your Business Efficiency with AI',
+  'take_control_email_files_hiring' => 'Take control of your email, files, and hiring processes in seconds one intelligent platform that brings together all the AI agents you need to work faster and smarter.',
   'get_started_free' => 'Start Free Trial',
+  'get_started_now' => 'Get Started Now',
   'active_users' => 'Active Users',
   'uptime' => 'Uptime',
   'support' => 'Support',
@@ -541,30 +554,34 @@ return [
   "cvs" => "CVs",
   "ai_tasks" => "AI Tasks",
 
+  // In English translation file
+  'agentify_main_description' => 'A Saudi platform that provides AI agents designed to simplify routine tasks.',
+  'agentify_goal_description' => 'Our goal is to give you more time for real work, boost productivity, and reduce wasted time on repetitive tasks.',
 
-  // Features Section
-  'powerful_features' => 'Powerful AI Features',
-  'discover_comprehensive_financial_management_tools_designed_to_help_you_take_control_of_your_money' => 'Discover comprehensive AI automation tools designed to help you streamline your business operations.',
-  'email_management' => 'Email AI Agent',
-  'create_and_manage_multiple_wallets_with_different_currencies' => 'Automatically read, sort, and reply to emails with bank-level security.',
-  'ai_reports' => 'AI Report Generator',
-  'track_your_daily_expenses_and_monitor_spending_patterns' => 'Connect your data sources and generate professional reports with AI.',
-  'hr_automation' => 'HR AI Agent',
-  'get_notified_about_important_financial_activities_and_budgets' => 'Automate recruitment, parse CVs, and rank candidates intelligently.',
-  'secure_platform' => 'Secure Platform',
-  'bank_level_security_with_encryption_and_secure_data_storage' => 'Bank-level security with encryption and secure data storage.',
-  'smart_integration' => 'Smart Integration',
-  'access_your_finances_anywhere_with_responsive_mobile_design' => 'Seamlessly connect Gmail, Outlook, and more.',
-  'ai_powered' => 'AI-Powered Intelligence',
-  'generate_comprehensive_reports_and_analytics_for_better_insights' => 'Advanced AI algorithms that learn and adapt to your business needs.',
-  'learn_more' => 'Learn More',
-  'ready_to_get_started' => 'Ready to automate your business?',
-  'join_thousands_of_users_managing_their_finances' => 'Join thousands of businesses automating with AI.',
-  'start_free_trial' => 'Start Free Trial',
+  'email_agent_title' => 'Email Agent',
+  'email_agent_classification' => 'Smart and accurate email classification based on its content',
+  'email_agent_suggestions' => 'Suggested replies',
+  'email_agent_query' => 'Ask the agent about any email you received—even from a long time ago—without needing to mention exact details, and it will give you all the information within seconds.',
+
+  'reports_agent_title' => 'Reports Agent',
+  'reports_agent_upload' => 'Upload any PDF, Word, Excel, or CSV file,',
+  'reports_agent_process' => 'and let the agent read it, summarize it, and extract key insights using AI.',
+
+  'hr_agent_title' => 'HR Agent',
+  'hr_agent_collection' => 'Collects CVs from your email or through direct upload, analyzes every resume,',
+  'hr_agent_analysis' => 'assigns a score, and organizes the candidate\'s information in a clear and readable format.',
+
+  'what_makes_agentify_special' => 'What Makes Agentify Special?',
+  'unified_platform' => 'A unified platform without complexity or switching between multiple pages',
+  'easy_to_use' => 'Easy to use—no technical experience needed to work with the agents',
+  'time_saving' => 'Saves hours of daily manual work',
+  'secure_data' => 'Ensures secure handling of sensitive data with top-level protection',
+  'email_integration' => 'Integrates easily with your current email (Outlook & Gmail)',
+
 
   // Pricing Section
   'simple_transparent_pricing' => 'Simple, Transparent Pricing',
-  'choose_the_plan_that_fits_your_needs_no_hidden_fees_cancel_anytime' => 'Choose the plan that fits your needs. No hidden fees, cancel anytime.',
+  'choose_the_plan_that_fits_your_needs_no_hidden_fees_cancel_anytime' => 'Choose the plan that fits your needs. All plans come with no contracts.',
   'monthly' => 'Monthly',
   'yearly' => 'Yearly',
   'save_20%' => 'Save 17%',
@@ -762,6 +779,29 @@ return [
 
   "agent_reports" => "Reports & Analytics",
   "email_smart_answer" => "Smart Email Assistant",
+
+  // Contact Section
+  'contact_us' => 'Contact Us',
+  'lets_start_conversation' => 'Let\'s Start the Conversation',
+  'contact_description' => 'For any suggestions or inquiries, we are happy to serve you and respond as soon as possible',
+  'email' => 'Email',
+  'response_within_24h' => 'Response within 24h',
+  'quick_response_time' => 'Contact Us',
+  'quick_response_description' => 'Reach out to us for any suggestions or inquiries, and we\'ll be happy to assist you as quickly as possible.',
+  'message_sent_success' => 'Your message has been sent!',
+  'will_contact_soon' => 'We will contact you soon',
+  'send_us_message' => 'Send Us a Message',
+  'fill_form_response' => 'Fill out the form and we will respond as soon as possible',
+  'full_name' => 'Full Name',
+  'enter_name' => 'Enter your name',
+  'email_address' => 'Email Address',
+  'subject' => 'Subject',
+  'what_subject' => 'What is the subject?',
+  'message' => 'Message',
+  'tell_us_help' => 'Tell us how we can help you...',
+  'sending' => 'Sending...',
+  'send_message' => 'Send Message',
+  'privacy_notice' => 'Your information is safe and will not be shared with any third party',
 
   "register" => "Register",
   "login" => "Login",

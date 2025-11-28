@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm } from '@inertiajs/react';
 import { useTrans } from '@/Hooks/useTrans';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -10,6 +10,8 @@ import TextArea from '@/Components/TextArea';
 export default function ContactSection() {
   const { t } = useTrans();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const formRef = useRef(null);
 
   const { data, setData, post, processing, errors, reset } = useForm({
     name: '',
@@ -20,298 +22,257 @@ export default function ContactSection() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     post(route('contact.store'), {
       onSuccess: () => {
         setIsSubmitted(true);
         reset();
+        setTimeout(() => setIsSubmitted(false), 5000);
       },
     });
   };
 
-  const contactMethods = [
+  const contactChannels = [
     {
-      icon: 'fa-envelope',
-      title: t('email_us'),
-      description: t('send_us_an_email_and_we_will_respond_within_24_hours'),
-      value: 'support@agentify.com',
+      id: 'email',
+      icon: 'fa-at',
+      title: t('email'),
+      subtitle: 'support@agentify.com',
+      description: t('response_within_24h'),
       action: 'mailto:support@agentify.com',
-      color: 'blue'
+      gradient: 'from-green-500 via-emerald-500 to-green-600',
+      glowColor: 'rgba(34, 197, 94, 0.4)'
     },
-    // {
-    //   icon: 'fa-phone',
-    //   title: t('call_us'),
-    //   description: t('speak_directly_with_our_support_team'),
-    //   value: '+966 59 966 9870',
-    //   action: 'tel:+966599669870',
-    //   color: 'green'
-    // },
-    // {
-    //   icon: 'fa-comments',
-    //   title: t('live_chat'),
-    //   description: t('chat_with_us_in_real_time_for_instant_help'),
-    //   value: t('available_24_7'),
-    //   action: '#',
-    //   color: 'purple'
-    // },
-    // {
-    //   icon: 'fa-map-marker-alt',
-    //   title: t('visit_us'),
-    //   description: t('come_visit_our_office_for_a_face_to_face_meeting'),
-    //   value: '123 Business St, City, Country',
-    //   action: 'https://maps.google.com',
-    //   color: 'orange'
-    // }
   ];
 
-  const getColorClasses = (color) => {
-    const colors = {
-      blue: {
-        bg: 'bg-blue-50 dark:bg-blue-900/30',
-        border: 'border-blue-200 dark:border-blue-700',
-        icon: 'text-blue-600 dark:text-blue-400',
-        iconBg: 'bg-blue-500',
-        hover: 'hover:border-blue-300 dark:hover:border-blue-600'
-      },
-      green: {
-        bg: 'bg-green-50 dark:bg-green-900/30',
-        border: 'border-green-200 dark:border-green-700',
-        icon: 'text-green-600 dark:text-green-400',
-        iconBg: 'bg-green-500',
-        hover: 'hover:border-green-300 dark:hover:border-green-600'
-      },
-      purple: {
-        bg: 'bg-purple-50 dark:bg-purple-900/30',
-        border: 'border-purple-200 dark:border-purple-700',
-        icon: 'text-purple-600 dark:text-purple-400',
-        iconBg: 'bg-purple-500',
-        hover: 'hover:border-purple-300 dark:hover:border-purple-600'
-      },
-      orange: {
-        bg: 'bg-orange-50 dark:bg-orange-900/30',
-        border: 'border-orange-200 dark:border-orange-700',
-        icon: 'text-orange-600 dark:text-orange-400',
-        iconBg: 'bg-orange-500',
-        hover: 'hover:border-orange-300 dark:hover:border-orange-600'
-      }
-    };
-    return colors[color];
-  };
-
   return (
-    <section id="contact" className="py-20 bg-white dark:bg-neutral-900">
-      <div className="container mx-auto px-3 md:px-6">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">
-            {t('get_in_touch')}
+    <section id="contact" className="relative py-32 overflow-hidden">
+      {/* Animated Background Mesh */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-emerald-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        {/* Header with Magnetic Effect */}
+        <div className="text-center mb-20">
+          <div className="inline-block mb-6">
+            <div className="px-6 py-2 bg-gradient-to-r from-green-500/20 to-green-500/20 border border-green-400/30 rounded-full backdrop-blur-sm">
+              <span className="text-sm font-semibold text-white">
+                {t('contact_us')}
+              </span>
+            </div>
+          </div>
+
+          <h2 className="text-5xl md:text-7xl font-black mb-6">
+            <span className="bg-gradient-to-r text-white bg-clip-text text-transparent">
+              {t('lets_start_conversation')}
+            </span>
           </h2>
-          <p className="text-lg text-neutral-600 dark:text-neutral-300 max-w-3xl mx-auto">
-            {t('have_questions_or_need_help_our_team_is_here_to_assist_you_every_step_of_the_way')}
+
+          <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
+            {t('contact_description')}
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 max-w-7xl mx-auto">
-          {/* Contact Methods */}
-          <div>
-            <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-8">
-              {t('multiple_ways_to_reach_us')}
-            </h3>
+        <div className="grid lg:grid-cols-5 gap-8 max-w-7xl mx-auto">
+          {/* Contact Channels - Left Side */}
+          <div className="lg:col-span-2 space-y-6">
 
-            <div className="space-y-6">
-              {contactMethods.map((method, index) => {
-                const colorClasses = getColorClasses(method.color);
-                return (
-                  <a
-                    key={index}
-                    href={method.action}
-                    className={`group block p-3 md:p-6 bg-neutral-50 dark:bg-neutral-800 rounded-2xl border-2 ${colorClasses.border} ${colorClasses.hover} transition-all duration-300 hover:shadow-lg`}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className={`w-12 h-12 ${colorClasses.iconBg} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                        <i className={`fa-solid ${method.icon} text-white`}></i>
-                      </div>
 
-                      <div className="flex-1">
-                        <h4 className="text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-2 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
-                          {method.title}
-                        </h4>
-                        <p className="text-neutral-600 dark:text-neutral-300 text-sm mb-2">
-                          {method.description}
-                        </p>
-                        <p className={`font-medium ${colorClasses.icon}`}>
-                          {method.value}
-                        </p>
-                      </div>
-
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <i className="fa-solid fa-arrow-right text-green-500"></i>
-                      </div>
-                    </div>
-                  </a>
-                );
-              })}
+            {/* Info Card */}
+            <div className="p-8 rounded-3xl bg-gradient-to-br from-green-500/10 to-green-500/10 border border-green-400/20 backdrop-blur-xl">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-green-500 flex items-center justify-center">
+                  <i className="fa-solid fa-info text-white"></i>
+                </div>
+                <div>
+                  <h4 className="text-white font-bold mb-2">{t('quick_response_time')}</h4>
+                  <p className="text-white text-sm leading-relaxed">
+                    {t('quick_response_description')}
+                  </p>
+                </div>
+              </div>
             </div>
 
-            {/* FAQ Link  */}
-            {/* <div className="mt-8 p-4 sm:p-6 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 rounded-2xl">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <i className="fa-solid fa-question-circle text-white"></i>
+            {contactChannels.map((channel) => (
+              <a
+                key={channel.id}
+                href={channel.action}
+                onMouseEnter={() => setHoveredCard(channel.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+                className="group block relative"
+              >
+                <div className="relative p-6 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 transition-all duration-500 hover:scale-105 hover:border-white/30 overflow-hidden">
+                  {/* Animated Gradient Background */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${channel.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
+                  ></div>
+
+                  {/* Glow Effect */}
+                  {hoveredCard === channel.id && (
+                    <div
+                      className="absolute -inset-1 rounded-3xl blur-xl transition-opacity duration-500"
+                      style={{ background: channel.glowColor }}
+                    ></div>
+                  )}
+
+                  <div className="relative flex items-center gap-4">
+                    {/* Icon */}
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${channel.gradient} flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-500 shadow-2xl`}>
+                      <i className={`fa-solid ${channel.icon} text-white text-2xl`}></i>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
+                        {channel.title}
+                        <i className="fa-solid ltr:rotate-180 fa-arrow-left text-white text-sm opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition-all duration-300"></i>
+                      </h3>
+                      <p className="text-gray-100 text-sm mb-1">{channel.subtitle}</p>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                        <span className="text-xs text-gray-100">{channel.description}</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-base sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 mb-1">
-                    {t('frequently_asked_questions')}
-                  </h4>
-                  <p className="text-neutral-600 dark:text-neutral-300 text-xs sm:text-sm">
-                    {t('find_quick_answers_to_common_questions')}
-                  </p>
-                </div>
-                <PrimaryButton
-                  as="a"
-                  href="#"
-                  className='w-full justify-center gap-2 ltr:flex-row-reverse'
-                  icon={'fa-arrow-right'}
-                >
-                  {t('view_faq')}
-                </PrimaryButton>
-              </div>
-            </div> */}
-
-
-
+              </a>
+            ))}
           </div>
 
-          {/* Contact Form */}
-          <div>
-            {isSubmitted ? (
-              <div className="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 rounded-2xl p-8 text-center">
-                <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <i className="fa-solid fa-check text-white text-2xl"></i>
-                </div>
-                <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
-                  {t('message_sent_successfully')}
-                </h3>
-                <p className="text-neutral-600 dark:text-neutral-300 mb-6">
-                  {t('thank_you_for_contacting_us_we_will_get_back_to_you_soon')}
-                </p>
-                <PrimaryButton
-                  type="button"
-                  onClick={() => setIsSubmitted(false)}
-                  variant="secondary"
-                  icon="fa-arrow-left"
-                >
-                  {t('send_another_message')}
-                </PrimaryButton>
-              </div>
-            ) : (
-              <div className="bg-neutral-50 dark:bg-neutral-800 rounded-2xl p-4 md:p-8 border border-neutral-200 dark:border-neutral-700">
-                <h3 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-6">
-                  {t('send_us_a_message')}
-                </h3>
+          {/* Contact Form - Right Side */}
+          <div className="lg:col-span-3">
+            <div
+              ref={formRef}
+              className="relative p-8 md:p-10 rounded-3xl bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl overflow-hidden"
+            >
+              {/* Animated Border Gradient */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-green-500 via-green-500 to-green-500 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-20"></div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <InputLabel htmlFor="name" value={t('your_name')} />
-                      <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        placeholder={t('enter_your_full_name')}
-                        onChange={(e) => setData('name', e.target.value)}
-                      />
-                      <InputError message={errors.name} className="mt-2" />
+              {isSubmitted ? (
+                <div className="text-center py-16 relative z-10">
+                  <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 mb-6 animate-bounce shadow-2xl">
+                    <i className="fa-solid fa-check text-white text-4xl"></i>
+                  </div>
+                  <h3 className="text-3xl font-bold text-white mb-4">{t('message_sent_success')}</h3>
+                  <p className="text-gray-100 text-lg">{t('will_contact_soon')}</p>
+                </div>
+              ) : (
+                <>
+                  <div className="mb-8 relative z-10">
+                    <h3 className="text-3xl font-bold text-white mb-2">{t('send_us_message')}</h3>
+                    <p className="text-gray-100">{t('fill_form_response')}</p>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="group">
+                        <InputLabel htmlFor="name" value={t('full_name')} className="text-white/90 mb-2" />
+                        <div className="relative">
+                          <TextInput
+                            id="name"
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
+                            className="w-full bg-white/5 border-white/20 text-white placeholder-white/40 focus:border-green-400 focus:ring-green-400/50 rounded-xl px-4 py-3 transition-all duration-300"
+                            placeholder={t('enter_name')}
+                          />
+                        </div>
+                        <InputError message={errors.name} className="mt-2" />
+                      </div>
+
+                      <div className="group">
+                        <InputLabel htmlFor="email" value={t('email_address')} className="text-white/90 mb-2" />
+                        <TextInput
+                          id="email"
+                          type="email"
+                          value={data.email}
+                          onChange={(e) => setData('email', e.target.value)}
+                          className="w-full bg-white/5 border-white/20 text-white placeholder-white/40 focus:border-green-400 focus:ring-green-400/50 rounded-xl px-4 py-3"
+                          placeholder="example@email.com"
+                        />
+                        <InputError message={errors.email} className="mt-2" />
+                      </div>
                     </div>
 
                     <div>
-                      <InputLabel htmlFor="email" value={t('email_address')} />
+                      <InputLabel htmlFor="subject" value={t('subject')} className="text-white/90 mb-2" />
                       <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="email"
-                        placeholder={t('enter_your_email')}
-                        onChange={(e) => setData('email', e.target.value)}
+                        id="subject"
+                        value={data.subject}
+                        onChange={(e) => setData('subject', e.target.value)}
+                        className="w-full bg-white/5 border-white/20 text-white placeholder-white/40 focus:border-green-400 focus:ring-green-400/50 rounded-xl px-4 py-3"
+                        placeholder={t('what_subject')}
                       />
-                      <InputError message={errors.email} className="mt-2" />
+                      <InputError message={errors.subject} className="mt-2" />
                     </div>
-                  </div>
 
-                  <div>
-                    <InputLabel htmlFor="subject" value={t('subject')} />
-                    <TextInput
-                      id="subject"
-                      name="subject"
-                      value={data.subject}
-                      className="mt-1 block w-full"
-                      placeholder={t('what_is_this_about')}
-                      onChange={(e) => setData('subject', e.target.value)}
-                    />
-                    <InputError message={errors.subject} className="mt-2" />
-                  </div>
+                    <div>
+                      <InputLabel htmlFor="message" value={t('message')} className="text-white/90 mb-2" />
+                      <TextArea
+                        id="message"
+                        value={data.message}
+                        onChange={(e) => setData('message', e.target.value)}
+                        rows={5}
+                        className="w-full bg-white/5 border-white/20 text-white placeholder-white/40 focus:border-green-400 focus:ring-green-400/50 rounded-xl px-4 py-3 resize-none"
+                        placeholder={t('tell_us_help')}
+                      />
+                      <InputError message={errors.message} className="mt-2" />
+                    </div>
 
-                  <div>
-                    <InputLabel htmlFor="message" value={t('message')} />
-                    <TextArea
-                      id="message"
-                      name="message"
-                      value={data.message}
-                      onChange={(e) => setData('message', e.target.value)}
-                      rows={6}
-                      placeholder={t('tell_us_how_we_can_help_you')}
-                    />
-                    <InputError message={errors.message} className="mt-2" />
-                  </div>
+                    <button
+                      type="submit"
+                      disabled={processing}
+                      className="group relative w-full py-4 px-8 bg-gradient-to-r from-green-500 via-emerald-500 to-green-500 rounded-xl font-bold text-white text-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <span className="relative z-10 flex items-center justify-center gap-3">
+                        {processing ? (
+                          <>
+                            <i className="fa-solid fa-spinner fa-spin"></i>
+                            {t('sending')}
+                          </>
+                        ) : (
+                          <>
+                            <i className="fa-solid fa-paper-plane"></i>
+                            {t('send_message')}
+                          </>
+                        )}
+                      </span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-green-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </button>
 
-                  <PrimaryButton
-                    type="submit"
-                    disabled={processing}
-                    className="w-full  justify-center py-4"
-                    icon={processing ? 'fa-spinner fa-spin' : 'fa-paper-plane'}
-                  >
-                    {processing ? t('sending') : t('send_message')}
-                  </PrimaryButton>
-                </form>
-
-                {/* Privacy Notice */}
-                <div className="mt-6 p-4 bg-neutral-100 dark:bg-neutral-700 rounded-xl">
-                  <p className="text-xs text-neutral-600 dark:text-neutral-300 flex items-start gap-2">
-                    <i className="fa-solid fa-shield-alt text-green-500 mt-0.5"></i>
-                    {t('your_information_is_secure_and_will_never_be_shared_with_third_parties')}
-                  </p>
-                </div>
-              </div>
-            )}
+                    {/* Privacy Notice */}
+                    <div className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10">
+                      <i className="fa-solid fa-lock text-green-400 mt-1"></i>
+                      <p className="text-xs text-gray-100 leading-relaxed">
+                        {t('privacy_notice')}
+                      </p>
+                    </div>
+                  </form>
+                </>
+              )}
+            </div>
           </div>
         </div>
-
-        {/* Statistics */}
-        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-16 border-t border-neutral-200 dark:border-neutral-700">
-          {[
-            { icon: 'fa-clock', value: '< 24h', label: t('average_response_time') },
-            { icon: 'fa-smile', value: '99%', label: t('customer_satisfaction') },
-            { icon: 'fa-users', value: '50+', label: t('support_team_members') },
-            { icon: 'fa-globe', value: '25+', label: t('languages_supported') }
-          ].map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center mx-auto mb-3">
-                <i className={`fa-solid ${stat.icon} text-green-600 dark:text-green-400`}></i>
-              </div>
-              <div className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-1">
-                {stat.value}
-              </div>
-              <div className="text-sm text-neutral-600 dark:text-neutral-300">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div> */}
       </div>
+
+      {/* Custom Animations */}
+      <style jsx>{`
+        @keyframes blob {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          25% { transform: translate(20px, -50px) scale(1.1); }
+          50% { transform: translate(-20px, 20px) scale(0.9); }
+          75% { transform: translate(50px, 50px) scale(1.05); }
+        }
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+      `}</style>
     </section>
   );
 }
