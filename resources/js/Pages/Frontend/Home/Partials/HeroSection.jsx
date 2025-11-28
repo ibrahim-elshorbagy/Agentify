@@ -11,33 +11,17 @@ export default function HeroSection() {
     <div id="home" className="relative overflow-hidden pt-20">
 
       {/* Floating Grid Decorations - Modern AI Icons */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Neural Network Icon */}
+      {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <i className="fas fa-network-wired absolute top-20 left-10 text-6xl text-green-200/70 dark:text-green-700/40 transform rotate-12 animate-float-slow" style={{ animation: 'float-slow 6s ease-in-out infinite, pulse-glow 3s ease-in-out infinite' }} />
-
-        {/* AI Chip/Processor */}
         <i className="fas fa-microchip absolute top-10 right-10 text-5xl text-emerald-300/70 dark:text-emerald-600/40 transform rotate-30 animate-float-slow" style={{ animation: 'float-slow 7s ease-in-out infinite, pulse-glow 2.5s ease-in-out infinite alternate' }} />
-
-        {/* Brain Circuit - AI Intelligence */}
         <i className="fas fa-brain absolute bottom-32 right-16 text-5xl text-teal-200/70 dark:text-teal-700/40 transform -rotate-6" style={{ animation: 'float-slower 8s ease-in-out infinite, pulse-glow 4s ease-in-out infinite' }} />
-
-        {/* Data/Analytics Stream */}
         <i className="fas fa-chart-bar absolute top-1/3 right-1/4 text-4xl text-green-300/70 dark:text-green-600/40 transform rotate-45" style={{ animation: 'float 5s ease-in-out infinite, pulse-glow 3.5s ease-in-out infinite' }} />
-
-        {/* Cloud AI / Neural Processing */}
         <i className="fas fa-cloud absolute bottom-20 left-20 text-4xl text-emerald-300/70 dark:text-emerald-600/40 transform -rotate-45" style={{ animation: 'float-slower 9s ease-in-out infinite, pulse-glow 2.8s ease-in-out infinite' }} />
-
-        {/* Spark/Innovation Icon */}
         <i className="fas fa-sparkles absolute top-2/3 left-1/3 text-5xl text-teal-300/70 dark:text-teal-600/40 transform rotate-60" style={{ animation: 'float 6.5s ease-in-out infinite, pulse-glow 3.2s ease-in-out infinite' }} />
-
-        {/* Automation/Workflow */}
         <i className="fas fa-diagram-project absolute bottom-10 right-1/3 text-4xl text-green-400/70 dark:text-green-500/40 transform rotate-15" style={{ animation: 'float-slow 7.5s ease-in-out infinite, pulse-glow 3.8s ease-in-out infinite' }} />
-
-        {/* Additional Modern Icons */}
         <i className="fas fa-atom absolute top-1/2 left-10 text-3xl text-emerald-200/60 dark:text-emerald-700/30 transform rotate-90" style={{ animation: 'spin-slow 20s linear infinite, pulse-glow 4.2s ease-in-out infinite' }} />
-
         <i className="fas fa-bolt absolute top-40 right-1/3 text-3xl text-teal-200/60 dark:text-teal-700/30 transform -rotate-20" style={{ animation: 'float 5.5s ease-in-out infinite, pulse-glow 2.2s ease-in-out infinite' }} />
-      </div>
+      </div> */}
 
       <div className="relative container mx-auto px-6 flex  min-h-screen">
         <div className="text-center max-w-6xl mx-auto">
@@ -58,7 +42,7 @@ export default function HeroSection() {
           </h1>
 
           {/* Description */}
-          <p className="text-lg md:text-xl lg:text-2xl text-gray-100 dark:text-white mb-12 max-w-4xl mx-auto leading-relaxed font-light">
+          <p className="text-lg md:text-xl lg:text-2xl text-white mb-12 max-w-4xl mx-auto leading-relaxed font-light">
             {t('take_control_email_files_hiring')}
           </p>
 

@@ -77,6 +77,14 @@ return [
   'language_changed' => 'تم تغيير اللغة',
   'current_language' => 'اللغة الحالية',
 
+  // Footer translations
+  'footer_brand_name' => 'Agentify',
+  'footer_description' => 'منصّة سعودية تقدّم وكلاء ذكاء اصطناعي مصممين لتبسيط المهام الروتينية، لتوفير وقت أكبر للعمل الحقيقي.',
+  'footer_rights_reserved' => 'جميع الحقوق محفوظة',
+  'home' => 'الرئيسية',
+  'about' => 'عن المنصة',
+  'contact' => 'تواصل معنا',
+
 
   /* Profile Page */
   'profile_settings' => 'إعدادات الملف الشخصي',
@@ -198,7 +206,7 @@ return [
   'starred' => 'مميز بنجمة',
   'archive' => 'الأرشيف',
   'unarchive' => 'إلغاء الأرشفة',
-  "more"=>"المزيد",
+  "more" => "المزيد",
   'select_all' => 'تحديد الكل',
   'from' => 'من',
   'to' => "الي",
@@ -236,7 +244,7 @@ return [
   'move_to_spam' => 'نقل إلى المزعج',
   'move_to_bin' => 'نقل إلى سلة المحذوفات',
   'move_to_folder' => 'نقل إلى مجلد',
-  'move'=>"نقل",
+  'move' => "نقل",
   'move_emails_to_folder' => 'نقل البريد الإلكتروني إلى مجلد',
   'select_destination_folder' => 'اختر المجلد المقصود',
   'delete_permanently' => 'حذف نهائي',
@@ -246,8 +254,8 @@ return [
   "draft_emails" => "رسائل المسودة",
   "delete_drafts" => "حذف المسودات",
   "send_drafts" => "ارسال المسودات",
-  "search"=>"بحث",
-  "serial"=>"تسلسل",
+  "search" => "بحث",
+  "serial" => "تسلسل",
 
   /* Draft/Sent Bulk Action Confirmations */
   'confirm_send_drafts' => 'هل أنت متأكد أنك تريد إرسال :count من الرسائل المسودة؟',
@@ -484,7 +492,7 @@ return [
   "emails" => "البريد الإلكتروني",
   "report" => "تقرير",
   "cvs" => "السير الذاتية",
-  "ai_tasks"=>"مهام تمت بالذكاء الاصطناعي",
+  "ai_tasks" => "مهام تمت بالذكاء الاصطناعي",
 
 
   // Pricing Section
@@ -523,6 +531,29 @@ return [
   '30_day_money_back_guarantee' => 'ضمان استرداد الأموال لمدة 30 يوماً',
   'no_setup_fees' => 'لا توجد رسوم إعداد',
   'cancel_anytime' => 'الإلغاء في أي وقت',
+
+  'agentify_main_description' => 'منصه سعودية تقدم وكلاء ذكاء اصطناعي مصممين لتبسيط المهام الروتينية',
+  'agentify_goal_description' => 'هدفنا توفير وقت أكبر للعمل الحقيقي، ونزيد الانتاجيه ونقلل الوقت الضائع في المهام المتكرره',
+
+  'email_agent_title' => 'وكيل البريد الإلكتروني',
+  'email_agent_classification' => 'تصنيف دقيق للبريد بناء على المحتوى الي بداخله',
+  'email_agent_suggestions' => 'اقتراح ردود',
+  'email_agent_query' => 'سؤال الوكيل عن محتوى اي بريد وصلك منذ مده من دون الحاجه الى ذكر معلومات دقيقه ويجيبك بكافة المعلومات عنه في ثواني',
+
+  'reports_agent_title' => 'وكيل التقارير',
+  'reports_agent_upload' => 'ارفع أي ملف PDF او Word او Excel او CSV،',
+  'reports_agent_process' => 'ودع الوكيل يقرأه، يلخصه، ويستخرج أهم البيانات بالذكاء الاصطناعي.',
+
+  'hr_agent_title' => 'وكيل الموارد البشرية',
+  'hr_agent_collection' => 'يجمع السير الذاتية من بريدك أو عبر الرفع المباشر، ثم يحلل كل سيرة ذاتية،',
+  'hr_agent_analysis' => 'يعطيها تقييم، ويرتب معلومات المرشح في شكل واضح وسهل القراءه.',
+
+  'what_makes_agentify_special' => 'ما الذي يجعل Agentify مميز؟',
+  'unified_platform' => 'منصه واحدة بدون تعقيد ولا تنقل بين صفحات كثيرة',
+  'easy_to_use' => 'سهل الاستخدام ولا تحتاج أي خبره تقنيه لاستخدام الوكلاء',
+  'time_saving' => 'توفير ساعات من العمل اليومي',
+  'secure_data' => 'ضمان حفظ المعلومات الحساسه بأعلى معايير الامان',
+  'email_integration' => 'يرتبط بسهوله مع بريدك الحالي Outlook و Gmail',
 
   // Contact Section
   'get_in_touch' => 'تواصل معنا',
@@ -679,8 +710,8 @@ return [
   'smart_cv_parsing' => 'تحليل ذكي للسير الذاتية',
   'candidate_ranking' => 'ترتيب المرشحين و تقييمهم',
   'recruitment_automation' => 'أتمتة التوظيف',
-  "email_action_automation"=>"أتمتة إجراءات البريد الإلكتروني",
-  "smart_email_assistant"=>"مساعد البريد الإلكتروني الذكي",
+  "email_action_automation" => "أتمتة إجراءات البريد الإلكتروني",
+  "smart_email_assistant" => "مساعد البريد الإلكتروني الذكي",
 
   // Action Buttons
   'start_using_this_agent' => 'ابدأ استخدام هذا الوكيل',
@@ -831,8 +862,8 @@ return [
   'save_changes' => 'حفظ التغييرات',
   'contact_number' => 'رقم الاتصال',
   'score' => 'النتيجة',
-  'this_take_15_30'=>"قد تاخذ العمليه وقت مقدر من 5 - 15 دقيقه",
-  "files_are_supported"=>"الملفات المسوح بها",
+  'this_take_15_30' => "قد تاخذ العمليه وقت مقدر من 5 - 15 دقيقه",
+  "files_are_supported" => "الملفات المسوح بها",
 
   // اتصالات البريد الإلكتروني
   'email_connections' => 'اتصالات البريد الإلكتروني',
@@ -854,7 +885,7 @@ return [
   'get_gmail' => 'جلب رسائل Gmail',
   'get_outlook' => 'جلب رسائل Outlook',
   'fetch_emails' => 'جلب الرسائل',
-  'select'=>"اختر",
+  'select' => "اختر",
 
   // Email fetch time settings
   'schedule_settings' => 'إعدادات الجدولة',

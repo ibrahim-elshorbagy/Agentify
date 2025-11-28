@@ -87,7 +87,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <h4 className="text-white font-bold mb-2">{t('quick_response_time')}</h4>
-                  <p className="text-gray-100 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     {t('quick_response_description')}
                   </p>
                 </div>

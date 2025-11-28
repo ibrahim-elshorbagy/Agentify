@@ -65,9 +65,9 @@ return [
 
   'welcome' => "Welcome 👋",
   'email_agent' => 'Email Agent',
-  'file_agent' => 'File Agent',
+  'file_agent' => 'Report Agent',
   'chatbot_agent' => 'ChatBot Agent',
-  'hiring_agent' => 'Hiring Agent',
+  'hiring_agent' => 'HR Agent',
   'ai_powered_platform' => 'AI-Powered Platform',
 
 
@@ -77,6 +77,14 @@ return [
   'change_language' => 'Change Language',
   'language_changed' => 'Language Changed',
   'current_language' => 'Current Language',
+
+  // Footer translations
+  'footer_brand_name' => 'Agentify',
+  'footer_description' => 'A Saudi platform offering AI agents designed to simplify routine tasks, giving you more time for real work.',
+  'footer_rights_reserved' => 'All rights reserved',
+  'home' => 'Home',
+  'about' => 'About',
+  'contact' => 'Contact',
 
   /* Profile Page */
   'profile_settings' => 'Profile Settings',
@@ -545,6 +553,31 @@ return [
   "report" => "Report",
   "cvs" => "CVs",
   "ai_tasks" => "AI Tasks",
+
+  // In English translation file
+  'agentify_main_description' => 'A Saudi platform that provides AI agents designed to simplify routine tasks.',
+  'agentify_goal_description' => 'Our goal is to give you more time for real work, boost productivity, and reduce wasted time on repetitive tasks.',
+
+  'email_agent_title' => 'Email Agent',
+  'email_agent_classification' => 'Smart and accurate email classification based on its content',
+  'email_agent_suggestions' => 'Suggested replies',
+  'email_agent_query' => 'Ask the agent about any email you received—even from a long time ago—without needing to mention exact details, and it will give you all the information within seconds.',
+
+  'reports_agent_title' => 'Reports Agent',
+  'reports_agent_upload' => 'Upload any PDF, Word, Excel, or CSV file,',
+  'reports_agent_process' => 'and let the agent read it, summarize it, and extract key insights using AI.',
+
+  'hr_agent_title' => 'HR Agent',
+  'hr_agent_collection' => 'Collects CVs from your email or through direct upload, analyzes every resume,',
+  'hr_agent_analysis' => 'assigns a score, and organizes the candidate\'s information in a clear and readable format.',
+
+  'what_makes_agentify_special' => 'What Makes Agentify Special?',
+  'unified_platform' => 'A unified platform without complexity or switching between multiple pages',
+  'easy_to_use' => 'Easy to use—no technical experience needed to work with the agents',
+  'time_saving' => 'Saves hours of daily manual work',
+  'secure_data' => 'Ensures secure handling of sensitive data with top-level protection',
+  'email_integration' => 'Integrates easily with your current email (Outlook & Gmail)',
+
 
   // Pricing Section
   'simple_transparent_pricing' => 'Simple, Transparent Pricing',

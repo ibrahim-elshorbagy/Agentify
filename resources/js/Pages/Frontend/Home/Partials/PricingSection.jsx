@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTrans } from '@/Hooks/useTrans';
 import PrimaryButton from '@/Components/PrimaryButton';
+import { SARIcon } from './Icons/Icons';
 
 export default function PricingSection({ plans = [] }) {
   const floatingAnimation = `
@@ -55,10 +56,17 @@ export default function PricingSection({ plans = [] }) {
   const displayPlans = isYearly ? yearlyPlans : monthlyPlans;
 
   const getPlanColor = (plan) => {
-    if (plan.id === 1 || plan.id === 5) return 'gray';
-    if (plan.id === 2 || plan.id === 6) return 'blue';
-    if (plan.id === 3 || plan.id === 7) return 'green';
-    return 'blue';
+    if (plan.id === 1 || plan.id === 5) return 'green'; // Basic - Green
+    if (plan.id === 2 || plan.id === 6) return 'green-black'; // Pro - Green + Black
+    if (plan.id === 3 || plan.id === 7) return 'green-gold'; // Business - Green + Gold + Black
+    return 'green';
+  };
+
+  const getPlanIcon = (plan) => {
+    if (plan.id === 1 || plan.id === 5) return 'fa-user'; // Basic - Single person
+    if (plan.id === 2 || plan.id === 6) return 'fa-chart-line'; // Pro - Multiple people
+    if (plan.id === 3 || plan.id === 7) return 'fa-building'; // Business - Building
+    return 'fa-star';
   };
 
   const isPlanPopular = (plan) => {
@@ -166,20 +174,6 @@ export default function PricingSection({ plans = [] }) {
 
   const getColorClasses = (color) => {
     const colors = {
-      gray: {
-        border: 'border-gray-200 dark:border-gray-700',
-        headerBg: 'bg-gray-50 dark:bg-gray-900/30',
-        button: 'bg-gray-600 hover:bg-gray-700',
-        text: 'text-gray-600 dark:text-gray-400',
-        popular: 'border-gray-500'
-      },
-      blue: {
-        border: 'border-blue-200 dark:border-blue-700',
-        headerBg: 'bg-blue-50 dark:bg-blue-900/30',
-        button: 'bg-blue-600 hover:bg-blue-700',
-        text: 'text-blue-600 dark:text-blue-400',
-        popular: 'border-blue-500'
-      },
       green: {
         border: 'border-green-200 dark:border-green-700',
         headerBg: 'bg-green-50 dark:bg-green-900/30',
@@ -187,12 +181,19 @@ export default function PricingSection({ plans = [] }) {
         text: 'text-green-600 dark:text-green-400',
         popular: 'border-green-500'
       },
-      purple: {
-        border: 'border-purple-200 dark:border-purple-700',
-        headerBg: 'bg-purple-50 dark:bg-purple-900/30',
-        button: 'bg-purple-600 hover:bg-purple-700',
-        text: 'text-purple-600 dark:text-purple-400',
-        popular: 'border-purple-500'
+      'green-black': {
+        border: 'border-green-200 dark:border-green-700',
+        headerBg: 'bg-green-50 dark:bg-green-900/30',
+        button: 'bg-green-600 hover:bg-green-700',
+        text: 'text-green-600 dark:text-green-400',
+        popular: 'border-green-500'
+      },
+      'green-gold': {
+        border: 'border-green-200 dark:border-green-700',
+        headerBg: 'bg-green-50 dark:bg-green-900/30',
+        button: 'bg-green-600 hover:bg-green-700',
+        text: 'text-green-600 dark:text-green-400',
+        popular: 'border-green-500'
       }
     };
     return colors[color] || colors.green;
@@ -223,7 +224,7 @@ export default function PricingSection({ plans = [] }) {
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 animate-[pulse_3s_ease-in-out_infinite]">
               {t('plans')}
             </h2>
-            <p className="text-base sm:text-lg text-neutral-100 max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
+            <p className="text-base sm:text-lg text-white max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
               {t('choose_the_plan_that_fits_your_needs_no_hidden_fees_cancel_anytime')}
             </p>
 
@@ -265,15 +266,16 @@ export default function PricingSection({ plans = [] }) {
               const savings = isYearly ? calculateSavings(plan) : 0;
 
               const gradientColors = {
-                1: 'from-yellow-500 via-orange-500 to-pink-500',
-                5: 'from-yellow-500 via-orange-500 to-pink-500',
-                2: 'from-blue-500 via-cyan-500 to-pink-500',
-                6: 'from-blue-500 via-cyan-500 to-pink-500',
-                3: 'from-green-500 via-emerald-500 to-cyan-500',
-                7: 'from-green-500 via-emerald-500 to-cyan-500',
+                1: 'from-green-400 via-green-500 to-green-600', // Basic - Pure green
+                5: 'from-green-400 via-green-500 to-green-600', // Basic Yearly
+                2: 'from-green-500 via-green-700 to-gray-900', // Pro - Green + Black
+                6: 'from-green-500 via-green-700 to-gray-900', // Pro Yearly
+                3: 'from-green-500 via-yellow-500 to-gray-900', // Business - Green + Gold + Black
+                7: 'from-green-500 via-yellow-500 to-gray-900', // Business Yearly
               };
 
-              const gradient = gradientColors[plan.id] || 'from-blue-500 via-purple-500 to-pink-500';
+              const gradient = gradientColors[plan.id] || 'from-green-400 via-green-500 to-green-600';
+              const planIcon = getPlanIcon(plan);
 
               return (
                 <PricingCard
@@ -285,6 +287,7 @@ export default function PricingSection({ plans = [] }) {
                   keyFeatures={keyFeatures}
                   savings={savings}
                   gradient={gradient}
+                  planIcon={planIcon}
                   isYearly={isYearly}
                   showAllFeatures={showAllFeatures}
                   t={t}
@@ -312,7 +315,7 @@ export default function PricingSection({ plans = [] }) {
 }
 
 // Separate component for pricing card with mouse tracking
-function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, gradient, isYearly, showAllFeatures, t }) {
+function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, gradient, planIcon, isYearly, showAllFeatures, t }) {
   const cardRef = useRef(null);
 
   const handleMouseMove = (e) => {
@@ -328,10 +331,10 @@ function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, g
 
   // Get radial gradient color based on plan
   const getRadialColor = () => {
-    if (plan.id === 1 || plan.id === 5) return 'rgba(249, 115, 22, 0.6)'; // orange
-    if (plan.id === 2 || plan.id === 6) return 'rgba(59, 130, 246, 0.6)'; // blue
-    if (plan.id === 3 || plan.id === 7) return 'rgba(34, 197, 94, 0.6)'; // green
-    return 'rgba(59, 130, 246, 0.6)';
+    if (plan.id === 1 || plan.id === 5) return 'rgba(34, 197, 94, 0.4)'; // Green for Basic
+    if (plan.id === 2 || plan.id === 6) return 'rgba(34, 197, 94, 0.3)'; // Green for Pro
+    if (plan.id === 3 || plan.id === 7) return 'rgba(234, 179, 8, 0.3)'; // Gold tint for Business
+    return 'rgba(34, 197, 94, 0.4)';
   };
 
   return (
@@ -350,29 +353,36 @@ function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, g
       {/* Blurred Background */}
       <div className={`absolute top-0 left-12 w-1/2 h-full bg-gradient-to-br ${gradient} rounded-lg transform skew-x-12 transition-all duration-500 blur-[30px] group-hover:skew-x-0 group-hover:left-5 group-hover:w-[calc(100%-5.625rem)]`}></div>
 
-      {/* Popular Badge */}
-      {isPopular && (
-        <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20">
-          <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg whitespace-nowrap animate-[pulse_2s_ease-in-out_infinite]">
+      {/* Plan Icon at top center */}
+      <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-20">
+        <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center shadow-lg animate-[pulse_3s_ease-in-out_infinite]`}>
+          <i className={`fa-solid ${planIcon} text-white text-2xl`}></i>
+        </div>
+      </div>
+
+      {/* Most Popular Badge */}
+      {/* {isPopular && (
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-20 mt-12">
+          <div className="bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg whitespace-nowrap animate-[pulse_2s_ease-in-out_infinite]">
             <i className="fa-solid fa-star mr-2"></i>
             {t('most_popular')}
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Content Card with Mouse-Following Border Glow */}
       <div
-  className="relative left-0 px-10 py-8 bg-white/5 backdrop-blur-[10px] shadow-[0_5px_15px_rgba(0,0,0,0.1)] rounded-lg z-[1] transition-all duration-500 text-white group-hover:-left-6 group-hover:px-10 group-hover:py-12 h-full flex flex-col overflow-hidden"
-  style={{
-    border: '2px solid transparent',
-    background: `
+        className="relative left-0 px-10 py-8 bg-white/5 backdrop-blur-[10px] shadow-[0_5px_15px_rgba(0,0,0,0.1)] rounded-lg z-[1] transition-all duration-500 text-white group-hover:-left-6 group-hover:px-10 group-hover:py-12 h-full flex flex-col overflow-hidden"
+        style={{
+          border: '2px solid transparent',
+          background: `
       radial-gradient(circle 150px at var(--mouse-x) var(--mouse-y), ${getRadialColor()}, transparent 100%) border-box,
       linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)) padding-box
     `,
-    backgroundClip: 'border-box, padding-box',
-    WebkitBackgroundClip: 'border-box, padding-box'
-  }}
->
+          backgroundClip: 'border-box, padding-box',
+          WebkitBackgroundClip: 'border-box, padding-box'
+        }}
+      >
         {/* Radial glow effect that follows mouse */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-lg"
@@ -393,8 +403,8 @@ function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, g
 
           {/* Price */}
           <div className="flex items-end gap-2 mb-2">
-            <span className="text-3xl font-bold text-white">
-              SAR {plan.price}
+            <span className="text-3xl font-bold text-white flex gap-2 items-center" dir='ltr'>
+              <SARIcon /> {plan.price}
             </span>
             <span className="text-white/70 mb-1 text-sm">
               /{isYearly ? t('year') : t('month')}
@@ -403,8 +413,8 @@ function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, g
 
           {/* Savings Display */}
           {isYearly && savings > 0 && (
-            <p className="text-sm text-green-300">
-              {t('save')} SAR {Math.round(savings)} {t('per_year')}
+            <p className="text-sm text-green-300 flex gap-1 items-center" >
+              {t('save')}  <span dir="ltr" className='inline-flex gap-2 items-center'><SARIcon /> {Math.round(savings)}</span> {t('per_year')}
             </p>
           )}
         </div>

@@ -101,14 +101,14 @@ class SubscriptionSystemSeeder extends Seeder
       ],
       [
         'id' => 2,
-        'name' => ['en' => 'Starter', 'ar' => 'المبتدئ'],
+        'name' => ['en' => 'Pro', 'ar' => 'المحترف'],
         'description' => ['en' => 'Ideal for small teams', 'ar' => 'مثالي للفرق الصغيرة'],
         'price' => 40,
         'type' => 'monthly',
       ],
       [
         'id' => 3,
-        'name' => ['en' => 'Pro', 'ar' => 'المحترف'],
+        'name' => ['en' => 'Business', 'ar' => 'الأعمال'],
         'description' => ['en' => 'For growing businesses', 'ar' => 'للشركات المتنامية'],
         'price' => 80,
         'type' => 'monthly',
@@ -124,14 +124,14 @@ class SubscriptionSystemSeeder extends Seeder
       ],
       [
         'id' => 6,
-        'name' => ['en' => 'Starter', 'ar' => 'المبتدئ'],
+        'name' => ['en' => 'Pro', 'ar' => 'المحترف'],
         'description' => ['en' => 'Ideal for small teams - Save 17%', 'ar' => 'مثالي للفرق الصغيرة - وفر 17%'],
         'price' => 400,
         'type' => 'yearly',
       ],
       [
         'id' => 7,
-        'name' => ['en' => 'Pro', 'ar' => 'المحترف'],
+        'name' => ['en' => 'Business', 'ar' => 'الأعمال'],
         'description' => ['en' => 'For growing businesses - Save 17%', 'ar' => 'للشركات المتنامية - وفر 17%'],
         'price' => 800,
         'type' => 'yearly',
@@ -157,8 +157,8 @@ class SubscriptionSystemSeeder extends Seeder
         7 => 5,      // Max file size (MB)
       ],
 
-      // Starter Plan
-      'Starter' => [
+      // Pro Plan
+      'Pro' => [
         1 => 30,     // Email fetches per month
         2 => 50,     // Email messages per month (Agent + QNA)
         3 => 15,     // Fetch CVs from email box per month
@@ -168,8 +168,8 @@ class SubscriptionSystemSeeder extends Seeder
         7 => 15,     // Max file size (MB)
       ],
 
-      // Pro Plan
-      'Pro' => [
+      // Business Plan
+      'Business' => [
         1 => 75,     // Email fetches per month
         2 => 150,    // Email messages per month (Agent + QNA)
         3 => 40,     // Fetch CVs from email box per month
@@ -183,11 +183,11 @@ class SubscriptionSystemSeeder extends Seeder
     // Map plan IDs to plan tiers
     $planMap = [
       1 => 'Basic',     // Monthly
-      2 => 'Starter',   // Monthly
-      3 => 'Pro',       // Monthly
+      2 => 'Pro',       // Monthly
+      3 => 'Business',  // Monthly
       5 => 'Basic',     // Yearly
-      6 => 'Starter',   // Yearly
-      7 => 'Pro',       // Yearly
+      6 => 'Pro',       // Yearly
+      7 => 'Business',  // Yearly
     ];
 
     // -------------------------
