@@ -29,17 +29,18 @@ export default function Menu({ footerRef }) {
       className: isHomePage && activeSection === 'home' ? 'bg-green-600' : ''
     },
     {
-      icon: <i className="fa-solid fa-tag text-white"></i>,
-      label: t('pricing'),
-      onClick: (e) => handleNavClick(e, 'pricing'),
-      className: isHomePage && activeSection === 'pricing' ? 'bg-green-600' : ''
-    },
-    {
       icon: <i className="fa-solid fa-info-circle text-white"></i>,
       label: t('about'),
       onClick: (e) => handleNavClick(e, 'about'),
       className: isHomePage && activeSection === 'about' ? 'bg-green-600' : ''
     },
+    {
+      icon: <i className="fa-solid fa-tag text-white"></i>,
+      label: t('pricing'),
+      onClick: (e) => handleNavClick(e, 'pricing'),
+      className: isHomePage && activeSection === 'pricing' ? 'bg-green-600' : ''
+    },
+
     {
       icon: <i className="fa-solid fa-envelope text-white"></i>,
       label: t('contact_us'),

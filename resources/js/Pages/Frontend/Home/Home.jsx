@@ -12,8 +12,8 @@ export default function Home({ plans }) {
       <Head title={'Welcome'} />
 
       <HeroSection />
-      <PricingSection plans={plans} />
       <AboutSection/>
+      <PricingSection plans={plans} />
       <ContactSection />
     </SiteLayout>
   );

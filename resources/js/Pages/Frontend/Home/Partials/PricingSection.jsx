@@ -70,7 +70,7 @@ export default function PricingSection({ plans = [] }) {
   };
 
   const isPlanPopular = (plan) => {
-    return plan.id === 3 || plan.id === 7;
+    return plan.id === 2 || plan.id === 6;
   };
 
   const findMatchingPlan = (currentPlan, targetPlans) => {
@@ -270,8 +270,8 @@ export default function PricingSection({ plans = [] }) {
                 5: 'from-green-400 via-green-500 to-green-600', // Basic Yearly
                 2: 'from-green-500 via-green-700 to-gray-900', // Pro - Green + Black
                 6: 'from-green-500 via-green-700 to-gray-900', // Pro Yearly
-                3: 'from-green-500 via-yellow-500 to-gray-900', // Business - Green + Gold + Black
-                7: 'from-green-500 via-yellow-500 to-gray-900', // Business Yearly
+                3: 'from-green-500 via-amber-600 to-gray-900', // Business - Green + Darker Gold + Black
+                7: 'from-green-500 via-amber-600 to-gray-900', // Business Yearly
               };
 
               const gradient = gradientColors[plan.id] || 'from-green-400 via-green-500 to-green-600';
@@ -333,7 +333,7 @@ function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, g
   const getRadialColor = () => {
     if (plan.id === 1 || plan.id === 5) return 'rgba(34, 197, 94, 0.4)'; // Green for Basic
     if (plan.id === 2 || plan.id === 6) return 'rgba(34, 197, 94, 0.3)'; // Green for Pro
-    if (plan.id === 3 || plan.id === 7) return 'rgba(234, 179, 8, 0.3)'; // Gold tint for Business
+    if (plan.id === 3 || plan.id === 7) return 'rgba(217, 119, 6, 0.3)'; // Darker gold (amber-600) for Business
     return 'rgba(34, 197, 94, 0.4)';
   };
 
@@ -361,14 +361,14 @@ function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, g
       </div>
 
       {/* Most Popular Badge */}
-      {/* {isPopular && (
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-20 mt-12">
-          <div className="bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg whitespace-nowrap animate-[pulse_2s_ease-in-out_infinite]">
-            <i className="fa-solid fa-star mr-2"></i>
+      {isPopular && (
+        <div className="absolute -top-4 -left-4  z-20">
+          <div className="bg-gradient-to-r from-green-400 to-green-600 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg whitespace-nowrap animate-[pulse_2s_ease-in-out_infinite]">
+            <i className="fa-solid fa-star ltr:mr-1 rtl:ml-1 text-yellow-400"></i>
             {t('most_popular')}
           </div>
         </div>
-      )} */}
+      )}
 
       {/* Content Card with Mouse-Following Border Glow */}
       <div
@@ -397,10 +397,6 @@ function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, g
           <h3 className="text-2xl font-bold text-white mb-2 truncate">
             {plan.name_value || plan.name?.en || plan.name}
           </h3>
-          <p className="text-white/80 mb-4 text-sm line-clamp-2">
-            {plan.description_value || plan.description?.en || plan.description}
-          </p>
-
           {/* Price */}
           <div className="flex items-end gap-2 mb-2">
             <span className="text-3xl font-bold text-white flex gap-2 items-center" dir='ltr'>
