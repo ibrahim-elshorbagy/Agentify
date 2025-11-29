@@ -51,11 +51,11 @@ export default function WebNavigation() {
             </li>
             <li>
               <NavLink
-                href="#features"
-                onClick={(e) => handleNavClick(e, 'features')}
-                active={isHomePage && activeSection === 'features'}
+                href="#about"
+                onClick={(e) => handleNavClick(e, 'about')}
+                active={isHomePage && activeSection === 'about'}
               >
-                {t('features')}
+                {t('about')}
               </NavLink>
             </li>
             <li>
@@ -64,16 +64,7 @@ export default function WebNavigation() {
                 onClick={(e) => handleNavClick(e, 'pricing')}
                 active={isHomePage && activeSection === 'pricing'}
               >
-                {t('pricing')}
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                href="#about"
-                onClick={(e) => handleNavClick(e, 'about')}
-                active={isHomePage && activeSection === 'about'}
-              >
-                {t('about')}
+                {t('plans')}
               </NavLink>
             </li>
             <li>

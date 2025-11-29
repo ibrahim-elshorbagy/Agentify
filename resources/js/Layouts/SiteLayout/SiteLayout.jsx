@@ -4,7 +4,6 @@ import Toastify from '../Partials/Toastify';
 import Header from './Header';
 import Footer from './Footer';
 import { useTrans } from '@/Hooks/useTrans';
-import Menu from './Menu';
 // import Squares from '@/Components/Squares';
 import Plasma from '@/Components/Plasma';
 
@@ -14,14 +13,16 @@ export default function SiteLayout({ children, title }) {
   const { t } = useTrans();
   const { auth } = usePage().props;
 
-  const footerRef = useRef();
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-500 via-green-400 to-green-500 dark:from-[#000201] dark:via-neutral-800 dark:to-[#000201]" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
 
+      {/* Header */}
+      <Header />
+
       {/* Animated Grid Background  */}
       <div className="fixed inset-0 w-full h-full pointer-events-none z-0">
-      <Plasma
+        <Plasma
           color="#5dea82"
           speed={0.5}
           direction="forward"
@@ -31,19 +32,11 @@ export default function SiteLayout({ children, title }) {
         />
       </div>
 
-      {/* Header */}
-      <div className="relative z-50">
-        <Header />
-      </div>
-
       {/* Main content */}
       <main className="relative z-10">{children}</main>
 
-      <Menu footerRef={footerRef} />
       {/* Footer */}
-      <div ref={footerRef} className="relative z-50">
-        <Footer />
-      </div>
+      <Footer />
 
       <Toastify />
     </div>

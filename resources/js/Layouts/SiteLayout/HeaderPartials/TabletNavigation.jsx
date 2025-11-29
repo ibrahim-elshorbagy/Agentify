@@ -42,7 +42,7 @@ export default function TabletNavigation() {
   return (
     <>
       {/* Mobile Menu Trigger */}
-      <div className="flex justify-between items-center p-4 border-b border-b-neutral-300 dark:border-b-neutral-700 bg-green-50 dark:bg-green-800 md:hidden">
+      <div className="flex justify-between items-center p-4 border-b border-b-neutral-300 dark:border-b-neutral-700 bg-green-50 dark:bg-green-800 md:hidden ">
         <div className='w-24'>
           <Link href={route("home")} >
             <ApplicationLogo />
@@ -68,7 +68,7 @@ export default function TabletNavigation() {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`md:hidden fixed inset-0 z-[60] bg-green-50  dark:bg-neutral-900 text-neutral-800 dark:text-white transition-all duration-300 ease-in-out
+        className={`md:hidden fixed inset-0 z-[60] bg-green-50  dark:bg-neutral-900 text-neutral-800 dark:text-white transition-all duration-300 ease-in-out h-full
         ${isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
       >
         <nav className="flex flex-col h-full ">
@@ -90,6 +90,17 @@ export default function TabletNavigation() {
 
           {/* Menu Links */}
           <ul className="flex flex-col divide-y divide-neutral-200 dark:divide-neutral-700 bg-green-50">
+            {user && (
+              <li>
+                <MenuNavLink
+                  href={route('dashboard')}
+                  icon="fa-gauge-high"
+                >
+                  {t('dashboard')}
+                </MenuNavLink>
+              </li>
+            )}
+
             <li>
               <MenuNavLink
                 href="#home"
@@ -102,12 +113,12 @@ export default function TabletNavigation() {
             </li>
             <li>
               <MenuNavLink
-                href="#features"
-                onClick={(e) => handleNavClick(e, 'features')}
-                active={isHomePage && activeSection === 'features'}
-                icon="fa-star"
+                href="#about"
+                onClick={(e) => handleNavClick(e, 'about')}
+                active={isHomePage && activeSection === 'about'}
+                icon="fa-building"
               >
-                {t('features')}
+                {t('about')}
               </MenuNavLink>
             </li>
             <li>
@@ -117,17 +128,7 @@ export default function TabletNavigation() {
                 active={isHomePage && activeSection === 'pricing'}
                 icon="fa-tags"
               >
-                {t('pricing')}
-              </MenuNavLink>
-            </li>
-            <li>
-              <MenuNavLink
-                href="#about"
-                onClick={(e) => handleNavClick(e, 'about')}
-                active={isHomePage && activeSection === 'about'}
-                icon="fa-building"
-              >
-                {t('about')}
+                {t('plans')}
               </MenuNavLink>
             </li>
 
@@ -183,6 +184,7 @@ export default function TabletNavigation() {
               variant="mobile"
               showLabels={true}
             />
+
           </div>
 
 
