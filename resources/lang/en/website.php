@@ -86,6 +86,9 @@ return [
   'about' => 'About',
   'contact' => 'Contact',
 
+  'no_results_found' => 'No results found for ',
+  'navigation'=>"Navigation",
+  'account'=>"Account",
   /* Profile Page */
   'profile_settings' => 'Profile Settings',
   'manage_account_settings' => 'Manage your account settings and security preferences',
