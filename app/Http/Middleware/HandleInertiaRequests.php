@@ -49,8 +49,20 @@ class HandleInertiaRequests extends Middleware
       'csrf_token' => csrf_token(),
       // 'translations' => fn () => __('website'),
       'available_locales' => ['en', 'ar'],
-      'locale' => fn () => app()->getLocale(),
+      'locale' => fn() => app()->getLocale(),
 
     ];
+  }
+  public function handle(Request $request, \Closure $next)
+  {
+    $response = parent::handle($request, $next);
+
+    if ($request->header('X-Inertia')) {
+      $response->headers->set('Cache-Control', 'no-cache, no-store, must-revalidate, private');
+      $response->headers->set('Pragma', 'no-cache');
+      $response->headers->set('Expires', '0');
+    }
+
+    return $response;
   }
 }
