@@ -28,16 +28,11 @@ uniform float uSpeed;
 uniform float uDirection;
 uniform float uScale;
 uniform float uOpacity;
-uniform vec2 uMouse;
-uniform float uMouseInteractive;
 out vec4 fragColor;
 
 void mainImage(out vec4 o, vec2 C) {
   vec2 center = iResolution.xy * 0.5;
   C = (C - center) / uScale + center;
-
-  vec2 mouseOffset = (uMouse - center) * 0.0002;
-  C += mouseOffset * length(C - center) * step(0.5, uMouseInteractive);
 
   float i, d, z, T = iTime * uSpeed * uDirection;
   vec3 O, p, S;
@@ -79,25 +74,20 @@ void main() {
   fragColor = vec4(finalColor, alpha);
 }`;
 
-export const Plasma = ({
+export const PlasmaStatic = ({
   color = '#ffffff',
   speed = 1,
   direction = 'forward',
   scale = 1,
-  opacity = 1,
-  mouseInteractive = true
+  opacity = 1
 }) => {
   const containerRef = useRef(null);
-  const mousePos = useRef({ x: 0, y: 0 });
-  const rafRef = useRef(0);
-  const isAnimatingRef = useRef(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     const useCustomColor = color ? 1.0 : 0.0;
     const customColorRgb = color ? hexToRgb(color) : [1, 1, 1];
-
     const directionMultiplier = direction === 'reverse' ? -1.0 : 1.0;
 
     const renderer = new Renderer({
@@ -126,27 +116,13 @@ export const Plasma = ({
         uSpeed: { value: speed * 0.4 },
         uDirection: { value: directionMultiplier },
         uScale: { value: scale },
-        uOpacity: { value: opacity },
-        uMouse: { value: new Float32Array([0, 0]) },
-        uMouseInteractive: { value: mouseInteractive ? 1.0 : 0.0 }
+        uOpacity: { value: opacity }
       }
     });
 
     const mesh = new Mesh(gl, { geometry, program });
 
-    const handleMouseMove = e => {
-      if (!mouseInteractive || window.innerWidth < 1024) return;
-      const rect = containerRef.current?.getBoundingClientRect();
-      if (!rect) return;
-      mousePos.current.x = e.clientX - rect.left;
-      mousePos.current.y = e.clientY - rect.top;
-      const mouseUniform = program.uniforms.uMouse.value;
-      mouseUniform[0] = mousePos.current.x;
-      mouseUniform[1] = mousePos.current.y;
-    };
-
     const setSize = () => {
-      if (!containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
       const width = Math.max(1, Math.floor(rect.width));
       const height = Math.max(1, Math.floor(rect.height));
@@ -156,95 +132,25 @@ export const Plasma = ({
       res[1] = gl.drawingBufferHeight;
     };
 
-    const t0 = performance.now();
-
-    const startAnimation = () => {
-      if (isAnimatingRef.current) return;
-      isAnimatingRef.current = true;
-
-      const loop = t => {
-        if (!isAnimatingRef.current) return;
-
-        let timeValue = (t - t0) * 0.001;
-        if (direction === 'pingpong') {
-          const pingpongDuration = 10;
-          const segmentTime = timeValue % pingpongDuration;
-          const isForward = Math.floor(timeValue / pingpongDuration) % 2 === 0;
-          const u = segmentTime / pingpongDuration;
-          const smooth = u * u * (3 - 2 * u);
-          const pingpongTime = isForward ? smooth * pingpongDuration : (1 - smooth) * pingpongDuration;
-          program.uniforms.uDirection.value = 1.0;
-          program.uniforms.iTime.value = pingpongTime;
-        } else {
-          program.uniforms.iTime.value = timeValue;
-        }
-        renderer.render({ scene: mesh });
-        rafRef.current = requestAnimationFrame(loop);
-      };
-      rafRef.current = requestAnimationFrame(loop);
-    };
-
-    const stopAnimation = () => {
-      isAnimatingRef.current = false;
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-        rafRef.current = 0;
-      }
-      program.uniforms.iTime.value = 0;
-      renderer.render({ scene: mesh });
-    };
-
-    const handleResize = () => {
-      setSize();
-      const isBigScreen = window.innerWidth >= 1024;
-
-      // Update mouse interaction
-      program.uniforms.uMouseInteractive.value = (mouseInteractive && isBigScreen) ? 1.0 : 0.0;
-
-      if (isBigScreen) {
-        startAnimation();
-      } else {
-        stopAnimation();
-      }
-    };
-
-    const ro = new ResizeObserver(handleResize);
+    const ro = new ResizeObserver(setSize);
     ro.observe(containerRef.current);
+    setSize();
 
-    // Initial setup
-    handleResize();
-
-    // Add mouse listener
-    if (mouseInteractive) {
-      window.addEventListener('mousemove', handleMouseMove);
-    }
-
-    // Add window resize listener
-    window.addEventListener('resize', handleResize);
-
-    // Add window resize listener
-    window.addEventListener('resize', handleResize);
+    // Render single static frame
+    program.uniforms.iTime.value = 0;
+    renderer.render({ scene: mesh });
 
     return () => {
-      isAnimatingRef.current = false;
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
-      window.removeEventListener('resize', handleResize);
-      if (mouseInteractive) {
-        window.removeEventListener('mousemove', handleMouseMove);
-      }
       ro.disconnect();
       try {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         containerRef.current?.removeChild(canvas);
       } catch {
         console.warn('Canvas already removed from container');
       }
     };
-  }, [color, speed, direction, scale, opacity, mouseInteractive]);
+  }, [color, speed, direction, scale, opacity]);
 
   return <div ref={containerRef} className="w-full h-full overflow-hidden relative" />;
 };
 
-export default Plasma;
+export default PlasmaStatic;

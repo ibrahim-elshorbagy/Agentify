@@ -20,7 +20,7 @@ export default function SiteLayout({ children, title }) {
       {/* Header */}
       <Header />
 
-      {/* Animated Grid Background  */}
+      {/* Responsive Background - Animated on desktop, static on mobile/tablet */}
       <div className="fixed inset-0 w-full h-full pointer-events-none z-0">
         <Plasma
           color="#5dea82"
