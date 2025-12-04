@@ -51,11 +51,17 @@ export default function PricingSection({ plans = [] }) {
   const [isYearly, setIsYearly] = useState(false);
   const [showAllFeatures, setShowAllFeatures] = useState(true);
 
-  const monthlyPlans = plans.filter(plan => plan.type === 'monthly');
-  const yearlyPlans = plans.filter(plan => plan.type === 'yearly');
+  const monthlyPlans = plans.filter(plan => plan.type === 'monthly').sort((a, b) => {
+    // Sort Starter (ID: 4) first, then by price ascending
+    if (a.id === 4) return -1;
+    if (b.id === 4) return 1;
+    return a.price - b.price;
+  });
+  const yearlyPlans = plans.filter(plan => plan.type === 'yearly').sort((a, b) => a.price - b.price);
   const displayPlans = isYearly ? yearlyPlans : monthlyPlans;
 
   const getPlanColor = (plan) => {
+    if (plan.id === 4) return 'light-green'; // Starter - Light Green
     if (plan.id === 1 || plan.id === 5) return 'green'; // Basic - Green
     if (plan.id === 2 || plan.id === 6) return 'green-black'; // Pro - Green + Black
     if (plan.id === 3 || plan.id === 7) return 'green-gold'; // Business - Green + Gold + Black
@@ -63,6 +69,7 @@ export default function PricingSection({ plans = [] }) {
   };
 
   const getPlanIcon = (plan) => {
+    if (plan.id === 4) return 'fa-rocket'; // Starter - Rocket
     if (plan.id === 1 || plan.id === 5) return 'fa-user'; // Basic - Single person
     if (plan.id === 2 || plan.id === 6) return 'fa-chart-line'; // Pro - Multiple people
     if (plan.id === 3 || plan.id === 7) return 'fa-building'; // Business - Building
@@ -174,6 +181,13 @@ export default function PricingSection({ plans = [] }) {
 
   const getColorClasses = (color) => {
     const colors = {
+      'light-green': {
+        border: 'border-green-200 dark:border-green-600',
+        headerBg: 'bg-green-50 dark:bg-green-800/20',
+        button: 'bg-green-400 hover:bg-green-500',
+        text: 'text-green-400 dark:text-green-300',
+        popular: 'border-green-400'
+      },
       green: {
         border: 'border-green-200 dark:border-green-700',
         headerBg: 'bg-green-50 dark:bg-green-900/30',
@@ -257,7 +271,7 @@ export default function PricingSection({ plans = [] }) {
           </div>
 
           {/* Plans Grid */}
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-8 max-w-7xl mx-auto">
+          <div className={`grid gap-8 md:gap-6 lg:gap-8 ${isYearly ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'} justify-items-center items-center max-w-7xl mx-auto`}>
             {displayPlans.map((plan, index) => {
               const color = getPlanColor(plan);
               const isPopular = isPlanPopular(plan);
@@ -266,6 +280,7 @@ export default function PricingSection({ plans = [] }) {
               const savings = isYearly ? calculateSavings(plan) : 0;
 
               const gradientColors = {
+                4: 'from-green-300 via-green-400 to-green-500', // Starter - Light green
                 1: 'from-green-400 via-green-500 to-green-600', // Basic - Pure green
                 5: 'from-green-400 via-green-500 to-green-600', // Basic Yearly
                 2: 'from-green-500 via-green-700 to-gray-900', // Pro - Green + Black
@@ -331,6 +346,7 @@ function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, g
 
   // Get radial gradient color based on plan
   const getRadialColor = () => {
+    if (plan.id === 4) return 'rgba(134, 239, 172, 0.4)'; // Light green for Starter
     if (plan.id === 1 || plan.id === 5) return 'rgba(34, 197, 94, 0.4)'; // Green for Basic
     if (plan.id === 2 || plan.id === 6) return 'rgba(34, 197, 94, 0.3)'; // Green for Pro
     if (plan.id === 3 || plan.id === 7) return 'rgba(217, 119, 6, 0.3)'; // Darker gold (amber-600) for Business
@@ -341,7 +357,7 @@ function PricingCard({ plan, color, isPopular, sections, keyFeatures, savings, g
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      className="group relative w-80 h-[700px] flex justify-center items-center my-10 mx-8 transition-all duration-500"
+      className="group relative w-full max-w-sm mx-auto flex justify-center items-center my-10 transition-all duration-500"
       style={{
         '--mouse-x': '0px',
         '--mouse-y': '0px'

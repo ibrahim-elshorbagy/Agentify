@@ -21,8 +21,8 @@ class DatabaseSeeder extends Seeder
 
 
 
-    $SystemAdminRole = Role::firstOrCreate(['name' => 'admin']);
-    $userRole = Role::firstOrCreate(['name' => 'user']);
+    // $SystemAdminRole = Role::firstOrCreate(['name' => 'admin']);
+    // $userRole = Role::firstOrCreate(['name' => 'user']);
 
     // $admin = User::create([
     //   'id' => 1,
@@ -33,42 +33,43 @@ class DatabaseSeeder extends Seeder
     // ]);
     // $admin->assignRole($SystemAdminRole);
 
-    $admin = User::create([
-      'id' => 3,
-      'name' => 'ihab',
-      'username' => 'i',
-      'email' => 'ihab@gmail.com',
-      'password' => Hash::make('i'),
-    ]);
+    // $admin = User::create([
+    //   'id' => 3,
+    //   'name' => 'ihab',
+    //   'username' => 'i',
+    //   'email' => 'ihab@gmail.com',
+    //   'password' => Hash::make('i'),
+    // ]);
 
 
-    $admin->assignRole($SystemAdminRole);
+    // $admin->assignRole($SystemAdminRole);
 
-    $user = User::create([
-      'id' => 2,
-      'name' => 'saad',
-      'username' => 's',
-      'email' => 'saad@gmail.com',
-      'password' => Hash::make('s'),
-    ]);
+    // $user = User::create([
+    //   'id' => 2,
+    //   'name' => 'saad',
+    //   'username' => 's',
+    //   'email' => 'saad@gmail.com',
+    //   'password' => Hash::make('s'),
+    // ]);
 
-    $user->assignRole($userRole);
+    // $user->assignRole($userRole);
 
-    $this->call(SubscriptionSystemSeeder::class);
+    // $this->call(SubscriptionSystemSeeder::class);
+    $this->call(NewPlan::class);
 
     // Create test user s2 and subscribe to plan
-    $testUser = User::create([
-      'name' => 'saad',
-      'username' => 's2',
-      'email' => 'saad@example.com',
-      'password' => Hash::make('s'),
-    ]);
+    // $testUser = User::create([
+    //   'name' => 'saad',
+    //   'username' => 's2',
+    //   'email' => 'saad@example.com',
+    //   'password' => Hash::make('s'),
+    // ]);
 
-    $testUser->assignRole($userRole);
+    // $testUser->assignRole($userRole);
 
     // Subscribe the test user to Basic Monthly plan (ID: 1)
-    $subscriptionService = new SubscriptionService();
-    $subscriptionService->subscribe($testUser->id, 7);
+    // $subscriptionService = new SubscriptionService();
+    // $subscriptionService->subscribe($testUser->id, 7);
 
     // User::factory(100)->create();
     // Message::factory()
