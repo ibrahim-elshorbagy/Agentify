@@ -31,7 +31,15 @@ export default function Footer() {
             </p>
           </div>
 
-
+          {/* Links */}
+          <div className="flex justify-center space-x-6 mb-4">
+            <Link href={route('privacy-policy')} className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200">
+              Privacy Policy
+            </Link>
+            <Link href={route('terms')} className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200">
+              Terms of Service
+            </Link>
+          </div>
 
           {/* Copyright */}
           <div className="text-center pt-3 border-t border-neutral-200 dark:border-neutral-700">

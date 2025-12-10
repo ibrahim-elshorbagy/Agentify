@@ -17,4 +17,14 @@ class HomeController extends Controller
       'plans' => $plans,
     ]);
   }
+
+  public function privacyPolicy()
+  {
+    return inertia("Frontend/Policy/PrivacyPolicy");
+  }
+
+  public function termsOfService()
+  {
+    return inertia("Frontend/Policy/Terms");
+  }
 }

@@ -27,6 +27,10 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
+// Privacy Policy and Terms of Service routes
+Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
+Route::get('/terms-of-service', [HomeController::class, 'termsOfService'])->name('terms');
+
 // Contact form route
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
